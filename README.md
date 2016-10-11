@@ -38,6 +38,7 @@ git clone https://github.com/zunction/HomeworkTeX *nameoffolder*
 if `*nameoffolder*` is left empty, the folder name will be HomeworkTeX. After cloning a repository, you need to `cd *nameofrepo*` to enter the directory/repository.
 
 **Checking the status of the repository**
+
 Once inside you can,
 
 ```git
