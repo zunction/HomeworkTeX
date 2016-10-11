@@ -16,12 +16,29 @@ If you like to collaborate on assignments with me but have no knowledge of Git o
 
 ## How to Git?
 
-Assuming that you have a github account and Git distribution on your machine we are ready to start!
+Assuming that you have a github account and Git distribution on your machine we are ready to start! Start up your terminal or PortableGit for Mac and Windows system respectively. We will start by cloning this repository. The commands for terminal and PortableGit work the same
 
-*Cloning this repository*
+**Basics**
 ```git
+pwd: tells you the present working directory.
+cd: goes back to home directory
+cd ..: jumps back one previous directory.
+ls: list the files in the directory you are in.
+```
+Tip: `pwd` is used to check which directory you are in, `cd` to change to the directory that you want to access, `ls` is for you to check if the file you are trying to access is in that directory. Use them to navigate around the directories and find your files :)
+
+**Cloning this repository**
+
+```git
+
 git clone https://github.com/zunction/HomeworkTeX *nameoffolder*
 ```
-if `*nameoffolder*` is left empty, the folder name will be HomeworkTeX.
+if `*nameoffolder*` is left empty, the folder name will be HomeworkTeX. After cloning a repository, you need to `cd *nameofrepo*` to enter the directory/repository. Once inside you can
+
+```git
+git status
+```
+
+which shows you the status of that directory/repository. Here directory and repository mean the same thing; it is seen as a directory by the machine but a repository by github.
 
 to be continued...
