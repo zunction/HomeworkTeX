@@ -1,0 +1,201 @@
+\documentclass[a4paper,12pt]{article}
+\setlength{\parindent}{0cm}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{graphicx,caption}
+\usepackage{verbatim}
+\usepackage{venndiagram}
+\usepackage[cm]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color,enumerate,framed}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%\usepackage{tgadventor}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{parskip}
+%\usepackage{picins} %for \parpic.
+%\newtheorem*{notation}{Notation}
+%\newtheorem{example}{Example}[section]
+%\newtheorem*{problem}{Problem}
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem*{solution}{Solution}
+%\newtheorem*{definition}{Definition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{remark}{Remark}
+%\setcounter{section}{1}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+%\newtheorem{defn}[thm]{Definition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{examp}{Example}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{nte}{Note}
+\newtheorem*{notat}{Notation}
+
+%\diagramstyle[labelstyle=\scriptstyle]
+
+\lstset{frame=tb,
+  language=Oz,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\pagestyle{fancy}
+
+
+
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\rfoot{\textsc{\thepage}}
+
+
+
+\begin{document}
+\flushright{Zhangsheng Lai\\1002554}
+\section*{Algorithmic Game Theory: HW 1}
+
+\begin{enumerate}
+\item To show the desired inequality, it suffices to show that $f(y,z) = 5y^2+z^2-3zy-3y \geq 0$ for every $y, z \in \{0,1,2,\ldots\}$. We shall use $\mathbb{Z}_{>0}$ to denote the set $\{0,1,2,\ldots\}$ subsequently. We can rewrite $f(y,z)$ to get
+\begin{align}
+f(y,z) = \left(\frac{3}{2}y-z\right)^2+\frac{11}{4}y^2-3y \label{eq:pos}
+\end{align}
+which we will show that the $f(y,z)$ in this form is nonnegative. All that is left to show is that  $\frac{11}{4}y^2-3y \geq 0$ for all $y\in \mathbb{Z}_{>0}$ but solving for the inequality, we have
+\begin{align*}
+\frac{11}{4}y^2-3y \geq 0 \Leftrightarrow y \geq \frac{12}{11} \text{ or } y=0
+\end{align*}
+meaning we are left to prove that (\ref{eq:pos}) holds for all $z \in \mathbb{Z}_{>0}$ when $y=1$. Solving for the inequality below, 
+\begin{align*}
+f(1,z)=\left(z-\frac{3}{2}\right)^2-\frac{1}{4} < 0 &\Leftrightarrow (z-1)(z-2)< 0\\
+&\Leftrightarrow 1<z<2
+\end{align*} 
+which says that $f(1,z)<0$ for $z \in (1,2)$ and hence positive for all $z \in \mathbb{Z}_{>0}$ and we are done.
+
+\item 
+\begin{enumerate}[(i)]
+\item In an nonatomic congestion games with multicommodity networks, let $\mathcal{P}_i$ denote the set of paths from an origin $s_i$ to a sink $t_i$ with $\mathcal{P}_i\neq \emptyset$.
+\begin{defn}[flow]
+For a \emph{flow} $f$ and path $P \in \mathcal{P}_i$, $f_P$ is the amount of traffic of commodity $i$ that chooses the path $P$ to travel from $s_i$ to $t_i$. A flow is feasible for a vector $r=(r_1,\ldots,r_k)$ if it routes all the traffic: for each $i\in \{1, 2, \ldots, k\}$, $\sum_{P\in \mathcal{P}_i}f_P=r_i$.
+\end{defn}
+\begin{defn}[Nonatomic equilibrium flow]
+Let $f$ be a feasible flow for an nonatomic congestion games with multicommodity networks. The flow $f$ is an \emph{equilibrium flow} if, for every commodity $i \in \{1,2, \ldots, k\}$ and every pair $P, \tilde{P} \in \mathcal{P}_i$ of $s_i-t_i$ paths with $f_P>0$, 
+\begin{align*}
+c_p(f) \leq c_{\tilde{P}}(f)
+\end{align*}
+where $c_p(f)$ denotes the cost of travelling on path $P$ for flow $f$.
+\end{defn}
+\item Let $\mathcal{P}=\bigcup_{i=1}^{k}\mathcal{P}_i$. Then the total cost of a multicommodity network is 
+\begin{align*}
+\sum_{P\in \mathcal{P}}c_p(f_p)\cdot f_p = \sum_{e\in E}c_e(f_e)\cdot f_e
+\end{align*}
+where $E$ is the set of directed edges on the graph $G$.
+\item
+\item 
+\end{enumerate}
+
+\item
+\begin{enumerate}[(i)]
+\item Let $\Phi$ be the potential function of a potential game and $c_i$ denote the cost function of the agents for $i\in \{1,2,\ldots,k\}$. 
+%If $s=(s_1,\ldots,s_{i-1},s_i,s_{i+1},\ldots,s_k)$ and $s'_i \neq s_i$ is any alternative strategy for agent $i$ for $i\in \{1,2,\ldots,k\}$, we have
+%\begin{align*}
+%c_i(s_i,s_{-i})-c_i(s'_i,s_{-i})=\Phi(s_i,s_{-i})-\Phi(s'_i,s_{-i})
+%\end{align*}
+To prove the required, it suffices to show that 
+\begin{align*}
+c_i(s_i,s_{-i})-\Phi(s_i,s_{-i})
+\end{align*}
+is independent of the choice of $s_i$ and solely dependent on $s_{-i}$. If we consider two alternative distinct strategies for agent $i$, $s'_i, s''_i \neq s_i$
+\begin{align*}
+c_i(s_i,s_{-i})&=\Phi(s_i,s_{-i})+\left[c_i(s'_i,s_{-i})-\Phi(s'_i,s_{-i})\right]\\
+c_i(s_i,s_{-i})&=\Phi(s_i,s_{-i})+\left[c_i(s''_i,s_{-i})-\Phi(s''_i,s_{-i})\right]
+\end{align*} 
+hence we can choose $D_i(s_{-i})=c_i(-,s_{-i})-\Phi(-,s_{-i})$, where $-$ represents any choice of strategy of agent $i$.
+
+\item Let $\Phi_1$ and $\Phi_2$ be two potential functions of a game. From 3\,(i) we have
+\begin{align}
+c_i(s_i,s_{-i})&=\Phi_1(s_i,s_{-i})+D^1_i(s_{-i})\label{eq:3ii1}\\
+c_i(s_i,s_{-i})&=\Phi_2(s_i,s_{-i})+D^2_i(s_{-i})\label{eq:3ii2}
+\end{align}
+where $D^k_i(s_{-i})$ denotes the dummy term for $k=1,2$. Taking (\ref{eq:3ii1})$-$(\ref{eq:3ii2}), 
+ \begin{align*}
+\Phi_1(s_i,s_{-i})-\Phi_2(s_i,s_{-i})=D^1_i(s_{-i})-D^2_i(s_{-i})
+\end{align*}
+we have shown that two distinct potential functions differ by a constant, more precisely the difference of their dummy term evaluated at $s_{-i}$ and any strategy of agent $i$, $s_i$.
+
+\item
+$(\Rightarrow)$: Let $\Phi$ be a potential function for a finite game. We want to show:
+\begin{align*}
+c_i(s^2_i,s^1_{-i})-c_i(s^1)+c_j(s^2)-c_j(s^2_i,s^1_{-i})=
+c_j(s^2_j,s^1_{-j})-c_j(s^1)+c_i(s^2)-c_i(s^2_j,s^1_{-j})
+\end{align*}
+consider the left hand side,
+\begin{align*}
+c_i(s^2_i,s^1_{-i})-c_i(s^1)+c_j(s^2)-c_j(s^2_i,s^1_{-i})&=
+\Phi(s^2_i,s^1_{-i})-c_i(s^1)+c_j(s^2)-c_j(s^2_i,s^1_{-i})
+\end{align*}
+
+$(\Leftarrow)$:
+\end{enumerate}
+
+\item
+\begin{enumerate}[(a)]
+\item Let $\tilde{f}$ be an equilibrium flow for an atomic selfish routing network of parallel links. Then for every player $i \in \{1,2,\ldots, n\}$, any two parallel links $P_i,P_j$ where $1\leq i < j \leq k$,
+\begin{align*}
+c_{P_i}(\tilde{f})\leq c_{P_j}(f)
+\end{align*}
+here, the flow of $\tilde{f}$ on $P_i$ equals the flow of $f$ on $P_j$, $(\tilde{f}_{P_i}=f_{P_j})$ i.e. any player routing their commodity to any path will have a cost equal to or larger than the equilibrium flow.
+\begin{align*}
+\sum_{m=1}^{\tilde{f}_{P_i}}c_{P_i}(m)\leq \sum_{m=1}^{f_{P_j}}c_{P_j}(m)
+\end{align*}
+since the above inequality is true for any two parallel links, we sum it over the $n$ parallel links and we are done.
+\begin{align*}
+\Phi(\tilde{f})=\sum_{i=1}^{n}\sum_{m=1}^{\tilde{f}_{P_i}}c_{P_i}(m)\leq \sum_{i=1}^{n}\sum_{m=1}^{f_{P_i}}c_{P_j}(m)=\Phi(f)
+\end{align*}
+where $\Phi$ is the potential function.
+\item
+\end{enumerate}
+
+\item
+\begin{enumerate}[(a)]
+\item Let $G^1$ and $G^2$ be a partnership game and congestion game respectively and suppose that they have the same number of players $k$. For the bijection $f_i$ to exists from the strategies $A_i$ of player $i$ in $G^1$ to the strategies $B_i$ of player $i$ in $G^2$, we require $|A_i|=|B_i|$ for all $i\in \{1,\ldots,k\}$.
+
+
+\end{enumerate}
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
