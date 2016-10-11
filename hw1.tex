@@ -118,7 +118,22 @@ where $c_p(f)$ denotes the cost of travelling on path $P$ for flow $f$.
 \end{align*}
 where $E$ is the set of directed edges on the graph $G$.
 \item
-\item 
+\item We start by showing that 
+\begin{align*}
+\inf_{x}\left\{\left(\frac{ax+b}{ar+b}-1\right)\right\}&=\inf_{x}\left\{x\left(\frac{a(x-r)}{ar+b}\right)\right\}\\
+&=\frac{a}{ar+b}\inf_{x}\left\{x^2-rx\right\}\\
+&=-\frac{r^2}{4}\cdot\frac{a}{ar+b}\\
+\end{align*}
+with that we can begin out proof.
+\begin{align*}
+\sup_{c\in \mathcal{C}}\sup_{x,r}\frac{rc(r)}{x c(x)-(r-x)c(r)}&=\sup_{c\in \mathcal{C}}\sup_{x,r}\frac{r}{r +x\left(\frac{c(x)}{c(r)}-1\right)}, \text{ since $c(r)>0$}
+\\
+&=\sup_{a,b\geq0}\sup_{x,r}\frac{r}{r +x\left(\frac{ax+b}{ar+b}-1\right)}\\
+&=\sup_{a,b\geq0}\sup_{r}\frac{r}{r -\frac{r^2}{4}\frac{a}{ar+b}}\\
+&=\sup_{a,b\geq0}\sup_{r}\frac{1}{1 -\frac{ar}{4(ar+b)}}\\
+&=\frac{1}{1-1/4}
+\end{align*}
+the last equality follows as the supremum of $\frac{ar}{4(ar+b)}$ occurs when $b=0$.
 \end{enumerate}
 
 \item
