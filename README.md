@@ -26,12 +26,7 @@ Assuming that you have a github account and Git distribution on your machine we 
 | `cd`                | Goes back to the home directory.                       |
 | `cd ..`             | Jumps back up one directory.                           |
 | `ls`                | List the files in the directory you are in.            |
-```git
-pwd: tells you the present working directory.
-cd: goes back to home directory
-cd .. : jumps back one previous directory.
-ls: list the files in the directory you are in.
-```
+
 Tip: `pwd` is used to check which directory you are in, `cd` to change to the directory that you want to access, `ls` is for you to check if the file you are trying to access is in that directory. Use them to navigate around the directories and find your files :)
 
 **Cloning this repository**
