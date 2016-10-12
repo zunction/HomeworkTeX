@@ -3,7 +3,7 @@ Homework that are submitted in tex inhabit this repository. Do not disturb!!!
 
 
 ## Requirements
-If you like to collaborate on assignments with me but have no knowledge of Git or github, below are some instructions that might be helpful for you.
+If you like to collaborate on assignments with me but have no knowledge of Git or github, below are some instructions that might be helpful for you.If you have no time, just download the zipped up file of the repository by clicking `Clone or download`.
 
 - a Git is a version control system that allows multiple parties to collaborate on a single project/document (in this case the tex file) without ruining each other's version.
 
