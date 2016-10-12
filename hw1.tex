@@ -74,13 +74,13 @@
 \cfoot{}
 
 %\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
-%\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
 \rfoot{\textsc{\thepage}}
 
 
 
 \begin{document}
-\flushright{Zhangsheng Lai\\1002554}
+\flushright{Nguyen Tan Thai Hung\quad *number*\\Zhangsheng Lai\quad1002554}
 \section*{Algorithmic Game Theory: HW 1}
 
 \begin{enumerate}
@@ -206,6 +206,50 @@ where $\Phi$ is the potential function.
 
 
 \end{enumerate}
+
+
+\item
+\begin{enumerate}[(a)]
+\item We consider two networks $A, B$ that resemble $n-$gons where $n$ is even, i.e. there are $n$ edges and $n$ vertices for each network as shown in Figure \ref{fig:ngon}. The strategy of each player $i$ is 
+\begin{align*}
+S_i=\{\{a_i,b_i\},\{a_{i+1},b_{i-1},b_{i+1}\}\}=\{s_i^1,s_i^2\}
+\end{align*}
+where $a_i,b_i$ denotes edges in $A$ and $B$ respectively and the cost function of each edge is simply $c_e(x)=x$. We claim that when all the player were to play $s_i^1$ it is a Nash equilibrium and we have the optimal value of potential which has value $2n$, since every edge is inhabit by a single player. Any player $i$ that deviates from playing $s_i^1$ will increase the potential by 2+2+2-1 (hence the claim it is a Nash) since it will share an edge with player $i+1$ in $A$ and players $i-1, i+1$ in $B$ and hence increase the potential. If all the players were to play $s_i^2$, we see that the potential will be $n+n+2n$ where the first $n$ is incurred from $A$ and the next two terms are from $B$ as we sum up the cost from 1 to the load of the edge. It is easy to see that everyone playing $s_i^2$ is a Nash; for any player that deviates from $s_i^2$, will have an increased cost of $+1$ coming from $A$, an increased cost of $+2$ from $B$ and hence this completes the proof. 
+
+
+
+\newdimen\R
+\R=2cm
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\tikzstyle{neuron}=[circle,fill=black!25,minimum size=5pt,inner sep=0pt]
+    \tikzstyle{m}=[neuron, fill=red!50];
+    \tikzstyle{n}=[neuron, fill=blue!50];
+
+ \draw[xshift=-3cm] (-144:\R) \foreach \x in {-108,-72,...,215} {
+              node[n]{}  -- (\x:\R)   
+            };%--  (90:\R) ;%node[above] {t} ;%cycle (90:\R) node[above] {t} ;
+\node[xshift=-6cm,below=2pt] at (-36:2.25){\footnotesize $a_{i-1}$};
+\node[xshift=-6cm,below=2pt] at (-30:3.5){\footnotesize $a_i$};
+\node[xshift=-6cm,below=2pt] at (-18:4.5){\footnotesize $a_{i+1}$};            
+            
+ \draw[xshift=3cm] (-144:\R) \foreach \x in {-108,-72,...,215} {
+              node[m]{}  -- (\x:\R)   
+            };
+\node[below=2pt] at (-36:2.25){\footnotesize $b_{i-1}$};
+\node[below=2pt] at (-30:3.5){\footnotesize $b_i$};
+\node[below=2pt] at (-18:4.5){\footnotesize $b_{i+1}$};
+%             \draw[xshift=3cm] (0:\R) \foreach \x in {36,72,...,359} {
+%              node[m]{}  -- (\x:\R) 
+%            } -- cycle (90:\R) node[above] {} ;
+\end{tikzpicture}
+\caption{Example with price of potential anarchy equals 2.}\label{fig:ngon}
+\end{figure}
+
+\item 
+\end{enumerate}
+
 \end{enumerate}
 
 
