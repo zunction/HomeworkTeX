@@ -421,6 +421,29 @@ where $a_i,b_i$ denotes edges in $A$ and $B$ respectively and the cost function 
 \end{figure}
 
 \item
+First, we understand that this question is concerning the atomic case, because for the non-atomic case, all Nash equilibria have the same potential value, as we proved in class.
+The first obvious bound is that
+\begin{align*}
+	\phi(s) &\leq SW(s)\\
+	\phi(s^*) &\leq SW(s^*)\\
+	\Rightarrow PoPA = \frac{\phi(s)}{\phi(s^*)} &\leq PoA = \frac{SW(s)}{SW(s^*)} \leq \frac{5}{2}
+\end{align*}
+Idea for proving a tight bound: apply the same 4-step strategy as for a normal PoA bound, but the tricky part is that the potential function is not a sum over all agents like the social welfare. Below are what we have got so far:
+\[ \phi(s) = \sum_{e\in\mathcal{E}}\sum_{i=1}^{l_e}c_e(i) \]
+\[ \phi(s^*) = \sum_{e\in\mathcal{E}}\sum_{i=1}^{l^*_e}c_e(i) \]
+Now we create a hybrid term
+\begin{align*}
+	\phi(s^*_i,s_{-i}) - \phi(s) = \sum_{e\in s^*_i \setminus s_i} c_e(f_e+1) - \sum_{e\in s_i \setminus s^*_i}c_e(f_e) \geq 0
+\end{align*}
+To go from $\phi(s)$ to $\phi(s^*)$ we let agents deviate one by one
+\begin{align*}
+	\phi(s) &\leq \phi(s^*_1,s_{-1}) + \sum_{e\in s_1 \setminus s^*_1}c_e(f_e) - \sum_{e\in s^*_1 \setminus s_1} c_e(f_e+1)\\
+	&\leq \phi(s^*_1,s^*_2,s_{3..n}) + \sum_{e\in s_1 \setminus s^*_1}c_e(f_e) - \sum_{e\in s^*_1 \setminus s_1} c_e(f_e+1) + \sum_{e\in s_2 \setminus s^*_2}c_e(f_e) - \sum_{e\in s^*_2 \setminus s_2} c_e(f_e+1)\\	\\
+	&\leq ...\\
+	&\leq \phi(s^*) + \sum_{i=1}^{n} \sum_{e\in s_i \setminus s^*_i}c_e(f_e) - \sum_{i=1}^{n}\sum_{e\in s^*_i \setminus s_i} c_e(f_e+1)
+\end{align*}
+Now if we can manipulate the double sums so that we can create $\phi(s)$ and $\phi(s^*)$ then we are done.
+
 
 
 %\newdimen\R
