@@ -77,7 +77,7 @@
 \cfoot{}
 
 %\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
-\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+%\cfoot{\color{black!60}{\sffamily Last modified: \today}}
 \rfoot{\textsc{\thepage}}
 
 
@@ -120,7 +120,30 @@ where $c_p(f)$ denotes the cost of travelling on path $P$ for flow $f$.
 \sum_{P\in \mathcal{P}}c_p(f_p)\cdot f_p = \sum_{e\in E}c_e(f_e)\cdot f_e
 \end{align*}
 where $E$ is the set of directed edges on the graph $G$.
+
 \item
+Let $L_i$ be the common cost of all paths in use between $s_i$ and $t_i$ at equilibrium.
+\begin{equation}\label{eq:SC_NE}
+\text{SC(NE)} = \sum_{i=1}^{k}\sum_{p\in\mathcal{P}_i}f_Pc_P(f) = \sum_{i=1}^{k}r_iL_i 
+\end{equation}
+On the other hand, for each source-sink pair $s_i-t_i$
+\[ \sum_{P\in\mathcal{P}_i}f^*_Pc_P(f)\geq r_iL_i \]
+\begin{equation}\label{eq:hybrid}
+\Rightarrow \sum_{i=1}^{k}\sum_{P\in\mathcal{P}_i}f^*_Pc_P(f)\geq \sum_{i=1}^{k}r_iL_i
+\end{equation}
+Now, substract (\ref{eq:SC_NE}) from (\ref{eq:hybrid}) and express the sum as summing over edges instead of over paths, we have
+\begin{equation}\label{eq:hybrid2}
+\sum_{e\in\mathcal{E}}(f_e^*-f_e)c_e(f_e) \geq 0
+\end{equation}
+Apply the Pigou bound for each edge with $c\leftarrow c_e, r \leftarrow f_e$ and $x \leftarrow f_e^*$.
+\begin{align*}
+	\alpha(C) &\geq \frac{rc(r)}{xc(x)+(r-x)c(r)}\\
+	\Rightarrow 	\alpha(C) &\geq \frac{f_ec_e(f_e)}{f_e^*c_e(f_e^*)+(f_e-f_e^*)c_e(f_e)}\\
+	\sum_{e \in \mathcal{E}}f_e^*c_e(f_e^*) & \geq \sum_{e \in \mathcal{E}} \frac{1}{\alpha(C)}f_ec_e(f_e) + (f_e^* - f_e)c_e(f_e)\\
+	\text{SW(OPT)} &\geq \frac{1}{\alpha(C)}\text{SW(NE)}\\
+	\alpha(C) &\geq \text{PoA}
+\end{align*}
+
 \item We start by showing that 
 \begin{align*}
 \inf_{x}\left\{\left(\frac{ax+b}{ar+b}-1\right)\right\}&=\inf_{x}\left\{x\left(\frac{a(x-r)}{ar+b}\right)\right\}\\
@@ -169,18 +192,23 @@ where $D^k_i(s_{-i})$ denotes the dummy term for $k=1,2$. Taking (\ref{eq:3ii1})
 we have shown that two distinct potential functions differ by a constant, more precisely the difference of their dummy term evaluated at $s_{-i}$ and any strategy of agent $i$, $s_i$.
 
 \item
-$(\Rightarrow)$: Let $\Phi$ be a potential function for a finite game. We want to show:
+First, we prove that for any potential game, the equality holds. Let $\Phi$ be a potential function. By definition,
+\[ c_i(s^2_i, s^1_{-i}) - c_i(s^1) = \phi(s^2_i,s^1_{-i}) - \phi(s^1)\]
+Furthermore, from part (i) we have
+\[ c_i(s^2) = \phi(s^2) + D_i(s^2_{-i}) \]
+and the same results apply for agent $j$. So
 \begin{align*}
-c_i(s^2_i,s^1_{-i})-c_i(s^1)+c_j(s^2)-c_j(s^2_i,s^1_{-i})=
-c_j(s^2_j,s^1_{-j})-c_j(s^1)+c_i(s^2)-c_i(s^2_j,s^1_{-j})
+\text{LHS} &= c_i(s^2_i,s^1_{-i})-c_i(s^1)+c_j(s^2)-c_j(s^2_i,s^1_{-i})\\
+&=\phi(s^2_i,s^1_{-i})-\phi(s^1) -c_j(s^2_i,s^1_{-i}) + \phi(s^2)+D_j(s^2_{-j}) \\
+&= \phi(s^2)-\phi(s^1) + D_j(s^2_{-j}) - D_j(s^2_i, s^1_{-i})
 \end{align*}
-consider the left hand side,
-\begin{align*}
-c_i(s^2_i,s^1_{-i})-c_i(s^1)+c_j(s^2)-c_j(s^2_i,s^1_{-i})&=
-\Phi(s^2_i,s^1_{-i})-c_i(s^1)+c_j(s^2)-c_j(s^2_i,s^1_{-i})
-\end{align*}
+Now, observe that $D_j(s^2_{-j})=D_j(s^2_i, s^1_{-i})$ because in both cases $i$ plays $s_i^2$ while the rest of the players (different from $i$ and $j$) play the same in $s^1$ and $s^2$ anyways. Therefore
+\[ \text{LHS}= \phi(s^2)-\phi(s^1)\]
+In the same manner we prove that RHS = $\phi(s^2)-\phi(s^1)$. Therefore, for any potential game, LHS = RHS.
 
-$(\Leftarrow)$:
+Now we need to prove the reverse, i.e. if the identity holds for every pair $s^1, s^2$ then the potential function exists. We want to show that for every pair $i,j$, 
+\[c_i(s^2_i, s^1_{-i}) - c_i(s^1) = \phi(s^2_i, s^1_{-i}) - \phi(s^1)\] 
+and so on. Our idea is to use the observation that $(s^2_i, s^1_{-i})$ and $(s^1_j, s^2_{-j})$ are the same outcome, and manipulate terms so that the relationship $D_j(s^2_{-j})=D_j(s^2_i, s^1_{-i})$ appears, which links us back to the first part.
 \end{enumerate}
 
 \item
@@ -198,12 +226,53 @@ since the above inequality is true for any two parallel links, we sum it over th
 \Phi(\tilde{f})=\sum_{i=1}^{n}\sum_{m=1}^{\tilde{f}_{P_i}}c_{P_i}(m)\leq \sum_{i=1}^{n}\sum_{m=1}^{f_{P_i}}c_{P_j}(m)=\Phi(f)
 \end{align*}
 where $\Phi$ is the potential function.
+
 \item
+Consider the triangular network of internet service providers (ISP) that we discussed in class (Figure \ref{fig:3gon}). There are 3 ISPs 1, 2, 3 serving a common market located at 4. Suppose the direct links from the ISPs to the user has high cost, and the links between the ISPs are cheap. Now, if 1 is using the direct link 1-4, then 3 will have an incentive to piggy-back ride and use 3-1-4, abandoning the link 3-4. Then 2 has two choices: either to use his own direct link 2-4, or to use a 3-hop link 2-3-1-4. The latter is not desirable (as it will cause a lot of delay), so he will bear the high cost and run the link 2-4. When that's the case, 1 will have the incentive to piggy-back ride, abandoning 1-4 and using 1-2-4 instead. But this will cause 3 to choose the direct link 3-4 instead of piggy-back ride through 1. This is contrary to his previous strategy. The cycle repeats. Effectively, there are no Nash equilibria in this game.
+
+\newdimen\R
+\R=2cm
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[scale=1.5]
+	\tikzstyle{neuron}=[circle,fill=black!25,minimum size=15pt,inner sep=0pt]
+	\tikzstyle{m}=[neuron, fill=red!50];
+	\tikzstyle{n}=[neuron, fill=blue!50];
+	
+	\draw[rotate=90,color=white] (0:\R) \foreach \x in {1,2,3} {
+		node[n](\x){\color{white}{\x}} -- (\x*120:\R) 
+	};%-- (90:\R) ;%node[above] {t} ;%cycle (90:\R) node[above] {t} ;
+	%\node[xshift=-6cm,below=2pt] at (-36:2.25){\footnotesize $a_{i-1}$};
+	%\node[xshift=-6cm,below=2pt] at (-30:3.5){\footnotesize $a_i$};
+	%\node[xshift=-6cm,below=2pt] at (-18:4.5){\footnotesize $a_{i+1}$}; 
+	\node[n](c) at (0:0){\color{white}{4}}; 
+	\draw[->,thick] (1) -- (c); 
+	\draw[->,thick] (3) -- (c); 
+	\draw[->,thick] (2) -- (c); 
+	\draw[->,thick] (1) -- (2);
+	\draw[->,thick] (2) -- (3);
+	\draw[->,thick] (3) -- (1);
+	% \draw[xshift=3cm] (-144:\R) \foreach \x in {-108,-72,...,215} {
+	% node[m]{} -- (\x:\R) 
+	% };
+	%\node[below=2pt] at (-36:2.25){\footnotesize $b_{i-1}$};
+	%\node[below=2pt] at (-30:3.5){\footnotesize $b_i$};
+	%\node[below=2pt] at (-18:4.5){\footnotesize $b_{i+1}$};
+	% \draw[xshift=3cm] (0:\R) \foreach \x in {36,72,...,359} {
+	% node[m]{} -- (\x:\R) 
+	% } -- cycle (90:\R) node[above] {} ;
+	\end{tikzpicture}
+	\caption{Example network with non-parallel links}
+	\label{fig:3gon}
+\end{figure}
+
 \end{enumerate}
 
 \item
 \begin{enumerate}[(a)]
-\item The approach to find construct the bijection from the strategies from a partnership game $G^1$ to a congestion game $G^2$ will be to first find one for a 2 player game where the player have $2$ strategies respectively. 
+\item %The approach to find construct the bijection from the strategies from a partnership game $G^1$ to a congestion game $G^2$ will be to first find one for a 2 player game where the player have $2$ strategies respectively. 
+The congestion game to consider is shown below with $m=n=2$  where $n$ and $m$ are the number of strategies for P1 and P2 respectively,. A strategy of P1 is the upper or lower edges of the networks; we shall let $A_1$ be the upper edges. A strategy of P2  is the choice of a disjoint network, here the left network is P2's strategy $B_1$. For  $1\leq i \leq n$ and  $1\leq j \leq m$, $e_{i,j}$ is the $i$th edge of the $j$th disjoint network.
+
 \begin{figure}[h]
 \begin{floatrow}
 \ffigbox{%
@@ -260,14 +329,13 @@ draw=black!50, node distance=\layersep]
 %\caption{A congestion network corresponding to a partnership game.}
 \end{figure}
 
-The congestion game to consider is shown above and a strategy of P1 is the upper or lower edges of the networks; we shall let $A_1$ be the upper edges. A strategy of P2  is the choice of a disjoint network, here the left network is P2's strategy $B_1$. For  $1\leq i \leq n$ and  $1\leq j \leq m$, where $n$ and $m$ are the number of strategies for P1 and P2 respectively, $e_{ij}$ is the $i$th edge of the $j$th disjoint network.
 %We shall denote an edge in the network as $e_{ij}$, where $1\leq i \leq n$ is the edge chosen in a network and $1 \leq j\leq m$ where $n$ and $m$ are the number of strategies for P1 and P2 respectively is a chosen network.
 Hence the tuple of bijective functions from the strategies of the network to the strategies in the partnership game for the congestion game shown above is:
 \begin{alignat*}{4}
 f_1(A_i,B_j)&=\{e_{i,j}\}_{1\leq j\leq m}, &\quad&\text{the $i$th edge in every disjoint network }\\
 f_2(A_i,B_j)&=\{e_{i,j}\}_{1\leq i\leq n}, &\quad &\text{all the edges in the $j$th disjoint network}\\
 \end{alignat*}
-which says that every strategy in the congestion game is a subset of edges in the family of disjoint networks. The cost function $c^1_k$ for the partnership game $G^1$ is shown in the table above and the cost function for the congestion game $c_k^2(\{e_{pj}\}_{1\leq j \leq m},\{e_{iq}\}_{1\leq i \leq n})$ is the cost of the unique edge found from the intersection $\{e_{pj}\}_{1\leq j \leq m}\cap\{e_{iq}\}_{1\leq i \leq n}$. Note that although we used fixed numbers as the cost in the 2 player 2 strategies example we illustrated above, we can see them as just placeholders and it works well for any partnership game of that form even with different cost. We can generalize this from 2 players to $N$ players in a similar fashion.
+which says that every strategy in the congestion game is a subset of edges in the family of disjoint networks. The cost function $c^1_k$ for the partnership game $G^1$ is shown in the table above and the cost function for the congestion game $c_k^2(\{e_{p,j}\}_{1\leq j \leq m},\{e_{i,q}\}_{1\leq i \leq n})$ is the cost of the unique edge found from the intersection $\{e_{p,j}\}_{1\leq j \leq m}\cap\{e_{i,q}\}_{1\leq i \leq n}$. Note that although we used fixed numbers as the cost in the 2 player 2 strategies example we illustrated above, we can see them as just placeholders and it works well for any partnership game of that form even with different cost. We can generalize this from 2 players to $N$ players in a similar fashion.
 
  
 %\begin{figure}
@@ -300,10 +368,16 @@ which says that every strategy in the congestion game is a subset of edges in th
 %\end{figure}
 
 \item 
-
-\item
-
-
+Let $G^1$ be any dummy game...
+\item Let $P$ and $D$ denote a partnership and dummy game respectively that $C^1, C^2$ be the respective congestion game they are isomorphic to. Then $P\times D$ is isomorphic to $C^1\times C^2$. Since the cartesian product of congestion games is also a congestion game, we have that the cartesian product of a partnership and dummy game isomorphic to a congestion game. Since a partnership game is a potential game, it suffices to show that a dummy game is a potential game. 
+\begin{align*}
+%\Phi(s_i,s_{-i})-\Phi(s^\ast_i,s_{-i})=
+c_i(s_i,s_{-i})-c_i(s^\ast_i,s_{-i})=D_i(s_{-i})-D_i(s_{-i})=0
+\end{align*}
+we can choose the potential function $\Phi(s)$ to be the zero function thus it is shown that dummy games are potential games. Now,
+\begin{align*}
+te
+\end{align*}
 \end{enumerate}
 
 
@@ -313,7 +387,7 @@ which says that every strategy in the congestion game is a subset of edges in th
 \begin{align*}
 S_i=\{\{a_i,b_i\},\{a_{i+1},b_{i-1},b_{i+1}\}\}=\{s_i^1,s_i^2\}
 \end{align*}
-where $a_i,b_i$ denotes edges in $A$ and $B$ respectively and the cost function of each edge is simply $c_e(x)=x$. We claim that when all the player were to play $s_i^1$ it is a Nash equilibrium and we have the optimal value of potential which has value $2n$, since every edge is inhabit by a single player. Any player $i$ that deviates from playing $s_i^1$ will increase the potential by 2+2+2-1 (hence the claim it is a Nash) since it will share an edge with player $i+1$ in $A$ and players $i-1, i+1$ in $B$ and hence increase the potential. If all the players were to play $s_i^2$, we see that the potential will be $n+n+2n$ where the first $n$ is incurred from $A$ and the next two terms are from $B$ as we sum up the cost from 1 to the load of the edge. It is easy to see that everyone playing $s_i^2$ is a Nash; for any player that deviates from $s_i^2$, will have an increased cost of $+1$ coming from $A$, an increased cost of $+2$ from $B$ and hence this completes the proof. 
+where $a_i,b_i$ denotes edges in $A$ and $B$ respectively and the cost function of each edge is simply $c_e(x)=x$. We claim that when all the player were to play $s_i^1$ it is a Nash equilibrium and we have the optimal value of potential which has value $2n$, since every edge is inhabit by a single player. Any player $i$ that deviates from playing $s_i^1$ will increase the potential by $2+2+2-1$ (hence the claim it is a Nash) since it will share an edge with player $i+1$ in $A$ and players $i-1, i+1$ in $B$ and hence increase the potential. If all the players were to play $s_i^2$, we see that the potential will be $n+n+2n$ where the first $n$ is incurred from $A$ and the next two terms are from $B$ as we sum up the cost from 1 to the load of the edge. It is easy to see that everyone playing $s_i^2$ is a Nash; for any player that deviates from $s_i^2$, will have an increased cost of $+1$ coming from $A$, an increased cost of $+2$ from $B$ and hence this completes the proof. 
 
 
 
