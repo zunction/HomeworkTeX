@@ -83,7 +83,7 @@
 
 
 \begin{document}
-\flushright{Nguyen Tan Thai Hung\quad *number*\\Zhangsheng Lai\quad1002554}
+\flushright{Nguyen Tan Thai Hung\quad 1001986\\Zhangsheng Lai\quad1002554}
 \section*{Algorithmic Game Theory: HW 1}
 
 \begin{enumerate}
@@ -267,51 +267,41 @@ Hence the tuple of bijective functions from the strategies of the network to the
 f_1(A_i,B_j)&=\{e_{i,j}\}_{1\leq j\leq m}, &\quad&\text{the $i$th edge in every disjoint network }\\
 f_2(A_i,B_j)&=\{e_{i,j}\}_{1\leq i\leq n}, &\quad &\text{all the edges in the $j$th disjoint network}\\
 \end{alignat*}
-which says that every strategy in the congestion game is a subset of edges in the family of disjoint networks. The cost function $c^1_k$ for the partnership game $G^1$ is shown in the table above and the cost function for the congestion game $c_k^2(\{e_{pj}\}_{1\leq j \leq m},\{e_{iq}\}_{1\leq i \leq n})$ is the cost of the unique edge found from the intersection $\{e_{pj}\}_{1\leq j \leq m}\cap\{e_{iq}\}_{1\leq i \leq n}$.
+which says that every strategy in the congestion game is a subset of edges in the family of disjoint networks. The cost function $c^1_k$ for the partnership game $G^1$ is shown in the table above and the cost function for the congestion game $c_k^2(\{e_{pj}\}_{1\leq j \leq m},\{e_{iq}\}_{1\leq i \leq n})$ is the cost of the unique edge found from the intersection $\{e_{pj}\}_{1\leq j \leq m}\cap\{e_{iq}\}_{1\leq i \leq n}$. Note that although we used fixed numbers as the cost in the 2 player 2 strategies example we illustrated above, we can see them as just placeholders and it works well for any partnership game of that form even with different cost. We can generalize this from 2 players to $N$ players in a similar fashion.
 
  
-\begin{figure}
-\centering
-\def\layersep{1.5cm}
-
-\begin{tikzpicture}[scale = 1,shorten >=1pt,->,draw=black!50, node distance=\layersep]
-    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=7.5pt,inner sep=0pt]
-    \tikzstyle{output neuron}=[neuron, fill=red!50];
-    \tikzstyle{n}=[neuron, fill=blue!50];
-
-\node[n] (a) at (0,0) {};
-\node[n] (b) at (2,0) {};
-\node[n] (c) at (3,0) {};
-\node[n] (d) at (5,0) {};
-\node[n] (e) at (6,0) {};
-\node[n] (f) at (8,0) {};
-\node at (5.5,0) {$\ldots$};
-\foreach \y in {-40,-20,0,20,40}{
+%\begin{figure}
+%\centering
+%\def\layersep{1.5cm}
+%
+%\begin{tikzpicture}[scale = 1,shorten >=1pt,->,draw=black!50, node distance=\layersep]
+%    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+%    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=7.5pt,inner sep=0pt]
+%    \tikzstyle{output neuron}=[neuron, fill=red!50];
+%    \tikzstyle{n}=[neuron, fill=blue!50];
+%
+%\node[n] (a) at (0,0) {};
+%\node[n] (b) at (2,0) {};
+%\node[n] (c) at (3,0) {};
+%\node[n] (d) at (5,0) {};
+%\node[n] (e) at (6,0) {};
+%\node[n] (f) at (8,0) {};
+%\node at (5.5,0) {$\ldots$};
+%\foreach \y in {-40,-20,0,20,40}{
 %\foreach \y in {-40,0,40}{
 %\draw (a) edge[bend right] node[below] {\small $2$} (b);
 %\draw (a) edge[bend left] node[above] {\small $x$} (b);
-\draw  (a) edge[bend left=\y] node[above] {} (b);
-\draw (c) edge[bend left=\y] node[above] {} (d);
-\draw (e) edge[bend left=\y] node[above] {} (f);
-};
-\end{tikzpicture}
-\caption{A two player game with where each player has $n,m$ strategies respectively. }
-\end{figure}
+%\draw  (a) edge[bend left=\y] node[above] {} (b);
+%\draw (c) edge[bend left=\y] node[above] {} (d);
+%\draw (e) edge[bend left=\y] node[above] {} (f);
+%};
+%\end{tikzpicture}
+%\caption{A two player game with where each player has $n,m$ strategies respectively. }
+%\end{figure}
 
-\begin{table}[h]
-\footnotesize
-\renewcommand{\arraystretch}{1.75}
-    \centering
-    \begin{tabular}{cc|c|c|}
-      & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $2$}\\
-      & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$A$}  & \multicolumn{1}{c}{$B$} \\\cline{3-4}
-      \multirow{2}*{Player $1$}  & $A$ & $1,1$ & $2,2$ \\\cline{3-4}
-      & $B$ & $3,3$ & $4,4$ \\\cline{3-4}
-    \end{tabular}
-    \caption{Partnership games}
-\end{table}
+\item 
 
+\item
 
 
 \end{enumerate}
