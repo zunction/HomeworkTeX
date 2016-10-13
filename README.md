@@ -44,6 +44,24 @@ Once inside you can,
 ```git
 git status
 ```
+which you will see
+
+```git
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Nothing to commit, working tree clean
+```
+but if you have made changes to any file in the directory/repository, you will get
+
+```git
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be commited)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+      modified:     README.md
+no changes added to commit (use "git add" and/or "git commit -a")      
+```
 
 which shows you the status of that directory/repository. Here directory and repository mean the same thing; it is seen as a directory by the machine but a repository by github.
 
