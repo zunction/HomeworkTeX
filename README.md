@@ -42,18 +42,20 @@ if `*nameoffolder*` is left empty, the folder name will be HomeworkTeX. After cl
 Once inside you can,
 
 ```git
-git status
+$ git status
 ```
 which you will see
 
 ```git
+$ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 Nothing to commit, working tree clean
 ```
-but if you have made changes to any file in the directory/repository, you will get
+but if you have made changes to any file in the directory/repository say the README.md which displays what you are reading, you will get
 
 ```git
+$ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 Changes not staged for commit:
@@ -63,6 +65,12 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")      
 ```
 
-which shows you the status of that directory/repository. Here directory and repository mean the same thing; it is seen as a directory by the machine but a repository by github.
+when you are not sure about the status of your *local repository* (since it is on your machine), `git status` is the command to use to check.
+
+**How to stage your changes**
+
+**Staging modified files**
+
+**Committing your changes**
 
 to be continued...
