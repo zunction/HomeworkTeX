@@ -368,16 +368,29 @@ which says that every strategy in the congestion game is a subset of edges in th
 %\end{figure}
 
 \item 
-Let $G^1$ be any dummy game...
-\item Let $P$ and $D$ denote a partnership and dummy game respectively that $C^1, C^2$ be the respective congestion game they are isomorphic to. Then $P\times D$ is isomorphic to $C^1\times C^2$. Since the cartesian product of congestion games is also a congestion game, we have that the cartesian product of a partnership and dummy game isomorphic to a congestion game. Since a partnership game is a potential game, it suffices to show that a dummy game is a potential game. 
-\begin{align*}
-%\Phi(s_i,s_{-i})-\Phi(s^\ast_i,s_{-i})=
-c_i(s_i,s_{-i})-c_i(s^\ast_i,s_{-i})=D_i(s_{-i})-D_i(s_{-i})=0
-\end{align*}
-we can choose the potential function $\Phi(s)$ to be the zero function thus it is shown that dummy games are potential games. Now,
-\begin{align*}
-te
-\end{align*}
+Still working on it.
+\item We know that the cost function of a potential game can be decomposed into the sum of a potential function and a dummy function. We claim that:
+\begin{enumerate}
+\item in a partnership game, the potential function is $\phi(s)=c_i(s) \; \forall i$. Therefore, the cost function of a partnership game which is also a potential game, can be decomposed into a sum of a potential function and a zero function as its dummy function 
+\[ c_i(s) = \phi(s) + \mathbf{0}\]
+\item in a dummy game, the potential function is $\phi(s) = 0$. The cost function of a dummy game which is also a potential game can be decomposed into a sum of itself as the dummy function and a potential function which is the zero function.
+\[ c_i(s) = \mathbf{0} + D_i(s_{-i})\]
+\end{enumerate}
+Now, if we have a potential game such that
+\[ c_i(s) = \phi(s) + D_i(s_{-i})\]
+then we can effectively map the partnership game with potential function $\phi(s)$ into a congestion game $G_1$ and map the dummy game with dummy function $D_i(s_{-i})$ into another congestion game $G_2$. What we did is effectively map a potential game into a congestion game with two separate networks $G_1$ and $G_2$, where each player has to play an action in $G_1$ and an action in $G_2$ simultaneously (isomorphism is preserved under addition). Thus every potential game is isomorphic to a congestion game.
+
+
+%Let $P$ and $D$ denote a partnership and dummy game respectively that $C^1, C^2$ be the respective congestion game they are isomorphic to. Then $P\times D$ is isomorphic to $C^1\times C^2$. Since the cartesian product of congestion games is also a congestion game, we have that the cartesian product of a partnership and dummy game isomorphic to a congestion game. Since a partnership game is a potential game, it suffices to show that 
+%
+%
+%a dummy game is a potential game. 
+%\begin{align*}
+%%\Phi(s_i,s_{-i})-\Phi(s^\ast_i,s_{-i})=
+%c_i(s_i,s_{-i})-c_i(s^\ast_i,s_{-i})=D_i(s_{-i})-D_i(s_{-i})=0
+%\end{align*}
+%we can choose the potential function $\Phi(s)$ to be the zero function thus it is shown that dummy games are potential games. Now,
+
 \end{enumerate}
 
 
@@ -442,7 +455,7 @@ To go from $\phi(s)$ to $\phi(s^*)$ we let agents deviate one by one
 	&\leq ...\\
 	&\leq \phi(s^*) + \sum_{i=1}^{n} \sum_{e\in s_i \setminus s^*_i}c_e(f_e) - \sum_{i=1}^{n}\sum_{e\in s^*_i \setminus s_i} c_e(f_e+1)
 \end{align*}
-Now if we can manipulate the double sums so that we can create $\phi(s)$ and $\phi(s^*)$ then we are done.
+Now if we can manipulate the double sums so that we can create $\phi(s)$ and $\phi(s^*)$ then we are done. We are trying to break the $c_e(f_e)$ term into two components, one involves $\phi(s)$ and one involves a dummy term.
 
 
 
