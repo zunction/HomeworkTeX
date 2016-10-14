@@ -245,6 +245,19 @@ add diagram here.
 \subsection{Location Games}
 
 
+\subsection{Positive Externalities}
+A \emph{network cost-sharing game} takes place in a graph $G=(V,E)$ which can be directed and undirected and each edge $E$ carries a fixed cost $\gamma_e\geq 0$. There are $k$ players and each player $i$ has a source vertex $s_i \in V$ and a sink vertex $t_i\in V$ and its strategy set is the $s_i-t_i$ paths of the graph. Outcomes of the game are path vectors $(P_1,\ldots,P_k)$, with the semantics that the subnetwork $(V,\cup_{i=1}^{k}P_i)$ gets formed. 
+
+The $\gamma_e$ is thought of as a fixed cost for building edge $e$, i.e. laying down high-speed internet fiber to a neighbourhood and this cost is independent of the number of users using that edge. The cost incurred by a player is the sum of all the cost of the edges used by the player, but instead of incurring higher cost for a highly utilized edge, the cost is lower when more people are using that edge, hence its name. Let $\ell_e$ denote the load of an edge $e$ and for $\ell_e>0$, the players that utilize edge $e$ are jointly responsible for the fixed cost of the edge, $\gamma_e$. Here we will assume that the cost of an edge are split equally amongst the players. The cost of a player $i$ is thus given by
+\begin{align*}
+C_i(\mathbf{P})=\sum_{e\in P_i}\frac{\gamma_e}{\ell_e}
+\end{align*}
+where $\ell_e=|\{i:e \in P_i\}|$ is the number of players that chooses a path the includes $e$. Our objective is to minimize the total cost of the formed network
+\begin{align*}
+cost(\mathbf{P}=\sum_{e\in E:\ell_e>0}^{})
+\end{align*}
+
+
 %\begin{defn}
 %For any finite game, an \emph{exact potential function} $\Phi$ is a function that maps every strategy vector $S$ to some real value and satisfies the following condition: If $S=(S_1,S_2, \ldots, S_k)$, $S'_i\neq S_i$ is an alternative strategy for some player $i$, and $S'=(S_{-i},S'_i)$, then
 %\begin{align*}
