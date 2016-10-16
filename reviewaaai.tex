@@ -7,7 +7,7 @@
 \usepackage[cm]{fullpage}
 \usepackage{fancyhdr}
 \usepackage{tikz}
-\usepackage{listings}
+\usepackage{listings,url,}
 \usepackage{color,enumerate,framed}
 \usepackage{color,hyperref}
 \definecolor{darkblue}{rgb}{0.0,0.0,0.5}
@@ -86,12 +86,29 @@
 %\flushright{Zhangsheng Lai\\1002554}
 \section*{Review: Building Adversary Resistant Deep Neural Networks with Random Feature Nullification}
 \subsection*{Summary}
+The paper presents the random feature nullification to preserve the DNN's integrity against adversarial samples. Based on the discussion on the related work to increase the DNN's resistance to adversarial samples, the non-deterministic technique introduced is a nature progression from the current available techniques of adversarial training and model complexity enhancement. (weakness of adversarial training and model complexity enhancement here?) The paper points out that to be able to put up a strong resistance against adversarial attacks, the model architecture has to be one makes it impossible to generate adversarial samples even when it is disclosed.
+
+
+
+
 
 \subsection*{Positivity}
 
-\subsection*{Negativity}
-%\cite{goodfellow2014explaining}
 
+
+
+\subsection*{Negativity}
+- the paper says that $\frac{\partial f(\tilde{X},I_p)}{\partial \tilde{X}}$ is computationally impossible due to the randomness of $I_p$ and thus for the attackers to compute this derivate to produce an adversarial perturbation attackers have to use a random $I_p^\ast$ to approximate the initial $I_p$ used. However, since the random nullification nullifies the inputs to 0, attackers can use the 
+
+- attackers can try to synthesis the $I_p$ matrix by examining the 
+
+- Could explore deeper on how attackers to bypass the random feature nullification technique other than the traditional method used by them to produce adversarial samples.
+
+- could have tested it on CIFAR dataset
+
+- there are papers that the author cited from that discussed about adversarial examples in other datasets.
+%\cite{goodfellow2014explaining}
+%\cite{tesla}
 \newpage
 
 \bibliography{review} 
