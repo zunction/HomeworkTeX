@@ -94,17 +94,25 @@ The paper presents the random feature nullification to preserve the DNN's integr
 
 \subsection*{Positivity}
 
+- the introduced method is more efficient than the method of adversarial training; there is no need to train on both the real sample and a crafted adversarial sample. The 
 
+- 
 
 
 \subsection*{Negativity}
 
-\subsection*{My Points}
+\subsection*{My Thoughts}
+- how does the techique to create adversarial samples work? How do we add the perturbation to make the DNN believe that it is of a particular class $A$ or $B$ when it is actually of class $C$?
+
+
 - why compute  $\frac{\partial \mathcal{L}(\theta, f(\tilde{X},I_p),Y)}{\partial \tilde{X}}$ instead of  $\frac{\partial \mathcal{L}(\theta, f(\tilde{X},I_p),Y)}{\partial  f(\tilde{X},I_p)}$? Would seeing the data as $f(\tilde{X},I_p)$  be better than seeing it as $\tilde{X}$? Or perhaps I should first myself if that derivative can be computed. (my tentative answer is yes). Although $I_p$ is a random variable, what it does is that it nullifies every sample to 0 with proportion $p$. This can be seen as a form of occlusion with the image being occluded at many small spots.
 
 - is $\delta X \odot I_p^\ast$ a notation or the exact representation of the perturbation?
 
-
+- can the attacker not draw a sample $I_p^\ast$ which then the nullified adversarial sample looks like
+\begin{align*}
+(X+\delta X {\color{black!30}\odot I_p^\ast}) \odot I_p = (X \odot I_p) + \delta X {\color{black!30}\odot I_p^\ast} \odot I_p
+\end{align*}
 %- the paper says that $\frac{\partial f(\tilde{X},I_p)}{\partial \tilde{X}}$ is computationally impossible due to the randomness of $I_p$ and thus for the attackers to compute this derivate to produce an adversarial perturbation attackers have to use a random $I_p^\ast$ to approximate the initial $I_p$ used. However, since the random nullification nullifies the inputs to 0, attackers can use the 
 
 %- attackers can try to synthesis the $I_p$ matrix by examining the 
