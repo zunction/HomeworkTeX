@@ -94,7 +94,7 @@ The paper presents the random feature nullification to preserve the DNN's integr
 
 \subsection*{Positivity}
 
-- the introduced method is more efficient than the method of adversarial training; there is no need to train on both the real sample and a crafted adversarial sample. The 
+- the introduced method is more efficient than the method of adversarial training; there is no need to train on both the real sample and a crafted adversarial sample which is an important aspect as the amout of real samples we potentially have is inexhaustive.
 
 - 
 
@@ -120,6 +120,12 @@ The paper presents the random feature nullification to preserve the DNN's integr
 - could explore deeper on how attackers can bypass the random feature nullification technique other than the traditional method used by them to produce adversarial samples.
 
 - could have tested it on CIFAR dataset since MNIST dataset is a smaller space than the CIFAR dataset and this technique might not work as well on images with more colors and variety. There are papers that the author cited from that discussed about adversarial examples in other datasets.
+
+- why is there a choice of different activation function and learning rate to train the models which makes the comparison not fair.
+
+- game theory aspects of the paper: every sample is seen as an agent and they are competing to have their cost reduced, i.e. to be classified correctly. However in the midst of this competition, the social cost of the DNN (which is the error made by the DNN) is increased as it is susceptible to adversarial attacks. Hence we want to construct the DNN such that the NE of the game is such that it is not susceptible to the adversarial samples.
+
+
 %\cite{goodfellow2014explaining}
 %\cite{tesla}
 \newpage
