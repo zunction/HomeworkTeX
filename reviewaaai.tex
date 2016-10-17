@@ -1,5 +1,5 @@
 \documentclass[a4paper,10pt]{article}
-\setlength{\parindent}{0cm}
+%\setlength{\parindent}{0cm}
 \usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
 \usepackage{graphicx,caption}
 \usepackage{verbatim}
@@ -86,13 +86,19 @@
 %\flushright{Zhangsheng Lai\\1002554}
 \section*{Review: Building Adversary Resistant Deep Neural Networks with Random Feature Nullification}
 \subsection*{Summary}
-The paper presents the random feature nullification to preserve the DNN's integrity against adversarial samples. Based on the discussion on the related work to increase the DNN's resistance to adversarial samples, the non-deterministic technique introduced is a nature progression from the current available techniques of adversarial training and model complexity enhancement. (weakness of adversarial training and model complexity enhancement here?) The paper points out that to be able to put up a strong resistance against adversarial attacks, the model architecture has to be one makes it impossible to generate adversarial samples even when it is disclosed.
+The paper presents the random feature nullification (RFN) to preserve the DNN's integrity against adversarial samples. Based on the discussion on the currently related work to increase the DNN's resistance to adversarial samples, the inclusion of a non-deterministic feature is a very nature progression from the current available techniques of adversarial training and model complexity enhancement. 
+
+(weakness of adversarial training and model complexity enhancement here?) The paper points out that to be able to put up a strong resistance against adversarial attacks, the model architecture has to be one that makes it impossible to generate adversarial samples even when it is disclosed. However, \cite{goodfellow2014explaining} 
 
 
 
 
 
 \subsection*{Positivity}
+The discussed approaches to tackle the problem of adversarial attacks have so far been trying to train the model on adversarial samples or to increase the non-linearity of the model. The RFN technique adopts another approach which is to make the construction of effective adversarial samples\footnote{adversarial samples that is able to successful deceive the DNN to make wrong classifications.} a tall order for the attackers, through the addition of random variables. Making it hard to construct adversarial samples might be an avenue that future efforts of tackling adversarial attacks might want to explore as the doing adversarial training has its limitations; 
+
+
+
 
 - the introduced method is more efficient than the method of adversarial training; there is no need to train on both the real sample and a crafted adversarial sample which is an important aspect as the amout of real samples we potentially have is inexhaustive.
 
@@ -101,8 +107,19 @@ The paper presents the random feature nullification to preserve the DNN's integr
 
 \subsection*{Negativity}
 
+%Using $I_p$ matrices to randomly nullify the 
+
+
+
+From \cite{goodfellow2014explaining} adversarial examples are known to generalize, i.e. an adversarial example generated for one model can be misclassified by another model, although they were trained on different learning architectures using disjoint training sets. Hence although the experimental results shown by the paper does numerically points to better resilience of their RFN method, it is only resilient to adversarial samples constructed using their RFN learning technique; it does not show resilience against adversarial samples generated from other learning techniques. 
+
+
+The paper worked with only the MNIST dataset where each real sample is a $28 \times  28$ grayscale image. And the nullification of MNIST data to 0 would simply mean it changed the pixel to a white pixel and since an image from MNIST is predominantly white\footnote{no preprocessing of the dataset is assumed here as the paper does not say anything about it}, it is possible that the RFN technique does not really ``null'' much of the information from the images. A reason for this suspicion is even with their choice of nullification rate to be a high $50\%$, the classification error is 0.0170. Even with the highest reported nullification rate of $70\%$ the classification error is still  a decent 0.0266. Such results are counter-intuitively, as one might feel that by nulling such a high proportion of the image could be though of as the image being occluded and occlusions in images limit the information that could be obtained (might need to find some papers that support my claim here). Such a problem might also cause a problem in trying to extend the RFN technique to colour images like CIFAR-10, CIFAR-100 and ImageNet.
+
+A lack of showing how their RFN technique to datasets of colour images like those mentioned above makes this paper slightly less attractive as compared to if it did some work on the extension of their technique to those datasets. As from the examples shared in \cite{szegedy2013intriguing} on how adversarial samples are generated from images from ImageNet shows that discussion on adversarial samples are not restricted to MNIST datasets and the complexity 
+
 \subsection*{My Thoughts}
-- how does the techique to create adversarial samples work? How do we add the perturbation to make the DNN believe that it is of a particular class $A$ or $B$ when it is actually of class $C$?
+- how does the technique to create adversarial samples work? How do we add the perturbation to make the DNN believe that it is of a particular class $A$ or $B$ when it is actually of class $C$?
 
 
 - why compute  $\frac{\partial \mathcal{L}(\theta, f(\tilde{X},I_p),Y)}{\partial \tilde{X}}$ instead of  $\frac{\partial \mathcal{L}(\theta, f(\tilde{X},I_p),Y)}{\partial  f(\tilde{X},I_p)}$? Would seeing the data as $f(\tilde{X},I_p)$  be better than seeing it as $\tilde{X}$? Or perhaps I should first myself if that derivative can be computed. (my tentative answer is yes). Although $I_p$ is a random variable, what it does is that it nullifies every sample to 0 with proportion $p$. This can be seen as a form of occlusion with the image being occluded at many small spots.
@@ -125,6 +142,7 @@ The paper presents the random feature nullification to preserve the DNN's integr
 
 - game theory aspects of the paper: every sample is seen as an agent and they are competing to have their cost reduced, i.e. to be classified correctly. However in the midst of this competition, the social cost of the DNN (which is the error made by the DNN) is increased as it is susceptible to adversarial attacks. Hence we want to construct the DNN such that the NE of the game is such that it is not susceptible to the adversarial samples.
 
+- does not talk about the confidence of the predictions.
 
 %\cite{goodfellow2014explaining}
 %\cite{tesla}
