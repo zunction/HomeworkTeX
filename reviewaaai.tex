@@ -95,28 +95,38 @@ The paper presents the random feature nullification (RFN) to preserve the DNN's 
 
 
 \subsection*{Positivity}
-The discussed approaches to tackle the problem of adversarial attacks have so far been trying to train the model on adversarial samples or to increase the non-linearity of the model. The RFN technique adopts another approach which is to make the construction of effective adversarial samples\footnote{adversarial samples that is able to successful deceive the DNN to make wrong classifications.} a tall order for the attackers, through the addition of random variables. Making it hard to construct adversarial samples might be an avenue that future efforts of tackling adversarial attacks might want to explore as the doing adversarial training has its limitations; 
+The discussed approaches to tackle the problem of adversarial attacks have so far been trying to train the model on adversarial samples or to increase the non-linearity of the model. The RFN technique adopts another approach which is to make the construction of effective adversarial samples\footnote{adversarial samples that is able to successful deceive the DNN to make wrong classifications.} a tall order for the attackers, through the addition of random variables. Making it hard to construct adversarial samples might be a better approach that future efforts of tackling adversarial attacks might want to explore as the doing adversarial training has its limitations; (the augmentation of adversarial samples to the training set to increase the resistance of the model from adversarial samples only trains the model well on adversarial samples that it has been exposed to.)
 
 
 
 
-- the introduced method is more efficient than the method of adversarial training; there is no need to train on both the real sample and a crafted adversarial sample which is an important aspect as the amout of real samples we potentially have is inexhaustive.
 
-- 
+%- the introduced method is more efficient than the method of adversarial training; there is no need to train on both the real sample and a crafted adversarial sample which is an important aspect as the amout of real samples we potentially have is inexhaustive.
+%
+%- 
 
 
 \subsection*{Negativity}
 
 %Using $I_p$ matrices to randomly nullify the 
+In its adversarial resistant analysis on why its RFN method is more robust than the known methods of adversarial resistance, its argument only assumed that the attackers used the same method to obtain perturbations which are then added to the real sample to form the adversarial samples. The discussion on how attackers might tweak their methodology to generate adversarial samples effective against them is little, not every clear and not convincing. Based on my naive thinking, the attacker might chose to not draw a sample $I_p^\ast$ which then the nullified adversarial sample looks like
+\begin{align*}
+(X+\delta X ) \odot I_p = (X \odot I_p) + \delta X\odot I_p
+\end{align*}
+thus there is no distortion of the $\delta X$. In the first place how much different is $\delta X \odot I_p$ from $\delta X$ is still not really known based on my point in the third paragraph. But the lack of analysis on the next point makes the RFN method less desirable as a technique to foil adversarial attacks.
 
 
+From \cite{goodfellow2014explaining} adversarial examples are known to generalize, i.e. an adversarial example generated for one model can be misclassified by another model, although they were trained on different learning architectures using disjoint training sets. Hence although the experimental results shown by the paper does numerically points to better resilience of their RFN method, it is only resilient to adversarial samples constructed using their RFN learning technique; it say anything about resilience against adversarial samples generated from other learning techniques. 
 
-From \cite{goodfellow2014explaining} adversarial examples are known to generalize, i.e. an adversarial example generated for one model can be misclassified by another model, although they were trained on different learning architectures using disjoint training sets. Hence although the experimental results shown by the paper does numerically points to better resilience of their RFN method, it is only resilient to adversarial samples constructed using their RFN learning technique; it does not show resilience against adversarial samples generated from other learning techniques. 
+
+The paper worked with only the MNIST dataset where each real sample is a $28 \times  28$ grayscale image. And the nullification of MNIST data to 0 would simply mean it changed the pixel to a white pixel and since an image from MNIST is predominantly white\footnote{no preprocessing of the dataset is assumed here as the paper does not say anything about it}, it is possible that the RFN technique does not really ``null'' much of the information from the images. A reason for this suspicion is even with their choice of nullification rate to be a high $50\%$, the classification error is 0.0170. Even with the highest reported nullification rate of $70\%$ the classification error is still  a decent 0.0266. Such results are counter-intuitively, as one might feel that by nulling such a high proportion of the image could be though of as the image being occluded and occlusions in images limit the information that could be obtained (might need to find some papers that support my claim here). Such a problem might also cause a problem in trying to extend the RFN technique to colour images like CIFAR-10, CIFAR-100 and ImageNet, which leads to the next point.
+
+As seen in the examples from \cite{szegedy2013intriguing}, we see that the perturbations introduced are not visible to the human eye but are classified by the trained model as classes that are very far from its original class. A lack of showing how their RFN technique to datasets of colour images like those mentioned above makes this paper less complete. Perhaps the RFN technique cannot be applied to colour images or the paper has not considered extending to a more complex dataset with more classes in a bigger space. 
 
 
-The paper worked with only the MNIST dataset where each real sample is a $28 \times  28$ grayscale image. And the nullification of MNIST data to 0 would simply mean it changed the pixel to a white pixel and since an image from MNIST is predominantly white\footnote{no preprocessing of the dataset is assumed here as the paper does not say anything about it}, it is possible that the RFN technique does not really ``null'' much of the information from the images. A reason for this suspicion is even with their choice of nullification rate to be a high $50\%$, the classification error is 0.0170. Even with the highest reported nullification rate of $70\%$ the classification error is still  a decent 0.0266. Such results are counter-intuitively, as one might feel that by nulling such a high proportion of the image could be though of as the image being occluded and occlusions in images limit the information that could be obtained (might need to find some papers that support my claim here). Such a problem might also cause a problem in trying to extend the RFN technique to colour images like CIFAR-10, CIFAR-100 and ImageNet.
-
-A lack of showing how their RFN technique to datasets of colour images like those mentioned above makes this paper slightly less attractive as compared to if it did some work on the extension of their technique to those datasets. As from the examples shared in \cite{szegedy2013intriguing} on how adversarial samples are generated from images from ImageNet shows that discussion on adversarial samples are not restricted to MNIST datasets and the complexity 
+%slightly less attractive as compared to if it did some work on the extension of their technique to those datasets. As from the examples shared in \cite{szegedy2013intriguing} on how adversarial samples that are generated from images from ImageNet are not distinguishable to 
+%
+%shows that discussion on adversarial samples are not restricted to MNIST datasets.
 
 \subsection*{My Thoughts}
 - how does the technique to create adversarial samples work? How do we add the perturbation to make the DNN believe that it is of a particular class $A$ or $B$ when it is actually of class $C$?
