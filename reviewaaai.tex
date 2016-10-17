@@ -94,17 +94,25 @@ The paper presents the random feature nullification to preserve the DNN's integr
 
 \subsection*{Positivity}
 
+- the introduced method is more efficient than the method of adversarial training; there is no need to train on both the real sample and a crafted adversarial sample which is an important aspect as the amout of real samples we potentially have is inexhaustive.
 
+- 
 
 
 \subsection*{Negativity}
 
-\subsection*{My Points}
+\subsection*{My Thoughts}
+- how does the techique to create adversarial samples work? How do we add the perturbation to make the DNN believe that it is of a particular class $A$ or $B$ when it is actually of class $C$?
+
+
 - why compute  $\frac{\partial \mathcal{L}(\theta, f(\tilde{X},I_p),Y)}{\partial \tilde{X}}$ instead of  $\frac{\partial \mathcal{L}(\theta, f(\tilde{X},I_p),Y)}{\partial  f(\tilde{X},I_p)}$? Would seeing the data as $f(\tilde{X},I_p)$  be better than seeing it as $\tilde{X}$? Or perhaps I should first myself if that derivative can be computed. (my tentative answer is yes). Although $I_p$ is a random variable, what it does is that it nullifies every sample to 0 with proportion $p$. This can be seen as a form of occlusion with the image being occluded at many small spots.
 
 - is $\delta X \odot I_p^\ast$ a notation or the exact representation of the perturbation?
 
-
+- can the attacker not draw a sample $I_p^\ast$ which then the nullified adversarial sample looks like
+\begin{align*}
+(X+\delta X {\color{black!30}\odot I_p^\ast}) \odot I_p = (X \odot I_p) + \delta X {\color{black!30}\odot I_p^\ast} \odot I_p
+\end{align*}
 %- the paper says that $\frac{\partial f(\tilde{X},I_p)}{\partial \tilde{X}}$ is computationally impossible due to the randomness of $I_p$ and thus for the attackers to compute this derivate to produce an adversarial perturbation attackers have to use a random $I_p^\ast$ to approximate the initial $I_p$ used. However, since the random nullification nullifies the inputs to 0, attackers can use the 
 
 %- attackers can try to synthesis the $I_p$ matrix by examining the 
@@ -112,6 +120,12 @@ The paper presents the random feature nullification to preserve the DNN's integr
 - could explore deeper on how attackers can bypass the random feature nullification technique other than the traditional method used by them to produce adversarial samples.
 
 - could have tested it on CIFAR dataset since MNIST dataset is a smaller space than the CIFAR dataset and this technique might not work as well on images with more colors and variety. There are papers that the author cited from that discussed about adversarial examples in other datasets.
+
+- why is there a choice of different activation function and learning rate to train the models which makes the comparison not fair.
+
+- game theory aspects of the paper: every sample is seen as an agent and they are competing to have their cost reduced, i.e. to be classified correctly. However in the midst of this competition, the social cost of the DNN (which is the error made by the DNN) is increased as it is susceptible to adversarial attacks. Hence we want to construct the DNN such that the NE of the game is such that it is not susceptible to the adversarial samples.
+
+
 %\cite{goodfellow2014explaining}
 %\cite{tesla}
 \newpage
