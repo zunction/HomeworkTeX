@@ -86,7 +86,18 @@
 %\flushright{Zhangsheng Lai\\1002554}
 \section*{Review: Building Adversary Resistant Deep Neural Networks with Random Feature Nullification}
 \subsection*{Summary}
-The paper presents the random feature nullification (RFN) to preserve the DNN's integrity against adversarial samples. Based on the discussion on the currently related work to increase the DNN's resistance to adversarial samples, the inclusion of a non-deterministic feature is a very nature progression from the current available techniques of adversarial training and model complexity enhancement. 
+The paper presents the random feature nullification (RFN) to preserve the DNN's integrity against adversarial samples. The problem is motivated by pointing out that a DNN can be tricked into doing a wrong classification by introducing perturbations that the human eye cannot observe. The perturbations are obtained using the \emph{fast gradient sign} method \cite{goodfellow2014explaining} where a cost function $\mathcal{L}(\theta,X,Y)$ is differentiated with respect to $X$ denoted by
+\begin{align*}
+\mathcal{J}_{\mathcal{L}}(X)=\frac{\partial \mathcal{L}(\theta,X,Y)}{\partial X}
+\end{align*}
+and the perturbation is calculated by the formula
+\begin{align*}
+\delta X = \phi \cdot sign(\mathcal{J}_{\mathcal{L}}(X))
+\end{align*}
+
+
+Based on the discussion on the currently related work to increase the DNN's resistance to adversarial samples, the inclusion of a non-deterministic feature is serves to make the construction of effective adversarial samples\footnote{adversarial samples that is able to successful deceive the DNN to make wrong classifications.} hard for the attacker. The trade off of the model is that every sample undergoes a nullification process before it is being trained. The nullification  is implemented by using a $I_p$ matrix with dimensions same as the real sample and each $i,j$ component to be Bernoulli distributed with parameter $p$. 
+
 
 (weakness of adversarial training and model complexity enhancement here?) The paper points out that to be able to put up a strong resistance against adversarial attacks, the model architecture has to be one that makes it impossible to generate adversarial samples even when it is disclosed. However, \cite{goodfellow2014explaining} 
 
@@ -95,7 +106,7 @@ The paper presents the random feature nullification (RFN) to preserve the DNN's 
 
 
 \subsection*{Positivity}
-The discussed approaches to tackle the problem of adversarial attacks have so far been trying to train the model on adversarial samples or to increase the non-linearity of the model. The RFN technique adopts another approach which is to make the construction of effective adversarial samples\footnote{adversarial samples that is able to successful deceive the DNN to make wrong classifications.} a tall order for the attackers, through the addition of random variables. Making it hard to construct adversarial samples might be a better approach that future efforts of tackling adversarial attacks might want to explore as the doing adversarial training has its limitations; (the augmentation of adversarial samples to the training set to increase the resistance of the model from adversarial samples only trains the model well on adversarial samples that it has been exposed to.)
+The discussed approaches to tackle the problem of adversarial attacks have so far been trying to train the model on adversarial samples or to increase the non-linearity of the model. The RFN technique adopts another approach which is to make the construction of effective adversarial samples a tall order for the attackers, through the addition of random variables. Making it hard to construct adversarial samples might be a better approach that future efforts of tackling adversarial attacks might want to explore as the doing adversarial training has its limitations; (the augmentation of adversarial samples to the training set to increase the resistance of the model from adversarial samples only trains the model well on adversarial samples that it has been exposed to.)
 
 
 
@@ -128,31 +139,28 @@ As seen in the examples from \cite{szegedy2013intriguing}, we see that the pertu
 %
 %shows that discussion on adversarial samples are not restricted to MNIST datasets.
 
-\subsection*{My Thoughts}
-- how does the technique to create adversarial samples work? How do we add the perturbation to make the DNN believe that it is of a particular class $A$ or $B$ when it is actually of class $C$?
-
-
-- why compute  $\frac{\partial \mathcal{L}(\theta, f(\tilde{X},I_p),Y)}{\partial \tilde{X}}$ instead of  $\frac{\partial \mathcal{L}(\theta, f(\tilde{X},I_p),Y)}{\partial  f(\tilde{X},I_p)}$? Would seeing the data as $f(\tilde{X},I_p)$  be better than seeing it as $\tilde{X}$? Or perhaps I should first myself if that derivative can be computed. (my tentative answer is yes). Although $I_p$ is a random variable, what it does is that it nullifies every sample to 0 with proportion $p$. This can be seen as a form of occlusion with the image being occluded at many small spots.
-
-- is $\delta X \odot I_p^\ast$ a notation or the exact representation of the perturbation?
-
-- can the attacker not draw a sample $I_p^\ast$ which then the nullified adversarial sample looks like
-\begin{align*}
-(X+\delta X {\color{black!30}\odot I_p^\ast}) \odot I_p = (X \odot I_p) + \delta X {\color{black!30}\odot I_p^\ast} \odot I_p
-\end{align*}
-%- the paper says that $\frac{\partial f(\tilde{X},I_p)}{\partial \tilde{X}}$ is computationally impossible due to the randomness of $I_p$ and thus for the attackers to compute this derivate to produce an adversarial perturbation attackers have to use a random $I_p^\ast$ to approximate the initial $I_p$ used. However, since the random nullification nullifies the inputs to 0, attackers can use the 
-
-%- attackers can try to synthesis the $I_p$ matrix by examining the 
-
-- could explore deeper on how attackers can bypass the random feature nullification technique other than the traditional method used by them to produce adversarial samples.
-
-- could have tested it on CIFAR dataset since MNIST dataset is a smaller space than the CIFAR dataset and this technique might not work as well on images with more colors and variety. There are papers that the author cited from that discussed about adversarial examples in other datasets.
-
-- why is there a choice of different activation function and learning rate to train the models which makes the comparison not fair.
-
-- game theory aspects of the paper: every sample is seen as an agent and they are competing to have their cost reduced, i.e. to be classified correctly. However in the midst of this competition, the social cost of the DNN (which is the error made by the DNN) is increased as it is susceptible to adversarial attacks. Hence we want to construct the DNN such that the NE of the game is such that it is not susceptible to the adversarial samples.
-
-- does not talk about the confidence of the predictions.
+%\subsection*{My Thoughts}
+%- how does the technique to create adversarial samples work? How do we add the perturbation to make the DNN believe that it is of a particular class $A$ or $B$ when it is actually of class $C$?
+%
+%
+%- why compute  $\frac{\partial \mathcal{L}(\theta, f(\tilde{X},I_p),Y)}{\partial \tilde{X}}$ instead of  $\frac{\partial \mathcal{L}(\theta, f(\tilde{X},I_p),Y)}{\partial  f(\tilde{X},I_p)}$? Would seeing the data as $f(\tilde{X},I_p)$  be better than seeing it as $\tilde{X}$? Or perhaps I should first myself if that derivative can be computed. (my tentative answer is yes). Although $I_p$ is a random variable, what it does is that it nullifies every sample to 0 with proportion $p$. This can be seen as a form of occlusion with the image being occluded at many small spots.
+%
+%- is $\delta X \odot I_p^\ast$ a notation or the exact representation of the perturbation?
+%
+%- can the attacker not draw a sample $I_p^\ast$ which then the nullified adversarial sample looks like
+%\begin{align*}
+%(X+\delta X {\color{black!30}\odot I_p^\ast}) \odot I_p = (X \odot I_p) + \delta X {\color{black!30}\odot I_p^\ast} \odot I_p
+%\end{align*}
+%
+%- could explore deeper on how attackers can bypass the random feature nullification technique other than the traditional method used by them to produce adversarial samples.
+%
+%- could have tested it on CIFAR dataset since MNIST dataset is a smaller space than the CIFAR dataset and this technique might not work as well on images with more colors and variety. There are papers that the author cited from that discussed about adversarial examples in other datasets.
+%
+%- why is there a choice of different activation function and learning rate to train the models which makes the comparison not fair.
+%
+%- game theory aspects of the paper: every sample is seen as an agent and they are competing to have their cost reduced, i.e. to be classified correctly. However in the midst of this competition, the social cost of the DNN (which is the error made by the DNN) is increased as it is susceptible to adversarial attacks. Hence we want to construct the DNN such that the NE of the game is such that it is not susceptible to the adversarial samples.
+%
+%- does not talk about the confidence of the predictions.
 
 %\cite{goodfellow2014explaining}
 %\cite{tesla}
