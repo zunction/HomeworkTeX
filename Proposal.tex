@@ -1,0 +1,82 @@
+\documentclass[11pt, a4paper]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{natbib}
+
+\title{
+	\vspace*{-1.5cm}
+	\scshape 40.752 Algorithmic Game Theory\\
+	\vspace{0.5cm}
+	Project Proposal\\
+	\vspace{0.5cm}
+	{\bfseries\Large TO COOPERATE OR TO COMPETE: \\
+		A GAME THEORETIC MODEL}\\
+	\vspace{0.5cm}}
+
+\author{Lai Zhangsheng \qquad \qquad Nguyen Tan Thai Hung}
+\date{}
+
+\begin{document}
+
+\maketitle
+\bibliographystyle{apalike}
+
+\section{Motivation}
+The idea for this project is drawn upon our own observation from past work experiences. 
+
+In the workplace, managers typically want their staff to cooperate in order to achieve a good performance for the department. However, staff appraisals are done according to a bell curve, which disincentify people to cooperate (If I help you, you'll get better and my chance of getting the top post is less). This appraisal mechanism is thus not incentive compatible. 
+
+In the school context, we observe a similar phenomenon. Students should study together and help each other, but the bell curve system can cause competition among students, leading to inefficiency.
+
+\section{Project description}
+In this project, we want to model what happens in the workplace from a game theoretic perspective. Then, we will attempt to figure out a way to quantify the performance, and propose a better mechanism.
+
+\subsection{The model}
+For the simplest case, we will model the game as a two-agent payoff-maximizing game. The payoff each agent receives depend on whether his performance is better than the other agent. Each agent's performance depends on whether they perform their task alone or with help from the other agent. We believe that under the ranking-base reward scheme, the equilibrium strategy is for each agent to work alone, whereas the socially optimal strategy is for them to cooperate. We will then compute the Price of Anarchy and its bounds.
+
+\subsection{Mechanism design}
+After determining the performance of the existing reward scheme, we will attempt to propose a different reward scheme such that cooperation becomes the dominant strategy. We draw our inspiration from real life games such as World of Warcraft and DOTA, where we have seen cooperative efforts to achieve the game objectives. Hence, we hope to transfer what was applied in the games to the workplace setting.
+
+\section{Experiment}
+This may be somewhat too ambitious, but we hope to conduct an experimental game on the ARENA website to verify our model.
+
+\section{Theoretical background}
+The problem was first mentioned in literature by \cite{Drago1991}. Since this seminal work, several scholars have investigated the problems in deeper details:
+\begin{itemize}
+	\item \cite{Drago1998} and \cite{Kistruck2016} discuss different reward structures to encourage cooperation.
+	\item \cite{Banerjee2014} and \cite{Chakravarti2015} also explore incentive schemes, but with focus on knowledge sharing among researchers and team members.
+	\item \cite{Immorlica2011} discussed a dueling game and show how bad head-on competition can get.
+	\item \cite{Landers2015} described an interesting gamification experiment to understand how people actually behave when the reward mechanism is changed.
+	
+\end{itemize}
+ 
+\section{Comparison with Prisoners' Dilemma}
+The Prisoners' Dilemma's payoff table is 
+\begin{table}[h]
+	\centering
+	\caption{Prisoners' Dilemma's payoff table}
+	\begin{tabular}{c c c}
+		        & Silent & Betray \\
+		Silent  & 1, 1    & 3, 0     \\
+		Betray  & 0, 3    & 2, 2
+	\end{tabular}
+\end{table}
+
+The payoff table of our game is still to be determined, but we believe that there are some differences, and we may want to tackle some or all of them
+\begin{itemize}
+	\item In the Prisoners' Dilemma game, players can move only once and they are not allowed to talk to each other. In our game, both these constraints are not present.
+	\item The Prisoners' Dilemma is symmetric, while it is reasonable to assume that our two office workers are different in many ways. For example, they have different skill sets.
+\end{itemize}
+\begin{table}[h]
+	\centering
+	\caption{Workplace game's payoff table}
+	\begin{tabular}{c c c}
+		          & Cooperate & Compete \\
+		Cooperate & ?, ?      & ?, ?    \\
+		 Compete  & ?, ?      & ?, ?
+	\end{tabular}
+\end{table}
+
+\bibliography{AGT_project}
+
+\end{document}
