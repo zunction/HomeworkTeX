@@ -1,5 +1,6 @@
 \documentclass[11pt, a4paper]{article}
  
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
 \usepackage[margin=1in]{geometry} 
 \usepackage{natbib}
 
@@ -76,6 +77,29 @@ The payoff table of our game is still to be determined, but we believe that ther
 		 Compete  & ?, ?      & ?, ?
 	\end{tabular}
 \end{table}
+
+\newpage
+
+\section{The Model}
+We shall consider an office game where there are $k$ agents, each with its own project. Every agent is assumed to have:
+\begin{itemize}
+\item the same time budget $T$
+\item a daily schedule represented by a vector $t_i=(t_{i1},t_{i2},\ldots,t_{ik})$ with $\sum_{k}t_{ik}=T$.
+\end{itemize}
+
+For each project which is owned by a sole agent, there is a work output (performance) associated with it that is dependent on the total time (effort) invested into the project
+\begin{align*}
+p_j = \beta_j\log\left(t_{ii}+\sum_{i\neq j}^{k}\alpha_{ij}t_{ij}\right)
+\end{align*}
+where $\alpha_{ij}$ is the effectiveness (skill) if agent $i$ when working on project $j$ (w.r.t the owner) and $\beta_{j}$ is the value of the project. Using the performance $p_j$, we can assign a rank to each agent and then derive its corresponding payoffs:
+\begin{align*}
+u_j=f(r_j)\times g(P)
+\end{align*}
+where $P=\sum_{i}p_i$. The utility you derive depends on how well you perform relative to the other agents and how the company performs as a whole. 
+
+
+
+
 
 \bibliography{AGT_project}
 
