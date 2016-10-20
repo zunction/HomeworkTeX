@@ -44,7 +44,7 @@
 	
 	Certainly, there are situations in which competition increases production, such as what was observed in the steel factory of Charles M. Schwab\footnote{Netessine and Yakubovich. The Darwinian workplace. \textit{Harvard Business Review}. \url{https://hbr.org/2012/05/the-darwinian-workplace}}. For each shift, Schwab wrote on the factory floor the amount of steel the previous shift had produced. The night shift workers, upon seeing the number from the day shift, worked themselves hard so as to break the record set by the day shift. Soon, the two shifts were trying their best to out perform each other for bragging rights, and production soared. Schwab's method may have worked back in those days, but may not be applicable in a modern day's context. In fact, as Dan Pink\footnote{Dan Pink. The puzzle of motivation (TED Talk). \url{https://youtu.be/rrkrvAUbU9Y}} pointed out, incentives may boost productivity if the task only requires linear thinking and individual focus. However, the workplace environment nowadays increasingly requires nonlinear thinking and collaborative efforts. This work considers a modern workplace setting where everyone receives, a part from their fixed remuneration, a variable reward (e.g. financial bonus or job promotion) that depends on his own performance relative to those of his colleagues, as well as the performance of the company as a whole. Everyone wants to rise up the ranks, and the strategy employed by the general population seems to move towards individualistic competition so as to outshine their colleagues.
 	
-	\section{Model}
+	\section{Model}\label{sec:model}
 	\subsection{A general model}
 	We shall consider a workplace reward maximizing game where there are $k$ agents, each of whom is assigned a specific project. Every agent $i$ is assumed to have the same time budget $T$, and he dedicate some of his time to his own project and some to his colleagues'. As a result, he has a time distribution (from here on referred to as a \textit{schedule)}, which is a vector $t_i=(t_{i1},t_{i2},\ldots,t_{ik})$  where $t_{ii}$ denotes the time agent $i$ allocates to his own project and $t_{ij}$ represents the time allocated by agent $i$ to agent $j$'s project, and $\sum_{j=1}^{k}t_{ij}=T$.	
 	
@@ -101,7 +101,7 @@
 		\tikzstyle{every pin edge}=[<-,shorten <=1pt]
 		\tikzstyle{neuron}=[circle,fill=black!25,minimum size=15pt,inner sep=0pt]
 		\tikzstyle{output neuron}=[neuron, fill=red!50];
-		\tikzstyle{n}=[neuron, fill=blue!50];
+		\tikzstyle{n}=[neuron, fill=blue!70!black];
 		
 		\node[n] (a) at (0,0) {\color{white}{\footnotesize $S$}};
 		\node[n] (b) at (5,0) {\color{white}{\footnotesize $T$}};
@@ -142,7 +142,82 @@
 	\section{Mechanism design}
 	After determining the performance of the existing reward scheme, we will attempt to propose a different reward scheme such that cooperation becomes the dominant strategy. We draw our inspiration from real life games such as World of Warcraft and DOTA, where we have seen cooperative efforts to achieve the game objectives. Hence, we hope to transfer what was applied in the games to the workplace setting.
 	
-	\section{Experiment}
+	\subsection{Fitting into an atomic routing game scenario}
+	The properties of an atomic routing game is well known to us and by trying to fit the model of our problem into the structure of a routing game, we hope to gain better insight and better understanding of the model of the office games we proposed in Section \ref{sec:model}.
+	
+	\newdimen\R
+\R=2cm
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[scale=1,draw=black!50,>=latex]
+	\tikzstyle{neuron}=[circle,fill=black!25,minimum size=15pt,inner sep=0pt]
+	\tikzstyle{m}=[neuron, fill=blue!70!black];
+	\tikzstyle{n}=[neuron, fill=red!70!white];
+%	\foreach \x in {1,2,3}{
+%	\node[m,yshift=\x*2 cm](s-\x) at (\x*2-2*2,1){\footnotesize {\color{white}$s_{\x}$}};
+%	\node[n,yshift=\x*2 cm](t-\x) at (\x*2-2*2,-1){\footnotesize {\color{white}$t_{\x}$}};
+%	}
+%	
+	\node[m,yshift=2 cm](s-1) at (-2,1){\footnotesize {\color{white}$v^s_1$}};;
+	\node[m,yshift=4 cm](s-2) at (0,1){\footnotesize {\color{white}$v^s_2$}};
+	\node[m,yshift=6 cm](s-3) at (2,1){\footnotesize {\color{white}$v^s_3$}};
+	\node[n,yshift=2 cm](t-1) at (-2,-1){\footnotesize {\color{white}$v^t_1$}};
+	\node[n,yshift=4 cm](t-2) at (0,-1){\footnotesize {\color{white}$v^t_2$}};
+	\node[n,yshift=6 cm](t-3) at (2,-1){\footnotesize {\color{white}$v^t_3$}};
+	\foreach \x in {1,2,3}{
+	\draw[->,color=black,thick] (s-\x) -- (t-\x);
+	\draw[->,thick,dashed] (s-\x) edge[bend right] (t-\x);
+	\draw[->,thick,dashed] (s-\x) edge[bend left] (t-\x);
+	}
+	\draw[->,thick,dashed] (s-1) edge[bend left] (s-2);
+	\draw[->,thick,dashed] (s-1) edge[bend left] (s-3);
+	\draw[->,thick,dashed] (s-2) edge (s-3);
+	\draw[->,thick,dashed] (s-2) edge (s-1);
+	\draw[->,thick,dashed] (s-3) edge[bend left] (s-2);
+	\draw[->,thick,dashed] (s-3) edge[bend left] (s-1);
+	\end{tikzpicture}
+	\caption{Office game seen as a routing game with 3 agents}
+	\label{fig:officerouting}
+\end{figure}
+
+%\begin{figure}[h]
+%	\centering
+%	\begin{tikzpicture}[scale=1.5,draw=black!50]
+%	\tikzstyle{neuron}=[circle,fill=black!25,minimum size=15pt,inner sep=0pt]
+%	\tikzstyle{m}=[neuron, fill=blue!70!black];
+%	\tikzstyle{n}=[neuron, fill=red!70!white];
+%	\foreach \x in {1,2,3}{
+%	\node[m,yshift=\x*2 cm](s-\x) at (\x*2-2*2,1){\footnotesize {\color{white}$s_{\x}$}};
+%	\node[n,yshift=\x*2 cm](t-\x) at (\x*2-2*2,-1){\footnotesize {\color{white}$t_{\x}$}};
+%	}
+%	\foreach \x in {1,2,3}{
+%	\draw[->] (s-\x) -- (t-\x);
+%%	\draw[->] (s-\x) edge[bend right] (t-\x);
+%%	\draw[->] (s-\x) edge[bend left] (t-\x);
+%	}
+%%	\draw[->] (s-1) edge[bend left] (s-2);
+%%	\draw[->] (s-1) edge[bend left] (s-3);
+%%	\draw[->] (s-2) edge (s-3);
+%%	\draw[->] (s-2) edge (s-1);
+%%	\draw[->] (s-3) edge[bend left] (s-2);
+%%	\draw[->] (s-3) edge[bend left] (s-1);
+%	\end{tikzpicture}
+%	\caption{Office game seen as a routing game}
+%	\label{fig:bipartite}
+%\end{figure}
+
+
+	In such a routing game, we have $G=(V,E)$, where $V$ and $E$ are the usual set of vertices and edges respectively. A usual routing game will require a player to route his commodity from $s_i$ to $t_i$; ours is similar but with some constrains:
+	\begin{itemize}
+	\item an agent $j$ is only allowed to route from a single source that is unique to him, this vertex $v^s_j$ represents the agent himself or herself.
+	\item any edge from $v^s_j$ can only be directed to:
+	\begin{itemize}
+	\item	 the unique vertex $v^t_j$ which represents the agent's assigned project, or
+	\item a vertex $v^s_k$, that represents another agent, which then there must be another edge from $v^s_k$ to $v^t_k$. This represents cooperation between $v^s_j$ and $v^s_k$ (agents $k$ and $j$), with the first edge of the path from $v^s_j\to v^s_k$ represent some form of cooperation utility and the second $v^s_k\to v^t_k$ representing the contribution of agent $j$'s time to agent's $k$ project.
+	\end{itemize}
+	\end{itemize}
+	The solid directed edges in Figure \ref{fig:officerouting} denotes an agent's investment of time into it's own project. The dotted lines represents the edges formed when cooperation occurs. With this idea, we want to see the correspondence between our office games and routing games to gain a better understanding of how bad office games can get.
+	\section{Experiment} 
 	This may be somewhat too ambitious, but we hope to conduct an experimental game on the \href{http://arenalabs.co/}{ArenaLabs} website to verify our model.
 	
 	\section{Theoretical background}
