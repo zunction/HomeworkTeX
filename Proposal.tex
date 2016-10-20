@@ -1,8 +1,25 @@
 \documentclass[11pt, a4paper]{article}
+
  
 \usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{graphicx,caption,multicol}
+\usepackage{verbatim}
+%\usepackage{venndiagram}
+\usepackage[cm]{fullpage}
+\usepackage{color,enumerate,framed}
+\usetikzlibrary{patterns}
+\usepackage[labelfont=bf, labelsep=period]{caption}
+%\captionsetup{labelformat=empty,labelsep=none}
+\usepackage{mdwlist}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+
 \usepackage[margin=1in]{geometry} 
 \usepackage{natbib}
+\usepackage{hyperref}
+
 
 \title{
 	\vspace*{-1.5cm}
@@ -18,89 +35,125 @@
 \date{}
 
 \begin{document}
-
-\maketitle
-\bibliographystyle{apalike}
-
-\section{Motivation}
-The idea for this project is drawn upon our own observation from past work experiences. 
-
-In the workplace, managers typically want their staff to cooperate in order to achieve a good performance for the department. However, staff appraisals are done according to a bell curve, which disincentify people to cooperate (If I help you, you'll get better and my chance of getting the top post is less). This appraisal mechanism is thus not incentive compatible. 
-
-In the school context, we observe a similar phenomenon. Students should study together and help each other, but the bell curve system can cause competition among students, leading to inefficiency.
-
-\section{Project description}
-In this project, we want to model what happens in the workplace from a game theoretic perspective. Then, we will attempt to figure out a way to quantify the performance, and propose a better mechanism.
-
-\subsection{The model}
-For the simplest case, we will model the game as a two-agent payoff-maximizing game. The payoff each agent receives depend on whether his performance is better than the other agent. Each agent's performance depends on whether they perform their task alone or with help from the other agent. We believe that under the ranking-base reward scheme, the equilibrium strategy is for each agent to work alone, whereas the socially optimal strategy is for them to cooperate. We will then compute the Price of Anarchy and its bounds.
-
-\subsection{Mechanism design}
-After determining the performance of the existing reward scheme, we will attempt to propose a different reward scheme such that cooperation becomes the dominant strategy. We draw our inspiration from real life games such as World of Warcraft and DOTA, where we have seen cooperative efforts to achieve the game objectives. Hence, we hope to transfer what was applied in the games to the workplace setting.
-
-\section{Experiment}
-This may be somewhat too ambitious, but we hope to conduct an experimental game on the ARENA website to verify our model.
-
-\section{Theoretical background}
-The problem was first mentioned in literature by \cite{Drago1991}. Since this seminal work, several scholars have investigated the problems in deeper details:
-\begin{itemize}
-	\item \cite{Drago1998} and \cite{Kistruck2016} discuss different reward structures to encourage cooperation.
-	\item \cite{Banerjee2014} and \cite{Chakravarti2015} also explore incentive schemes, but with focus on knowledge sharing among researchers and team members.
-	\item \cite{Immorlica2011} discussed a dueling game and show how bad head-on competition can get.
-	\item \cite{Landers2015} described an interesting gamification experiment to understand how people actually behave when the reward mechanism is changed.
 	
-\end{itemize}
- 
-\section{Comparison with Prisoners' Dilemma}
-The Prisoners' Dilemma's payoff table is 
-\begin{table}[h]
-	\centering
-	\caption{Prisoners' Dilemma's payoff table}
-	\begin{tabular}{c c c}
-		        & Silent & Betray \\
-		Silent  & 1, 1    & 3, 0     \\
-		Betray  & 0, 3    & 2, 2
-	\end{tabular}
-\end{table}
+	\maketitle
+	\bibliographystyle{apalike}
+	
+	\section{Motivation}
+	The idea for this project is drawn upon our own observation from past work experiences. In the workplace, managers typically want their staff to cooperate with one another in order to achieve a good overall performance for the company. However, staff appraisals are often done according to a bell curve, which disincentifies people to cooperate: if a worker helps his colleague, he faces stronger competition for the top ranks. This appraisal mechanism is thus not incentive compatible. A similar phenomenon is observed in the classroom context. Students should study together and help each other, but the bell curve system can cause competition among students, leading to poorer learning outcomes. In this project, we want to model what happens in the workplace from a game theoretic perspective. Then, we will attempt to figure out a way to quantify the performance, and propose a better mechanism. 
+	
+	Certainly, there are situations in which competition increases production, such as what was observed in the steel factory of Charles M. Schwab\footnote{Netessine and Yakubovich. The Darwinian workplace. \textit{Harvard Business Review}. \url{https://hbr.org/2012/05/the-darwinian-workplace}}. For each shift, Schwab wrote on the factory floor the amount of steel the previous shift had produced. The night shift workers, upon seeing the number from the day shift, worked themselves hard so as to break the record set by the day shift. Soon, the two shifts were trying their best to out perform each other for bragging rights, and production soared. Schwab's method may have worked back in those days, but may not be applicable in a modern day's context. In fact, as Dan Pink\footnote{Dan Pink. The puzzle of motivation (TED Talk). \url{https://youtu.be/rrkrvAUbU9Y}} pointed out, incentives may boost productivity if the task only requires linear thinking and individual focus. However, the workplace environment nowadays increasingly requires nonlinear thinking and collaborative efforts. This work considers a modern workplace setting where everyone receives, a part from their fixed remuneration, a variable reward (e.g. financial bonus or job promotion) that depends on his own performance relative to those of his colleagues, as well as the performance of the company as a whole. Everyone wants to rise up the ranks, and the strategy employed by the general population seems to move towards individualistic competition so as to outshine their colleagues.
+	
+	\section{Model}
+	\subsection{A general model}
+	We shall consider a workplace reward maximizing game where there are $k$ agents, each of whom is assigned a specific project. Every agent $i$ is assumed to have the same time budget $T$, and he dedicate some of his time to his own project and some to his colleagues'. As a result, he has a time distribution (from here on referred to as a \textit{schedule)}, which is a vector $t_i=(t_{i1},t_{i2},\ldots,t_{ik})$  where $t_{ii}$ denotes the time agent $i$ allocates to his own project and $t_{ij}$ represents the time allocated by agent $i$ to agent $j$'s project, and $\sum_{j=1}^{k}t_{ij}=T$.	
+	
+	For each project $j$, its work output (performance) is a function of the total time effort dedicated to it. To reflect the diminishing returns of time investment, we use the natural logarithm to express this relationship (Figure \ref{fig:log}).
+	\begin{equation}\label{eq:pj}
+		p_j = \beta_j\log\left(t_{jj}+\sum_{i\neq j}^{k}\alpha_{ij}t_{ij}\right)
+	\end{equation}
+	where $\alpha_{ij}$ is the effectiveness (as a result of skill or experience) of agent $i$ when working on project $j$, compared to that of the project owner, and $\beta_{j}$ is a coefficient that reflects the value of the project. Agents are ranked according to his own project's performance. A higher rank means a higher reward. In addition, the reward is also affected by the company's performance as a whole.	
+	\begin{equation}\label{eq:ui}
+		u_i=f(r_i, P)
+	\end{equation}
+	where 
+	\begin{itemize}
+		\item $r_i$ is the rank of agent $i$ compared to his colleagues. $r_i$ can be obtained by cardinal ranking, by means of a bell curve, or byt any other ranking methods, and
+		\item $P$ is the company performance, which, for simplicity, is taken as the total performance of all its employees, $P=\sum_{i}p_i$. 
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[scale=0.75,
+		no markers,  domain=-1:12, samples=100,
+		axis y line=center,
+		axis x line=center,
+		xlabel=$t$, ylabel=$p(t)$,
+		every axis y label/.style={at=(current axis.above origin),anchor=south},
+		every axis x label/.style={at=(current axis.right of origin),anchor=west},
+		height=8cm, width=12cm,
+		enlargelimits=true, 
+		clip=false,
+		axis equal,
+		xtick=\empty,
+		ytick=\empty,
+		ymin=-1,
+		% ymax=4,
+		xmin=-1,
+		xmax=4,
+		%axis equal
+		%  minor tick num =5
+		]
+		\addplot[mark=none,smooth,color=red,thick,domain=0:4] {1.7^x} 	node[pos=0.75,pin=150:{\color{black}$p(t)=a^t$},inner sep=0pt] {};
+		\addplot[mark=none,smooth,color=blue,thick,domain=1:8] {ln(x)/ln(1.7)} node[pos=0.95,pin=-15:{\color{black}$p(t)=\log_a t$},inner sep=0pt] {};
+		\addplot[thick,dashed,domain=0:8] {x} node[pos=0.95,pin=45:{\color{black}$p(t)=t$},inner sep=0pt] {};
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Comparison between diminishing return (blue), linear return (black) and exponential return (red).}\label{fig:log}
+	\end{figure}
 
-The payoff table of our game is still to be determined, but we believe that there are some differences, and we may want to tackle some or all of them
-\begin{itemize}
-	\item In the Prisoners' Dilemma game, players can move only once and they are not allowed to talk to each other. In our game, both these constraints are not present.
-	\item The Prisoners' Dilemma is symmetric, while it is reasonable to assume that our two office workers are different in many ways. For example, they have different skill sets.
-\end{itemize}
-\begin{table}[h]
-	\centering
-	\caption{Workplace game's payoff table}
-	\begin{tabular}{c c c}
-		          & Cooperate & Compete \\
-		Cooperate & ?, ?      & ?, ?    \\
-		 Compete  & ?, ?      & ?, ?
-	\end{tabular}
-\end{table}
+	\subsection{Routing game equivalent}
+	We will prove that this game is equivalent to an atomic routing game. The time budget could be though of as the commodity of an agent and the agent needs to route all its commodity through a single source and sink network with parallel links. Each edge linking the source and sink represents a project and when an agent chooses to route some `flow' through a particular edge, it is just same as saying that the agent is investing time into that project (Figure \ref{fig:network}). This equivalence guarantees that a pure Nash equilibrium exists.
+	\begin{figure}[h]
+		\centering		
+		\def\layersep{2.5cm}		
+		\begin{tikzpicture}[scale = 1,shorten >=1pt,->,draw=black!50, node distance=\layersep]
+		\tikzstyle{every pin edge}=[<-,shorten <=1pt]
+		\tikzstyle{neuron}=[circle,fill=black!25,minimum size=15pt,inner sep=0pt]
+		\tikzstyle{output neuron}=[neuron, fill=red!50];
+		\tikzstyle{n}=[neuron, fill=blue!50];
+		
+		\node[n] (a) at (0,0) {\color{white}{\footnotesize $S$}};
+		\node[n] (b) at (5,0) {\color{white}{\footnotesize $T$}};
+		\draw (a) edge[bend left, dashed] node[above] {\small self } (b);
+		\draw (a) edge[bend right=-10] node[above] {\small } (b);
+		
+		\draw (a) edge[bend right=10] node[above] {\small $\vdots$} (b);
+		\draw (a) edge[bend left=-20] node[above] {\small } (b);
+		\draw (a) edge[bend left=-30] node[above] {\small } (b);
+		\draw (a) edge[bend right] node[below] {\small } (b);
+		\end{tikzpicture}
+		\caption{An equivalent routing game}\label{fig:network}
+	\end{figure}
 
-\newpage
-
-\section{The Model}
-We shall consider an office game where there are $k$ agents, each with its own project. Every agent is assumed to have:
-\begin{itemize}
-\item the same time budget $T$
-\item a daily schedule represented by a vector $t_i=(t_{i1},t_{i2},\ldots,t_{ik})$ with $\sum_{k}t_{ik}=T$.
-\end{itemize}
-
-For each project which is owned by a sole agent, there is a work output (performance) associated with it that is dependent on the total time (effort) invested into the project
-\begin{align*}
-p_j = \beta_j\log\left(t_{ii}+\sum_{i\neq j}^{k}\alpha_{ij}t_{ij}\right)
-\end{align*}
-where $\alpha_{ij}$ is the effectiveness (skill) if agent $i$ when working on project $j$ (w.r.t the owner) and $\beta_{j}$ is the value of the project. Using the performance $p_j$, we can assign a rank to each agent and then derive its corresponding payoffs:
-\begin{align*}
-u_j=f(r_j)\times g(P)
-\end{align*}
-where $P=\sum_{i}p_i$. The utility you derive depends on how well you perform relative to the other agents and how the company performs as a whole. 
-
-
-
-
-
-\bibliography{AGT_project}
-
+	\subsection{A toy example}
+	We will investigate the simplest instantiation of the model: a two-agent case, for which different scenarios concerning $\beta_i$ and $\alpha_{ij}$ will be investigated. The optimal and equilibrium strategies will be determined and the Price of Anarchy as well as its bound will be analysed.
+	
+	In a two-agent case, it is important to distinguish our model from the well-known Prisoners' Dilemma
+	
+   %	The Prisoners' Dilemma's payoff table is 
+	%	\begin{table}[h]
+	%		\centering
+	%		\caption{Prisoners' Dilemma's payoff table}
+	%		\begin{tabular}{c c c}
+	%			& Silent & Betray \\
+	%			Silent  & 1, 1    & 3, 0     \\
+	%			Betray  & 0, 3    & 2, 2
+	%		\end{tabular}
+	%	\end{table}
+	%	
+	%	The payoff table of our game is still to be determined, but we believe that there are some differences, and we may want to tackle some or all of them
+	\begin{itemize}
+		\item In the Prisoners' Dilemma game, players can move only once and they are not allowed to talk to each other. In our game, both these constraints are not present.
+		\item The Prisoners' Dilemma is symmetric, while it is reasonable to assume that our two office workers are different in many ways. For example, they have different skill sets.		
+	\end{itemize}
+	
+	%\emph{Here, we would like to address some of the assumptions that have been made which might have to lead to some scenarios of a real office setting not being considered in this model. }	
+	\section{Mechanism design}
+	After determining the performance of the existing reward scheme, we will attempt to propose a different reward scheme such that cooperation becomes the dominant strategy. We draw our inspiration from real life games such as World of Warcraft and DOTA, where we have seen cooperative efforts to achieve the game objectives. Hence, we hope to transfer what was applied in the games to the workplace setting.
+	
+	\section{Experiment}
+	This may be somewhat too ambitious, but we hope to conduct an experimental game on the \href{http://arenalabs.co/}{ArenaLabs} website to verify our model.
+	
+	\section{Theoretical background}
+	The problem was first mentioned in literature by \cite{Drago1991}. Since this seminal work, several scholars have investigated the problems in deeper details:
+	\begin{itemize}
+		\item \cite{Drago1998} and \cite{Kistruck2016} discuss different reward structures to encourage cooperation.
+		\item \cite{Banerjee2014} and \cite{Chakravarti2015} also explore incentive schemes, but with focus on knowledge sharing among researchers and team members.
+		\item \cite{Immorlica2011} discussed a dueling game and show how bad head-on competition can get.
+		\item \cite{Landers2015} described an interesting gamification experiment to understand how people actually behave when the reward mechanism is changed.		
+	\end{itemize}
+	
+	\bibliography{AGT_project}
+	
 \end{document}
