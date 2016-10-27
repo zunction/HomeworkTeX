@@ -83,7 +83,58 @@
 \begin{enumerate}
 \item
 \begin{enumerate}[(i)]
+\item 
+\item 
+\begin{align*}
+\mathbb{P}(N(9.5)-N(8.5)=0)&=e^{-(m(9.5)-m(8.5))}\frac{m(9.5)-m(8.5)^0}{0!}\\
+&=e^{-10}
+\end{align*}
+\item 
+\begin{align*}
+\mathbb{E}(\text{number of arrivals from 8:30AM-9:30AM})&=\sum_{k=0}^{\infty}k\cdot e^{-(m(9.5)-m(8.5))}\frac{(m(9.5)-m(8.5))^k}{k!}\\
+&=10\sum_{k=1}^{\infty} e^{-10}\frac{10^{(k-1)}}{(k-1)!}\\
+&=10
+\end{align*}
+\end{enumerate}
+\item 
+\begin{align*}
+\mathbb{P}(N(I_1)=k_1,\ldots,N(I_n)=k_n\mid N(U)=k)&=\frac{\mathbb{P}(N(I_1)=k_1,\ldots,N(I_n)=k_n,N(u)=k)}{\mathbb{P}(N(U)=k)}\\
+&=\left(\prod_{i=1}^{n}e^{-\lambda c_i}\left.\frac{(\lambda c_i)^{k_i}}{k_i!}\right)\right/ e^{-\lambda c}\frac{(\lambda c)^k}{k!}\\
+&=\frac{k!}{k_1!k_2!\ldots k_n!}\left(\frac{c_1}{c}\right)^{k_1}\left(\frac{c_2}{c}\right)^{k_2}\ldots\left(\frac{c_n}{c}\right)^{k_n}
+\end{align*}
+
+\item Let $N_i$ denote the number of families with number of member of size $i$ migrating to Batan Island over a $t$ week(s) period and let such an event be called a type-$i$ event for $i=1,2,3,4$. Hence $N_i(t)$ is a Poisson process and $\mathbb{E}(N_i(t))=\lambda t p_i=10p_i$. Let $M(t)=\sum_{i}iN_i(t)$ denote the number of individuals migrating during a $t$-week period. 
+\begin{align*}
+\mathbb{E}(M(t))&=\sum_{i}i\mathbb{E}(N_i(t))\\
+&=(1+4)\frac{10}{6}+(2+3)\frac{10}{3}\\
+&=25
+\end{align*}
+To find variance, we first find $\mathbb{E}(N_i(t)^2)$
+\begin{align*}
+\mathbb{E}(N_i(t)^2)&=\sum_{n=0}^{\infty}n^2e^{-\lambda t p_i}\frac{(\lambda t p_i)^n}{n!}\\
+&=\sum_{n=2}^{\infty}e^{-\lambda t p_i}\frac{(\lambda t p_i)^{n-2}}{(n-2)!}+\sum_{n=1}^{\infty}e^{-\lambda t p_i}\frac{(\lambda t p_i)^{n-1}}{(n-1)!}\\
+&=\lambda t p_i+(\lambda t p_i)^2
+\end{align*}
+and so $Var(N_i(t))=\lambda t p_i$.
+\begin{align*}
+Var(M(t))&=\sum_{i}i^2Var(N_i(t))\\
+&=(1^2+4^2)\frac{10}{6}+(2^2+3^2)\frac{10}{3}=\frac{215}{3}
+\end{align*}
+
 \item
+
+\item
+
+\item
+\begin{enumerate}
+\item Let $N_1(t)$ and $N_2(t)$ be the type-I and type-II events where Irma Pince finds a misplaced book and fails to find a misplaced book respectively. Hence, the $N_i$s are independent Poisson process with rate $\lambda p_i$ where $i=1,2$. This the misplacements found by Irma Pince follows a homogeneous Poisson process. For $t=100$, $\mathbb{E}(N_1(100))=90 \lambda$.
+\item
+
+
+%\begin{align*}
+%\mathbb{P}(N_1(t+s)-N(t)=1)=0.9
+%\end{align*}
+
 \end{enumerate}
 \end{enumerate}
 \end{document}
