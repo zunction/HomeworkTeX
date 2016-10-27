@@ -124,16 +124,33 @@ Var(M(t))&=\sum_{i}i^2Var(N_i(t))\\
 \item
 
 \item
+\begin{enumerate}[(i)]
+\item
+\begin{enumerate}[(a)]
+\item No. This can be show as follows, where $m(t)=\int_{0}^{t}\alpha(u)\,du$
+\begin{align*}
+\mathbb{P}(E_1>t)&=\mathbb{P}(N(t)=0)\\
+&=e^{-m(t)}\\
+&=exp\left(-\int_{0}^{t}\alpha(u)\,du\right)\\
+\mathbb{P}(E_2>t\mid E_1=s)&=\mathbb{P}(N(t+s)-N(s)=0\mid E_1=s)\\
+&=\mathbb{P}(N(t+s)-N(s)=0),\quad \text{by independent increments}\\
+&=e^{-(m(t+s)-m(s))}\\
+&=exp\left(-\int_{t}^{t+s}\alpha(u)\,du\right)
+\end{align*}
+\item From (a), we have $\mathbb{P}(E_1\leq t)=1-exp\left(-\int_{0}^{t}\alpha(u)\,du\right)$
+\end{enumerate}
+\item
+\end{enumerate}
 
 \item
 \begin{enumerate}
 \item Let $N_1(t)$ and $N_2(t)$ be the type-I and type-II events where Irma Pince finds a misplaced book and fails to find a misplaced book respectively. Hence, the $N_i$s are independent Poisson process with rate $\lambda p_i$ where $i=1,2$. This the misplacements found by Irma Pince follows a homogeneous Poisson process. For $t=100$, $\mathbb{E}(N_1(100))=90 \lambda$.
-\item
+\item For each shelf $i$, we can the classify the event of find a misplaced book in the shelf as a type-I event and not finding a misplaced book as a type-II event. Then the $N_1(t)$ of shelf $i$ is a Poisson process with rate $\lambda p_i$. Define $N(t)=N_1(t)+N_2(t)+N_3(t)$ and we claim that it is a Poisson process with rate of process $\lambda(p_1+p_2+p_3)$. Hence the desired probability is,
+\begin{align*}
+\mathbb{P}(N(3)=5)=e^{-\lambda(p_1+p_2+p_3)}\frac{(\lambda(p_1+p_2+p_3))^5}{5!}
+\end{align*}
 
 
-%\begin{align*}
-%\mathbb{P}(N_1(t+s)-N(t)=1)=0.9
-%\end{align*}
 
 \end{enumerate}
 \end{enumerate}
