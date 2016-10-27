@@ -84,6 +84,15 @@
 \item
 \begin{enumerate}[(i)]
 \item 
+The setup can be modelled by disjoint Poisson process with $s$ being the 24-hour time,
+\begin{align*}
+\lambda(s):=\begin{cases}
+5t-35, &~8\leq s < 11\\
+20, &~11\leq s < 13\\
+-2t+46, &~13\leq s < 17
+\end{cases}
+\end{align*}
+we see that the first and last are nonhomogeneous Poisson process and the middle one is a homogeneous.  To justify the modelling of it to a Poisson process, 
 \item 
 \begin{align*}
 \mathbb{P}(N(9.5)-N(8.5)=0)&=e^{-(m(9.5)-m(8.5))}\frac{m(9.5)-m(8.5)^0}{0!}\\
@@ -92,7 +101,7 @@
 \item 
 \begin{align*}
 \mathbb{E}(\text{number of arrivals from 8:30AM-9:30AM})&=\sum_{k=0}^{\infty}k\cdot e^{-(m(9.5)-m(8.5))}\frac{(m(9.5)-m(8.5))^k}{k!}\\
-&=10\sum_{k=1}^{\infty} e^{-10}\frac{10^{(k-1)}}{(k-1)!}\\
+&=10\sum_{k=1}^{\infty} e^{-10}\frac{10^{k-1}}{(k-1)!}\\
 &=10
 \end{align*}
 \end{enumerate}
@@ -140,6 +149,20 @@ Var(M(t))&=\sum_{i}i^2Var(N_i(t))\\
 \item From (a), we have $\mathbb{P}(E_1\leq t)=1-exp\left(-\int_{0}^{t}\alpha(u)\,du\right)$
 \end{enumerate}
 \item
+\begin{enumerate}[(a)]
+\item For each busstop $i$, let $A_{ij}$ represent the number of passengers that board at stop $i$ and alight at stop $j$. We claim that $A_{ij}\sim Pois(\lambda_ip_{ij})$ for $j=i+1,i+2\ldots,n$. Since $D_j=\sum_{i=1}^{j-1}A_{ij}$, we have $D_j\sim Pois(\tilde{\lambda}_j)$, where $\tilde{\lambda}_j=\sum_{i=1}^{j-1}\lambda_ip_{ij}$ as the sum of finitely many Poisson random variable is Poisson. 
+
+To show the claim, let $X\sim Pois(\lambda)$ and suppose the Poisson random variable can be classified into $n$ distinct types with type $i$ occurring with probability $p_i$, $\sum_{i=1}^np_i=1$, also let $N_i$ denote the number of occurrence of type $i$ thus $X=\sum_{i=1}^{n}N_i$. Now
+\begin{align*}
+\mathbb{P}(N_1=k_1, \ldots, N_n=k_n)&=\mathbb{P}(N_1=k_1, \ldots, N_n=k_n\mid X=k)\cdot \mathbb{P}(X=k)\\
+&=\mathbb{P}(N_1=k_1, \ldots, N_n=k_n\mid X=k)\cdot e^{-\lambda}\frac{\lambda^k}{k!}\\
+&= \binom {k} {k_1,k_2,\ldots,k_n}\cdot e^{-\lambda}\frac{\lambda^k}{k!}\\
+&= \prod_{i=1}^{n} e^{-\lambda p_i}\frac{\lambda^{k_i}}{k_i!}
+\end{align*}
+
+\item It follows from (a) that $\mathbb{E}(D_j)=\sum_{i=1}^{j-1}\lambda_ip_{ij}$
+\end{enumerate}
+
 \end{enumerate}
 
 \item
@@ -149,16 +172,24 @@ Var(M(t))&=\sum_{i}i^2Var(N_i(t))\\
 \begin{align*}
 \mathbb{P}(N(3)=5)=e^{-\lambda(p_1+p_2+p_3)}\frac{(\lambda(p_1+p_2+p_3))^5}{5!}
 \end{align*}
-Here, we shall proof the claim that the sum of two independent Poisson process is a Poisson process. Let $\{N(t), t\geq 0\}$ and $\{M(t), t\geq 0\}$ be two independent Poisson process with rate $\lambda_1$ and $\lambda_2$ respectively. We shall show that $\{N(t)+M(t), t\geq 0\}$ is also a Poisson process by showing the conditions.
+Here, we shall proof the claim that the sum of two independent Poisson process is a Poisson process. Let $\{N(t), t\geq 0\}$ and $\{M(t), t\geq 0\}$ be two independent Poisson process with rate $\lambda_1$ and $\lambda_2$ respectively. We shall show that $\{N(t)+M(t), t\geq 0\}$ is also a Poisson process by showing the four conditions.
 \begin{enumerate}[(i)]
 \item N(0)+M(0)=0
 \item The independent and stationary increments are inherited from $N(t), M(t)$.
 \item 
 \begin{align*}
 \mathbb{P}(N(h)+M(h)=1)&=\mathbb{P}(N(h)=1,M(h)=0)+\mathbb{P}(N(h)=0,M(h)=1)\\
-&=(\lambda_1h+o(h))(1-\lambda_2h+o(h))+(\lambda_2h+o(h))(1-\lambda_1h+o(h)),\quad \text{since $N M$}\\
+&=(\lambda_1h+o(h))(1-\lambda_2h+o(h))+(\lambda_2h+o(h))(1-\lambda_1h+o(h)),\quad \text{since $N \perp M$}\\
 &=(\lambda_1+\lambda_2)h+o(h)
-\end{align*}`
+\end{align*}
+\item Lastly,
+\begin{align*}
+\mathbb{P}(N(t)+M(t)\geq 2)&= 1- (\mathbb{P}(N(t)=0,M(t=0))+\mathbb{P}(N(t)=1,M(t)=0))+\mathbb{P}(N(t)=0,M(t)=1))\\
+&= 1- (1-\lambda_1h+o(h))(1-\lambda_2h+o(h))\\
+&-(\lambda_1h+o(h))(1-\lambda_2h+o(h))-(1-\lambda_1h+o(h))(\lambda_2h+o(h))\\
+&=o(h)
+\end{align*}
+which proves our earlier claim.
 \end{enumerate}
 
 
