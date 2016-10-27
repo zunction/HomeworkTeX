@@ -103,7 +103,7 @@
 &=\frac{k!}{k_1!k_2!\ldots k_n!}\left(\frac{c_1}{c}\right)^{k_1}\left(\frac{c_2}{c}\right)^{k_2}\ldots\left(\frac{c_n}{c}\right)^{k_n}
 \end{align*}
 
-\item Let $N_i$ denote the number of families with number of member of size $i$ migrating to Batan Island over a $t$ week(s) period and let such an event be called a type-$i$ event for $i=1,2,3,4$. Hence $N_i(t)$ is a Poisson process and $\mathbb{E}(N_i(t))=\lambda t p_i=10p_i$. Let $M(t)=\sum_{i}iN_i(t)$ denote the number of individuals migrating during a $t$-week period. 
+\item Let $N_i$ denote the number of families with number of member of size $i$ migrating to Batan Island over a $t$ week period and let such an event be called a type-$i$ event for $i=1,2,3,4$. Hence $N_i(t)$ is a Poisson process and $\mathbb{E}(N_i(t))=\lambda t p_i=10p_i$. Let $M(t)=\sum_{i}iN_i(t)$ denote the number of individuals migrating during a $t$-week period. 
 \begin{align*}
 \mathbb{E}(M(t))&=\sum_{i}i\mathbb{E}(N_i(t))\\
 &=(1+4)\frac{10}{6}+(2+3)\frac{10}{3}\\
@@ -149,7 +149,17 @@ Var(M(t))&=\sum_{i}i^2Var(N_i(t))\\
 \begin{align*}
 \mathbb{P}(N(3)=5)=e^{-\lambda(p_1+p_2+p_3)}\frac{(\lambda(p_1+p_2+p_3))^5}{5!}
 \end{align*}
-
+Here, we shall proof the claim that the sum of two independent Poisson process is a Poisson process. Let $\{N(t), t\geq 0\}$ and $\{M(t), t\geq 0\}$ be two independent Poisson process with rate $\lambda_1$ and $\lambda_2$ respectively. We shall show that $\{N(t)+M(t), t\geq 0\}$ is also a Poisson process by showing the conditions.
+\begin{enumerate}[(i)]
+\item N(0)+M(0)=0
+\item The independent and stationary increments are inherited from $N(t), M(t)$.
+\item 
+\begin{align*}
+\mathbb{P}(N(h)+M(h)=1)&=\mathbb{P}(N(h)=1,M(h)=0)+\mathbb{P}(N(h)=0,M(h)=1)\\
+&=(\lambda_1h+o(h))(1-\lambda_2h+o(h))+(\lambda_2h+o(h))(1-\lambda_1h+o(h)),\quad \text{since $N M$}\\
+&=(\lambda_1+\lambda_2)h+o(h)
+\end{align*}`
+\end{enumerate}
 
 
 \end{enumerate}
