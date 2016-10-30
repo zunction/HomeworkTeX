@@ -92,7 +92,9 @@ The setup can be modelled by disjoint Poisson process with $s$ being the 24-hour
 -2t+46, &~13\leq s < 17
 \end{cases}
 \end{align*}
-we see that the first and last are nonhomogeneous Poisson process and the middle one is a homogeneous.  To justify the modelling of it to a Poisson process, 
+we see that the first and last are nonhomogeneous Poisson process and the middle one is a homogeneous. A Poisson process can be used to model the number of customers that arrive at different time intervals as it is a counting process.
+
+%To justify the modelling of it to a Poisson process, we first note that for each of the 3 disjoint intervals, $N_i(0)$ for $i=1,2,3$. It also satisfy the condition of stationary and independent increments 
 \item 
 \begin{align*}
 \mathbb{P}(N(9.5)-N(8.5)=0)&=e^{-(m(9.5)-m(8.5))}\frac{m(9.5)-m(8.5)^0}{0!}\\
@@ -184,7 +186,7 @@ Here, we shall proof the claim that the sum of two independent Poisson process i
 \end{align*}
 \item Lastly,
 \begin{align*}
-\mathbb{P}(N(t)+M(t)\geq 2)&= 1- (\mathbb{P}(N(t)=0,M(t=0))+\mathbb{P}(N(t)=1,M(t)=0))+\mathbb{P}(N(t)=0,M(t)=1))\\
+\mathbb{P}(N(t)+M(t)\geq 2)&= 1- (\mathbb{P}(N(t)=0,M(t)=0)+\mathbb{P}(N(t)=1,M(t)=0)+\mathbb{P}(N(t)=0,M(t)=1))\\
 &= 1- (1-\lambda_1h+o(h))(1-\lambda_2h+o(h))\\
 &-(\lambda_1h+o(h))(1-\lambda_2h+o(h))-(1-\lambda_1h+o(h))(\lambda_2h+o(h))\\
 &=o(h)
