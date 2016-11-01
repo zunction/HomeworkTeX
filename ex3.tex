@@ -132,7 +132,19 @@ Var(M(t))&=\sum_{i}i^2Var(N_i(t))\\
 &=(1^2+4^2)\frac{10}{6}+(2^2+3^2)\frac{10}{3}=\frac{215}{3}
 \end{align*}
 
-\item
+\item 
+Suppose that the mini toys are collected at times chosen according to a homogeneous Poisson process with unit rate 1 per order of a meal. Thinning the Poisson process, for each toy $i$, we have $\{N_i(t),t \in \mathbb{Z}_{\geq0}\}$ to be a Poisson process with rate $\lambda p_i=p_i$ and independent of each other. Let $X_i$ denote the first interarrival time of the Poisson process $\{N_i(t),t\geq 0\}$ and we known that $\mathbb{P}(X_i\leq t)=e^{-tp_i}$. The number of meals to be ordered such is all the mini toys are collected is $X = \max_{1\leq i\leq m} X_i$.
+\begin{align*}
+\mathbb{P}(X<t) &= \prod_{i=1}^{m}\mathbb{P}(X_i\leq t)
+\end{align*}
+thus
+\begin{align*}
+\mathbb{E}(X)&=\int_{0}^{\infty}\mathbb{P}(X> t)\,dt\\
+&=\int_{0}^{\infty} \prod_{i=1}^{m}\mathbb{P}(X_i> t)\,dt\\
+&=\int_{0}^{\infty} \prod_{i=1}^{m}(1-e^{-tp_i})\,dt
+\end{align*}
+
+Since there is a one to one correspondence between the number of order of meals and the time, $\mathbb{E}(X)=\mathbb{E}(N)$.
 
 \item
 \begin{enumerate}[(i)]
