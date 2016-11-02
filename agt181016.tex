@@ -21,10 +21,20 @@ c_i(s'_i,s_{-i})\geq (1-\epsilon)c_i(s_i,s_{-i})
 \end{align*}
 \end{defn}
 
-An $epsilon-$best response dynamics is one which permits moves when there is significant improvements (substential lowering of cost or increasing of utility) which is an important factor to for a state to converge to near optimal equilibrium. While a current outcome $\mathbf{s}$ is not an $\epsilon-$PNE, we pick an arbitary player $i$ that has an $\epsilon-$move, i.e. a deviation to $s'_i$:
+An $\epsilon-$best response dynamics is one which permits moves when there is significant improvements (substential lowering of cost or increasing of utility) which is an important factor to for a state to converge to near optimal equilibrium. While a current outcome $\mathbf{s}$ is not an $\epsilon-$PNE, we pick an arbitary player $i$ that has an $\epsilon-$move, i.e. a deviation to $s'_i$:
 \begin{align*}
 c_i(s'_i,s_{-i})<(1-\epsilon)c_i(\mathbf{s})
 \end{align*}
+
+
+\begin{lemma}
+For $x\in (0,1)$
+\begin{align*}
+(1-x)^{1/x}\leq (e^{-x})^{1/x}=e^{-1}
+\end{align*}
+\label{lemma:exp}
+\end{lemma}
+
 
 \begin{thm}[Fast convergence of $\epsilon-$Best Response Dynamics]
 Consider an atomic selfish routing game where:
@@ -42,11 +52,60 @@ for all edges $e$.
  \frac{k \cdot \alpha}{\epsilon}\log\frac{\Phi(\mathbf{s^0})}{\Phi_{min}}
  \end{align*}
  iterations, where $k$ is the number of agents, $\mathbf{s^0}$ is the initial state of the system.
+ \begin{proof}
+ Using lemma \ref{lemma:highcostagent} we pick the agent $i$ with the highest cost to get
+ \begin{align*}
+ \Phi(\mathbf{s})-\Phi(s'_i,s_{-i})= c_i(\mathbf{s})-c_i(s'_i,s_{-i}) &\geq \frac{\epsilon}{\alpha k}\cdot c_i(\mathbf{s}),\quad \text{by Lemma \ref{lemma:costofdevplayer}}\\
+ &\geq \frac{\epsilon}{\alpha 	k}\cdot \Phi(\mathbf{s})
+ \end{align*}
+ thus we have
+ \begin{align*}
+\left(1-\frac{\epsilon}{\alpha 	k}\right) \Phi(\mathbf{s^t}) \geq \Phi(\mathbf{s^{t+1}}) 
+ \end{align*}
+ thus using Lemma \ref{lemma:exp} we obtain that an $\epsilon-$PNE is reached in $\frac{\alpha k}{\epsilon}\log \frac{\Phi(\mathbf{s^0})}{\Phi_{min}}$ iterations.
+ \end{proof}
 \end{thm}
 
+The two lemmas below are the ones used in the proof.
 
+\begin{lemma}
+For all $\mathbf{s}\in\mathcal{S}$ there exists an agent such that
+\begin{align*}
+c_i(s)\geq \frac{\Phi(\mathbf{s})}{k}
+\end{align*}
+\begin{proof}
+Recall that $\Phi(\mathbf{s})\leq cost(\mathbf{s})$, then pick the agent that realizes the highest cost, $i=\argmax_{i}c_i(\mathbf{s})$, then
+\begin{align*}
+c_i(\mathbf{s})\geq \frac{cost(\mathbf{s})}{k}\geq \frac{\Phi(\mathbf{s})}{k}
+\end{align*}
 
+\end{proof}
+\label{lemma:highcostagent}
+\end{lemma}
 
+\begin{lemma}
+Suppose player $i$ is chosen at outcome $s$ by MaxGain $\epsilon-$best response dynamics and he takes the $\epsilon-$ move $s'_i$,then
+\begin{align}
+c_i(\mathbf{s})-c_i(s'_i,s_{-i})\geq \frac{\epsilon}{\alpha}c_j(\mathbf{s})\label{eq:costofdevplayer}
+\end{align}
+for any other agent $j$.
+\label{lemma:costofdevplayer}
+\begin{proof}
+For the case when $j=i$, when $\alpha=1$, it is exactly the definition of the $\epsilon-$move. Now consider when $i \neq j$ with $j$ having an $\epsilon-$move, by MaxGain dynamics and $\alpha=1$,
+\begin{align*}
+c_i(\mathbf{s})-c_i(s'_i,s_{-i})\geq c_j(\mathbf{s})-c_j(s'_j,s_{-j})>\epsilon\cdot c_j(\mathbf{s})
+\end{align*}
+the proof is completed by with the case where $j$ does not have an $\epsilon-$move, which we consider $-$ since $s'_i$ is such a great deviation for player $i$, why isn't it good for player $j$? That is 
+\begin{align*}
+c_i(s'_i,s_{-i})<(1-\epsilon)c_i(\mathbf{s})
+\end{align*}
+while
+\begin{align*}
+c_j(s'_i,s_{-j})\geq(1-\epsilon)c_j(\mathbf{s})
+\end{align*}
+and here we used the condition that the agents have the same source and sink vertex, i.e. they have the same set of strategies. An observation made here is that $(s'_i,s_{-i})$ and $(s'_i,s_{-j})$ have at least $k-1$ strategies in common (not that $s'_i$ is played by agent $i$ in the former and agent $j$ in the latter.)
+\end{proof}
+\end{lemma}
 
 
 
