@@ -1,3 +1,6 @@
+\begin{flushright}
+Date: 181016
+\end{flushright}
 
 \section{Best Response Dynamics}
 While the current outcome is not a Pure Nash equilibirum (PNE), we can pick an arbitrary player $i$ and an arbitrary beneficial deviation $s'_i$ for player $i$ and move to outcome $(s'_i,\mathbf{s_{-i}})$.
@@ -103,7 +106,16 @@ while
 \begin{align*}
 c_j(s'_i,s_{-j})\geq(1-\epsilon)c_j(\mathbf{s})
 \end{align*}
-and here we used the condition that the agents have the same source and sink vertex, i.e. they have the same set of strategies. An observation made here is that $(s'_i,s_{-i})$ and $(s'_i,s_{-j})$ have at least $k-1$ strategies in common (not that $s'_i$ is played by agent $i$ in the former and agent $j$ in the latter.)
+
+and here we used the condition that the agents have the same source and sink vertex, i.e. they have the same set of strategies. An observation made here is that $(s'_i,s_{-i})$ and $(s'_i,s_{-j})$ have at least $k-1$ strategies in common (note that $s'_i$ is played by agent $i$ in the former and agent $j$ in the latter and the $k-2$ players other than $i$ and $j$ are playing fixed strategies.) Thus by the ``$\alpha-$bound jump condition'', we have
+\begin{align*}
+c_j(s'_i,s_{-j})\leq \alpha c_i(s'_i,s_{-i})
+\end{align*}
+using the inequality above
+\begin{align*}
+c_i(\mathbf{s})-c_i(s'_i,s_{-i})>\epsilon c_i(\mathbf{s})\geq \frac{\epsilon}{\alpha}c_j(\mathbf{s})
+\end{align*}
+which completes the proof.
 \end{proof}
 \end{lemma}
 

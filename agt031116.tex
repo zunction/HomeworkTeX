@@ -1,0 +1,187 @@
+\begin{flushright}
+Date: 031116
+\end{flushright}
+
+%\section{Best Response Dynamics}
+%While the current outcome is not a Pure Nash equilibirum (PNE), we can pick an arbitrary player $i$ and an arbitrary beneficial deviation $s'_i$ for player $i$ and move to outcome $(s'_i,\mathbf{s_{-i}})$.
+%
+%Recall that the definition of a potential game is one where there exists a function $\Phi:\mathcal{S}\to \mathbb{R}$ where $\mathcal{S}$ is the finite set of strategies with
+%\begin{align*}
+%\Phi(s'_i,s_{-i})-\Phi(s_i,s_{-i})=c_i(s'_i,s_{-i})-c_i(s_i,s_{-i})
+%\end{align*}
+%
+%\begin{prop}
+%In a finite potential game from any arbitrary outcome, best-response dynamics converge to a PNE.
+%\begin{proof}
+%In a best-response dynamics approach, every iteration has $\Phi(\mathbf{s^{t+1}})<\Phi(\mathbf{s^t})$, i.e. the potential decreases. Unless the $\mathbf{s^t}$ is a PNE, our $\Phi$ is lower bounded by $\min_{s\in \mathcal{S}}\Phi(s)$ and hence the process must terminate.
+%\end{proof}
+%\end{prop}
+%
+%\begin{defn}[$\epsilon-$Pure Nash Equilibrium]
+%For $\epsilon \in [0,1]$, and outcome $\mathbf{s}$ is an $\epsilon-$pure NE if for every agent $i$ and deviations $s'_i\in S_i$
+%\begin{align*}
+%c_i(s'_i,s_{-i})\geq (1-\epsilon)c_i(s_i,s_{-i})
+%\end{align*}
+%\end{defn}
+%
+%An $\epsilon-$best response dynamics is one which permits moves when there is significant improvements (substential lowering of cost or increasing of utility) which is an important factor to for a state to converge to near optimal equilibrium. While a current outcome $\mathbf{s}$ is not an $\epsilon-$PNE, we pick an arbitary player $i$ that has an $\epsilon-$move, i.e. a deviation to $s'_i$:
+%\begin{align*}
+%c_i(s'_i,s_{-i})<(1-\epsilon)c_i(\mathbf{s})
+%\end{align*}
+%
+%
+%\begin{lemma}
+%For $x\in (0,1)$
+%\begin{align*}
+%(1-x)^{1/x}\leq (e^{-x})^{1/x}=e^{-1}
+%\end{align*}
+%\label{lemma:exp}
+%\end{lemma}
+%
+%
+%\begin{thm}[Fast convergence of $\epsilon-$Best Response Dynamics]
+%Consider an atomic selfish routing game where:
+%\begin{enumerate}[1.]
+%\item All players have the same source $s$ and destination $t$ vertex.
+%\item Cost function satisfy the ``$\alpha-$bound jump condition''
+%\begin{align*}
+%c_e(x)\leq c_e(x+1)\leq\alpha\cdot c_e(x)
+%\end{align*}
+%for all edges $e$.
+%\item The MaxGain variant of $\epsilon-$BR dynamics is used: in every iteration, amongst all players with an $\epsilon-$move available, the player who can obtain the biggest absolute cost decrease gets to move.
+%\end{enumerate}
+% Then an $\epsilon-$PNE is reached in at most
+% \begin{align*}
+% \frac{k \cdot \alpha}{\epsilon}\log\frac{\Phi(\mathbf{s^0})}{\Phi_{min}}
+% \end{align*}
+% iterations, where $k$ is the number of agents, $\mathbf{s^0}$ is the initial state of the system.
+% \begin{proof}
+% Using lemma \ref{lemma:highcostagent} we pick the agent $i$ with the highest cost to get
+% \begin{align*}
+% \Phi(\mathbf{s})-\Phi(s'_i,s_{-i})= c_i(\mathbf{s})-c_i(s'_i,s_{-i}) &\geq \frac{\epsilon}{\alpha k}\cdot c_i(\mathbf{s}),\quad \text{by Lemma \ref{lemma:costofdevplayer}}\\
+% &\geq \frac{\epsilon}{\alpha 	k}\cdot \Phi(\mathbf{s})
+% \end{align*}
+% thus we have
+% \begin{align*}
+%\left(1-\frac{\epsilon}{\alpha 	k}\right) \Phi(\mathbf{s^t}) \geq \Phi(\mathbf{s^{t+1}}) 
+% \end{align*}
+% thus using Lemma \ref{lemma:exp} we obtain that an $\epsilon-$PNE is reached in $\frac{\alpha k}{\epsilon}\log \frac{\Phi(\mathbf{s^0})}{\Phi_{min}}$ iterations.
+% \end{proof}
+%\end{thm}
+%
+%The two lemmas below are the ones used in the proof.
+%
+%\begin{lemma}
+%For all $\mathbf{s}\in\mathcal{S}$ there exists an agent such that
+%\begin{align*}
+%c_i(s)\geq \frac{\Phi(\mathbf{s})}{k}
+%\end{align*}
+%\begin{proof}
+%Recall that $\Phi(\mathbf{s})\leq cost(\mathbf{s})$, then pick the agent that realizes the highest cost, $i=\argmax_{i}c_i(\mathbf{s})$, then
+%\begin{align*}
+%c_i(\mathbf{s})\geq \frac{cost(\mathbf{s})}{k}\geq \frac{\Phi(\mathbf{s})}{k}
+%\end{align*}
+%
+%\end{proof}
+%\label{lemma:highcostagent}
+%\end{lemma}
+%
+%\begin{lemma}
+%Suppose player $i$ is chosen at outcome $s$ by MaxGain $\epsilon-$best response dynamics and he takes the $\epsilon-$ move $s'_i$,then
+%\begin{align}
+%c_i(\mathbf{s})-c_i(s'_i,s_{-i})\geq \frac{\epsilon}{\alpha}c_j(\mathbf{s})\label{eq:costofdevplayer}
+%\end{align}
+%for any other agent $j$.
+%\label{lemma:costofdevplayer}
+%\begin{proof}
+%For the case when $j=i$, when $\alpha=1$, it is exactly the definition of the $\epsilon-$move. Now consider when $i \neq j$ with $j$ having an $\epsilon-$move, by MaxGain dynamics and $\alpha=1$,
+%\begin{align*}
+%c_i(\mathbf{s})-c_i(s'_i,s_{-i})\geq c_j(\mathbf{s})-c_j(s'_j,s_{-j})>\epsilon\cdot c_j(\mathbf{s})
+%\end{align*}
+%the proof is completed by with the case where $j$ does not have an $\epsilon-$move, which we consider $-$ since $s'_i$ is such a great deviation for player $i$, why isn't it good for player $j$? That is 
+%\begin{align*}
+%c_i(s'_i,s_{-i})<(1-\epsilon)c_i(\mathbf{s})
+%\end{align*}
+%while
+%\begin{align*}
+%c_j(s'_i,s_{-j})\geq(1-\epsilon)c_j(\mathbf{s})
+%\end{align*}
+%
+%and here we used the condition that the agents have the same source and sink vertex, i.e. they have the same set of strategies. An observation made here is that $(s'_i,s_{-i})$ and $(s'_i,s_{-j})$ have at least $k-1$ strategies in common (note that $s'_i$ is played by agent $i$ in the former and agent $j$ in the latter and the $k-2$ players other than $i$ and $j$ are playing fixed strategies.) Thus by the ``$\alpha-$bound jump condition'', we have
+%\begin{align*}
+%c_j(s'_i,s_{-j})\leq \alpha c_i(s'_i,s_{-i})
+%\end{align*}
+%using the inequality above
+%\begin{align*}
+%c_i(\mathbf{s})-c_i(s'_i,s_{-i})>\epsilon c_i(\mathbf{s})\geq \frac{\epsilon}{\alpha}c_j(\mathbf{s})
+%\end{align*}
+%which completes the proof.
+%\end{proof}
+%\end{lemma}
+%
+%
+%
+%
+%%\begin{lemma}
+%%For $x\in (0,1)$
+%%\begin{align*}
+%%(1-x)^{1/x}\leq (e^{-x})^{1/x}=e^{-1}
+%%\end{align*}
+%%\label{lemma:exp}
+%%\end{lemma}
+%%
+%%
+%%\begin{thm}
+%%Consider a $(\lambda,\mu)-$cost minimization game with a positive potential function $\Phi$ such that $\Phi(\mathbf{s}) \leq cost(\mathbf{s})$ for every outcome $\mathbf{s}$. Let $\mathbf{s^0},\mathbf{s^1},\ldots,\mathbf{s^T}$ be a sequence generated by MaxGain best response dynamics, $\mathbf{s^\ast}$ a minimum cost outcome and $1>\gamma>0$ is a parameter, Then for all but 
+%%\begin{align}
+%%%O\left(
+%%\frac{k}{\gamma(1-\mu)}\log\frac{\Phi(\mathbf{s^0})}{\Phi_{min}}\label{eq:outcomes}
+%%%\right)
+%%\end{align}
+%%outcomes $\mathbf{s}^t$ satisfy
+%%%\begin{align*}
+%%%cost(\mathbf{s^t})\leq \left(\frac{\lambda}{1-\mu}+\frac{1}{1-\gamma}\right)\cdot cost(\mathbf{s^\ast})
+%%%\end{align*}
+%%\begin{align}
+%%%cost(\mathbf{s^t})\leq \left(\frac{\lambda}{1-\mu}+\gamma\right)\cdot cost(\mathbf{s^\ast})
+%%cost(\mathbf{s^t})\leq \left(\frac{\lambda}{(1-\mu)(1-\gamma)}\right)\cdot cost(\mathbf{s^\ast})\, \label{eq:good}
+%%\end{align}
+%%\begin{proof}
+%%\begin{align}
+%%cost(\mathbf{s^t})&\leq \sum_i c_i(\mathbf{s^t})\notag\\
+%%&=\sum_i\left[c_i(s_i^\ast,s_{-i}^t)+\delta_i(\mathbf{s^t})\right],\quad \delta_i(\mathbf{s^t})=c_i(\mathbf{s^t})-c_i(s_i^\ast,s^t_{-i})\notag\\
+%%&\leq \lambda \cdot cost(\mathbf{s^\ast})+\mu \cdot cost(\mathbf{s^t})+\sum_i\delta_i(\mathbf{s^t})\notag\\
+%%cost(\mathbf{s^t})&\leq \frac{\lambda}{1-\mu}\cdot cost(\mathbf{s^\ast}) + \frac{1}{1-\mu}\cdot \sum_i\delta_i(\mathbf{s^t}) \label{eq:2}
+%%\end{align}
+%%we shall let $\Delta(\mathbf{s^t})=\sum_i\delta_i(\mathbf{s^t})$ in the remaining parts of the proof. We shall now define a state $\mathbf{s^t}$ to be bad if it does not satisfy (\ref{eq:good}) and 
+%%%\begin{align}
+%%%cost(\mathbf{s^t})>\left(\frac{\lambda}{1-\mu}+\frac{1}{1-\gamma}\right)\cdot cost(\mathbf{s^t})
+%%%\end{align} 
+%%%\begin{align*}
+%%%cost(\mathbf{s^t})> \left(\frac{\lambda}{1-\mu}+\gamma\right)\cdot cost(\mathbf{s^\ast})
+%%%\end{align*}
+%%by (\ref{eq:2}), when $\mathbf{s^t}$ is bad we get
+%%\begin{align*}
+%%\Delta(\mathbf{s^t})&\geq \gamma(1-\mu)\cdot cost(\mathbf{s^t})\\
+%%\end{align*}
+%%By the MaxGain definition and the inequality relating the potential function and cost,
+%%\begin{align*}
+%%\max_{i}\delta_i(\mathbf{s^t})\geq \frac{\Delta(\mathbf{s^t})}{k}\geq \frac{\gamma(1-\mu)}{k}\cdot cost(\mathbf{s^t})\geq \frac{\gamma(1-\mu)}{k}\cdot \Phi(\mathbf{s^t})
+%%\end{align*}
+%%and we get what we desire as
+%%\begin{align*}
+%%\Phi(\mathbf{s^t})-\Phi(s_i^\ast,s^t_{-i})
+%%=c_i(\mathbf{s^t})-c_i(s_i^\ast,s^t_{-i})&=\delta_i(\mathbf{s^t})
+%%\end{align*}
+%%and hence
+%%\begin{align}
+%%%\left(1-\frac{\gamma(1-\mu)}{k}\right)\Phi(\mathbf{s^t})\geq \Phi(s_i^\ast,s^t_{-i})
+%%\left(1-\frac{\gamma(1-\mu)}{k}\right)\Phi(\mathbf{s^t})\geq \Phi(\mathbf{s^{t+1}})\label{eq:result}
+%%\end{align}
+%%whenever $\mathbf{s^t}$ is a bad state. The equation in (\ref{eq:result}) says that for every MaxGain best response dynamics, if the state is bad, the new state $\mathbf{s^{t+1}}$ is smaller than the previous state $\mathbf{s^t}$ by a factor of $1-\frac{\gamma(1-\mu)}{k}$. By Lemma \ref{lemma:exp}, the potential decreases by a factor of $e$ for every $\frac{k}{\gamma(1-\mu)}$ bad states encountered. Thus solving 
+%%\begin{align*}
+%%e^{-n}\Phi(\mathbf{s^0}) \geq \Phi_{min}
+%%\end{align*}
+%%shows (\ref{eq:outcomes}).
+%%\end{proof}
+%%\end{thm}
