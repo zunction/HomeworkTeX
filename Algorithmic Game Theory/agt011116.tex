@@ -78,6 +78,9 @@ Let $\mathcal{A}$ be an online decision making algorithm.
 \begin{enumerate}[(a)]
 \item An adversary for $\mathcal{A}$ is a function that takes an input the day $t$, the history of mixed strategies $p^1,p^2,\ldots,p^t$ produced by $\mathcal{A}$ on the first $t$ days and the realised actions $a^1,a^2,\ldots, a^{t-1}$ of the first $t-1$ days and outputs a cost vector $c^t:A\to [0,1]$.
 \item An online decision making algorithm has no (external) regret if for every adversary, the expected regret with respect to every action $a\in A$ converges to $0$ as $T\to \infty$.
+\begin{align*}
+R=\frac{1}{t}\left(\sum_{t}c^t(a^t)-\min_{a \in A}\sum_{t}c^t(a)\right)\leq \mathcal{O}(1)
+\end{align*}
 \end{enumerate}
 \end{defn}
 
