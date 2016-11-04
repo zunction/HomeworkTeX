@@ -69,7 +69,7 @@ Taking $\ln$,
 \sum_{i=1}^{t}  V^i &\leq \frac{\ln n}{\epsilon}+(1+\epsilon)\text{OPT}\\
 &\leq \text{OPT}+\frac{\ln n}{\epsilon}+\epsilon\text{OPT}
 \end{align*}
-Here we realize that in the last eqution decreasing $\epsilon$ increases $\ln n /\epsilon$ and increasing $\epsilon$ increases $\epsilon \text{OPT}$. Thus to keep the upper bound low, we keep them equal, which then we obtain $\epsilon = \sqrt{\ln n /T}$
+Here we realize that in the last eqution decreasing $\epsilon$ increases $\ln n /\epsilon$ and increasing $\epsilon$ increases $\epsilon \text{OPT}$. Thus to keep the upper bound low, we keep them equal, which then we obtain $\epsilon = \sqrt{\ln n /T}$. Hence the cumulative expected cost of the no regret algorithm is at most $2\sqrt{T\ln n}$ more than the cumulative cost of the optimal.
 
 \begin{lemma}
 For $\epsilon \in [0,1]$ and $x \in [0,1]$, 
@@ -84,8 +84,29 @@ If $x \in [0,1/2]$
 -x-x^2 \leq \ln (1-x) \leq -x
 \end{align*}\label{lemma:ln}
 \end{lemma}
+Next we show that in a game, i.e. routing game where everyone is using a no regret algorithm, the state of the game converges to a coarse correlated equilibrium. In each time step $t=1,2,\ldots, T$ of no regret dynamics:
+\begin{enumerate}
+\item Each player $i$ chooses simultaneously and independently a mixed strategy $p^t_i$ using a no regret algorithm of their choice.
+\item Each player receives a cost vector $c^t_i$ where $c_i^t(s_i)$ is the expected cost of strategy $s_i$ when the other players play their chosen mixed strategies, i.e. $c^t_i(s_i)=\mathbf{E}_{s_{-i}\sim \sigma_{-i}}[c_i(s_i,s_{-i})]$ where $\sigma_{-i}=\prod_{j\neq i}\sigma_j$.
+\end{enumerate}
 
 
+\begin{thm}
+Suppose after $T$ iterations of no-regret dynamics, every player of a cost minimization game has a regret of at most $\epsilon$ for each of its strategies. Let $\sigma=\prod_{i=1}^{k}p^t_i$ denote the outcome distribution at time $t$ and $\sigma=\frac{1}{T}\sum_{t=1}^{T}\sigma^t$ the time average history of these distributions. Then $\sigma$ is an $\epsilon-$approximate coarse correlated equilibrium, in the sense that 
+\begin{align*}
+\mathbf{E}[c_i(\mathbf{s})]\leq\mathbf{E}[c_i(s'_i,s_{-i})]+\epsilon
+\end{align*}
+for every player $i$ and unilateral decision $s'_i$.
+\end{thm}
+
+
+\begin{cor}
+Suppose after $T$ iterations of no regret dynamics, player $i$ has expected regret at most $R_i$ for each of its actions. Then the time average expected objective function value $\frac{1}{T}\mathbf{E}_{\mathbf{s}\sim\sigma_i}$ is at most 
+\begin{align*}
+\frac{\lambda}{1-\mu} cost(s^\ast)+\frac{\sum_{i=1}^{k}R_i}{1-\mu}
+\end{align*}
+In particular, as $T \to \infty, \sum_{i=1}^{k}R_i\to 0$ and the guarantee to converge to the standard PoA bound $\frac{\lambda}{1-\mu}$.
+\end{cor}
 %\section{Best Response Dynamics}
 %While the current outcome is not a Pure Nash equilibirum (PNE), we can pick an arbitrary player $i$ and an arbitrary beneficial deviation $s'_i$ for player $i$ and move to outcome $(s'_i,\mathbf{s_{-i}})$.
 %
