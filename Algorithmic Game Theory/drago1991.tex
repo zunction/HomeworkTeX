@@ -1,5 +1,5 @@
 \documentclass[a4paper,10pt,leqno]{article}
-%\setlength{\parindent}{0cm}
+\setlength{\parindent}{0cm}
 \usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
 \usepackage{graphicx,caption}
 \usepackage{verbatim}
@@ -116,10 +116,18 @@ With the desired properties of the components of the utility function the papers
 (i) A \emph{Cournot} behaviour is one where $(a,b)=(0,0)$, the workers efforts are not related to each other in any way. (ii) Partial bargaining behaviour is when $(a,b)=(0,1)$; the amount of helping effort exchanged between the workers are the same but own effort is independent of others independent effort. (iii) Complete bargaining occurs when $(a,b)=(1,1)$.
 
 
-The next consideration of the paper is the incentive scheme: contest or quota, which sets up a competitive and non-competitive environment in the workplace respectively. In the contest scenario, the workers are ranked and afforded prizes accordingly, but for the quota scheme, workers are given the prizes when they fulfil an expectation; thus everyone can get the prize and similarly fail to get the prize.
+The next consideration of the paper is the incentive scheme: contest or quota, which sets up a competitive and non-competitive environment in the workplace respectively. In the contest scenario, the workers are ranked and afforded prizes accordingly; in their two workers scenario they the higher ranked is assigned a prize of $+x$ and the lower is given a prize of $-x$. In the quota scheme, workers are given the prizes when they fulfil an expectation; thus everyone can get the prize $(+x)$ and similarly fail to get the prize $(-x)$.
 
-As every worker aims to maximise their utility that is the expectation introduced earlier, 
+As every worker aims to maximise their utility that is the expectation introduced earlier, using $\overline{Y}$ as a fixed income-base the expectation is given by
+\begin{align*}
+\mathbb{P}_i(\mathbf{\mu})U(\overline{Y}+x)+(1-\mathbb{P}_i(\mathbf{\mu}))U(\overline{Y}-x)-V(\mu_i)
+\end{align*}
+and Karush-Kuhn-Tucker (KKT) approached is used to find the optimal utility of the player. Conditioning on the sufficient conditions for KKT, the paper then derives the type of behaviours to be exhibited by the workers when they individually try to maximise their utility on both the contest and quota schemes.
 
+The last discussion in the paper compares the difference between the contest and quota schemes using the term welfare, which then requires some knowledge of the density of $\epsilon$; the paper examines the cases when $\epsilon$ is uniform and the case when it is unimodal symmetric.
+
+TLDR: The paper gives a rigorous explanation of how the compensation scheme of a company plays a part in the helping efforts of its workers. 
+ 
 
 %\cite{drago1991}
 
@@ -127,16 +135,17 @@ As every worker aims to maximise their utility that is the expectation introduce
 - working with only the distribution of $\epsilon$ makes the model much more neat; if there are too many distributions to manage, the analysis will be complex $-$ too much integrals that might not be tractable.
 
 
+- subdividing into the contest and quota schemes tells us something important: the way the workers are graded plays an important role in whether the dynamic of the workers lean towards cooperation or competition. This is also seen in schools, where using a bell curve to grade students lead to very individualistic behaviour as compared to assigning grades based on the student's raw score.
 
-
-
-
+- 
 
 
 
 \subsection*{Negativity}
 
+-  using KKT conditions to reverse-engineer the worker's behaviour that secures its best interest is an interesting approach but KKT does not guarantee that the workers will display such behaviours; it only guarantee that if the workers display a particular behaviour it will guarantee to maximise their utility. The paper argues in the reverse way and obtains results that are intuitive, however, it is important to note that it is the dynamics of the workers that give the utility, not the opposite which is what the paper is doing.
 
+- the discussions is strictly on two workers and the paper does little to no discussion on extending it to a general $n$ workers. Will KKT conditions argument still hold if it is being extended to $n$ workers?
 
 
 \subsection*{\sffamily My Thoughts}
