@@ -75,24 +75,56 @@
 \fancyhead{}
 \renewcommand{\headrulewidth}{0pt}
 
-\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
+\lfoot{\color{black!60}{\sffamily Hung \& Zhangsheng}}
 \cfoot{}
 \cfoot{\color{black!60}{\sffamily Last modified: \today}}
-\rfoot{\color{black!60}{\textsc{\thepage}}}
+\rfoot{\color{black!60}{\sffamily\thepage}}
 
 
 
 \begin{document}
-\flushright{Zhangsheng Lai\\1002554}
-\section*{Review: Building Adversary Resistant Deep Neural Networks with Random Feature Nullification}
+\begin{flushright}
+Nguyen Tan Thai Hung\\
+Zhangsheng Lai\\
+\end{flushright}
+\section*{Review: Competition and cooperation in theworkplace}
 \subsection*{Summary}
 
+In this paper the authors analyse the workplace dynamics of cooperation and competition that exists by two risk averse workers with similar attributes. A worker's utility is a function of the worker's effort, $\mu$, presented as an expectation $\mathbf{E}[U(y)-V(\mu)]$,
+%\begin{align*}
+%\mathbf{E}[U(y)-V(\mu)]
+%\end{align*}
+where $y$ is the worker's income, $U$ and $V$ are utility functions that convert income and effort into a common measure. A worker's effort made up of his or her own effort $\mu_{ii}$ and a helping effort $\mu_{ij}$, which denotes worker $i$'s effort in helping agent $j$. The paper does not clearly define each worker's task or their task as a whole but uses a more generic measure of the worker's output represented by a production function $Q_i=f^i(\mu_{ii},\mu_{ji})+\epsilon_i$,
+%\begin{align*}
+%Q_i=f^i(\mu_{ii},\mu_{ji})+\epsilon_i
+%\end{align*}
+which is a function of own effort and helping effort from other agents and the $\epsilon_i$ is some random disturbance to the production. In order to evaluate expectation, we need some probability distribution and here, the distribution of $\epsilon$ which is called $g$, is only one that the paper works with in its analysis and the random noise of each worker is (independent? I think not) and identically distributed. The paper imposes three restrictions on the production function and we would potentially like to adopt two of them into our discussion: 
+\begin{enumerate}[(i)]
+\item $f^i(0,\mu_{ji})=0$ which implies $\frac{\partial f^i(0,\mu_{ji})}{\partial \mu_{ji}}=0$
+\item For $\mu_{ii}>0$,
+\begin{align*}
+\left.\frac{\partial f^i}{\partial \mu_{ii}}\right|_{\mu_{ij}=0} < \left.\frac{\partial f^i}{\partial \mu_{ij}}\right|_{\mu_{ij}=0}
+\end{align*}
+\end{enumerate}
+as the first is a natural property aligned to real scenarios in workplaces and the second is a design to induce helping efforts. 
+
+With the desired properties of the components of the utility function the papers breaks down the different behaviour of the workers in the sense of their personal effort by classifying them based on these partial derivative:
+\begin{align*}
+\frac{\partial\mu_{ii}}{\partial\mu_{jj}}=\frac{\partial\mu_{jj}}{\partial\mu_{ii}}=a\quad
+\frac{\partial\mu_{ij}}{\partial\mu_{ji}}=\frac{\partial\mu_{ji}}{\partial\mu_{ij}}=b
+\end{align*}
+(i) A \emph{Cournot} behaviour is one where $(a,b)=(0,0)$, the workers efforts are not related to each other in any way. (ii) Partial bargaining behaviour is when $(a,b)=(0,1)$; the amount of helping effort exchanged between the workers are the same but own effort is independent of others independent effort. (iii) Complete bargaining occurs when $(a,b)=(1,1)$.
 
 
-\cite{drago1991}
+The next consideration of the paper is the incentive scheme: contest or quota, which sets up a competitive and non-competitive environment in the workplace respectively. In the contest scenario, the workers are ranked and afforded prizes accordingly, but for the quota scheme, workers are given the prizes when they fulfil an expectation; thus everyone can get the prize and similarly fail to get the prize.
+
+As every worker aims to maximise their utility that is the expectation introduced earlier, 
+
+
+%\cite{drago1991}
 
 \subsection*{Positivity}
-
+- working with only the distribution of $\epsilon$ makes the model much more neat; if there are too many distributions to manage, the analysis will be complex $-$ too much integrals that might not be tractable.
 
 
 
@@ -104,7 +136,17 @@
 
 \subsection*{Negativity}
 
-\cite{drago1991}
+
+
+
+\subsection*{\sffamily My Thoughts}
+- in pg 355, the player's maximand will be (7) with (16) with the given $(\overline{Y},x,Q^0)$. Why is the utility function $U$ missing? 
+
+- in pg 357 the argument for equation (26) says that the $g(0)$ reflects the restriction $Q^0=\mathbf{E}[Q_i]$; is this obtained as $f^i(\mu_{ii},0)=\mathbf{E}[Q_i]$?
+
+- in pg 357 why (26) $\to$ (27) when base incomes are identical? The argument used is the the efforts and probability of winning is identical, so the employer sees no need to vary the base income of quote or contest scheme?
+
+%\cite{drago1991}
 \bibliography{drago1991} 
 \bibliographystyle{apalike}
 
