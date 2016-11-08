@@ -26,7 +26,7 @@
 \usepackage[T1]{fontenc}
 %\usepackage{helvet}
 %\renewcommand{\familydefault}{\sfdefault}
-%\usepackage{parskip}
+\usepackage{parskip}
 %\usepackage{picins} %for \parpic.
 %\newtheorem*{notation}{Notation}
 %\newtheorem{example}{Example}[section]
@@ -87,7 +87,8 @@
 Nguyen Tan Thai Hung\\
 Zhangsheng Lai\\
 \end{flushright}
-\section*{Review: Competition and cooperation in theworkplace}
+\section*{Review: Competition and cooperation in the
+workplace}
 \subsection*{Summary}
 
 In this paper the authors analyse the workplace dynamics of cooperation and competition that exists by two risk averse workers with similar attributes. A worker's utility is a function of the worker's effort, $\mu$, presented as an expectation $\mathbf{E}[U(y)-V(\mu)]$,
@@ -98,7 +99,7 @@ where $y$ is the worker's income, $U$ and $V$ are utility functions that convert
 %\begin{align*}
 %Q_i=f^i(\mu_{ii},\mu_{ji})+\epsilon_i
 %\end{align*}
-which is a function of own effort and helping effort from other agents and the $\epsilon_i$ is some random disturbance to the production. In order to evaluate expectation, we need some probability distribution and here, the distribution of $\epsilon$ which is called $g$, is only one that the paper works with in its analysis and the random noise of each worker is (independent? I think not) and identically distributed. The paper imposes three restrictions on the production function and we would potentially like to adopt two of them into our discussion: 
+which is a function of own effort and helping effort from other agents and the $\epsilon_i$ is some random disturbance to the production. In order to evaluate expectation, we need some probability distribution and here, the distribution of $\epsilon$ which is called $g$, is only one that the paper works with in its analysis and the random noise of each worker is (independent? I think not) and identically distributed. The paper imposes three restrictions on the production function and we would potentially like to adopt the following two of them into our discussion: 
 \begin{enumerate}[(i)]
 \item $f^i(0,\mu_{ji})=0$ which implies $\frac{\partial f^i(0,\mu_{ji})}{\partial \mu_{ji}}=0$
 \item For $\mu_{ii}>0$,
@@ -106,7 +107,7 @@ which is a function of own effort and helping effort from other agents and the $
 \left.\frac{\partial f^i}{\partial \mu_{ii}}\right|_{\mu_{ij}=0} < \left.\frac{\partial f^i}{\partial \mu_{ij}}\right|_{\mu_{ij}=0}
 \end{align*}
 \end{enumerate}
-as the first is a natural property aligned to real scenarios in workplaces and the second is a design to induce helping efforts. 
+as the first is a natural property aligned to real scenarios in workplaces; the amount of work produced by an agent is deemed as zero if the agent's is zero, even if there are positive helping efforts from the other agents  and the second is a design to induce helping efforts $-$ by making the production per unit of effort higher for helping effort than own effort whenever an agent direct all effort to ownself.
 
 With the desired properties of the components of the utility function the papers breaks down the different behaviour of the workers in the sense of their personal effort by classifying them based on these partial derivative:
 \begin{align*}
@@ -116,12 +117,12 @@ With the desired properties of the components of the utility function the papers
 (i) A \emph{Cournot} behaviour is one where $(a,b)=(0,0)$, the workers efforts are not related to each other in any way. (ii) Partial bargaining behaviour is when $(a,b)=(0,1)$; the amount of helping effort exchanged between the workers are the same but own effort is independent of others independent effort. (iii) Complete bargaining occurs when $(a,b)=(1,1)$.
 
 
-The next consideration of the paper is the incentive scheme: contest or quota, which sets up a competitive and non-competitive environment in the workplace respectively. In the contest scenario, the workers are ranked and afforded prizes accordingly; in their two workers scenario they the higher ranked is assigned a prize of $+x$ and the lower is given a prize of $-x$. In the quota scheme, workers are given the prizes when they fulfil an expectation; thus everyone can get the prize $(+x)$ and similarly fail to get the prize $(-x)$.
+The next consideration of the paper is the incentive scheme: contest or quota, which sets up a competitive and non-competitive environment in the workplace respectively. In the contest scenario, the workers are ranked and afforded prizes accordingly; in their two workers scenario they the higher ranked is assigned a prize of $+x$ and the lower is given a prize of $-x$. In the quota scheme, workers are given the prizes when they fulfil an expectation; thus everyone can get the prize $(+x)$ and similarly fail to get the prize $(-x)$. The conclusion derived from this paper is that we cannot expect much helping efforts in a competitive environment 
 
-As every worker aims to maximise their utility that is the expectation introduced earlier, using $\overline{Y}$ as a fixed income-base the expectation is given by
-\begin{align*}
-\mathbb{P}_i(\mathbf{\mu})U(\overline{Y}+x)+(1-\mathbb{P}_i(\mathbf{\mu}))U(\overline{Y}-x)-V(\mu_i)
-\end{align*}
+As every worker aims to maximise their utility that is the expectation introduced earlier, using $\overline{Y}$ as a fixed income-base the expectation is given by $\mathbb{P}_i(\mathbf{\mu})U(\overline{Y}+x)+(1-\mathbb{P}_i(\mathbf{\mu}))U(\overline{Y}-x)-V(\mu_i)$
+%\begin{align*}
+%\mathbb{P}_i(\mathbf{\mu})U(\overline{Y}+x)+(1-\mathbb{P}_i(\mathbf{\mu}))U(\overline{Y}-x)-V(\mu_i)
+%\end{align*}
 and Karush-Kuhn-Tucker (KKT) approached is used to find the optimal utility of the player. Conditioning on the sufficient conditions for KKT, the paper then derives the type of behaviours to be exhibited by the workers when they individually try to maximise their utility on both the contest and quota schemes.
 
 The last discussion in the paper compares the difference between the contest and quota schemes using the term welfare, which then requires some knowledge of the density of $\epsilon$; the paper examines the cases when $\epsilon$ is uniform and the case when it is unimodal symmetric.
