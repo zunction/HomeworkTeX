@@ -114,10 +114,10 @@ which is a function of own effort and helping effort from other agents and the $
 The first is a natural property aligned to real scenarios in workplaces; the amount of work produced by an agent is deemed as zero if the agent's effort is zero, even if there are positive helping efforts from the other agents. The second is a design to induce helping efforts $-$ by making the production per unit of effort higher for helping effort than own effort whenever an agent directs all effort to ownself.
 
 With the desired properties of the components of the utility function established,  the papers considers different scenarios based on the different behaviour of the workers in the sense of their classifying them based on these partial derivatives:
-\begin{align*}
+\begin{align}
 \frac{\partial\mu_{ii}}{\partial\mu_{jj}}=\frac{\partial\mu_{jj}}{\partial\mu_{ii}}=a\quad
-\frac{\partial\mu_{ij}}{\partial\mu_{ji}}=\frac{\partial\mu_{ji}}{\partial\mu_{ij}}=b
-\end{align*}
+\frac{\partial\mu_{ij}}{\partial\mu_{ji}}=\frac{\partial\mu_{ji}}{\partial\mu_{ij}}=b \label{eq:partiald}
+\end{align}
 (i) A \emph{Cournot} behaviour is one where $(a,b)=(0,0)$, the workers efforts are not related to each other in any way. (ii) Partial bargaining behaviour is when $(a,b)=(0,1)$; the amount of helping effort exchanged between the workers are the same but own effort is independent of others independent effort. (iii) Complete bargaining occurs when $(a,b)=(1,1)$.
 
 
@@ -140,9 +140,9 @@ TLDR: The paper gives a rigorous explanation of how the compensation scheme of a
 - working with only the distribution of $\epsilon$ makes the model much more neat; if there are too many distributions to manage, the analysis will be complex $-$ too much integrals that might not be tractable.
 
 
-- subdividing into the contest and quota schemes tells us something important: the way the workers are graded plays an important role in whether the dynamic of the workers lean towards cooperation or competition. This is also seen in schools, where using a bell curve to grade students lead to very individualistic behaviour as compared to assigning grades based on the student's raw score.
+- subdividing into the tournament and quota schemes tells us something important: the way the workers are graded plays an important role in whether the dynamic of the workers lean towards cooperation or competition. This is also seen in schools, where using a bell curve to grade students lead to very individualistic behaviour as compared to assigning grades based on the student's raw score.
 
--  
+- the paper allows the workers to know which scheme they are compensated under and we see that it is 
 
 
 
@@ -152,10 +152,10 @@ TLDR: The paper gives a rigorous explanation of how the compensation scheme of a
 
 - the discussion only considers the scenarios where the workers' behaviours are the same, there might be scenarios where workers exhibit different behaviour from each other.
 
-- the definition of the partial and complete bargaining behaviours is too constrained as we set the values to either 0 or 1 in the partial derivatives. This constrain is the reason for the result of propositions 2 and 3, where helping efforts do not occur even in a partial or complete bargaining tournament.  It seems to be this constrain is preventing  helping efforts although the imposing of the restriction on $f$ is to promote helping efforts.
+- the definition of the partial and complete bargaining behaviours is too constrained as we set the values to either 0 or 1 in the partial derivatives in (\ref{eq:partiald}) which does not incentivize helping efforts. This constrain is the reason for the result of propositions 2 and 3, where helping efforts do not occur even in a partial or complete bargaining tournament.  It seems to be this constrain is preventing  helping efforts although the imposing of the (second) restriction on $f$ was aimed to promote helping efforts. It will be a tad bit too mecenary to require more help effort than what was offered but in our idea of cooperation, we view helping efforts being able to create some synergy between the parties such that it reaps greater benefits for the team as compared to everyone working isolatedly. Hence we need to 
 
 
-- the paper fails to consider the social welfare of the game as a whole as due to the lack of considerations to ensure that there is in proposition due to the la
+- the paper fails to consider that the firm needs to be operating to a certain level of expectation in order to be able to pay their workers wages, which resulted in proposition 3 being able to make the conclusion that all efforts are identically zero. Without such a consideration it seems to make the assumption that the firm has infinite resources and the workers can stand to take and not give in a complete bargaining tournament, ironically the workers are cooperating; cooperating to exploit the firm of its resources.
 
 
 
