@@ -1,0 +1,199 @@
+\documentclass[a4paper,10pt]{article}
+\setlength{\parindent}{0cm}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{graphicx,caption}
+\usepackage{verbatim}
+\usepackage{venndiagram}
+\usepackage[cm]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color,enumerate,framed}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%\usepackage{tgadventor}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{parskip}
+%\usepackage{picins} %for \parpic.
+%\newtheorem*{notation}{Notation}
+%\newtheorem{example}{Example}[section]
+%\newtheorem*{problem}{Problem}
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem*{solution}{Solution}
+%\newtheorem*{definition}{Definition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{remark}{Remark}
+%\setcounter{section}{1}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{examp}{Example}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{nte}{Note}
+\newtheorem*{notat}{Notation}
+
+%\diagramstyle[labelstyle=\scriptstyle]
+
+\lstset{frame=tb,
+  language=Oz,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\pagestyle{fancy}
+
+
+
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\rfoot{\textsc{\thepage}}
+
+
+
+\begin{document}
+\flushright{Zhangsheng Lai\\1002554}
+\section*{Stochastic Models: Exercise 2}
+
+\begin{enumerate}
+\item
+\begin{enumerate}[(i)]
+\item 
+\begin{align*}
+\mathbb{P}(S_{n+1}=k)&=\mathbb{P}(S_{n}=k\mid X_{n+1}=0)\mathbb{P}(X_{n+1}=0)+\mathbb{P}(S_{n}=k-1\mid X_{n+1}=1)\mathbb{P}(X_{n+1}=1)\\
+&=\mathbb{P}(S_{n}=k\mid X_{n+1}=0)\cdot q+\mathbb{P}(S_{n}=k-1\mid X_{n+1}=1)\cdot p \quad\text{ since $S_n \perp X_{n+1}$}\\
+&=q\,\mathbb{P}(S_{n}=k)+p\,\mathbb{P}(S_{n}=k-1)\\
+\end{align*}
+\item 
+\begin{align*}
+\mathbb{P}(S_{n+1}=k)&=q\,\mathbb{P}(S_{n}=k)+p\,\mathbb{P}(S_{n}=k-1)\\
+\sum_{k=0}^{n+1}s^k\mathbb{P}(S_{n+1}=k)&=\sum_{k=0}^{n+1}s^kq\,\mathbb{P}(S_{n}=k)+\sum_{k=0}^{n+1}s^kp\,\mathbb{P}(S_{n}=k-1)\\
+\sum_{k=0}^{n+1}s^k\mathbb{P}(S_{n+1}=k)&=\sum_{k=0}^{n}s^kq\,\mathbb{P}(S_{n}=k)+\sum_{k=0}^{n}s^{k+1}p\,\mathbb{P}(S_{n}=k)\\
+&=(q+ps)\sum_{k=0}^{n}s^k\,\mathbb{P}(S_{n}=k)\\
+\end{align*}
+let $P_{n}(s) = \mathbb{E}[s^{S_n}]$, then for all $n\geq 0$ we have the relation,
+\begin{align*}
+P_{n+1}(s)=(q+ps)P_{n}(s)
+\end{align*}
+and we can inductively deduce that 
+\begin{align*}
+P_{n}(s)=(q+ps)^n
+\end{align*}
+which shows that $S_n$ has a binomial distribution with parameters $n, p$.
+\end{enumerate}
+\item
+The extinction probability $\pi$ is the smallest fixed point of $P(s)$. 
+\begin{align*}
+P(s) &= s\\
+as^2+bs+c&=s\\
+as^2+(b-1)s+c&=0\\
+s&=\frac{1-b\pm \sqrt{(b-1)^2-4ac}}{2a}\\
+s&=\frac{1-b\pm \sqrt{(a+c)^2-4ac}}{2a}\\
+s&=\frac{1-b\pm (a-c)}{2a}
+\end{align*}
+hence $s=1$ or $s=c/a$. For extinction to occur, we need the expectation to be greater or equal to 1, i.e. $P'(1) \leq 1$,
+\begin{align*}
+P'(1)=2a+b\leq 1 &\Leftrightarrow a + 1-c \leq 1\\
+&\Leftrightarrow a  \leq c\\
+\end{align*}
+Extinction occurs when $a \leq c$.
+\newpage
+\item
+\begin{enumerate}[(i)]
+\item We first observe that $\mathbb{P}(Z_n=0)$ is same as $\mathbb{P}(T \leq n)$  since the latter is the probability that the population becomes extinct before or at the $n$th generation. We can see that
+\begin{align*}
+P(s)=P_1(s)&=q+ps\\
+P_2(s)&=q+p(q+ps)=q + pq +p^2s\\
+&\vdots\\
+P_n(s)&=q\sum_{i=0}^{n-1}p^i +p^ns\\
+\end{align*}
+we can then solve for the following,
+\begin{align*}
+\mathbb{P}(T=n) &= \mathbb{P}(T \leq n)-\mathbb{P}(T \leq n-1)\\
+&= \mathbb{P}(Z_{n}=0)-\mathbb{P}(Z_{n-1} = 0)\\
+&= P_{n}(0)-P_{n-1}(0)\\
+&= q\sum_{k=0}^{n-1}p^k-q\sum_{k=0}^{n-2}p^k = qp^{n-1}
+\end{align*}
+\item Given the assumption that $Z_0=i$, define
+\begin{align*}
+T_i:=\inf\{n:Z_n=0\mid Z_0=i\}
+\end{align*}
+then $\mathbb{P}(T_i\leq n)= (\mathbb{P}(T \leq n))^i$, then
+\begin{align*}
+\mathbb{P}(T_i= n) &= \mathbb{P}(T_i \leq n)-\mathbb{P}(T_i \leq n-1)\\
+&= (\mathbb{P}(T \leq n))^i-(\mathbb{P}(T \leq n-1))^i\\
+&= \left(q\sum_{k=0}^{n-1}p^k\right)^i-\left(q\sum_{k=0}^{n-2}p^k\right)^i\\
+\end{align*}
+
+%we need all the $i$ progenitors to be extinct by the $n$th generation, i.e. all the progenitors are extinct latest by the $n$th generation.
+%\begin{align*}
+%\mathbb{P}(T=n|Z_0=i) &= \left[\mathbb{P}(T\leq n|Z_0=1)\right]^i \quad\text{by independence of the $i$ progenitors}\\
+%&=  \left(q\sum_{k=0}^{n}p^k\right)^i
+%\end{align*}
+\end{enumerate}
+\item
+\begin{enumerate}[(a)]
+\item We start by finding the pgf of the branching process
+\begin{align*}
+P(s)=\sum_{k=0}^{\infty}s^k(1-q)q^k=\frac{1-q}{1-sq}
+\end{align*}
+where $|s|<1/q$. The extinction probability is obtained from
+\begin{align*}
+s=\frac{1-q}{1-sq} &\Leftrightarrow qs^2-s+(1-q)=0\\
+&\Leftrightarrow s=1 \text{ or } s=\frac{1-q}{q}
+\end{align*}
+therefore $\frac{1-q}{q}$ is the extinction probability for $q>1/2$ since $\frac{1-q}{q}\geq 1$ for $q \leq 1/2$.
+\item For a progenitor Poisson distributed with parameter $\lambda$, the population becomes extinct when all the subpopulation of each progenitor becomes extinct which we know from (a) has a probability of $\frac{1-q}{q}$.
+\begin{align*}
+%\mathbb{P}(\text{extinct}\,\mid Z_0 \text{ follows a Poisson distribution}) 
+\pi \text{ when $Z_0$ is Poisson distributed}
+&= \sum_{k=0}^{\infty}\mathbb{P}(\text{all subpopulations become extinct}\mid Z_0=k)\cdot\mathbb{P}(Z_0=k)\\
+&=\sum_{k=0}^{\infty}\left(\frac{1-q}{q}\right)^k\frac{\lambda^ke^{-\lambda}}{k!}\\
+&=e^{-\lambda}\cdot e^{\frac{\lambda(1-q)}{q}}=\exp\left(\frac{\lambda}{q}-2\lambda\right)
+\end{align*}
+
+%Let $S_{Z_0}=\sum_{i=0}^{Z_0}Z_{0,i}$ where $Z_0$ is a Poisson random variable with parameter $\lambda$ and $Z_{0,i}$ denotes a single progenitor with the distribution in (a) with pgf $P(s)=\frac{1-q}{1-sq}$.
+\end{enumerate}
+\item 
+\begin{enumerate}[(a)]
+\item The pgf for $n=2k$ is 
+\begin{align*}
+g\circ f \circ g \circ \ldots  \circ g \circ f(s)
+\end{align*}
+where there are $k$ $g$ and $f$ functions in the sequence above. Hence the mean number of individuals in the $n$th generation is 
+\begin{align*}
+\frac{d(g\circ f \circ g \circ \ldots  \circ g \circ f(s))}{ds}\bigg|_{s=1}
+\end{align*}
+\item The fixed point of the pgf in (a) governs the extinction probability process.
+\item For $i=1,2$, 
+\begin{align*}
+P_i(s)=\sum_{k=0}^{\infty}s^kp_i(1-p_i)^k=\frac{1-p_i}{1-sp_i}
+\end{align*}
+with $|s|<1/p_i$.
+\end{enumerate}
+\end{enumerate}
+\end{document}
