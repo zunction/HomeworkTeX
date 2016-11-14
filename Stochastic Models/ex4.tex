@@ -82,10 +82,30 @@
 
 \begin{enumerate}
 \item 
+\begin{align*}
+m(t) &= \sum_{n=1}^{\infty}F_n(t),\quad \text{where $F_n(t)$ is the $n-$fold convolution.}\\
+&=F(t) + \sum_{n=2}^{\infty}F_n(t) ,\quad\text{since $F(t)=F_1(t)$}\\
+&=F(t)+\sum_{n=2}^{\infty} F \ast F_{n-1}(t)\\
+&=F(t)+\sum_{n=2}^{\infty} \int_{0}^{t} F_{n-1}(t-x)\,dF(x)\\
+&=F(t)+\int_{0}^{t} \sum_{n=1}^{\infty} F_{n}(t-x)\,dF(x)\\
+&=F(t)+\int_{0}^{t} m(t-x)\,dF(x)
+\end{align*}
 
+\item Let $\{N_D(t), t \geq 0\}$ be a given delay renewal process, then
+\begin{align*}
+P\left[S_{N_D(t)}\leq s\right] &=\sum_{n=0}^{\infty}P\left[S_{n}\leq s, S_{n+1}>t\right]\\
+&=\bar{F}(t)+\sum_{n=1}^{\infty}P\left[S_{n}\leq s, S_{n+1}>t\right]\\
+&=\bar{F}(t)+\sum_{n=1}^{\infty}\int_{0}^{\infty}P\left[S_{n}\leq s, S_{n+1}>t\mid S_n=y\right]\,dF_n(y)\\
+&=\bar{F}(t)+\int_{0}^{s}\bar{F}(t-y)\,d\left(\sum_{n=1}^{\infty}F_n(y)\right)\\
+&=\bar{F}(t)+\int_{0}^{s}\bar{F}(t-y)\,dm_D(y),\quad \text{since $F_1(y)=G(y)$}
+\end{align*}
+where $m_D(y)=\sum_{n=0}^{\infty}G \ast F_{n}(y)$.
 \item
+\begin{align*}
+P\left[X_{N(t)+1}>x\right]&=\sum_{n=0}^{\infty}P\left[X_{N(t)+1}>x\right]\\
+&=\bar{F}(x)+\sum_{n=1}^{\infty}P\left[X_{N(t)+1}>x\right]\\
+\end{align*}
 
-\item
 
 \item
 
