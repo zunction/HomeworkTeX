@@ -14,7 +14,7 @@
 \hypersetup{colorlinks,breaklinks,
             linkcolor=darkblue,urlcolor=darkblue,
             anchorcolor=darkblue,citecolor=darkblue}
-
+\usetikzlibrary{arrows,positioning} 
 \usepackage{sectsty}
 \allsectionsfont{\centering}
 %\usepackage[normalem]{ulem}
@@ -95,17 +95,36 @@ This discussion attempts to analyse the cooperation and competition problem usin
 \centering
 \begin{tikzpicture}[scale=1,draw=black!50,>=latex]
 	\tikzstyle{neuron}=[circle,fill=black!25,
-	minimum size=1pt,
-	inner sep=5pt
+	minimum size=25pt,
+	inner sep=0pt
 	]
-	\tikzstyle{m}=[neuron, fill=blue!70!black];
+	\tikzstyle{m}=[neuron, fill=blue!50!black];
 	\tikzstyle{n}=[neuron, fill=red!70!white];
 
-\node[m](a1) at (-4,0){\footnotesize {\color{white}$a_{1}$}};
-\node[m](a1) at (-2,0){\footnotesize {\color{white}$a_2$}};
-\node[m](a1) at (0,0){\footnotesize {\color{white}$a_i$}};
-\node[m](a1) at (2,0){\footnotesize {\color{white}$a_{k-1}$}};
-\node[m](a1) at (4,0){\footnotesize {\color{white}$a_k$}};
+\node[n](t) at (0,3){\footnotesize {\color{white}\sffamily $t$}};
+\node[n](r) at (0,-3){\footnotesize {\color{white}\sffamily $r$}};
+\node[m](s1) at (-4,0){\footnotesize {\color{white}\sffamily $s_{1}$}};
+\node[m](s2) at (-2,0){\footnotesize {\color{white}$s_2$}};
+\node[m](si) at (0,0){\footnotesize {\color{white}$s_i$}};
+\node[m](sk-1) at (2,0){\footnotesize {\color{white}$s_{k-1}$}};
+\node[m](sk) at (4,0){\footnotesize {\color{white}$s_k$}};
+
+\node[right=of sk](dummy) {$1+\epsilon$} edge[bend left] (r) edge[bend right,->,>=stealth] (t);
+%\draw[->,thick,dashed] (r) edge (dummy) edge[thick] (t);
+
+\draw [->,>=stealth] (s1) edge[bend left] (t);
+\draw [->,>=stealth] (s2) edge[bend left] (t);
+\draw [->,>=stealth] (si) edge (t);
+\draw [->,>=stealth] (sk-1) edge[bend right] (t);
+\draw [->,>=stealth] (sk) edge[bend right] (t);
+
+
+\draw [->,>=stealth] (s1) edge[bend right] (r);
+\draw [->,>=stealth] (s2) edge[bend right] (r);
+\draw [->,>=stealth] (si) edge (r);
+\draw [->,>=stealth] (sk-1) edge[bend left] (r);
+\draw [->,>=stealth] (sk) edge[bend left] (r);
+
 
 \end{tikzpicture}
 \end{figure}
