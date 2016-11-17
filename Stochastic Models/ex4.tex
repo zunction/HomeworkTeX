@@ -108,7 +108,6 @@ P\left[X_{N(t)+1}>x\right]&=\sum_{n=0}^{\infty}P\left[X_{N(t)+1}>x\right]\\
 
 
 \item
-
 \item Given the scenario, a new cycle starts each time the policyholder payment rate reverts to $r_1$. 
 \begin{enumerate}[(i)]
 \item Since the claims are made with a Poisson process of rate $\lambda$, the interarrival times are exponentially distributed with parameter $\lambda$, thus it is not lattice. Hence
@@ -126,7 +125,7 @@ For the given $s$ and letting $X$ denote the interarrival time, we can have eith
 Therefore
 \begin{align*}
 \mathbf{E}[\text{paying at rate }r_0]&=\frac{e^{-\lambda x}/\lambda}{1/\lambda}=e^{-\lambda x} \\
-\mathbf{E}[\text{paying at rate }r_0]&=\frac{1/\lambda -e^{-\lambda x}/\lambda}{1/\lambda} =1-e^{-\lambda x}
+\mathbf{E}[\text{paying at rate }r_1]&=\frac{1/\lambda -e^{-\lambda x}/\lambda}{1/\lambda} =1-e^{-\lambda x}
 \end{align*}
 \item The long-run average amount paid per unit time is 
 \begin{align*}
@@ -137,7 +136,7 @@ P_0r_0+P_1r_1&=r_0e^{-\lambda x}+r_1(1-e^{-\lambda x})\\
 
 \item
 \begin{enumerate}[(a)]
-\item 
+\item To find the rate of occurrance of $d-$events, we want to find $\lim_{t\to\infty}N(t)/t$ which we know to be $1/\mu$, where $\mu$ is the interarrival time of a $d-$event. Since we are given that the events occur according to a Poisson process, the interarrival time $X_i$ are exponentially distributed with parameter $\lambda$ and a $d-$event occurs when the interarrival time is less than $d$. A new cycle starts when a $d-$event occurs, we then see that the $d-$events occur with a geometric distribution and thus the expected time for 
 \item
 \end{enumerate}
 
