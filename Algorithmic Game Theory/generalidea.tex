@@ -93,77 +93,54 @@ This discussion attempts to analyse the cooperation and competition problem usin
 \R=2cm
 \begin{figure}[h]
 \centering
-\begin{tikzpicture}[scale=1,draw=black!50,>=latex]
+\begin{tikzpicture}[scale=1,draw=black!50,>=stealth,thick]
 	\tikzstyle{neuron}=[circle,fill=black!25,
 	minimum size=25pt,
 	inner sep=0pt
 	]
 	\tikzstyle{m}=[neuron, fill=blue!50!black];
 	\tikzstyle{n}=[neuron, fill=red!70!white];
-
+\footnotesize
 \node[n](t) at (0,3){\footnotesize {\color{white}\sffamily $t$}};
-\node[n](r) at (0,-3){\footnotesize {\color{white}\sffamily $r$}};
-\node[m](s1) at (-4,0){\footnotesize {\color{white}\sffamily $s_{1}$}};
-\node[m](s2) at (-2,0){\footnotesize {\color{white}$s_2$}};
-\node[m](si) at (0,0){\footnotesize {\color{white}$s_i$}};
-\node[m](sk-1) at (2,0){\footnotesize {\color{white}$s_{k-1}$}};
-\node[m](sk) at (4,0){\footnotesize {\color{white}$s_k$}};
+%\node[n](r) at (0,-3){\footnotesize {\color{white}\sffamily $r$}};
+\node[m](s1) at (-4,0){\footnotesize {\color{white}\sffamily $a_{1}$}};
+\node[m](s2) at (-2,0){\footnotesize {\color{white}$a_2$}};
+%\node[m](si) at (0,0){\footnotesize {\color{white}$a_i$}};
+\node (si) at (0,0){$\ldots \ldots \ldots\ldots \ldots$};
+\node[m](sk-1) at (2,0){\footnotesize {\color{white}$a_{k-1}$}};
+\node[m](sk) at (4,0){\footnotesize {\color{white}$a_k$}};
 
-\node[right=of sk](dummy) {$1+\epsilon$} edge[bend left] (r) edge[bend right,->,>=stealth] (t);
+\node[n,right=of sk](r) {{\color{white}$r$}}  edge[bend right,->,>=stealth]node[right]{$1+\epsilon$} (t);
 %\draw[->,thick,dashed] (r) edge (dummy) edge[thick] (t);
 
-\draw [->,>=stealth] (s1) edge[bend left] (t);
-\draw [->,>=stealth] (s2) edge[bend left] (t);
+
+
+\draw [->] (s1) edge[bend left]node[left]{$1$} (t);
+\draw [->,>=stealth] (s2) edge[bend left]node[left]{$\frac{1}{2}$} (t);
 \draw [->,>=stealth] (si) edge (t);
-\draw [->,>=stealth] (sk-1) edge[bend right] (t);
-\draw [->,>=stealth] (sk) edge[bend right] (t);
+\draw [->,>=stealth] (sk-1) edge[bend right]node[left]{$\frac{1}{k-1}$} (t);
+\draw [->,>=stealth] (sk) edge[bend right]node[left]{$\frac{1}{k}$} (t);
 
-
-\draw [->,>=stealth] (s1) edge[bend right] (r);
-\draw [->,>=stealth] (s2) edge[bend right] (r);
-\draw [->,>=stealth] (si) edge (r);
-\draw [->,>=stealth] (sk-1) edge[bend left] (r);
-\draw [->,>=stealth] (sk) edge[bend left] (r);
+%\draw[dotted] (s2) edge (si);
+%\draw[dotted] (si) edge (sk-1);
+\draw [->,>=stealth] (s1) edge[bend right=60](r);
+\draw [->,>=stealth] (s2) edge[bend right=60] (r);
+\draw [->,>=stealth] (si) edge[bend right=60] (r);
+\draw [->,>=stealth] (sk-1) edge[bend right=60] (r);
+\draw [->,>=stealth	] (sk) edge[bend right=60] (r);
 
 
 \end{tikzpicture}
+\caption{Opting out problem viewed as a cooperation and competition problem.}
 \end{figure}
+In a cooperation and competition problem, instead of looking at how much time the agent spends on his own project and how much time on helping other agents, we just consider the nature of the agent; whether the agent is cooperative or competitive. Now we consider a company with $k$ agents and with some measure, we can rank the agents based on their work ability. Here, work ability is with respect to a particular task. For example, if we have two agents, an account and a secretary, the work ability of an account is higher for account work as compared to the secretary and vice versa the work ability of a secretary is higher for secretarial duties. For such a task, we assume that every agent can complete it by himself, however, due to the agent's own work ability for a particular task, the quality of the work produced and the time taken to complete the work varies for different agents. Given the ranking of an agent's work ability for a task $t$ is $i$, the quality of work that they produce is $1/i$. The better your work ability, the better the quality of your work.
 
-%	\newdimen\R
-%\R=2cm
-%\begin{figure}[h]
-%	\centering
-%	\begin{tikzpicture}[scale=1,draw=black!50,>=latex]
-%	\tikzstyle{neuron}=[circle,fill=black!25,minimum size=15pt,inner sep=0pt]
-%	\tikzstyle{m}=[neuron, fill=blue!70!black];
-%	\tikzstyle{n}=[neuron, fill=red!70!white];
-%%	\foreach \x in {1,2,3}{
-%%	\node[m,yshift=\x*2 cm](s-\x) at (\x*2-2*2,1){\footnotesize {\color{white}$s_{\x}$}};
-%%	\node[n,yshift=\x*2 cm](t-\x) at (\x*2-2*2,-1){\footnotesize {\color{white}$t_{\x}$}};
-%%	}
-%%	
-%	\node[m,yshift=2 cm](s-1) at (-2,1){\footnotesize {\color{white}$v^s_1$}};;
-%	\node[m,yshift=4 cm](s-2) at (0,1){\footnotesize {\color{white}$v^s_2$}};
-%	\node[m,yshift=6 cm](s-3) at (2,1){\footnotesize {\color{white}$v^s_3$}};
-%	\node[n,yshift=2 cm](t-1) at (-2,-1){\footnotesize {\color{white}$v^t_1$}};
-%	\node[n,yshift=4 cm](t-2) at (0,-1){\footnotesize {\color{white}$v^t_2$}};
-%	\node[n,yshift=6 cm](t-3) at (2,-1){\footnotesize {\color{white}$v^t_3$}};
-%	\foreach \x in {1,2,3}{
-%	\draw[->,color=black,thick] (s-\x) -- (t-\x);
-%	\draw[->,thick,dashed] (s-\x) edge[bend right] (t-\x);
-%	\draw[->,thick,dashed] (s-\x) edge[bend left] (t-\x);
-%	}
-%	\draw[->,thick,dashed] (s-1) edge[bend left] (s-2);
-%	\draw[->,thick,dashed] (s-1) edge[bend left] (s-3);
-%	\draw[->,thick,dashed] (s-2) edge (s-3);
-%	\draw[->,thick,dashed] (s-2) edge (s-1);
-%	\draw[->,thick,dashed] (s-3) edge[bend left] (s-2);
-%	\draw[->,thick,dashed] (s-3) edge[bend left] (s-1);
-%	\end{tikzpicture}
-%	\caption{Office game seen as a routing game with 3 agents}
-%	\label{fig:officerouting}
-%\end{figure}
-%
+Now if we consider scenario with two agents and a particular task $t$ is assigned to one of them, with agent $i$ having rank $i$. If agent 1 was the agent assigned the task, there is no need to find collaborators for the task as the quality of work he is producing is the best. However if the task is assigned to agent 2, then he might want to engage the help of agent 1 to collaborate on that task assigned to him. As such if they collaborate, they would be producing a work of quality $1+\epsilon$ and assuming that they contributed equal effort for the equality of work produced, then there is 
+
+
+a particular task $t$ that is assigned to a particular agent with rank $i$. If $i=1$, the agent does not see the need get collaborators as 
+
+
 
 
 \end{document}
