@@ -107,9 +107,17 @@ where $m_D(y)=\sum_{n=0}^{\infty}G \ast F_{n}(y)$.
 %&=\bar{F}(x)+\sum_{n=1}^{\infty}P\left[X_{N(t)+1}>x\right]\\
 %\end{align*}
 \begin{align*}
-P\left[X_{N(t)+1}>x\right]&=P\left[X_{N(t)+1}>x\right]
+P\left[X_{N(t)+1}>x\right]&=\mathbf{E}\left[P\left[X_{N(t)+1}>x\mid S_{N(t)}=t-s\right]\right]
 \end{align*}
-
+We now consider cases. When $s\geq x$, $P\left[X_{N(t)+1}>x\mid S_{N(t)}=t-s\right]=1 \geq \bar{F}(x)$. For the case of $s < x$,
+\begin{align*}
+P\left[X_{N(t)+1}>x\mid S_{N(t)}=t-s\right]&=P\left[X>x\mid X > s\right], \quad \text{where $X$ denotes the interarrival time.}\\
+&=\frac{\bar{F}(x)}{\bar{F}(s)}\geq \bar{F}(x)
+\end{align*}
+Taking expectations on both side
+\begin{align*}
+P\left[X_{N(t)+1}>x\right] \geq \bar{F}(x)
+\end{align*}
 
 \item We will define a renewal reward process where the reward is the cost incurred due to the locked turnstile or the busy server. Then the average cost per unit time is $\lim_{t \to \infty}=\mathbf{E}[R]/\mathbf{E}[X]$ where $R$ is the reward obtained in  a cycle and $X$ is the time of one cycle. Here, a cycle starts when the senior manager arrives at an unlocked turnstile. Then the time of one cycle is the time needed for the turnstile to unlock plus the time required for the next senior manager to arrive at the unlocked turnstile which we get
 \begin{align*}
