@@ -100,14 +100,37 @@ P\left[S_{N_D(t)}\leq s\right] &=\sum_{n=0}^{\infty}P\left[S_{n}\leq s, S_{n+1}>
 &=\bar{F}(t)+\int_{0}^{s}\bar{F}(t-y)\,dm_D(y),\quad \text{since $F_1(y)=G(y)$}
 \end{align*}
 where $m_D(y)=\sum_{n=0}^{\infty}G \ast F_{n}(y)$.
+
 \item
+%\begin{align*}
+%P\left[X_{N(t)+1}>x\right]&=\sum_{n=0}^{\infty}P\left[X_{N(t)+1}>x\right]\\
+%&=\bar{F}(x)+\sum_{n=1}^{\infty}P\left[X_{N(t)+1}>x\right]\\
+%\end{align*}
 \begin{align*}
-P\left[X_{N(t)+1}>x\right]&=\sum_{n=0}^{\infty}P\left[X_{N(t)+1}>x\right]\\
-&=\bar{F}(x)+\sum_{n=1}^{\infty}P\left[X_{N(t)+1}>x\right]\\
+P\left[X_{N(t)+1}>x\right]&=P\left[X_{N(t)+1}>x\right]
 \end{align*}
 
 
-\item
+\item We will define a renewal reward process where the reward is the cost incurred due to the locked turnstile or the busy server. Then the average cost per unit time is $\lim_{t \to \infty}=\mathbf{E}[R]/\mathbf{E}[X]$ where $R$ is the reward obtained in  a cycle and $X$ is the time of one cycle. Here, a cycle starts when the senior manager arrives at an unlocked turnstile. Then the time of one cycle is the time needed for the turnstile to unlock plus the time required for the next senior manager to arrive at the unlocked turnstile which we get
+\begin{align*}
+\mathbf{E}[X]=t+\frac{1}{\lambda}
+\end{align*}
+since the arrivals of the senior managers follow a Poisson process with rate $\lambda$, thus their interarrival times are exponentially distributed with mean $1/\lambda$. To find the `reward' incurred, we have to find the cost incurred at the turnstile $(T)$ and server $(S)$. For the fixed time $t$, the number of arrivals is $\mathbf{E}[N(t)]=\lambda t$. Since each arrival incurs a cost of $c$, $\mathbf{E}[T]=\mathbf{E}[cN(t)]=ct\lambda$. To incur a cost at the server, the serving time $Y$ has to be greater than $t$ and also greater than the interarrival time $Z$. Hence
+\begin{align*}
+\mathbf{E}[S]&=K\cdot P\left[Y\geq t\right]\cdot P\left[Y\geq Z\right]\\
+&=K\cdot e^{-\lambda t}\cdot P\left[Y\geq Z\right]\\
+&=K\cdot e^{-\lambda t}\cdot \int_{0}^{\infty}P\left[Y\geq Z\mid Z=x\right]f_Z(x)\,dx\\
+&=K\cdot e^{-\lambda t}\cdot \int_{0}^{\infty}P\left[Y\geq x\right]f_Z(x)\,dx\\
+&=K\cdot e^{-\lambda t}\cdot \int_{0}^{\infty}e^{-\mu x}\lambda e^{-\lambda x}\,dx\\
+&=\lambda K\cdot e^{-\lambda t}\cdot \int_{0}^{\infty}e^{-\mu x} e^{-\lambda x}\,dx\\
+&=\lambda K\cdot e^{-\lambda t}\cdot \left[-\frac{1}{\lambda+\mu}e^{-x(\lambda+\mu)}\right]_{0}^{\infty}\\
+&=\frac{\lambda Ke^{-\lambda t}}{\lambda+\mu}
+\end{align*}
+Thus we arrive at 
+\begin{align*}
+\frac{\mathbf{E}[R]}{\mathbf{E}[X]}&=\frac{\mathbf{E}[T]+\mathbf{E}[S]}{\mathbf{E}[X]}\\
+&=\frac{ct\lambda+\frac{\lambda Ke^{-\lambda t}}{\lambda+\mu}}{t+\frac{1}{\lambda}}
+\end{align*}
 \item Given the scenario, a new cycle starts each time the policyholder payment rate reverts to $r_1$. 
 \begin{enumerate}[(i)]
 \item Since the claims are made with a Poisson process of rate $\lambda$, the interarrival times are exponentially distributed with parameter $\lambda$, thus it is not lattice. Hence
