@@ -136,8 +136,16 @@ P_0r_0+P_1r_1&=r_0e^{-\lambda x}+r_1(1-e^{-\lambda x})\\
 
 \item
 \begin{enumerate}[(a)]
-\item To find the rate of occurrance of $d-$events, we want to find $\lim_{t\to\infty}N(t)/t$ which we know to be $1/\mu$, where $\mu$ is the interarrival time of a $d-$event. Since we are given that the events occur according to a Poisson process, the interarrival time $X_i$ are exponentially distributed with parameter $\lambda$ and a $d-$event occurs when the interarrival time is less than $d$. A new cycle starts when a $d-$event occurs, we then see that the $d-$events occur with a geometric distribution and thus the expected number of renewals to before a $d-$event occurs is $1/\mathbf{P}[X\leq d]$. As the expected interarrival time is $1\lambda$, the expected time between $d-$events is $1/\lambda \mathbf{P}[X\leq d]$ and we get that the rate is $\lambda(1-\lambda e^{-\lambda d})$
-\item Since the arrivals arrive at a rate of $\lambda$, the proportion of $d-$events is $\lambda(1-\lambda e^{-\lambda d})/\lambda=1-\lambda e^{-\lambda d}$
+\item To find the rate of occurrance of $d-$events, we want to find $\lim_{t\to\infty}N(t)/t$ which we know to be $1/\mu$, where $\mu$ is the expected interarrival time of a $d-$event. Since we are given that the events occur according to a Poisson process, the interarrival times, $X_i$ are exponentially distributed with parameter $\lambda$ and a $d-$event occurs when the interarrival time is less than $d$. Let a new cycle start when a $d-$event occurs, we then see that the $d-$events occur with a geometric distribution $Y$ and thus the expected number of renewals (regardless of whether it is a $d-event$ or not) to before a $d-$event occurs is $1/\mathbf{P}[X\leq d]$. The value of $mu$ is given by
+\begin{align*}
+\mu&=\mathbf{E}\left[\sum_{i=1}^{Y}X_i\right]=\mathbf{E}\left[Y\right]\cdot \mathbf{E}\left[X\right],\quad \text{By Wald's equation}\\
+&=\frac{1}{\mathbf{P}[X\leq d]}\cdot \frac{1}{\lambda}=\frac{1}{\lambda\mathbf{P}[X\leq d]}
+\end{align*}
+
+
+%As the expected interarrival time is $1/\lambda$, the expected time between $d-$events is $1/\lambda \mathbf{P}[X\leq d]$ and 
+thus we get that the rate is $\lambda(1- e^{-\lambda d})$.
+\item Since the arrivals arrive at a rate of $\lambda$, the proportion of $d-$events is $\lambda(1-e^{-\lambda d})/\lambda=1-e^{-\lambda d}$
 \end{enumerate}
 
 
@@ -158,11 +166,11 @@ thus the proportion of time is
 \end{align*}
 \item The travelling speed from SUTD to Simei is uniformly distributed from 40 to 50 as such, the probability of it travelling at 40 is 0 as it is a continuous variable. Thus it suffices to consider the time at which it travels at 40 from Simei to SUTD. The proportion of time travelling at 40 from Simei to SUTD is 
 \begin{align*}
-\frac{d/40}{1/2(d/40+d/50)}=\frac{10}{9}
+\frac{d/40}{d/40+d/50}=\frac{5}{9}
 \end{align*}
 thus the proportion that the driving time is at a speed of 40 is 
 \begin{align*}
-\frac{1/4}{\ln(5/4)+9/40}
+\frac{1/8}{\ln(5/4)+9/40}
 \end{align*}
 \end{enumerate}
 
