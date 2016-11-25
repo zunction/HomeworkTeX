@@ -102,13 +102,26 @@ We would now like to introduce some form of dynamics in which the players learn 
 Let $A$ be a set of actions playable by the agent in the workplace reward maximizing game with $|A|\geq 2$. At time $t=1,2,\ldots, T$
 \begin{enumerate}[(i)]
 \item The agent plays a mixed strategy $p^t$, which is a probability distribution over $A$.
-\item The adversary picks a cost vector $c^t: A \to [0,1]$
+\item The adversary picks a cost vector $c^t: A \to [0,1]$.\footnote{The other $k-1$ agents models the adversary well: when an agent $i$ plays his strategy, other agents might play strategies that might possibly increase his cost which nicely simulates that the adversary picks a cost vector $c^t$ after the agent $i$ picks his mixed strategy.}
+\item An action $a^t$ is then chosen according to the distribution $p^t$ and the decision-maker incurs a cost of $c^t(a^t)$. The decision-maker learns the entire cost vector $c^t$ and not just the realized cost $c^t(a^t)$.\footnote{The learning of the entire cost vector is also reasonable in real-life scenarios as often after making a wrong decision, you will think of what if you played the other strategy that is more beneficial for you.}
 \end{enumerate}
 
-(The other $k-1$ agents models the adversary well as what the agent plays can b)
+As in the definitions in no-regret dynamics we define regret and the no-regret algorithm the same way.
 
+\begin{defn}[Time-averaged regret]
+The \emph{time-averaged regret} of the action sequencce $a^1,a^2,\ldots, a^T$ with respect to a fixed action $a$ is 
+\begin{align*}
+\frac{1}{T}\sum_{t=1}^{T}\left[c^t(a^t)-c^t(a)\right]
+\end{align*}	
+\end{defn}
 
-
+\begin{defn}[No-Regret Algorithm]
+Let $\mathcal{A}$ be an online decision-making algorithm.
+\begin{enumerate}[(a)]
+\item The adversary for $\mathcal{A}$ is a function that takes as input the day $t$, the mixed strategies $p^1,p^2,\ldots,p^t$ produced by $\mathcal{A}$ on the first $t$ days and the realized actions, $a^1,a^2,\ldots, a^{t-1}$ of the first $t-1$ days and produces as output a cost vector $c^t:A\to [0,1]$.
+\item An online decision-making algorithm has \emph{no external regret} if for every adversary for it, the expected regret with respect to every action $a\in A$ is $\mathcal{O}(1)$ as $T \to \infty$.
+\end{enumerate}
+\end{defn}
 
 
 
