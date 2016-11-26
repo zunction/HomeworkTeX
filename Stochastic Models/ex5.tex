@@ -1,0 +1,148 @@
+\documentclass[a4paper,10pt]{article}
+\setlength{\parindent}{0cm}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{graphicx,caption}
+\usepackage{verbatim}
+\usepackage{venndiagram}
+\usepackage[cm]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color,enumerate,framed}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%\usepackage{tgadventor}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{parskip}
+%\usepackage{picins} %for \parpic.
+%\newtheorem*{notation}{Notation}
+%\newtheorem{example}{Example}[section]
+%\newtheorem*{problem}{Problem}
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem*{solution}{Solution}
+%\newtheorem*{definition}{Definition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{remark}{Remark}
+%\setcounter{section}{1}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{examp}{Example}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{nte}{Note}
+\newtheorem*{notat}{Notation}
+
+%\diagramstyle[labelstyle=\scriptstyle]
+
+\lstset{frame=tb,
+  language=Oz,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\pagestyle{fancy}
+
+
+
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
+\cfoot{}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\rfoot{\color{black!60}{\textsc{\thepage}}}
+
+
+
+\begin{document}
+\flushright{Zhangsheng Lai\\1002554}
+\section*{Stochastic Models: Exercise 5}
+
+\begin{enumerate}
+\item Let $\{X_n: n\geq 0\}$ be an irreducible Markov chain with period $d \geq 1$ thus for any state $i$
+\begin{align*}
+d=\text{gcd}\{n\geq 1: P\left[X_n=i\mid X_0=i\right]>0\}
+\end{align*}
+%Let $k$ be the period of the embedded Markov chain, $\{X_{nd}:n\geq 0\}$ and $k \mid d$.
+
+
+Suppose $\{X_{nd}:n\geq 0\}$ is not aperiodic, thus for some integer $k>1$, we have
+\begin{align*}  
+k=\text{gcd}\{n\geq 1: P\left[X_{nd}=i\mid X_0=i\right]>0\}
+\end{align*}
+for every state $i$. This implies that, for all states, the number of transitions needed to return to state $i$ given that it starts from $i$ in $\{X_n: n\geq 0\}$ is of the form $lkd$ where $l$ is a positive integer. This contradicts that $\{X_n: n\geq 0\}$ is a Markov chain with period $d$ since for any integer $l$, $lkd>d$, thus $k=1$ as required and $\{X_{nd}: n\geq 0\}$ as aperiodic.
+
+If we consider the states accessible to $\{X_{nd}: n\geq 0\}$, it is irreducible. Else it is not. Consider the simple symmetric random walk where $\{X_{2n}: n\geq 0\}$ is aperiodic and irreducible for the even states. But if we consider both even and odd states, it is not irreducible as it cannot visit an odd state in even number of steps.
+
+\item Suppose $i \leftrightarrow j$ and let $i$ be positive recurrent, thus $\sum_{n=1}^{\infty}nf_{ii}^n<\infty$. 
+\begin{align*}
+%\sum_{n=1}^{\infty}nf_{jj}\geq\sum_{n=1}^{\infty}nP_{ij}f_{jj}P_{ji}
+\infty >\sum_{n=1}^{\infty}nf_{ii}\geq \sum_{n=1}^{\infty}nf_{ji}f_{ii}^nf_{ij}\geq \sum_{n=1}^{\infty}nf_{jj}
+\end{align*}
+
+
+\item Let $\{X_n:n\geq 0\}$ be an irreducible and aperiodic Markov chain. The chain is doubly stochastic, thus $\sum_{i}P_{ij}=1$. For any two states $i$ and $j$, we have $i \leftrightarrow j$ since the Markov chain is irreducible and together with the aperiodicity, we have $\lim_{n\to\infty}P_{ij}^n=\pi_j$. 
+\begin{align*}
+\pi_j=\lim_{n\to\infty}P^{n+1}_{ij}&=\lim_{n\to\infty}\sum_{l=0}^{k}P^{n}_{il}P_{lj}\\
+&=\sum_{l=0}^{k}\lim_{n\to\infty}P^{n}_{il}P_{lj}\\
+&=\sum_{l=0}^{k}\pi_{l}P_{lj}\\
+\end{align*}
+by assuming the uniform distribution, show that the above is satisfied.
+%Since there are finitely many states, for a fixed $j$
+%\begin{align*}
+%1 = \lim_{n\to\infty}\sum_{i=0}^{k}P^n_{ij}=\sum_{i=0}^{k}\lim_{n\to\infty}P^n_{ij}=(k+1)\pi_j
+%\end{align*}
+%and for a fixed $i$, 
+%\begin{align*}
+%1 = \lim_{n\to\infty}\sum_{j=0}^{k}P^n_{ij}=\sum_{j=0}^{k}\lim_{n\to\infty}P^n_{ij}=\sum_{j=0}^{k}\pi_j
+%\end{align*}
+
+
+\item Let $\{X_n:n\geq 0\}$ be a Markov chain with states $S=\{0,1,2,3,4\}$ denoting the number of umbrella(s) in his home. The transition matrix $\mathbb{P}$ is such that $P_{i,i-1}=p=1-P_{i,i}$ for $i\neq 0$ and $P_{0,0}=1$.
+
+
+%of the form $(i,4-i)$, where $i=0,1,2,3,4$ denoting the number of umbrella(s) in his home and office respectively.
+%The transition matrix $\mathbb{P}$ is such that $P_{i,i-1}=p=1-$
+%\begin{align*}
+%\begin{pmatrix}
+%123
+%\end{pmatrix}
+%\end{align*}
+\begin{enumerate}[(a)]
+\item
+\item
+\end{enumerate}
+\item
+\begin{enumerate}[(a)]
+\item
+\item
+\end{enumerate}
+\item
+\begin{enumerate}[(a)]
+\item
+\item
+\end{enumerate}
+\end{enumerate}
+\end{document}
