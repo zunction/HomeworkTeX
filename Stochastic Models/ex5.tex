@@ -103,13 +103,26 @@ If we consider the states accessible to $\{X_{nd}: n\geq 0\}$, it is irreducible
 \end{align*}
 
 
-\item Let $\{X_n:n\geq 0\}$ be an irreducible and aperiodic Markov chain. The chain is doubly stochastic, thus $\sum_{i}P_{ij}=1$. For any two states $i$ and $j$, we have $i \leftrightarrow j$ since the Markov chain is irreducible and together with the aperiodicity, we have $\lim_{n\to\infty}P_{ij}^n=\pi_j$. 
+\item Let $\{X_n:n\geq 0\}$ be an irreducible and aperiodic Markov chain. The chain is doubly stochastic, thus $\sum_{i}P_{ij}=1$. For any two states $i$ and $j$, we have $i \leftrightarrow j$ since the Markov chain is irreducible and together with the aperiodicity, we have $\lim_{n\to\infty}P_{ij}^n=1/\mu_{jj}$. We can prove by induction that $\sum^{k}_{j=0}P^n_{ij}=1$. Thus
 \begin{align*}
-\pi_j=\lim_{n\to\infty}P^{n+1}_{ij}&=\lim_{n\to\infty}\sum_{l=0}^{k}P^{n}_{il}P_{lj}\\
-&=\sum_{l=0}^{k}\lim_{n\to\infty}P^{n}_{il}P_{lj}\\
-&=\sum_{l=0}^{k}\pi_{l}P_{lj}\\
+1 = \lim_{n\to\infty}\sum_{i=0}^{k}P^n_{ij}=\sum_{i=0}^{k}\lim_{n\to\infty}P^n_{ij}=(k+1)/\mu_{jj}
 \end{align*}
-by assuming the uniform distribution, show that the above is satisfied.
+Thus $\mu_{jj}=k+1>0$ implies all the states are positive recurrent. Thus there exists a unique stationary distribution that is also the limiting distribution, i.e. $\pi_j = 1/\mu_{jj}$. Hence $\pi_j = 1/k+1$ for all $j$.
+
+We shall prove the claim that $\sum^{k}_{j=0}P^n_{ij}=1$. It is easy to see that it holds for $n=1$. Suppose that it is true for $n$, then since we have
+\begin{align*}
+\sum^{k}_{j=0}P^{n+1}_{ij} = \sum^{k}_{j=0}\sum_{l=0}^{k}P^{n}_{il}P_{lj}= \sum_{l=0}^{k}P^{n}_{il}\sum^{k}_{j=0}P_{lj}
+\end{align*}
+it is also true for $n+1$, which proves the claim.
+%There are finitely many states and thus we cannot have any transient state (since it is irreducible). We claim that all the states are positive recurrent and not null recurrent. Suppose all the states are null recurrent, then for each state, $\sum_{n=1}^{\infty}nf_{ii} = \infty$, that is the expected number of transitions need to return to state $i$ is infinite.
+
+%\begin{align*}
+%\pi_j=\lim_{n\to\infty}P^{n+1}_{ij}=\lim_{n\to\infty}\sum_{l=0}^{k}P^{n}_{il}P_{lj}
+%=\sum_{l=0}^{k}\lim_{n\to\infty}P^{n}_{il}P_{lj}=\sum_{l=0}^{k}\pi_{l}P_{lj}\\
+%\end{align*}
+%A solution for $(\pi_0,\ldots,\pi_k)$ will be one where all the $\pi_j$'s are the same as it is doubly stochastic.
+
+
 %Since there are finitely many states, for a fixed $j$
 %\begin{align*}
 %1 = \lim_{n\to\infty}\sum_{i=0}^{k}P^n_{ij}=\sum_{i=0}^{k}\lim_{n\to\infty}P^n_{ij}=(k+1)\pi_j
