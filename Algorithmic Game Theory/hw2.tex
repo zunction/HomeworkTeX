@@ -95,7 +95,31 @@
 
 \item
 
-\item 
+\item Let $f_\epsilon(x)=(1-\epsilon)^x$ and $g_\epsilon(x)=1+\epsilon x$, then
+\begin{align*}
+&f_\epsilon(0) = 1 = g_\epsilon(0)\\
+&f_\epsilon(1) = 1-\epsilon = g_\epsilon(1)\\
+&\begin{rcases}
+ f'_\epsilon(x)&=(1-\epsilon)^x\ln (1-\epsilon) \\
+  g'_\epsilon(x)&=\epsilon \\
+\end{rcases}f'_\epsilon(0) = \ln(1-\epsilon) < 0= g'_\epsilon(0)
+\end{align*}
+also $f_\epsilon$ is a convex function as $f''_\epsilon(x)=(1-\epsilon)^x\left[\ln (1-\epsilon)\right]^2>0$ for $\epsilon \in(0,1/2]$. This this proves $f_\epsilon(x)\leq g_\epsilon(x)$ since the initial gradient of $f_\epsilon$ is smaller then $g_\epsilon$ 
+
+%Let $f(\epsilon,x)=(1-\epsilon)^x$, then
+%\begin{align*}
+%\frac{f^{n}(\epsilon,x)}{d\epsilon^n}=(-1)^n\cdot x(x-1)(x-2)\ldots(x-n+1)(1-\epsilon)^{x-n}
+%\end{align*}
+%Doing Maclaurin series on $f(\epsilon,x)$ for a fixed $x \in [0,1]$ with respect to $\epsilon$, we get:
+%\begin{align*}
+%(1-\epsilon)^x&=\sum_{n=0}^{\infty}(-1)^n\frac{x(x-1)(x-2)\ldots(x-n+1)}{n!}\epsilon^n\\
+%&=1-\epsilon x + \sum_{n=2}^{\infty}(-1)^n\frac{x(x-1)(x-2)\ldots(x-n+1)}{n!}\epsilon^n
+%\end{align*}
+%To prove the inequality, it suffices to prove that 
+%\begin{align*}
+%\sum_{n=2}^{\infty}(-1)^n\frac{x(x-1)(x-2)\ldots(x-n+1)}{n!}\epsilon^n \leq 0
+%\end{align*}
+%which is true since $(-1)^n\cdot x(x-1)(x-2)\ldots(x-n+1) = -x (1-x)(2-x)\ldots (n-1-x)\leq 0$.
 \end{enumerate}
 
 
