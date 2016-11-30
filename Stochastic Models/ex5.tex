@@ -133,19 +133,49 @@ it is also true for $n+1$, which proves the claim.
 %\end{align*}
 
 
-\item Let $\{X_n:n\geq 0\}$ be a Markov chain with states $S=\{0,1,2,3,4\}$ denoting the number of umbrella(s) in his home. The transition matrix $\mathbb{P}$ is such that $P_{i,i-1}=p=1-P_{i,i}$ for $i\neq 0$ and $P_{0,0}=1$.
-
-
-%of the form $(i,4-i)$, where $i=0,1,2,3,4$ denoting the number of umbrella(s) in his home and office respectively.
-%The transition matrix $\mathbb{P}$ is such that $P_{i,i-1}=p=1-$
-%\begin{align*}
-%\begin{pmatrix}
-%123
-%\end{pmatrix}
-%\end{align*}
+\item Let $\{X_n:n\geq 0\}$ be a Markov chain with states $S=\{0,1,2,3,4\}$ denoting the number of umbrella(s) in the new location after travelling from the previous one, thus $S = \{0,1,2,3,4\}$.
 \begin{enumerate}[(a)]
-\item
-\item
+\item We first observe that
+\begin{align*}
+X_{n+1}:=\begin{cases}
+4 & X_n=0\\
+4 - X_n + 1 & \text{if raining}\\
+4 - X_n & \text{if not raining}\\
+\end{cases}
+\end{align*}
+with this, the transition matrix is
+\begin{align*}
+\begin{pmatrix}
+0& 0 &0 &0 & 1\\
+ 0 & 0 &0  &1-p  & p \\
+ 0 & 0 & 1-p &p  &0  \\
+ 0 & 1-p & p & 0 &  0\\  
+ 1-p & p & 0 &  0&  0\\  
+\end{pmatrix}
+\end{align*}
+The proportion of time that he possibly gets wet is when he is in state 0, and the proportion of time that he gets wet is $p\pi_0$. Solving for $\pi_j=\sum_{i}\pi_iP_{i,j}$
+\begin{align*}
+\pi_0 &= (1-p)\pi_4\\ 
+\pi_1 &= (1-p)\pi_3+p\pi_4\\ 
+\pi_2 &= (1-p)\pi_2+p\pi_3\\ 
+\pi_3 &= (1-p)\pi_1+p\pi_2\\ 
+\pi_4 &= \pi_0+p\pi_1\\  
+\end{align*}
+which solving for yields $\pi_i$ are the same for $i=1,2,3,4$. Thus $(4+1-p)\pi_1=1
+$ and 
+\begin{align*}
+\pi_0=\frac{1-p}{5-p}, \qquad \pi_i=\frac{1}{5-p} \text{ for } i \neq 0
+\end{align*}
+Thus Tom gets wet with probability $\frac{p(1-p)}{5-p}$ in the long run.
+\item From (a), we can generalise it to for $r$ umbrellas:
+\begin{align*}
+\pi_0=\frac{1-p}{r+1-p}, \qquad \pi_i=\frac{1}{r+1-p} \text{ for } i \neq 0
+\end{align*}
+which then we have to solve for $r$ when $p=0.6$,
+\begin{align*}
+\frac{p(1-p)}{r+1-p}<0.01
+\end{align*}
+which yields $23.6<r$, thus Tom should have 24 umbrellas.
 \end{enumerate}
 \item
 \begin{enumerate}[(a)]
@@ -171,7 +201,7 @@ P_{i,i}=2(1/2)^2\quad P_{i,i+1}=(1/2)^2=P_{i,i-1}\quad\text{for $i \neq 0, k$}\\
 \text{when $i = 0$} \quad \sum_{i}P_{i,j}&=P_{0,0}+P_{1,0}=1  \\
 \text{when $i = k$} \quad\sum_{i}P_{i,j}&=P_{k-1,k}+P_{k,k}=1 
 \end{align*}
-Hence by question 3, we have $\pi_0=\pi_k=1/k$. Thus the proportion of time where there is only shoes at one door is $2/k$ and since he choose to depart the front or back door with equal chance, he runs barefooted $1/k$ of the time.
+Hence by question 3, we have $\pi_0=\pi_k=1/k+1$. Thus the proportion of time where there is only shoes at one door is $2/k+1$ and since he choose to depart the front or back door with equal chance, he runs barefooted $1/k+1$ of the time.
 \end{enumerate}
 \item
 \begin{enumerate}[(a)]
