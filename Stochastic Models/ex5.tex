@@ -99,7 +99,7 @@ If we consider the states accessible to $\{X_{nd}: n\geq 0\}$, it is irreducible
 \item Suppose $i \leftrightarrow j$ and let $i$ be positive recurrent, thus $\sum_{n=1}^{\infty}nf_{ii}^n<\infty$. 
 \begin{align*}
 %\sum_{n=1}^{\infty}nf_{jj}\geq\sum_{n=1}^{\infty}nP_{ij}f_{jj}P_{ji}
-\infty >\sum_{n=1}^{\infty}nf_{ii}\geq \sum_{n=1}^{\infty}nf_{ji}f_{ii}^nf_{ij}\geq \sum_{n=1}^{\infty}nf_{jj}
+\infty >\sum_{n=1}^{\infty}nf^n_{ii}\geq \sum_{n=1}^{\infty}nf^1_{ji}f_{ii}^nf^1_{ij}\geq \sum_{n=1}^{\infty}nf^n_{jj}
 \end{align*}
 
 
@@ -175,8 +175,38 @@ Hence by question 3, we have $\pi_0=\pi_k=1/k$. Thus the proportion of time wher
 \end{enumerate}
 \item
 \begin{enumerate}[(a)]
-\item
-\item
+\item We first note that with $X_n$ being the number of rolls in the warehouse at the beginning of the $n$th day, we have $X_{n+1}=X_n-1+k$, where $k$ is the number of rolls delivered by the local distributor in the evening. Thus, the states are $S=\{0,1,2,\ldots\}$ and the transition probabilities that make up the transition matrix $\mathbb{P}$ is
+\begin{align*}
+P_{i,j}:=\begin{cases}
+a_{j-i+1} & \text{if $j\geq i-1$, $i\neq 0$}\\
+0 & \text{otherwise}
+\end{cases}
+\end{align*}
+when $i=0$, we have $P_{0,j}=a_j$.
+\item We observe that this Markov chain is irreducible and aperiodic, thus all the states are either positive or null recurrent. The stationary distribution need to satisfy
+\begin{align*}
+\pi_j=\sum\pi_iP_{i,j}=\pi_0P_{0,j}+\pi_1P_{1,j}+\pi_2P_{2,j}+\ldots+\pi_{j+1}P_{j+1,j}
+\end{align*}
+Trying out for the first few values:
+\begin{align*}
+\pi_0 &=  \pi_0a_{0}+\pi_1a_{0}\\
+\pi_1 &= \pi_0a_1 +\pi_1a_1  +\pi_2a_0 \\
+\pi_2 &= \pi_0a_2 + \pi_1a_2 + \pi_2a_1+ \pi_3a_0
+\end{align*}
+we can generalise it to 
+\begin{align*}
+\pi_{n+1}&=q\pi_{n-1}+(1-q)\pi_{n+1}\implies \pi_{n+1}=\frac{1}{1-q}(\pi_n-q\pi_{n-1})\\
+\pi_1&=\frac{q}{1-q}\pi_0\\
+\pi_2&=\frac{1}{1-q}\left(\frac{q}{1-q}\pi_0-q\pi_0\right)=\left(\frac{q}{1-q}\right)^2\pi_0\\
+\pi_3&=\frac{1}{1-q}\left(\left(\frac{q}{1-q}\right)^2\pi_0-\frac{q^2}{1-q}\pi_0\right)=\left(\frac{q}{1-q}\right)^3\pi_0\\
+&\vdots\\
+\pi_n&=\left(\frac{q}{1-q}\right)^n\pi_0
+\end{align*}
+For it to be a stationary distribution we need:
+\begin{align*}
+\pi_0\sum_{i=0}^{\infty}\left(\frac{q}{1-q}\right)^i=1
+\end{align*}
+to converge which happens when $|q/1-q|<1$.
 \end{enumerate}
 \end{enumerate}
 \end{document}
