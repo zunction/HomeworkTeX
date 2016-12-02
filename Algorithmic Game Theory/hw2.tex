@@ -68,6 +68,8 @@
 \pagestyle{fancy}
 
 
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 
 \fancyhead{}
@@ -83,14 +85,22 @@
 
 
 \begin{document}
-\flushright{Nguyen Tan Thai Hung\quad 1001986\\Zhangsheng Lai\quad1002554}
+\flushright{Manos \\Nguyen Tan Thai Hung\quad 1001986\\Zhangsheng Lai\quad1002554}
 \section*{Algorithmic Game Theory: HW 2}
 
 \begin{enumerate}
 
 \item
-
-
+Let $G$ be a cost-minimization game which has the function $\Phi$ such that
+\begin{align*}
+C_i(s'_i,s_{-i})&<C_i(s)\\
+\Phi(s'_i,s_{-i})&<\Phi(s)
+\end{align*}
+As the game is finite, we can use $\Phi$ and best-response dynamics such that the cost decreases with every beneficial deviation made by a particular agent until no more beneficial deviation exists for every agent and call this strategy $s^\ast$. Then this $s^\ast$ is a pure Nash since for any agent $i$ and any deviation $s'_i$, we cannot have
+\begin{align*}
+C_i(s'_i,s_{-i})<C_i(s^\ast)
+\end{align*}
+since it implies $\Phi(s'_i,s_{-i})<\Phi(s^\ast)$ and contradicts $\Phi(s^\ast)<\Phi(s)$ for all pure strategies $s \neq s^\ast$. Thus this game has at least on PNE.
 \item
 \begin{enumerate}[(a)]
 \item 
@@ -101,13 +111,26 @@ Consider the utility maximizing game below starting with the the initial outcome
     \begin{tabular}{cc|c|c|c|}
       & \multicolumn{1}{c}{} & \multicolumn{3}{c}{P$1$}\\
       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$A_1$}  & \multicolumn{1}{c}{$A_2$} &\multicolumn{1}{c}{$A_3$}\\\cline{3-5}
-      \multirow{3}*{P$2$}  & $B_1$ & $4,1$ & $1,2$& $0,0$\\\cline{3-5}
+      \multirow{3}*{P$2$}  & $B_1$ & $1,4$ & $2,3$& $0,0$\\\cline{3-5}
       \cline{3-5}
 & $B_2$ & $0,0$ & $0,0$& $5,5$\\\cline{3-5}
-      & $B_3$ & $3,3$ & $3,2$ &$0,0$\\\cline{3-5}
+      & $B_3$ & $4,1$ & $3,2$ &$0,0$\\\cline{3-5}
     \end{tabular}
  \end{figure}   
- \item Consider the game below
+
+%\begin{figure}[h]
+%\renewcommand{\arraystretch}{1.5}
+%    \centering
+%    \begin{tabular}{cc|c|c|c|}
+%      & \multicolumn{1}{c}{} & \multicolumn{3}{c}{P$1$}\\
+%      & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$A_1$}  & \multicolumn{1}{c}{$A_2$} &\multicolumn{1}{c}{$A_3$}\\\cline{3-5}
+%      \multirow{3}*{P$2$}  & $B_1$ & $4,1$ & $1,2$& $0,0$\\\cline{3-5}
+%      \cline{3-5}
+%& $B_2$ & $0,0$ & $0,0$& $5,5$\\\cline{3-5}
+%      & $B_3$ & $3,3$ & $3,2$ &$0,0$\\\cline{3-5}
+%    \end{tabular}
+% \end{figure}   
+ \item Consider the cost minimization game below, where for player P1, weights are decreased whenever $A_1$ or $A_2$ is played. Thus the weights are concentrated on $A_3$ in the long run and hence the time-averaged history of joint play would point to playing $A_3$ with close to 1 probability. Similar argument goes for P2 and thus average history of joint play will point to $A_3,B_3$ being the PNE.
  
  \begin{figure}[h]
 \renewcommand{\arraystretch}{1.5}
@@ -115,18 +138,28 @@ Consider the utility maximizing game below starting with the the initial outcome
     \begin{tabular}{cc|c|c|c|}
       & \multicolumn{1}{c}{} & \multicolumn{3}{c}{P$1$}\\
       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$A_1$}  & \multicolumn{1}{c}{$A_2$} &\multicolumn{1}{c}{$A_3$}\\\cline{3-5}
-      \multirow{3}*{P$2$}  & $B_1$ & $0,0$ & $0,0$& $5,5$\\\cline{3-5}
+      \multirow{3}*{P$2$}  & $B_1$ & $1,1$ & $1,1$& $0,0$\\\cline{3-5}
       \cline{3-5}
-& $B_2$ & $0,0$ & $0,0$& $5,5$\\\cline{3-5}
-      & $B_3$ & $5,5$ & $5,5$ &$5,5$\\\cline{3-5}
+& $B_2$ & $1,1$ & $1,1$& $0,0$\\\cline{3-5}
+      & $B_3$ & $0,0$ & $0,0$ &$0,0$\\\cline{3-5}
     \end{tabular}
  \end{figure}   
 
  
 \end{enumerate}
 
-\item 
-
+\item For a fixed $t'$ such that $i$ is the smallest integer such that $t'\leq2^i$. Then $\epsilon=\sqrt{\frac{\ln n}{t'}}\geq\sqrt{\frac{\ln n}{2^i}}$ and the regret is at most $2\sqrt{2^i\ln n}$ up till time $t$, i.e.
+\begin{align*}
+\sum_{t=1}^{t'}\nu^t \leq OPT + 2\sqrt{2^i\ln n}
+\end{align*}
+Let $kt'\geq T$, then
+\begin{align*}
+\sum_{t=1}^{T}\nu^t \leq\sum_{t=1}^{kt'}\nu^t \leq OPT + k\cdot 2\sqrt{2^i\ln n}=OPT + k\sqrt{2^i}(2\sqrt{\ln n}) \leq OPT + 2\sqrt{T\ln n}
+\end{align*}
+The last inequality holds since 
+\begin{align*}
+\sqrt{T} \geq k\sqrt{2^i} \implies T \geq k^22^i
+\end{align*}
 \item Let $f_\epsilon(x)=(1-\epsilon)^x$ and $g_\epsilon(x)=1+\epsilon x$, then
 \begin{align*}
 &f_\epsilon(0) = 1 = g_\epsilon(0)\\
@@ -152,12 +185,42 @@ also $f_\epsilon$ is a convex function as $f''_\epsilon(x)=(1-\epsilon)^x\left[\
 %\sum_{n=2}^{\infty}(-1)^n\frac{x(x-1)(x-2)\ldots(x-n+1)}{n!}\epsilon^n \leq 0
 %\end{align*}
 %which is true since $(-1)^n\cdot x(x-1)(x-2)\ldots(x-n+1) = -x (1-x)(2-x)\ldots (n-1-x)\leq 0$.
+\item
+\item 
+\begin{enumerate}[(a)]
+\item %$(\Rightarrow)$ 
+Let $\hat{x}, \hat{y}$ be a mixed Nash equilibrium then,
+\begin{align}
+\hat{x}^TA\hat{y}&\geq x^TA\hat{y} \quad \text{for all mixed distributions $x$}\\
+\hat{x}^TA\hat{y}&\leq \hat{x}^TAy \quad \text{for all mixed distributions $y$}
+\end{align}
+if and only if,
+\begin{align*}
+\hat{x}\in\argmax_x \left(x^TA \hat{y}\right)\subseteq\argmax_x\left(\min_yx^TAy\right)\\
+\hat{y}\in\argmin_y \left(\hat{x}^T Ay\right)\subseteq\argmin_x\left(\max_xx^TAy\right)
+\end{align*}
+
+%$(\Leftarrow)$ 
+\item Let $x_1,y_1$ and $x_2,y_2$ be the given mixed Nash equilibria of a two-player zero-sum game. Thus by the above result, for $i=1,2$
+\begin{align*}
+x_i &\in \argmax_x\left(\min_yx^TAy\right)\\
+y_{3-i} & \in\argmin_x\left(\max_xx^TAy\right)
+\end{align*}
+thus
+\begin{align*}
+x_i^TAy_{3-i}&\geq x^TAy_{3-i} \quad \text{for all mixed distributions $x$}\\
+x_i^TAy_{3-i}&\leq x_i^TAy_{} \quad \text{for all mixed distributions $y$}
+\end{align*}
+\end{enumerate}
+
+\item
+\begin{enumerate}[(a)]
+\item 
+\item
 \end{enumerate}
 
 
-
-
-
+\end{enumerate}
 
 
 
