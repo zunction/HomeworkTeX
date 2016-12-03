@@ -100,7 +100,7 @@ As the game is finite, we can use $\Phi$ and best-response dynamics such that th
 \begin{align*}
 C_i(s'_i,s_{-i})<C_i(s^\ast)
 \end{align*}
-since it implies $\Phi(s'_i,s_{-i})<\Phi(s^\ast)$ and contradicts $\Phi(s^\ast)<\Phi(s)$ for all pure strategies $s \neq s^\ast$. Thus this game has at least on PNE.
+since it implies $\Phi(s'_i,s_{-i})<\Phi(s^\ast)$ and contradicts $\Phi(s^\ast)<\Phi(s)$ for all pure strategies $s \neq s^\ast$. Thus this game has at least one PNE.
 \item
 \begin{enumerate}[(a)]
 \item 
@@ -152,14 +152,11 @@ Consider the utility maximizing game below starting with the the initial outcome
 \begin{align*}
 \sum_{t=1}^{t'}\nu^t \leq OPT + 2\sqrt{2^i\ln n}
 \end{align*}
-Let $kt'\geq T$, then
+Let $kt'\geq T$ for some integer $k$, then
 \begin{align*}
-\sum_{t=1}^{T}\nu^t \leq\sum_{t=1}^{kt'}\nu^t \leq OPT + k\cdot 2\sqrt{2^i\ln n}=OPT + k\sqrt{2^i}(2\sqrt{\ln n}) \leq OPT + 2\sqrt{T\ln n}
+\sum_{t=1}^{T}\nu^t \leq\sum_{t=1}^{kt'}\nu^t \leq OPT + k\cdot 2\sqrt{2^i\ln n}=OPT + (2\sqrt{k^2\cdot 2^i\ln n}) \leq OPT + 2\sqrt{k}\sqrt{T\ln n}
 \end{align*}
-The last inequality holds since 
-\begin{align*}
-\sqrt{T} \geq k\sqrt{2^i} \implies T \geq k^22^i
-\end{align*}
+and hence the expected regret is still $O(\sqrt{\ln n/T})$ with respect to every fixed action.
 \item Let $f_\epsilon(x)=(1-\epsilon)^x$ and $g_\epsilon(x)=1+\epsilon x$, then
 \begin{align*}
 &f_\epsilon(0) = 1 = g_\epsilon(0)\\
@@ -211,11 +208,12 @@ thus
 x_i^TAy_{3-i}&\geq x^TAy_{3-i} \quad \text{for all mixed distributions $x$}\\
 x_i^TAy_{3-i}&\leq x_i^TAy_{} \quad \text{for all mixed distributions $y$}
 \end{align*}
+which by definition tells us that $(x_i,y_{3-i})$ is a mixed Nash equilibrium for $i=1,2$.
 \end{enumerate}
 
 \item
 \begin{enumerate}[(a)]
-\item 
+\item Let $(A,B)$ be a given general bimatrix game with player one and player two having $n$ and $m$ different strategies to choose from their strategy set denoted by $\mathbf{x}$ and $\mathbf{y}$ respectively, thus $A$ and $B$ are $n \times m$ and $m \times n$ matrices respectively. The expected payoffs of player one is then  $\mathbf{x}^TA\mathbf{y}$ and the expected payoffs of player two is $\mathbf{y}^TB\mathbf{x}$.
 \item
 \end{enumerate}
 
