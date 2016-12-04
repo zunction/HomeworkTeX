@@ -94,13 +94,22 @@ k=\text{gcd}\{n\geq 1: P\left[X_{nd}=i\mid X_0=i\right]>0\}
 \end{align*}
 for every state $i$. This implies that, for all states, the number of transitions needed to return to state $i$ given that it starts from $i$ in $\{X_n: n\geq 0\}$ is of the form $lkd$ where $l$ is a positive integer. This contradicts that $\{X_n: n\geq 0\}$ is a Markov chain with period $d$ since for any integer $l$, $lkd>d$, thus $k=1$ as required and $\{X_{nd}: n\geq 0\}$ as aperiodic.
 
-If we consider the states accessible to $\{X_{nd}: n\geq 0\}$, it is irreducible. Else it is not. Consider the simple symmetric random walk where $\{X_{2n}: n\geq 0\}$ is aperiodic and irreducible for the even states. But if we consider both even and odd states, it is not irreducible as it cannot visit an odd state in even number of steps.
+%If we consider the states accessible to $\{X_{nd}: n\geq 0\}$, it is irreducible. Else it is not. Consider the simple symmetric random walk where $\{X_{2n}: n\geq 0\}$ is aperiodic and irreducible for the even states. But if we consider both even and odd states, it is not irreducible as it cannot visit an odd state in even number of steps.
 
-\item Suppose $i \leftrightarrow j$ and let $i$ be positive recurrent, thus $\sum_{n=1}^{\infty}nf_{ii}^n<\infty$. 
+\item Suppose $i \leftrightarrow j$ and let $i$ be positive recurrent, thus $\lim_{n\to\infty}P^n_{ii}>0$. Let $d$ be the smallest integer such that $P^d_{ij}\neq 0$. Suppose $\lim_{n\to\infty}P^n_{jj}=0$, then
 \begin{align*}
-%\sum_{n=1}^{\infty}nf_{jj}\geq\sum_{n=1}^{\infty}nP_{ij}f_{jj}P_{ji}
-\infty >\sum_{n=1}^{\infty}nf^n_{ii}\geq \sum_{n=1}^{\infty}nf^1_{ji}f_{ii}^nf^1_{ij}\geq \sum_{n=1}^{\infty}nf^n_{jj}
+0=\lim_{n\to\infty}P^{n+d}_{jj}&=\lim_{n\to\infty}\sum_{k=0}^{\infty}P^n_{jk}P^d_{kj}\\
+&\geq\lim_{n\to\infty}\sum_{k=0}^{M}P^n_{jk}P^d_{kj} \quad \text{for all $M$}\\
+&=\sum_{k=0}^{M}\pi_{k}P^d_{kj} \quad \text{for all $M$}\\
+&=\sum_{k=0}^{\infty}\pi_{k}P^d_{kj} 
 \end{align*}
+This implies that for every $k$, $\pi_kP^d_{kj}=0$ and in particular $\pi_iP^d_{ij}=0$. Since $\pi_i >0$, we will need $P^d_{ij}=0$, a contradiction.
+
+%$\sum_{n=1}^{\infty}nf_{ii}^n<\infty$. 
+%\begin{align*}
+%%\sum_{n=1}^{\infty}nf_{jj}\geq\sum_{n=1}^{\infty}nP_{ij}f_{jj}P_{ji}
+%\infty >\sum_{n=1}^{\infty}nf^n_{ii}\geq \sum_{n=1}^{\infty}nf^1_{ji}f_{ii}^nf^1_{ij}\geq \sum_{n=1}^{\infty}nf^n_{jj}
+%\end{align*}
 
 
 \item Let $\{X_n:n\geq 0\}$ be an irreducible and aperiodic Markov chain. The chain is doubly stochastic, thus $\sum_{i}P_{ij}=1$. For any two states $i$ and $j$, we have $i \leftrightarrow j$ since the Markov chain is irreducible and together with the aperiodicity, we have $\lim_{n\to\infty}P_{ij}^n=1/\mu_{jj}$. We can prove by induction that $\sum^{k}_{i=0}P^n_{ij}=1$. Thus
