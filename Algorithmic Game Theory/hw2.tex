@@ -157,17 +157,26 @@ Let $kt'\geq T$ for some integer $k$, then
 \sum_{t=1}^{T}\nu^t \leq\sum_{t=1}^{kt'}\nu^t \leq OPT + k\cdot 2\sqrt{2^i\ln n}=OPT + (2\sqrt{k^2\cdot 2^i\ln n}) \leq OPT + 2\sqrt{k}\sqrt{T\ln n}
 \end{align*}
 and hence the expected regret is still $O(\sqrt{\ln n/T})$ with respect to every fixed action.
-\item Let $f_\epsilon(x)=(1-\epsilon)^x$ and $g_\epsilon(x)=1+\epsilon x$, then
+\item Let $f_\epsilon(x)=(1-\epsilon)^x$ and $g_\epsilon(x)=1-\epsilon x$, then
 \begin{align*}
 &f_\epsilon(0) = 1 = g_\epsilon(0)\\
 &f_\epsilon(1) = 1-\epsilon = g_\epsilon(1)\\
 &\begin{rcases}
  f'_\epsilon(x)&=(1-\epsilon)^x\ln (1-\epsilon) \\
-  g'_\epsilon(x)&=\epsilon \\
-\end{rcases}f'_\epsilon(0) = \ln(1-\epsilon) < 0= g'_\epsilon(0)
+  g'_\epsilon(x)&=-\epsilon \\
+\end{rcases}f'_\epsilon(0) = \ln(1-\epsilon) < -\epsilon= g'_\epsilon(0)
 \end{align*}
-also $f_\epsilon$ is a convex function as $f''_\epsilon(x)=(1-\epsilon)^x\left[\ln (1-\epsilon)\right]^2>0$ for $\epsilon \in(0,1/2]$. This this proves $f_\epsilon(x)\leq g_\epsilon(x)$ since the initial gradient of $f_\epsilon$ is smaller then $g_\epsilon$ 
+The last inequality holds since
+\begin{align*}
+\ln(1-\epsilon)=-\epsilon -\frac{\epsilon^2}{2!(1-\xi)^2}\quad \text{by Taylor's theorem in Lagrange form}
+\end{align*}
+for some $\xi \in (0,\epsilon)$. Also $f_\epsilon$ is a convex function as $f''_\epsilon(x)=(1-\epsilon)^x\left[\ln (1-\epsilon)\right]^2>0$ for $\epsilon \in(0,1/2]$ on the interval $[0,1]$. This this proves $f_\epsilon(x)\leq g_\epsilon(x)$.
 
+Let $\hat{f}_\epsilon(x)=(1+\epsilon)^x$, then by Taylor's expansion  %$\hat{g}_\epsilon(x)$ 
+\begin{align*}
+(1+\epsilon)^x = 1 + \epsilon x + \frac{x(x-1)(1-\xi)^{x-2}}{2!}\epsilon^2
+\end{align*}
+for some $\xi \in (0,\epsilon)$. We observe that $\frac{x(x-1)(1-\xi)^{x-2}}{2!}\epsilon^2 \leq 0$ since $x \in [0,1]$ we have proved that $(1+\epsilon)^x \leq 1+\epsilon x$.
 %Let $f(\epsilon,x)=(1-\epsilon)^x$, then
 %\begin{align*}
 %\frac{f^{n}(\epsilon,x)}{d\epsilon^n}=(-1)^n\cdot x(x-1)(x-2)\ldots(x-n+1)(1-\epsilon)^{x-n}
@@ -182,7 +191,30 @@ also $f_\epsilon$ is a convex function as $f''_\epsilon(x)=(1-\epsilon)^x\left[\
 %\sum_{n=2}^{\infty}(-1)^n\frac{x(x-1)(x-2)\ldots(x-n+1)}{n!}\epsilon^n \leq 0
 %\end{align*}
 %which is true since $(-1)^n\cdot x(x-1)(x-2)\ldots(x-n+1) = -x (1-x)(2-x)\ldots (n-1-x)\leq 0$.
-\item
+\item Consider the online decision-making setting where every time step $t$ the adversary  chooses a payoff vector $\pi^t:A \to [0,1]$ where the time-averaged regret is defined as $\frac{1}{T} \max_{a\in A}\sum_{t=1}^{T}\pi^t(a)-\frac{1}{T}\sum_{t=1}^{T}\pi^t(a^t)$. Let $\Gamma^t =\sum_{a\in A}w^t(a)$ and define $OPT = \sum_{t=1}^{T}c^t(a^\ast)$ as the cumulative cost for the best fixed action $a^\ast$. Then
+\begin{align*}
+\Gamma^T&\leq w^T(a^\ast)\\
+&=w^1(a^\ast)\prod_{t=1}^{T}(1+\epsilon)^{\pi^t(a^\ast)} = (1+\epsilon)^{OPT}
+\end{align*}
+Te expectec cost of the MW algorithm at time $t$ is 
+\begin{align*}
+\sum_{a \in A}p^t(a).\pi^t(a) = \sum_{a \in A}\frac{w^t(a)}{\Gamma^t}\pi^t(a) 
+\end{align*}
+We can rewrite $\Gamma^{t+1}$ in terms of $\Gamma^t$ in the following manner
+\begin{align*}
+\Gamma^{t+1} &= \sum_{a \in A}w^{t+1}(a)\\
+&= \sum_{a \in A}w^{t}(a)\cdot (1+\epsilon)^{\pi^t(a)}\\
+&\leq \sum_{a \in A}w^{t}(a)\cdot (1+\epsilon\pi^t(a))\\
+&\leq \Gamma^t\sum_{a \in A}p^{t}(a)\cdot (1+\epsilon\pi^t(a))\\
+&\leq \Gamma^t\sum_{a \in A}p^{t}(a)+p^{t}(a)\epsilon\pi^t(a)\\
+&\leq \Gamma^t(1+\epsilon\nu^t)\quad \text{where $\nu^t$ is the expected utility at time $t$.}
+\end{align*}
+Combining the results obtained from before,
+\begin{align*}
+(1+\epsilon)^{OPT}\leq \Gamma^T\leq \Gamma^1\prod_{t=1}^{T}(1+\epsilon \nu^t)\\
+OPT \ln (1+\epsilon)\leq  \ln n + \sum_{t=1}^{T}\ln (1+\epsilon \nu^t)\\
+\end{align*}
+
 \item 
 \begin{enumerate}[(a)]
 \item %$(\Rightarrow)$ 
