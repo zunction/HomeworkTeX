@@ -88,7 +88,7 @@ Zhangsheng Lai
 \end{flushright}
 
 \section*{A new direction}
-We noticed that in most of the models that we read (cf.  \cite{Drago1991}, \cite{Chakravarti2015}), the workplace reward maximizing game that was played is static and there are no dynamics involved. However, in real scenarios, when someone joins a new company, the newcomer does not immediately decide to purely cooperate or compete, similiarly, this is true for his new colleagues too. After some interaction with each other over a time span, everyone will have a rough idea of everybody's work style and ethnics. This will then allow the agent to decide whether to cooperate or compete with each agent respectively which we shall call it the nature of the agent. Such a model would be a more realistic scenario as it gives each agent time to learn about the environment before determining his nature. 
+We noticed that in most of the models that we read (cf.  \cite{Drago1991}, \cite{Chakravarti2015}), the workplace reward maximizing game that was played is static and there are no dynamics involved. However, in real scenarios, when someone joins a new company, the newcomer does not immediately decide to purely cooperate or compete, similiarly, this is true for his new colleagues too. After some interaction with each other over a time span, everyone will have a rough idea of everybody's work style, ethnics and most importantly the reward derived. This will then allow the agent to decide whether to cooperate or compete with each agent respectively which we shall call it the nature of the agent. Such a model would be a more realistic scenario as it gives each agent time to learn about the environment before determining his nature. 
 
 \begin{defn}
 The \emph{nature} of an agent in a workplace reward maximizing game with $k$ agents is a vector $\mathbf{x_i}=(x^i_1,x^i_2,\ldots, x^i_k)$ such that $\sum x_i=1$. It is a discrete probability distribution where $x^i_j$ denotes the probability of cooperating with agent $j$ and $x^i_i$ denotes the probability of not cooperating. \label{def:nature}
@@ -140,8 +140,29 @@ Thus, if the proportion of the reward that is allocated to you is larger for wor
 \end{enumerate}
 
 
-
-
+\subsection{Two Agent Scenario}
+Consisder two agents each with a project on its own. Let agent $i$ has strategy $p^t_{ij}$: probability of joining project $j$. At each time step (which we shall more precisely define later), the project produces a reward $R_j^t$ to be spilt among agents in that project such that
+\begin{align*}
+R_j^t=\sum_{i\in R}u_{ij}^t
+\end{align*} 
+Agent $i$ update his weights with every time step such that for all $i, j$ $\sum_ip_{ij}^t=1$. This is done by the multiplicative weights (MW) update algorithm. For every time step the reward is calculated by the following in a two agent scenario
+\begin{align*}
+R_{i}(\mathbf{p})
+\end{align*}
+and the agent's utility can be computed using the matrix
+\begin{align*}
+\begin{pmatrix}
+R_{1} &R_{2}\\
+\end{pmatrix}
+\begin{pmatrix}
+p_{11} & p_{12}\\
+p_{21} & p_{22}\\
+\end{pmatrix}
+\begin{pmatrix}
+R_{1}\\
+R_{2}\\
+\end{pmatrix}
+\end{align*}
 
 
 
