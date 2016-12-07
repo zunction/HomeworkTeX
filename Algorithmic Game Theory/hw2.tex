@@ -157,7 +157,7 @@ Let $kt'\geq T$ for some integer $k$, then
 \sum_{t=1}^{T}\nu^t \leq\sum_{t=1}^{kt'}\nu^t \leq OPT + k\cdot 2\sqrt{2^i\ln n}=OPT + (2\sqrt{k^2\cdot 2^i\ln n}) \leq OPT + 2\sqrt{k}\sqrt{T\ln n}
 \end{align*}
 and hence the expected regret is still $O(\sqrt{\ln n/T})$ with respect to every fixed action.
-\item Let $f_\epsilon(x)=(1-\epsilon)^x$ and $g_\epsilon(x)=1-\epsilon x$, then
+\item \label{eq:q4} Let $f_\epsilon(x)=(1-\epsilon)^x$ and $g_\epsilon(x)=1-\epsilon x$, then \label{eq:q4}
 \begin{align*}
 &f_\epsilon(0) = 1 = g_\epsilon(0)\\
 &f_\epsilon(1) = 1-\epsilon = g_\epsilon(1)\\
@@ -204,17 +204,20 @@ We can rewrite $\Gamma^{t+1}$ in terms of $\Gamma^t$ in the following manner
 \begin{align*}
 \Gamma^{t+1} &= \sum_{a \in A}w^{t+1}(a)\\
 &= \sum_{a \in A}w^{t}(a)\cdot (1+\epsilon)^{\pi^t(a)}\\
-&\leq \sum_{a \in A}w^{t}(a)\cdot (1+\epsilon\pi^t(a))\\
+&\leq \sum_{a \in A}w^{t}(a)\cdot (1+\epsilon\pi^t(a)) \quad \text{by Q\ref{eq:q4}}\\
 &\leq \Gamma^t\sum_{a \in A}p^{t}(a)\cdot (1+\epsilon\pi^t(a))\\
 &\leq \Gamma^t\sum_{a \in A}p^{t}(a)+p^{t}(a)\epsilon\pi^t(a)\\
 &\leq \Gamma^t(1+\epsilon\nu^t)\quad \text{where $\nu^t$ is the expected utility at time $t$.}
 \end{align*}
 Combining the results obtained from before,
 \begin{align*}
-(1+\epsilon)^{OPT}\leq \Gamma^T\leq \Gamma^1\prod_{t=1}^{T}(1+\epsilon \nu^t)\\
-OPT \ln (1+\epsilon)\leq  \ln n + \sum_{t=1}^{T}\ln (1+\epsilon \nu^t)\\
+(1+\epsilon)^{OPT}&\leq \Gamma^T\leq \Gamma^1\prod_{t=1}^{T}(1+\epsilon \nu^t)\\
+OPT \ln (1+\epsilon)&\leq  \ln n + \sum_{t=1}^{T}\ln (1+\epsilon \nu^t)\\
+OPT (\epsilon-\epsilon^2)\leq OPT \ln (1+\epsilon)&\leq  \ln n + \sum_{t=1}^{T}\ln (1+\epsilon \nu^t)\leq  \ln n + \sum_{t=1}^{T}\epsilon \nu^t\\
+OPT (\epsilon-\epsilon^2)&\leq   \ln n + \sum_{t=1}^{T}\epsilon \nu^t\\
+OPT &\leq   (\ln n)/\epsilon + \sum_{t=1}^{T}\nu^t +\epsilon OPT\leq   (\ln n)/\epsilon +\epsilon T + \sum_{t=1}^{T}\nu^t \\
 \end{align*}
-
+Hence equalizing the two error terms, we get $\epsilon=\sqrt{\ln n/T}$, similar to the case of the cost vector. Thus it has regret $O(\sqrt{\ln n/T})$
 \item 
 \begin{enumerate}[(a)]
 \item %$(\Rightarrow)$ 
