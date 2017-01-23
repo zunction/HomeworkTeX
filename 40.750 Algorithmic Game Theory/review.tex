@@ -1,0 +1,265 @@
+\documentclass[a4paper,10pt]{article}
+\setlength{\parindent}{0cm}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{graphicx,caption}
+\usepackage{verbatim}
+\usepackage{venndiagram}
+\usepackage[cm]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{listings,url,}
+\usepackage{color,enumerate,framed}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+\usepackage{sectsty}
+\allsectionsfont{\centering}
+%\usepackage[normalem]{ulem}
+%\allsectionsfont{\sffamily}
+%\sectionfont{\centering\ulemheading{\uuline}}
+
+%\usepackage{tgadventor}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+\usepackage{parskip}
+%\usepackage{picins} %for \parpic.
+%\newtheorem*{notation}{Notation}
+%\newtheorem{example}{Example}[section]
+%\newtheorem*{problem}{Problem}
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem*{solution}{Solution}
+%\newtheorem*{definition}{Definition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{remark}{Remark}
+%\setcounter{section}{1}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{examp}{Example}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{nte}{Note}
+\newtheorem*{notat}{Notation}
+
+%\diagramstyle[labelstyle=\scriptstyle]
+
+\lstset{frame=tb,
+  language=Oz,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\pagestyle{fancy}
+
+
+
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lfoot{\color{black!60}{\sffamily Hung \& Zhangsheng}}
+\cfoot{}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\rfoot{\color{black!60}{\sffamily\thepage}}
+
+
+
+\begin{document}
+\begin{flushright}
+Nguyen Tan Thai Hung\\
+Zhangsheng Lai\\
+\end{flushright}
+%\begin{flushleft}
+%Competition and cooperation in the workplace\\
+%Drago R Turnbull G\\
+%Journal of Economic Behavior and Organization\\
+%1991
+%\end{flushleft}
+Our group decided to review two papers \cite{Drago1991} and \cite{Banerjee2014} that adopted two different approach analysis cooperation and competition in workplaces. The former uses the very familiar utility function approach and the latter introduces a novel idea in the setting of a treasure-hunt game where agents progressively solve a series of clues so as to arrive at a final objective. The interesting part of it is that an agent is allowed to disclose or not disclose the clue that he or she has solved for; disclosing the clue will lead to a reward, but will also allow the other agents to proceed to the next stage that when solved might generate much greater rewards. Hence the agent has to decide whether disclosing the results of his progress will maximise his rewards or lead to more competition for future rewards.
+
+
+\section{Review 1: Competition and cooperation in the
+workplace}
+\subsection*{Summary}
+
+In this paper the authors analyse cooperation and competition that exists between two risk averse workers with similar attributes. A worker's utility is a function of the worker's effort, $\mu$ and the worker's income $y$, presented as an expectation $\mathbf{E}[U(y)-V(\mu)]$.
+%\begin{align*}
+%\mathbf{E}[U(y)-V(\mu)]
+%\end{align*}
+$U$ and $V$ are utility functions that convert income and effort respectively into a common measure. A worker's effort is represented by $\mu_i = \mu_{ii}+\mu_{ij}$, made up of his or her own effort $\mu_{ii}$ and a helping effort $\mu_{ij}$, which denotes effort in helping agent $j$. The paper does not clearly define each worker's task or their task as a whole but uses a more generic measure of the worker's output represented by a production function $Q_i=f^i(\mu_{ii},\mu_{ji})+\epsilon_i$,
+%\begin{align*}
+%Q_i=f^i(\mu_{ii},\mu_{ji})+\epsilon_i
+%\end{align*}
+which is a function of own effort and helping effort from other agents and the $\epsilon_i$ is some random disturbance to the production. The paper requires knowledge of the distribution of $\epsilon$ to compute the average utility received by a worker. The random disturbance is assumed to be uncorrelated to each other as it imposes $\mathbf{E}[\epsilon_i\epsilon_j]=0$ and $\mathbf{E}[\epsilon_i]=0$. Instead of proposing a production function explicitly, the paper characterizes $f$ by imposes three restrictions on it:
+
+
+%In order to evaluate expectation, we need some probability distribution and here, the distribution of $\epsilon$, is the only one that the paper works with in its analysis and the random noise of each worker is (independent? I think not) and identically distributed. 
+
+\begin{enumerate}[(a)]
+\item Marginal products are positive for both own and helping efforts, except that:
+\item $f^i(0,\mu_{ji})=0$ which implies $\frac{\partial f^i(0,\mu_{ji})}{\partial \mu_{ji}}=0$
+\item For $\mu_{ii}>0$,
+\begin{align*}
+\left.\frac{\partial f^i}{\partial \mu_{ii}}\right|_{\mu_{ij}=0} < \left.\frac{\partial f^i}{\partial \mu_{ij}}\right|_{\mu_{ij}=0}
+\end{align*}
+\end{enumerate}
+
+With the desired properties of the components of the utility function established,  the papers considers different scenarios based on the different behaviour of the workers in the sense of their classifying them based on these partial derivatives:
+\begin{align}
+\frac{\partial\mu_{ii}}{\partial\mu_{jj}}=\frac{\partial\mu_{jj}}{\partial\mu_{ii}}=a\quad
+\frac{\partial\mu_{ij}}{\partial\mu_{ji}}=\frac{\partial\mu_{ji}}{\partial\mu_{ij}}=b \label{eq:partiald}
+\end{align}
+(i) A \emph{Cournot} behaviour is one where $(a,b)=(0,0)$, the workers efforts are not related to each other in any way. (ii) Partial bargaining behaviour is when $(a,b)=(0,1)$; the amount of helping effort exchanged between the workers are the same but own effort is independent of others independent effort. (iii) Complete bargaining occurs when $(a,b)=(1,1)$.
+
+
+The next consideration of the paper is the incentive scheme: tournament or quota, which sets up a competitive and non-competitive environment in the workplace respectively. In the contest scenario, the workers are ranked and afforded prizes accordingly; in their two workers scenario they the higher ranked is assigned a prize of $+x$ and the lower is given a prize of $-x$. In the quota scheme, workers are given the prizes when they fulfil an expectation; thus everyone can get the prize $(+x)$ and similarly fail to get the prize $(-x)$. 
+
+As every worker aims to maximise their utility that is the expectation introduced earlier, using $\overline{Y}$ as a fixed income-base the expectation is given by $\mathbb{P}_i(\mathbf{\mu})U(\overline{Y}+x)+(1-\mathbb{P}_i(\mathbf{\mu}))U(\overline{Y}-x)-V(\mu_i)$
+%\begin{align*}
+%\mathbb{P}_i(\mathbf{\mu})U(\overline{Y}+x)+(1-\mathbb{P}_i(\mathbf{\mu}))U(\overline{Y}-x)-V(\mu_i)
+%\end{align*}
+and Karush-Kuhn-Tucker (KKT) approached is used to find the optimal utility of the player. Conditioning on the sufficient conditions for KKT, the paper then derives the type of behaviours to be exhibited by the workers when they individually try to maximise their utility on both the contest and quota schemes.
+
+The last discussion in the paper compares the difference between the tournament and quota schemes using the term welfare, which then requires some knowledge of the density of $\epsilon$; the paper examines the cases when $\epsilon$ is uniform and the case when it is unimodal symmetric.
+
+The conclusion derived from this paper is that we cannot expect any helping efforts in a tournament and for a quota scheme, helping efforts only exists when there is partial or complete bargaining. This result is consistent with our intuition and experience that people are more willing to lend a helping hand in noncompetitive environment than in a competitive one.
+
+
+This paper is more of a worker-centric paper where the focus is more on how the workers can obtain the best utility with the least effort. In the tournament scheme, as the workers are just competing relative to each other with no production benchmark set by the firm, we see that in a complete bargining tournment the workers are playing with the flaw in the compensation scheme by all refusing to work. In the case of the quota scheme, proposition 5 and 6 simply says that the classification of own and helping efforts are blurred as the production of an agent derived from a unit of own effort is no different from production derived from a unit of helping effort and by the symmetrical actions of the workers, everyone will exert similar amount of effort (this effort is any effort, be it own or helping). Thus the allocation of effort does not matter in a quota scheme with nonzero bargaining. 
+
+%The workers in the scenario provided in this paper are treating the firm that they work for as an adversary and does not see themselves as part of the firm. What we would like to model is one where the workers have to see the firm and their fellow workers as allies worthy of cooperating with, as the whole is greater than the sum of its parts. Although this paper provides useful approaches and ways of analysis, it lacks the idea of the model that we are aiming for.
+
+%TLDR: The paper gives a rigorous explanation of how the compensation scheme of a company plays a part in the helping efforts of its workers. 
+ 
+
+%\cite{drago1991}
+
+\subsection*{Positivity}
+
+The paper works with only the distribution of $\epsilon$ makes the model much more neat; if there are too many distributions to manage, the analysis will be complex $-$ too much integrals that might not be tractable. Classification into the tournament and quota schemes tells us something important: the way the workers are graded plays an important role in whether the strategy of the workers lean towards cooperation or competition. This is also seen in schools, where using a bell curve to grade students lead to very individualistic behaviour as compared to assigning grades based on the student's raw score. 
+
+Lastly, the paper allows the workers to know which scheme they are compensated under and we see that it is workers will tend to the direction that either give them more wages or require less effort from them. This leads to the thought that if the idea is to promote helping efforts without the firm being exploited, the compensation scheme should be designed in such a way that it is fully disclosed to them but due to some incomplete information, the way to raise their utility is to increase own or helping effort. This would lead to the consideration of a hybrid tournament and quota scheme:  a quota will be set in place to ensure the minimum efforts are guaranteed to obtain the output quota and any surplus outputs are then rewarded; this is exactly the type of compensation scheme that we see today. Although this point was not mentioned in the paper, it indirectly points to why the compensation schemes in most companies are of this structure. 
+
+
+%\begin{itemize}
+%\item working with only the distribution of $\epsilon$ makes the model much more neat; if there are too many distributions to manage, the analysis will be complex $-$ too much integrals that might not be tractable.
+%
+%
+%\item classification into the tournament and quota schemes tells us something important: the way the workers are graded plays an important role in whether the dynamic of the workers lean towards cooperation or competition. This is also seen in schools, where using a bell curve to grade students lead to very individualistic behaviour as compared to assigning grades based on the student's raw score.
+%
+%\item the paper allows the workers to know which scheme they are compensated under and we see that it is workers will tend to the direction that either give them more wages or require less effort from them. This leads to the thought that if the idea is to promote helping efforts without the firm being exploited, the compensation scheme should be designed in such a way that it is fully disclosed to them but due to some incomplete information, the way to raise their utility is to increase own or helping effort. This would lead to the consideration of a hybrid tournament and quota scheme:  a quota will be set in place to ensure the minimum efforts are guaranteed to obtain the output quota and any surplus outputs are then rewarded; this is exactly the type of compensation scheme that we see today. Although this point was not mentioned in the paper, it indirectly points to why the compensation schemes in most companies are of this structure. 
+%\end{itemize}
+
+
+\subsection*{Negativity}
+%The using of KKT conditions to reverse-engineer the worker's behaviour that secures its best interest is an interesting approach but KKT does not guarantee that the workers will display such behaviours; it only guarantee that if the workers display a particular behaviour it will guarantee to maximise their utility. The paper argues in the reverse way and obtains results that are intuitive, however, it is important to note that it is the dynamics of the workers that give the utility, not the opposite which is what the paper is doing.
+
+The assumptions that the workers' behaviour are homogeneous may have made it easier to make deductions on own and helping efforts but workers do not generally exhibit the same working behaviour. A deviant from the workplace culture might lead to very different outcomes. As we recall that in an equilibrium, unless it is a strong Nash equilibrium, we can have a coalition of players that might deviate due to some benefits to be derived from. %The paper also does not use any concept of equilibrium in its discussion which makes the strategies of the players derived from a given scheme and bargaining level constrain on the KKT conditions just some theoretical concepts and may not be the case observed in real situations.
+
+The definition of the partial and complete bargaining behaviours is too constrained as the values are set to either 0 or 1 in the partial derivatives in (\ref{eq:partiald}) which does not incentivize helping efforts. These constrains result in Propositions 2 and 3, where helping efforts do not occur even in a partial or complete bargaining tournament. It adversely prevents workers increasing their efforts in a tournament that will lead to higher utility. This lack of freedom to choose a more attractive strategy prevents us to uncover the positivities or negativities derived from having different levels of helping efforts.
+
+%The constrains that are imposed in (\ref{eq:partiald}) restrict 
+%
+%It seems that this constrain is preventing  helping efforts, although the imposing of the restriction (b) on $f$ was aimed to promote helping efforts. 
+
+
+%This model adopted by the paper does not allow freedom in how the 
+%
+%It will seem too mecenary to require more help effort than what was offered but in our idea of cooperation, we woul
+%
+%
+%view helping efforts being able to create some synergy between the parties such that it reaps greater benefits for the team as compared to everyone working isolatedly.
+
+The paper fails to consider that the firm needs to be operating to a certain level of expectation in order to be able to pay their workers wages, which resulted in Proposition 3 being able to make the conclusion that all efforts are identically zero. Without such a consideration it seems to make the assumption that the firm has infinite resources and the workers can exploit the firm in a complete bargaining tournament, ironically the workers are cooperating; cooperating to exploit the firm of its resources.
+
+%\begin{itemize}
+%\item  using KKT conditions to reverse-engineer the worker's behaviour that secures its best interest is an interesting approach but KKT does not guarantee that the workers will display such behaviours; it only guarantee that if the workers display a particular behaviour it will guarantee to maximise their utility. The paper argues in the reverse way and obtains results that are intuitive, however, it is important to note that it is the  of the workers that give the utility, not the opposite which is what the paper is doing.
+%
+%\item the discussion only considers the scenarios where the workers' behaviours are the same, there might be scenarios where workers exhibit different behaviour from each other.
+%
+%\item the definition of the partial and complete bargaining behaviours is too constrained as we set the values to either 0 or 1 in the partial derivatives in (\ref{eq:partiald}) which does not incentivize helping efforts. This constrain is the reason for the result of propositions 2 and 3, where helping efforts do not occur even in a partial or complete bargaining tournament.  It seems to be this constrain is preventing  helping efforts although the imposing of the restriction (b) on $f$ was aimed to promote helping efforts. It will be a tad bit too mecenary to require more help effort than what was offered but in our idea of cooperation, we view helping efforts being able to create some synergy between the parties such that it reaps greater benefits for the team as compared to everyone working isolatedly. Hence we need to 
+%
+%
+%\item the paper fails to consider that the firm needs to be operating to a certain level of expectation in order to be able to pay their workers wages, which resulted in proposition 3 being able to make the conclusion that all efforts are identically zero. Without such a consideration it seems to make the assumption that the firm has infinite resources and the workers can stand to take and not give in a complete bargaining tournament, ironically the workers are cooperating; cooperating to exploit the firm of its resources.
+%
+%
+%\end{itemize}
+
+\section*{Review 2: Reincentivizing Discovery: Mechanisms for Partial-Progress Sharing in Research}
+
+\subsection*{Summary}
+	The paper examines incentives of researcher in large-scale research projects and finds the conditions for which partial progress sharing (PPS) is the optimal strategy.
+	
+	In this paper, a stylized model is proposed. A research project is broken down to a collection of subtasks in an acyclic network. Each subtask is an edge connecting two nodes. A task is available to an agent when she knows all the solutions of the preceding subtasks, and the project is completed when all subtasks are solved. For each subtask, a reward is given to the agent who first publicizes its solution, and this reward is fixed exogenously (e.g, by a central planner). Upon solving a subtask, an agent may either keep the solution private, or publicize it and claim the reward. By keeping the solution private, he may have a competitive advantage in solving the subsequent subtasks. The time it takes for agent $i$ to complete subtask $u$, denoted $T_i(u)$ is an exponential random variable with rate $a_i(u)$, which is the aptitude of agent $i$ with respect to project $u$. In a specific subclass of games, one with a Separable Aptitude (SA) Model, $a_i(u)$ is decomposable into two independent components: $a_i(u) = a_i \cdot s_u$, where $a_i$ is the ability of agent $i$, and $s_u$ is the simplicity of task $u$. The paper mainly discusses this model.
+	
+	The key result throughout the paper is that under the SA Model, in order to ensure PPS, the reward for a subtask must be inversely proportional to its simplicity. Specifically:
+	\begin{itemize}
+		\item For an acyclic network, PPS is a perfect Bayesian Equilibrium if for every pair of subtask $u, v$ such that $u$ precedes $v$, 
+		\begin{align}\label{eq1}
+			\frac{R_us_u}{R_vs_v} \geq 1
+		\end{align}	
+		\item For linear network, a stronger result holds: condition (\ref{eq1}) becomes
+		\begin{align}
+			\frac{R_us_u}{R_vs_v} \geq \alpha
+		\end{align}
+		where
+		\begin{align*}
+			\alpha = \max_{i} \frac{a_i}{\sum_j a_j}
+		\end{align*}
+	\end{itemize}
+	The results make intuitive sense. First of all, in a linear network, everyone works on the same task. This stronger competition creates a stronger incentive to claim immediate reward than in the previous case, and thus $\alpha < 1$. Furthermore, if an agent has a higher ability than other agents, he has a higher chance of completing a task. Thus, keeping the solution private gives him an even higher chance of claiming the next reward. Therefore, $\alpha$ must be set such that even the best agent would be incentified to disclose immediate results.
+	
+	The second key result is that ensuring PPS is sufficient to minimize the makespan (the total duration of the entire project). This means that PPS ensure the social optimum. The authors highlighted that this findings is significance because the model provides a constructive way to guarantee social optimum. In contrast, a previous paper which discussed the SA model under a static context (instead of a sequential game) found that finding the reward vector that ensures PPS is NP-hard. 
+
+\section{Relevance to our project}
+	\cite{Banerjee2014} uses a stylized acyclic network coupled with exponential completion time. This is an excellent model, in our opinion. The results are nontrivial and not apparent. But they have a nice structure and make very intuitive sense and. In our own model, we also incorporated an aptitude parameter called $a_{ij}$ but we did not separate it into two independent components. This is something we can try.
+	
+	\cite{Drago1991} employs a convex function to penalizes additional effort in order to ensure that efforts do not go to infinity. Contrarily, we enforce a fixed time budget $T$ for all agents. In our opinion, setting a time budget is more realistic than enforcing a convex penalty function. The restrictions (b) and (c) that were imposed on the production function is something that we like to adopt into our model; the first is a natural property aligned to real scenarios in workplaces; the amount of work produced by an agent is deemed as zero if the agent's effort is zero, even if there are positive helping efforts from the other agents. The second is a design to induce helping efforts $-$ by making the production per unit of effort higher for helping effort than own effort whenever an agent directs all effort to ownself. 
+	
+		
+	Our initial model is static, although we wanted to have a sequential game to better reflect reality. After reading both papers, we have an idea of how to model a sequential game. \emph{We also observe that it is hard to model the game of cooperation and competition: there are often many variables that contribute to a cooperation or competition dominated game and as observed in this paper, we see that the compensation scheme is a strong influencer. A point to consider is that we would like to analyses this from a higher level; instead of considering all the plethora variables that we think causes the environment to be cooperative or competitive, we would like examine this in a simplistic manner that generalises to most settings regardless of the variables considered.} We will develop this idea further.
+
+
+
+
+\bibliography{AGT_project} 
+\bibliographystyle{apalike}
+
+
+%\subsection*{\sffamily My Thoughts}
+%- the discussions is strictly on two workers and the paper does little to no discussion on extending it to a general $n$ workers. Will KKT conditions argument still hold if it is being extended to $n$ workers?
+%
+%
+%- in pg 355, the player's maximand will be (7) with (16) with the given $(\overline{Y},x,Q^0)$. Why is the utility function $U$ missing? 
+%
+%- in pg 357 the argument for equation (26) says that the $g(0)$ reflects the restriction $Q^0=\mathbf{E}[Q_i]$; is this obtained as $f^i(\mu_{ii},0)=\mathbf{E}[Q_i]$?
+%
+%- in pg 357 why (26) $\to$ (27) when base incomes are identical? The argument used is the the efforts and probability of winning is identical, so the employer sees no need to vary the base income of quote or contest scheme?
+
+
+
+
+
+
+
+
+
+\end{document}

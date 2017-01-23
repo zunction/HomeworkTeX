@@ -1,0 +1,109 @@
+\begin{flushright}
+Date: 031116
+\end{flushright}
+
+
+
+\begin{thm}
+There exists simple no-regret algorithms such that the expected regret of every action is 
+\begin{align*}
+\mathcal{O}\left(\sqrt{\frac{\ln n}{T}}\right)
+\end{align*}
+\end{thm}
+An easy consequence of the theorem above is presented in the following collary.
+\begin{cor}
+There exists an online learning algorithm such that for every $\epsilon >0$, has expected regret of at most $\epsilon$ after $\mathcal{O}\left(\ln n/\epsilon^2\right)$
+\end{cor}
+
+\subsection{Algorithm}
+\begin{enumerate}
+\item Initialize $w^1(a)=1$ for every $a \in A$.
+\item For $t=1,2,\ldots, T$
+\begin{enumerate}[(a)]
+\item Play an action according to the distribution $p^t:=w^t/\Gamma^t$, where $\Gamma^t=\sum_{a\in A}w^t(a)$ is the sum of the weights.
+\item Given the cost vector $c^t$, decrease the weights using the formula 
+\begin{align*}
+w^{t+1}(a)=w^t(a)\cdot (1-\epsilon)^{c^t(a)}
+\end{align*}
+for every action $a \in A$.
+
+
+\end{enumerate}
+\end{enumerate}
+
+The construction of the algorithm is such that when the cost is 0, then the weight remains the same and when the cost is 1, the weight gets reduced by a factor of $1-\epsilon$. Considering what happens to the distribution of the weights when we vary $\epsilon$, for small values of $\epsilon$, the weights are slowly eroded and the distribution $p^t$ tends to the uniform distribution (needs a more rigor argument as to why).When $\epsilon$ is close to 1, we see that the weight is concentrated on the action that has accumulated the least cost so far. This can be observed by the analysis of the algorithm below. For all $a \in A$, we start with $w^1(a)=1$
+\begin{align*}
+w^{t+1}(a)&= f(w^t(a),c^t(a))\\
+&= w^t(a)\cdot(1-\epsilon)^{c^t(a)}\\
+&=\quad\vdots\\
+&= w^1(a)\cdot (1-\epsilon)^{\sum_{k=1}^{t-1}c^k(a)}
+\end{align*}
+
+
+Now we would like to connect the expected performance at day $t$ denoted by $V^t$, the optimal performance (OPT) and $w^t(a)$ together. Let $a^\ast = \max_{a \in A}w^T(a)$, then
+\begin{align}
+\Gamma^T=\sum_{a \in A} w^T(a) &\geq w^T(a^\ast)\notag\\
+&= w^1(a^\ast)\cdot (1-\epsilon)^{\sum_{k=1}^{t-1}c^k(a^\ast)}\notag\\
+&=  (1-\epsilon)^{\text{OPT}}\label{eq:earlierresult}
+\end{align}
+the expected performance at time $t$ to be
+\begin{align*}
+V^t=\sum_{a\in A}p^t(a)\cdot c^t(a)=\sum_{a \in A}\frac{w^t(a)}{\Gamma^t}\cdot c^t(a)
+\end{align*}
+with the prelimaries done, we are ready to connect them together. We now try to find a recursive equation relating $\Gamma^{t+1}$ and $\Gamma^t$:
+\begin{align*}
+\Gamma^{t+1}&=\sum_{a\ in A} w^{t+1}(a)\\
+&=\sum_{a\ in A} w^{t}(a)(1-\epsilon)^{c^t(a)}\\
+&\leq \sum_{a\in A} w^{t}(a)(1-\epsilon\cdot c^t(a)), \quad \text{by lemma \ref{lemma:epsilon}}\\
+&= \Gamma^t\sum_{a\in A} \frac{w^{t}(a)}{\Gamma^t}(1-\epsilon\cdot c^t(a))\\
+&= \Gamma^t\sum_{a\in A} p^{t}(a)(1-\epsilon\cdot c^t(a))\\
+&= \Gamma^t\sum_{a\in A} p^{t}(a)-\epsilon\sum_{a\in A}p^t(a) c^t(a)\\
+&= \Gamma^t\left(1-\epsilon V^t\right)\\
+\implies& \Gamma^{t+1} \leq \Gamma^1 \prod_{i=1}^{t}(1-\epsilon\cdot V^i)\\
+\text{By (\ref{eq:earlierresult})	,}~~(1-\epsilon)^{\text{OPT}}&\leq\Gamma^{t+1} \leq \Gamma^1 \prod_{i=1}^{t}(1-\epsilon\cdot V^i)
+\end{align*}
+Taking $\ln$,
+\begin{align*}
+\text{OPT}\cdot \ln(1-\epsilon)&\leq \ln n + \sum_{i=1}^{t} \ln (1-\epsilon \cdot V^i)\\
+\text{OPT}\cdot (-\epsilon-\epsilon^2)&\leq \ln n - \epsilon\sum_{i=1}^{t}  V^i, \quad \text{by Lemma \ref{lemma:ln}}\\
+\sum_{i=1}^{t}  V^i &\leq \frac{\ln n}{\epsilon}+(1+\epsilon)\text{OPT}\\
+&\leq \text{OPT}+\frac{\ln n}{\epsilon}+\epsilon\text{OPT}
+\end{align*}
+Here we realize that in the last eqution decreasing $\epsilon$ increases $\ln n /\epsilon$ and increasing $\epsilon$ increases $\epsilon \text{OPT}$. Thus to keep the upper bound low, we keep them equal, which then we obtain $\epsilon = \sqrt{\ln n /T}$. Hence the cumulative expected cost of the no regret algorithm is at most $2\sqrt{T\ln n}$ more than the cumulative cost of the optimal.
+
+\begin{lemma}
+For $\epsilon \in [0,1]$ and $x \in [0,1]$, 
+\begin{align*}
+(1-\epsilon)^x \leq (1-\epsilon x)
+\end{align*}\label{lemma:epsilon}
+\end{lemma}
+
+\begin{lemma}
+If $x \in [0,1/2]$
+\begin{align*}
+-x-x^2 \leq \ln (1-x) \leq -x
+\end{align*}\label{lemma:ln}
+\end{lemma}
+Next we show that in a game, i.e. routing game where everyone is using a no regret algorithm, the state of the game converges to a coarse correlated equilibrium. In each time step $t=1,2,\ldots, T$ of no regret dynamics:
+\begin{enumerate}
+\item Each player $i$ chooses simultaneously and independently a mixed strategy $p^t_i$ using a no regret algorithm of their choice.
+\item Each player receives a cost vector $c^t_i$ where $c_i^t(s_i)$ is the expected cost of strategy $s_i$ when the other players play their chosen mixed strategies, i.e. $c^t_i(s_i)=\mathbf{E}_{s_{-i}\sim \sigma_{-i}}[c_i(s_i,s_{-i})]$ where $\sigma_{-i}=\prod_{j\neq i}\sigma_j$.
+\end{enumerate}
+
+
+\begin{thm}
+Suppose after $T$ iterations of no-regret dynamics, every player of a cost minimization game has a regret of at most $\epsilon$ for each of its strategies. Let $\sigma^t=\prod_{i=1}^{k}p^t_i$ denote the outcome distribution at time $t$ and $\sigma=\frac{1}{T}\sum_{t=1}^{T}\sigma^t$ the time average history of these distributions. Then $\sigma$ is an $\epsilon-$approximate coarse correlated equilibrium, in the sense that 
+\begin{align*}
+\mathbf{E}[c_i(\mathbf{s})]\leq\mathbf{E}[c_i(s'_i,s_{-i})]+\epsilon
+\end{align*}
+for every player $i$ and unilateral decision $s'_i$.
+\end{thm}
+
+
+\begin{cor}
+Suppose after $T$ iterations of no regret dynamics, player $i$ has expected regret at most $R_i$ for each of its actions. Then the time average expected objective function value $\frac{1}{T}\mathbf{E}_{\mathbf{s}\sim\sigma_i}$ is at most 
+\begin{align*}
+\frac{\lambda}{1-\mu} cost(s^\ast)+\frac{\sum_{i=1}^{k}R_i}{1-\mu}
+\end{align*}
+In particular, as $T \to \infty, \sum_{i=1}^{k}R_i\to 0$ and the guarantee to converge to the standard PoA bound $\frac{\lambda}{1-\mu}$.
+\end{cor}

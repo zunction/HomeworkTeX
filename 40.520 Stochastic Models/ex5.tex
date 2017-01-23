@@ -1,0 +1,249 @@
+\documentclass[a4paper,10pt]{article}
+\setlength{\parindent}{0cm}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{graphicx,caption}
+\usepackage{verbatim}
+\usepackage{venndiagram}
+\usepackage[cm]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color,enumerate,framed}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%\usepackage{tgadventor}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{parskip}
+%\usepackage{picins} %for \parpic.
+%\newtheorem*{notation}{Notation}
+%\newtheorem{example}{Example}[section]
+%\newtheorem*{problem}{Problem}
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem*{solution}{Solution}
+%\newtheorem*{definition}{Definition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{remark}{Remark}
+%\setcounter{section}{1}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{examp}{Example}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{nte}{Note}
+\newtheorem*{notat}{Notation}
+
+%\diagramstyle[labelstyle=\scriptstyle]
+
+\lstset{frame=tb,
+  language=Oz,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\pagestyle{fancy}
+
+
+
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
+\cfoot{}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\rfoot{\color{black!60}{\textsc{\thepage}}}
+
+
+
+\begin{document}
+\flushright{\sffamily Zhangsheng Lai\\1002554}
+\section*{Stochastic Models: Exercise 5}
+
+\begin{enumerate}
+\item Let $\{X_n: n\geq 0\}$ be an irreducible Markov chain with period $d \geq 1$ thus for any state $i$
+\begin{align*}
+d=\text{gcd}\{n\geq 1: P\left[X_n=i\mid X_0=i\right]>0\}
+\end{align*}
+%which means $P_{ii}^n>0$ where $n=ad$ for some positive integer $a$. Let $\{X_{nd}:n\geq 0\}$ be a Markov chain with period $k$, then $P_{ii}^{nd}>0$ where $nd=bk$ for some positive integer $b$.
+Suppose $\{X_{nd}:n\geq 0\}$ is not aperiodic, thus for some integer $k>1$, we have
+\begin{align*}  
+k=\text{gcd}\{n\geq 1: P\left[X_{nd}=i\mid X_0=i\right]>0\}
+\end{align*}
+for every state $i$. This implies that, for all states, the number of transitions needed to return to state $i$ given that it starts from $i$ in $\{X_n: n\geq 0\}$ is of the form $lknd$ where $l$ is a positive integer. This contradicts that $\{X_n: n\geq 0\}$ is a Markov chain with period $d$ since for any integer $l$, $lknd>d$, thus $k=1$ as required and $\{X_{nd}: n\geq 0\}$ as aperiodic.
+
+If we consider the states accessible to $\{X_{nd}: n\geq 0\}$, it is irreducible. Else it is not. Consider the simple symmetric random walk where $\{X_{2n}: n\geq 0\}$ is aperiodic and irreducible for the even states. But if we consider both even and odd states, it is not irreducible as it cannot visit an odd state in even number of steps.
+
+\item Suppose $i \leftrightarrow j$ and let $i$ be positive recurrent, thus $\lim_{n\to\infty}P^n_{ii}>0$. Let $d$ be the smallest integer such that $P^d_{ij}\neq 0$. Suppose $\lim_{n\to\infty}P^n_{jj}=0$, then
+\begin{align*}
+0=\lim_{n\to\infty}P^{n+d}_{jj}&=\lim_{n\to\infty}\sum_{k=0}^{\infty}P^n_{jk}P^d_{kj}\\
+&\geq\lim_{n\to\infty}\sum_{k=0}^{M}P^n_{jk}P^d_{kj} \quad \text{for all $M$}\\
+&=\sum_{k=0}^{M}\pi_{k}P^d_{kj} \quad \text{for all $M$}\\
+&=\sum_{k=0}^{\infty}\pi_{k}P^d_{kj} \quad \text{as $M \to\infty$}
+\end{align*}
+This implies that for every $k$, $\pi_kP^d_{kj}=0$ and in particular $\pi_iP^d_{ij}=0$. Since $\pi_i >0$, we will need $P^d_{ij}=0$, a contradiction.
+
+%$\sum_{n=1}^{\infty}nf_{ii}^n<\infty$. 
+%\begin{align*}
+%%\sum_{n=1}^{\infty}nf_{jj}\geq\sum_{n=1}^{\infty}nP_{ij}f_{jj}P_{ji}
+%\infty >\sum_{n=1}^{\infty}nf^n_{ii}\geq \sum_{n=1}^{\infty}nf^1_{ji}f_{ii}^nf^1_{ij}\geq \sum_{n=1}^{\infty}nf^n_{jj}
+%\end{align*}
+
+
+\item Let $\{X_n:n\geq 0\}$ be an irreducible and aperiodic Markov chain. The chain is doubly stochastic, thus $\sum_{i}P_{ij}=1$. For any two states $i$ and $j$, we have $i \leftrightarrow j$ since the Markov chain is irreducible and together with the aperiodicity, we have $\lim_{n\to\infty}P_{ij}^n=1/\mu_{jj}$. We can prove by induction that $\sum^{k}_{i=0}P^n_{ij}=1$. Thus
+\begin{align*}
+1 = \lim_{n\to\infty}\sum_{i=0}^{k}P^n_{ij}=\sum_{i=0}^{k}\lim_{n\to\infty}P^n_{ij}=(k+1)/\mu_{jj}
+\end{align*}
+Thus $\mu_{jj}=k+1>0$ implies all the states are positive recurrent. Thus there exists a unique stationary distribution that is also the limiting distribution, i.e. $\pi_j = 1/\mu_{jj}$. Hence $\pi_j = 1/k+1$ for all $j$.
+
+We shall prove the claim that $\sum^{k}_{i=0}P^n_{ij}=1$. It is easy to see that it holds for $n=1$. Suppose that it is true for $n$, then since we have
+\begin{align*}
+\sum^{k}_{i=0}P^{n+1}_{ij} = \sum^{k}_{i=0}\sum_{l=0}^{k}P^{n}_{il}P_{lj}= \sum_{l=0}^{k}\left(\sum^{k}_{i=0}P^{n}_{il}\right)P_{lj}
+\end{align*}
+it is also true for $n+1$, which proves the claim.
+%There are finitely many states and thus we cannot have any transient state (since it is irreducible). We claim that all the states are positive recurrent and not null recurrent. Suppose all the states are null recurrent, then for each state, $\sum_{n=1}^{\infty}nf_{ii} = \infty$, that is the expected number of transitions need to return to state $i$ is infinite.
+
+%\begin{align*}
+%\pi_j=\lim_{n\to\infty}P^{n+1}_{ij}=\lim_{n\to\infty}\sum_{l=0}^{k}P^{n}_{il}P_{lj}
+%=\sum_{l=0}^{k}\lim_{n\to\infty}P^{n}_{il}P_{lj}=\sum_{l=0}^{k}\pi_{l}P_{lj}\\
+%\end{align*}
+%A solution for $(\pi_0,\ldots,\pi_k)$ will be one where all the $\pi_j$'s are the same as it is doubly stochastic.
+
+
+%Since there are finitely many states, for a fixed $j$
+%\begin{align*}
+%1 = \lim_{n\to\infty}\sum_{i=0}^{k}P^n_{ij}=\sum_{i=0}^{k}\lim_{n\to\infty}P^n_{ij}=(k+1)\pi_j
+%\end{align*}
+%and for a fixed $i$, 
+%\begin{align*}
+%1 = \lim_{n\to\infty}\sum_{j=0}^{k}P^n_{ij}=\sum_{j=0}^{k}\lim_{n\to\infty}P^n_{ij}=\sum_{j=0}^{k}\pi_j
+%\end{align*}
+
+
+\item Let $\{X_n:n\geq 0\}$ be a Markov chain with states $S=\{0,1,2,3,4\}$ denoting the number of umbrella(s) in the new location after travelling from the previous one, thus $S = \{0,1,2,3,4\}$.
+\begin{enumerate}[(a)]
+\item We first observe that
+\begin{align*}
+X_{n+1}:=\begin{cases}
+4 & X_n=0\\
+4 - X_n + 1 & \text{if raining}\\
+4 - X_n & \text{if not raining}\\
+\end{cases}
+\end{align*}
+with this, the transition matrix is
+\begin{align*}
+\begin{pmatrix}
+0& 0 &0 &0 & 1\\
+ 0 & 0 &0  &1-p  & p \\
+ 0 & 0 & 1-p &p  &0  \\
+ 0 & 1-p & p & 0 &  0\\  
+ 1-p & p & 0 &  0&  0\\  
+\end{pmatrix}
+\end{align*}
+The proportion of time that he possibly gets wet is when he is in state 0, and the proportion of time that he gets wet is $p\pi_0$. Solving for $\pi_j=\sum_{i}\pi_iP_{i,j}$
+\begin{align*}
+\pi_0 &= (1-p)\pi_4\\ 
+\pi_1 &= (1-p)\pi_3+p\pi_4\\ 
+\pi_2 &= (1-p)\pi_2+p\pi_3\\ 
+\pi_3 &= (1-p)\pi_1+p\pi_2\\ 
+\pi_4 &= \pi_0+p\pi_1\\  
+\end{align*}
+which solving for yields $\pi_i$ are the same for $i=1,2,3,4$. Thus $(4+1-p)\pi_1=1
+$ and 
+\begin{align*}
+\pi_0=\frac{1-p}{5-p}, \qquad \pi_i=\frac{1}{5-p} \text{ for } i \neq 0
+\end{align*}
+Thus Tom gets wet with probability $\frac{p(1-p)}{5-p}$ in the long run.
+\item From (a), we can generalise it to for $r$ umbrellas:
+\begin{align*}
+\pi_0=\frac{1-p}{r+1-p}, \qquad \pi_i=\frac{1}{r+1-p} \text{ for } i \neq 0
+\end{align*}
+which then we have to solve for $r$ when $p=0.6$,
+\begin{align*}
+\frac{p(1-p)}{r+1-p}<0.01
+\end{align*}
+which yields $23.6<r$, thus Tom should have 24 umbrellas.
+\end{enumerate}
+\item
+\begin{enumerate}[(a)]
+\item Let $\{X_n:n\geq0\}$ be a Markov chain with states of the form $(i,k-i)$ for $i=0,1,\ldots, k$. We shall denote state $(i,k-i)$ by $i$. Then the transition matrix is given by
+\begin{align*}
+P_{0,0}=3(1/2)^2=P_{k,k}\quad P_{0,1}=(1/2)^2=P_{k,k-1}\\
+P_{i,i}=2(1/2)^2\quad P_{i,i+1}=(1/2)^2=P_{i,i-1}\quad\text{for $i \neq 0, k$}\\
+\end{align*}
+
+%\begin{align*}
+%\begin{pmatrix}
+%3(1/2)^3 & (1/2)^2 &  0&  0 & \dots &0 & 0&0\\
+%(1/2)^2 & 2(1/2)^2 &  (1/2)^2&  0 & \dots &0&0 & 0\\
+%0 &(1/2)^2 & 2(1/2)^2 &  (1/2)^2 & \dots &0&0 & 0\\
+%\vdots & \vdots &  \vdots & \vdots &  \ddots&(1/2)^2 & 0&0\\
+%0 & 0 &  0&0& (1/2)^2&  2(1/2)^2&(1/2)^2 & 0\\
+%0 & 0 &  0& 0 &  0&\dots& (1/2)^2 & 3(1/2)^3\\
+%\end{pmatrix}
+%\end{align*}
+\item We first note that the Markov chain is irreducible as $i\leftrightarrow j$ for any states $i$ and $j$. It is aperiodic as $P\left[X_1=i\mid X_0=i\right] >0$ for all states. The transition matrix is also doubly stochastic as 
+\begin{align*}
+\text{when $i \neq 0,k$} \quad\sum_{i}P_{i,j}&=P_{i-1,i}+P_{i,i}+P_{i+1,i}=1  \\
+\text{when $i = 0$} \quad \sum_{i}P_{i,j}&=P_{0,0}+P_{1,0}=1  \\
+\text{when $i = k$} \quad\sum_{i}P_{i,j}&=P_{k-1,k}+P_{k,k}=1 
+\end{align*}
+Hence by question 3, we have $\pi_0=\pi_k=1/k+1$. Thus the proportion of time where there is only shoes at one door is $2/k+1$ and since he choose to depart the front or back door with equal chance, he runs barefooted $1/k+1$ of the time.
+\end{enumerate}
+\item
+\begin{enumerate}[(a)]
+\item We first note that with $X_n$ being the number of rolls in the warehouse at the beginning of the $n$th day, we have $X_{n+1}=X_n-1+k$, where $k$ is the number of rolls delivered by the local distributor in the evening. Thus, the states are $S=\{0,1,2,\ldots\}$ and the transition probabilities that make up the transition matrix $\mathbb{P}$ is
+\begin{align*}
+P_{i,j}:=\begin{cases}
+a_{j-i+1} & \text{if $j\geq i-1$, $i\neq 0$}\\
+0 & \text{otherwise}
+\end{cases}
+\end{align*}
+when $i=0$, we have $P_{0,j}=a_j$.
+\item We observe that this Markov chain is irreducible and aperiodic, thus all the states are either positive or null recurrent. The stationary distribution need to satisfy
+\begin{align*}
+\pi_j=\sum\pi_iP_{i,j}=\pi_0P_{0,j}+\pi_1P_{1,j}+\pi_2P_{2,j}+\ldots+\pi_{j+1}P_{j+1,j}
+\end{align*}
+Trying out for the first few values:
+\begin{align*}
+\pi_0 &=  \pi_0a_{0}+\pi_1a_{0}\\
+\pi_1 &= \pi_0a_1 +\pi_1a_1  +\pi_2a_0 \\
+\pi_2 &= \pi_0a_2 + \pi_1a_2 + \pi_2a_1+ \pi_3a_0
+\end{align*}
+we can generalise it to 
+\begin{align*}
+\pi_{n+1}&=q\pi_{n-1}+(1-q)\pi_{n+1}\implies \pi_{n+1}=\frac{1}{1-q}(\pi_n-q\pi_{n-1})\\
+\pi_1&=\frac{q}{1-q}\pi_0\\
+\pi_2&=\frac{1}{1-q}\left(\frac{q}{1-q}\pi_0-q\pi_0\right)=\left(\frac{q}{1-q}\right)^2\pi_0\\
+\pi_3&=\frac{1}{1-q}\left(\left(\frac{q}{1-q}\right)^2\pi_0-\frac{q^2}{1-q}\pi_0\right)=\left(\frac{q}{1-q}\right)^3\pi_0\\
+&\vdots\\
+\pi_n&=\left(\frac{q}{1-q}\right)^n\pi_0
+\end{align*}
+For it to be a stationary distribution we need:
+\begin{align*}
+\pi_0\sum_{i=0}^{\infty}\left(\frac{q}{1-q}\right)^i=1
+\end{align*}
+to converge which happens when $|q/1-q|<1$.
+\end{enumerate}
+\end{enumerate}
+\end{document}
