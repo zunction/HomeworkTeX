@@ -71,7 +71,7 @@
 
 \lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
 \cfoot{\color{black!60}{\sffamily Last modified: \today}}
-\rfoot{\textsc{\thepage}}
+\rfoot{\color{black!60}{\sffamily\thepage}}
 
 
 
@@ -124,12 +124,34 @@ f_Y(y)&:= \begin{cases}
 \end{enumerate}
 \item[2.11]
 \begin{enumerate}[(a)]
-\item We see that $\mathbb{P}(X = 1) = p = \mathbb{P}(Y=0)$. Since the state space contains is $\{H,T\}$, we have $1 - \mathbb{P}(X =1,Y=0) = 1- p = \mathbb{P}(X = 0, Y = 1)$. But since
+\item We see that $\mathbb{P}(X = 1) = p = \mathbb{P}(Y=0)$. Since the state space contains  $\{H,T\}$, we have $1 - \mathbb{P}(X =1,Y=0) = 1- p = \mathbb{P}(X = 0, Y = 1)$. But since
 \begin{align*}
 \mathbb{P}(X = 1)\mathbb{P}(Y=0) = p^2 \neq p = \mathbb{P}(X = 1, Y =0)
 \end{align*}
 $X$ and $Y$ are dependent.
-\item 
+\item By total law of probability, 
+\begin{align*}
+\mathbb{P}(X=x) &= \sum_{n = x}^{\infty} \mathbb{P}(X=x|N=n)\cdot \mathbb{P}(N=n)\\
+&= \sum_{n = x}^{\infty} \binom{n}{x}p^x(1-p)^{n-x}
+\cdot e^{-\lambda}\frac{\lambda^n}{n!}\\
+&= e^{-\lambda}\frac{(\lambda p)^x}{x!}\sum_{n = x}^{\infty} \frac{[\lambda(1-p)]^{n-x}}{(n-x)!}\\
+&= e^{-\lambda p}\frac{(\lambda p)^x}{x!}\\
+\end{align*}
+in a similar fashion, we have
+\begin{align*}
+\mathbb{P}(Y=y) = e^{-\lambda (1-p)}\frac{(\lambda (1-p))^y}{y!}
+\end{align*}
+for the joint distribution of $X$ and $Y$, 
+\begin{align*}
+\mathbb{P}(X=x, Y=n-x) &= \mathbb{P}(X=x, Y=n-x| N=n)\cdot \mathbb{P}(N=n)\\
+&=\binom{n}{x}p^x(1-p)^{n-x}\cdot e^{-\lambda}\frac{\lambda^n}{n!}
+\end{align*}
+now
+\begin{align*}
+\mathbb{P}(X=x)\cdot\mathbb{P}(Y=y) &= e^{-\lambda p}\frac{(\lambda p)^x}{x!} \cdot e^{-\lambda (1-p)}\frac{(\lambda (1-p))^y}{y!}\\
+&=\binom{x+y}{x} p^x(1-p)^y e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!}
+\end{align*}
+which shows that $X$ and $Y$ are independent.
 \end{enumerate}
 
 \item[3.4] Let $Y_i$ denote the jump of the particle at the $i$th unit. Then $X_n=\sum_{i=1}^nY_i$. The $Y_i$'s are iid, with $\mathbb{E}(Y_i)=1-2p$ and $\mathbb{V}(Y_i) = 1 - (1-2p)^2 = 4p(1-p)$ for $i=1,2,\ldots, n$.
@@ -139,8 +161,8 @@ $X$ and $Y$ are dependent.
 \end{align*}
 \item[4.3] Using Chebyshev's and Hoeffding's inequality we have
 \begin{align*}
-\mathbb{P}(|\overline{X}_n - p|>\epsilon) &= \frac{p(1-p)}{n \epsilon^2} \\
-\mathbb{P}(|\overline{X}_n - p|>\epsilon) &= 2e^{-2n\epsilon^2}
+\mathbb{P}(|\overline{X}_n - p|>\epsilon) &\leq \frac{1}{4n \epsilon^2} \\
+\mathbb{P}(|\overline{X}_n - p|>\epsilon) &\leq 2e^{-2n\epsilon^2}
 \end{align*}
 The inequality $(1+x)^r \leq e^{rx}$ for $r>0, x>0$, thus for $r=1$
 \begin{align*}
@@ -149,7 +171,30 @@ x &< 1 + x \leq e^x\\
 \frac{1}{2n\epsilon^2} &> e^{-2n\epsilon^2}\\
 \frac{1}{n\epsilon^2} &> 2e^{-2n\epsilon^2}\\
 \end{align*}
-\item[5.7]
+\item[5.7] We first note that 
+\begin{align*}
+\mathbb{V}\left(n^{-1}\sum_{i=1}^{n}X_i^2-p\right) & = n^{-2}\sum_{i=1}^{n}\mathbb{V}(X_i^2) = \frac{p(1-p)}{n}
+\end{align*}
+thus for any given $\epsilon >0$,
+\begin{align*}
+\mathbb{P}\left(|n^{-1}\sum_{i=1}^{n}X_i^2-p|>\epsilon\right)\leq \frac{\mathbb{V}(n^{-1}\sum_{i=1}^{n}X_i^2-p)}{\epsilon^2}=\frac{p(1-p)}{n\epsilon^2} \to 0 \text{ as } n \to \infty
+\end{align*}
+which proves the convergence in probability. We now prove its convergence in quadratic mean:
+\begin{align}
+\mathbb{E}\left(\left[n^{-1}\sum_{i=1}^{n}X_i^2-p \right]^2\right) = \mathbb{E}\left(n^{-2}\left[\sum_{i=1}^{n}X_i^2\right]^2\right)-2\,\mathbb{E}\left(p/n\sum_{i=1}^{n}X_i^2\right)+\mathbb{E}\left(p^2\right)\label{eq}
+\end{align}
+simplifying the first term, we get
+\begin{align*}
+\mathbb{E}\left(n^{-2}\left[\sum_{i=1}^{n}X_i^2\right]^2\right) &= n^{-2}\left[\mathbb{E}\left(\sum_{i=1}^{n}X_i^4\right)+2\,\mathbb{E}\left(\sum_{i\neq j}X_i^2X_j^2\right)\right]\\
+&= n^{-2}\left[\mathbb{E}\left(\sum_{i=1}^{n}X_i^4\right)+2\,\sum_{i\neq j}\mathbb{E}\left(X_i^2\right)\,\mathbb{E}\left(X_j^2\right)\right]\\
+&= n^{-2}\left[np +2\binom{n}{2}p^2\right]\\
+&=\frac{p}{n} + \frac{n-1}{n}p^2
+\end{align*}
+the simplification of the last 2 terms in (\ref{eq}) gives $-p^2$. Thus
+\begin{align*}
+\mathbb{E}\left(\left[n^{-1}\sum_{i=1}^{n}X_i^2-p \right]^2\right) = \frac{p-p^2}{n} \to 0 \text{ as } n \to \infty
+\end{align*}
+which concludes the prove of convergence in quadratic mean.
 \end{enumerate}
 
 \end{document}
