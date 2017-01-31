@@ -132,8 +132,23 @@ $X$ and $Y$ are dependent.
 \item 
 \end{enumerate}
 
-\item[3.4]
-\item[4.3]
+\item[3.4] Let $Y_i$ denote the jump of the particle at the $i$th unit. Then $X_n=\sum_{i=1}^nY_i$. The $Y_i$'s are iid, with $\mathbb{E}(Y_i)=1-2p$ and $\mathbb{V}(Y_i) = 1 - (1-2p)^2 = 4p(1-p)$ for $i=1,2,\ldots, n$.
+\begin{align*}
+\mathbb{E}(X_n) &= \sum_{i=1}^n\mathbb{E}(Y_i) = n(1-2p)\\
+\mathbb{V}(X_n) &= \sum_{i=1}^n\mathbb{V}(Y_i) = n\cdot4p(1-p)
+\end{align*}
+\item[4.3] Using Chebyshev's and Hoeffding's inequality we have
+\begin{align*}
+\mathbb{P}(|\overline{X}_n - p|>\epsilon) &= \frac{p(1-p)}{n \epsilon^2} \\
+\mathbb{P}(|\overline{X}_n - p|>\epsilon) &= 2e^{-2n\epsilon^2}
+\end{align*}
+The inequality $(1+x)^r \leq e^{rx}$ for $r>0, x>0$, thus for $r=1$
+\begin{align*}
+x &< 1 + x \leq e^x\\
+1/x &> e^{-x}\\
+\frac{1}{2n\epsilon^2} &> e^{-2n\epsilon^2}\\
+\frac{1}{n\epsilon^2} &> 2e^{-2n\epsilon^2}\\
+\end{align*}
 \item[5.7]
 \end{enumerate}
 
