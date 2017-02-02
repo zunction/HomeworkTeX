@@ -88,7 +88,9 @@
 &=\frac{(.82)(.5)}{(.65)(.3)+(.82)(.5)+(.5)(.2)}\\
 &=0.581560284
 \end{align*}
-\item
+%\item Since the event that the first person has a system that is infected by a virus and the second person has a system that is infected by a virus are independent events,
+\item $\mathbb{P}(V) = (.65)(.3)+(.82)(.5)+(.5)(.2) = .705 $
+\item Let $A$ and $B$ denote the event that the second person has a system that was also infected by a virus and the second person is known to have the same computer system as the first person. We observe that $A$ and $B$ are independent events as the probability of getting a virus on your computer system is the same regardless of whether the second person has the same computer system as the first person. Thus $\mathbb{P}(A|B) = \mathbb{P}(A) = \mathbb{P}(V) = .705$
 
 \end{enumerate}
 \item[2.4] 
@@ -103,11 +105,7 @@
 F_X(x):= \begin{cases}
 \frac{1}{4}x & 0 < x < 1\\
 \frac{3}{8}x-\frac{7}{8} & 3 < x < 5\\
-<<<<<<< HEAD
-1 & x > 5\\
-=======
 1 & x>5\\
->>>>>>> refs/remotes/origin/master
 \end{cases}
 \end{align*}
 \item
@@ -120,12 +118,13 @@ From (a):
 \begin{align*}
 F_Y(y)&:= \begin{cases}
 \frac{15}{8}-\frac{3}{8y} & 1/5 < y < 1/3\\
-1 - \frac{1}{4y} & y \geq 1\\
-0 & \text{otherwise}\\
+\frac{3}{4} & 1/3\leq y \leq 1\\
+1 - \frac{1}{4y} & y > 1\\
 \end{cases}\\
 f_Y(y)&:= \begin{cases}
 \frac{3}{8y^2} & 1/5 < y < 1/3\\
-\frac{1}{4y^2} & y \geq 1\\
+%0 & 1/3\leq y \leq 1\\
+\frac{1}{4y^2} & y >1\\
 0 & \text{otherwise}\\
 \end{cases}
 \end{align*}
