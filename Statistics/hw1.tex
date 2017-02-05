@@ -104,6 +104,7 @@
 %\end{cases}\\
 F_X(x):= \begin{cases}
 \frac{1}{4}x & 0 < x < 1\\
+\frac{1}{4} & 1 \leq x \leq 3\\
 \frac{3}{8}x-\frac{7}{8} & 3 < x < 5\\
 1 & x>5\\
 \end{cases}
@@ -128,7 +129,7 @@ f_Y(y)&:= \begin{cases}
 0 & \text{otherwise}\\
 \end{cases}
 \end{align*}
-Alternatively, we can do it in this way:
+%Alternatively, we can do it in this way:
 
 \end{enumerate}
 \item[2.11]
@@ -158,7 +159,7 @@ for the joint distribution of $X$ and $Y$,
 now
 \begin{align*}
 \mathbb{P}(X=x)\cdot\mathbb{P}(Y=y) &= e^{-\lambda p}\frac{(\lambda p)^x}{x!} \cdot e^{-\lambda (1-p)}\frac{(\lambda (1-p))^y}{y!}\\
-&=\binom{x+y}{x} p^x(1-p)^y e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!}
+&=\binom{x+y}{x} p^x(1-p)^y e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!} = \mathbb{P}(X=x, Y=y)
 \end{align*}
 which shows that $X$ and $Y$ are independent.
 \end{enumerate}
