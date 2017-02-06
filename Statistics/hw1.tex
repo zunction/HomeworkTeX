@@ -174,13 +174,17 @@ which shows that $X$ and $Y$ are independent.
 \mathbb{P}(|\overline{X}_n - p|>\epsilon) &\leq \frac{1}{4n \epsilon^2} \\
 \mathbb{P}(|\overline{X}_n - p|>\epsilon) &\leq 2e^{-2n\epsilon^2}
 \end{align*}
-The inequality $1+x \leq e^{x}$ for $x>0$, thus:
 \begin{align*}
-1 + x &\leq e^x\\
-1 + 2n\epsilon^2 &\leq e^{2n\epsilon^2}\\
-e^{-2n\epsilon^2} &\leq \frac{1}{1+2n\epsilon^2}\\
-2e^{-2n\epsilon^2} &<\frac{1}{n\epsilon^2}
+\lim_{n\to\infty}\frac{e^{-2n\epsilon^2}}{1/(4n\epsilon^2)}&=4\epsilon^2\lim_{n\to\infty}\frac{n}{e^{2n\epsilon^2}}\to 0 \text{ as } n \to \infty\\
 \end{align*}
+thus $\frac{1}{4n\epsilon^2}$ grows faster than $e^{-2n\epsilon^2}$ for sufficiently large $n$.
+%The inequality $1+x \leq e^{x}$ for $x>0$, thus:
+%\begin{align*}
+%1 + x &\leq e^x\\
+%1 + 2n\epsilon^2 &\leq e^{2n\epsilon^2}\\
+%e^{-2n\epsilon^2} &\leq \frac{1}{1+2n\epsilon^2}\\
+%2e^{-2n\epsilon^2} &<\frac{1}{n\epsilon^2}
+%\end{align*}
 %when $n >1/6\epsilon^2$, we have 
 %\begin{align*}
 %\frac{1}{8n\epsilon^2} < \frac{1}{2n\epsilon^2+1}
@@ -192,9 +196,9 @@ e^{-2n\epsilon^2} &\leq \frac{1}{1+2n\epsilon^2}\\
 \mathbb{P}(|X_n-0|> \epsilon) = \mathbb{P}(X_n^2> \epsilon^2)&\leq \frac{\mathbb{E}(X_n^2)}{\epsilon^2} \text{ by Markov's inequality}\\
 &=\left(\frac{1}{n}+\frac{1}{n^2}\right)\cdot\frac{1}{\epsilon^2} \to 0 \text{ as } n \to \infty
 \end{align*}
-\item Let $Y_n$ be as given in the question and $Y = 0$ (0 distribution). Then we can show $Y_n \leadsto Y$ and $\mathbb{P}(Y=0)=1$ which implies $Y_n \overset{P}{\to} Y$. The cdf of $Y$, $F(t)=1$ for all $t\geq0$ and 0 otherwise.
+\item Let $Y_n$ be as given in the question. Then we can show $Y_n \leadsto Y$ and $\mathbb{P}(Y=0)=1$ which implies $Y_n \overset{P}{\to} Y$. The cdf of $Y$, $F(t)=1$ for all $t\geq0$ and 0 otherwise.
 \begin{align*}
-F_n(t) &= \mathbb{P}(Y\leq t) = \sum_{k=0}^{\lfloor \frac{t}{n}\rfloor}e^{-1/n}\frac{(1/n)^k}{k!}\\
+F_n(t) &= \mathbb{P}(Y_n\leq t) = \sum_{k=0}^{\lfloor \frac{t}{n}\rfloor}e^{-1/n}\frac{(1/n)^k}{k!}\\
 \lim_{n\to \infty} F_n(t) &= \lim_{n\to \infty}\sum_{k=0}^{\lfloor \frac{t}{n}\rfloor}e^{-1/n}\frac{(1/n)^k}{k!}=1
 \end{align*}
 therefore $Y_n \overset{P}{\to} 0$.
