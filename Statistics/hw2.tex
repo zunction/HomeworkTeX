@@ -83,9 +83,20 @@
 \item[6.3] Given $\hat{\theta} = 2\overline{X}_n$ and $X_1, \ldots, X_n \sim \text{Uniform}(0,\theta)$,
 \begin{align*}
 \text{bias}(\hat{\theta}) & =\mathbb{E}(2\overline{X}_n)-\theta\\
-& =2n^{-1}\mathbb{E}(\sum_{i=1}^{n}{X}_i)-\theta\\
+& =2n^{-1}\mathbb{E}\left(\sum_{i=1}^{n}{X}_i\right)-\theta\\
+& =2n^{-1}\sum_{i=1}^{n}\mathbb{E}\left({X}_i\right)-\theta\\
+& =2n^{-1}\frac{n\theta}{2}-\theta=0\\
+\text{se}(\hat{\theta})^2 & = \mathbb{V}(2\overline{X}_n)\\
+& = 4\mathbb{V}(\overline{X}_n)\\
+&=4n^{-2}\mathbb{V}\left(\sum_{i=1}^{n}{X}_i\right)\\
+&=4n^{-2}\sum_{i=1}^{n}\mathbb{V}\left({X}_i\right)\\
+&=4n^{-2}\frac{n\theta^2}{12} = \frac{\theta^2}{3n}\\
+\text{MSE}(\hat{\theta}) &= \text{bias}(\hat{\theta})^2+\text{se}(\hat{\theta})^2 = \frac{\theta^2}{3n}
 \end{align*}
-\item[7.2]
+\item[7.2] 
+\begin{align*}
+\text{se} = \mathbb{V}(\overline{X}_n)
+\end{align*}
 
 \item[7.9]
 
