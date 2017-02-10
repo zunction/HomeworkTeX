@@ -93,12 +93,37 @@
 &=4n^{-2}\frac{n\theta^2}{12} = \frac{\theta^2}{3n}\\
 \text{\sffamily MSE}(\hat{\theta}) &= \text{bias}(\hat{\theta})^2+\text{se}(\hat{\theta})^2 = \frac{\theta^2}{3n}
 \end{align*}
-\item[7.2] Let $T(F) = \int x\,dF(x)$, then the plug-in estimator is $n^{-1}\sum_{i=1}^{n}$
+\item[7.2] For $X_1, \ldots, X_n \sim \text{Bernoulli}(p)$ plug-in estimator for $p$ is 
 \begin{align*}
-\text{\sffamily se} = \mathbb{V}(\overline{X}_n)
+\hat{p}=\frac{1}{n}\sum_{i=1}^{n}X_i
 \end{align*}
+and the estimated standard error is given by
+\begin{align*}
+\hat{\text{\sffamily se}}_p = \sqrt{\mathbb{V}(\hat{p})} = \sqrt{\frac{\hat{p}(1-\hat{p})}{n} }
+\end{align*}
+As the $X_i$'s are iid, by Central Limit Theorem, $\hat{p}$ is asymptotically normal with mean $p$ and variance $\hat{\text{\sffamily se}}_p^2$. Thus an approximate $90\%$ confidence interval for $p$ is $(\hat{p}-1.96\text{\sffamily se},\hat{p}+1.96\text{\sffamily se})$.
 
-\item[7.9]
+For $X_1, \ldots, X_n \sim \text{Bernoulli}(p)$ and $Y_1, \ldots, Y_n \sim \text{Bernoulli}(q)$ plug-in estimator for $p-q$ is 
+\begin{align*}
+\hat{p}-\hat{q}=\frac{1}{n}\sum_{i=1}^{n}X_i - \frac{1}{m}\sum_{i=1}^{m}Y_i
+\end{align*}
+with estimated standard error 
+\begin{align*}
+\hat{\text{\sffamily se}}_{p-q} = \sqrt{\mathbb{V}(\hat{p}-\hat{q})} = \sqrt{\mathbb{V}(\hat{p})+\mathbb{V}(\hat{q})}= \sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{\hat{q}(1-\hat{q})}{m} }
+\end{align*}
+Since the $Y_i$'s are iid, by Central Limit Theorem $\hat{q}$ is asymptotically normal with mean $q$ and variance $\hat{\text{\sffamily se}}_q^2$. The difference of two asymptotically normal random variables is asymptotically normal, thus $\hat{p-q}$ is asymptotically normal with mean $p-q$ and variance $\text{\sffamily se}_{p-q}^2$. An approximate $90\%$ confidence interval is 
+\begin{align*}
+\text{\sffamily se}_{p-q}=(\hat{p}-\hat{q}-1.96\text{\sffamily se}_{p-q},\hat{p}-\hat{q}+1.96\text{\sffamily se}_{p-q})
+\end{align*}
+\item[7.9] An estimate for $p_1-p_2$ is $0.9-0.85=0.05$ with standard error 
+\begin{align*}
+\sqrt{\frac{0.9(1-0.9)}{100}+\frac{0.85(1-0.85)}{100}}= 0.0466368953
+\end{align*}
+with $80\%$ and $90\%$ confidence intervals given by
+\begin{align*}
+80\%:\quad(\hat{p}-\hat{q}-1.282\text{\sffamily se}_{p-q},\hat{p}-\hat{q}+1.282\text{\sffamily se}_{p-q})&=(-0.0097885,0.1097885)\\
+90\%:\quad(\hat{p}-\hat{q}-1.96\text{\sffamily se}_{p-q},\hat{p}-\hat{q}+1.96\text{\sffamily se}_{p-q})&=(-0.041408315,0.141408315)
+\end{align*} 
 
 \item[8.7]
 
