@@ -101,7 +101,7 @@ and the estimated standard error is given by
 \begin{align*}
 \hat{\text{\sffamily se}}_p = \sqrt{\mathbb{V}(\hat{p})} = \sqrt{\frac{\hat{p}(1-\hat{p})}{n} }
 \end{align*}
-As the $X_i$'s are iid, by Central Limit Theorem, $\hat{p}$ is asymptotically normal with mean $p$ and variance $\hat{\text{\sffamily se}}_p^2$. Thus an approximate $90\%$ confidence interval for $p$ is $(\hat{p}-1.96\text{\sffamily se},\hat{p}+1.96\text{\sffamily se})$.
+As the $X_i$'s are iid, by Central Limit Theorem, $\hat{p}$ is asymptotically normal with mean $p$ and variance $\hat{\text{\sffamily se}}_p^2$. Thus an approximate $90\%$ confidence interval for $p$ is $(\hat{p}-1.645\text{\sffamily se},\hat{p}+1.645\text{\sffamily se})$.
 
 For $X_1, \ldots, X_n \sim \text{Bernoulli}(p)$ and $Y_1, \ldots, Y_n \sim \text{Bernoulli}(q)$ plug-in estimator for $p-q$ is 
 \begin{align*}
@@ -113,7 +113,8 @@ with estimated standard error
 \end{align*}
 Since the $Y_i$'s are iid, by Central Limit Theorem $\hat{q}$ is asymptotically normal with mean $q$ and variance $\hat{\text{\sffamily se}}_q^2$. The difference of two asymptotically normal random variables is asymptotically normal, thus $\hat{p-q}$ is asymptotically normal with mean $p-q$ and variance $\text{\sffamily se}_{p-q}^2$. An approximate $90\%$ confidence interval is 
 \begin{align*}
-\text{\sffamily se}_{p-q}=(\hat{p}-\hat{q}-1.96\text{\sffamily se}_{p-q},\hat{p}-\hat{q}+1.96\text{\sffamily se}_{p-q})
+%\text{\sffamily se}_{p-q}=
+(\hat{p}-\hat{q}-1.645\text{\sffamily se}_{p-q},\hat{p}-\hat{q}+1.645\text{\sffamily se}_{p-q})
 \end{align*}
 \item[7.9] An estimate for $p_1-p_2$ is $0.9-0.85=0.05$ with standard error 
 \begin{align*}
