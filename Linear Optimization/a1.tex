@@ -14,7 +14,7 @@
 \hypersetup{colorlinks,breaklinks,
             linkcolor=darkblue,urlcolor=darkblue,
             anchorcolor=darkblue,citecolor=darkblue}
-
+\pgfplotsset{compat=1.12}
 %\usepackage{tgadventor}
 %\usepackage[nohug]{diagrams}
 \usepackage[T1]{fontenc}
@@ -87,11 +87,75 @@
 \begin{document}
 \flushright{Zhangsheng Lai\\1002554}
 \section*{Linear Optimization: Assignment 1}
+\begin{align*}
+  \begin{array}{r@{}r@{}r@{}l}
+    \text{max} \quad z=x_1 &{} + 12x_2 \\[\jot]
+    \text{s.t.}\qquad 3x_1 &{} + \phantom{12}x_2 &{} + 12x_3 &{} \leq 5 \\                          x_1 &         &{} +   \phantom{12}x_3 &{} \leq 16 \\                        15x_1 &{} + \phantom{12}x_2 &           &{} = 14 \\         
+ \multicolumn{4}{c}{x_j \geq 0, \quad j=1,2,3.}
+  \end{array}
+\end{align*}
 
 \begin{enumerate}
 \item[1.17]
+\begin{enumerate}[(a)]
+\item
+\begin{align*}
+  \begin{array}{r@{}r@{}r@{}r@{}l}
+    \text{min} \quad c_1x_1 &{} + c_2x_2&{}+ c_3x_3&{}+ c_4x_4&{} \\[\jot]
+    \text{s.t.}\qquad x_1 &{} +\phantom{c_2}x_2 &{} + \phantom{c_3}x_3 &{}+\phantom{c_3} x_4&{}  \geq K\\ [\jot]
+    x_1 &{} +\phantom{c_2}x_2 &{} + \phantom{c_3}x_3 &{}+\phantom{c_3} x_4&{}  \leq M\\ [\jot]
+P_1x_1 &{}+P_2x_2 &{}+P_3x_3 &{}+P_4x_4 &{}\leq KP/M\\        [\jot]          
+N_1x_1 &{}+N_2x_2 &{}+N_3x_3 &{}+N_4x_4 &{}\leq KN/M\\    [\jot]              
+ \multicolumn{4}{c}{x_j \geq 0, \quad j=1,\ldots,4}
+  \end{array}
+\end{align*}
+\item
+\begin{align*}
+  \begin{array}{r@{}r@{}r@{}r@{}l}
+    \text{min} \quad c_1x_1 &{} + c_2x_2&{}+ c_3x_3&{}+ c_4x_4&{} \\[\jot]
+    \text{s.t.}\qquad x_1 &{} +\phantom{c_2}x_2 &{} + \phantom{c_3}x_3 &{}+\phantom{c_3} x_4&{}  \geq K\\ [\jot]
+    x_1 &{} +\phantom{c_2}x_2 &{} + \phantom{c_3}x_3 &{}+\phantom{c_3} x_4&{}  \leq M\\ [\jot]
+P_1x_1 &{}+P_2x_2 &{}+P_3x_3 &{}+P_4x_4 &{}\leq P\\        [\jot]          
+N_1x_1 &{}+N_2x_2 &{}+N_3x_3 &{}+N_4x_4 &{}\leq N\\    [\jot]              
+ \multicolumn{4}{c}{x_j \geq 0, \quad j=1,2,3,4}
+  \end{array}
+\end{align*}
+\end{enumerate}
+\item[1.18]
+\begin{enumerate}[(a)]
+\item
+\begin{align*}
+  \begin{array}{r@{}r@{}r@{}l}
+    \text{min} \quad \sum_{i=1}^{4}c_ix_{1,i} &{} + \sum_{i=1}^{4}c_ix_{2,i}&{}+ \sum_{i=1}^{4}c_ix_{3,i}&{} \\[\jot]
+    \text{s.t.}\qquad \sum_{i=1}^{4}c_ix_{1,i} &{} &{} &{}   \geq K_A\\ [\jot]
+  &{}  \ \sum_{i=1}^{4}c_ix_{2,i}  &{} &{}   \geq K_B\\ [\jot]
+ &{} &{}    \sum_{i=1}^{4}c_ix_{3,i}  &{}   \geq K_C\\ [\jot]
+ \sum_{i=1}^{4}c_ix_{1,i} &{} &{} &{}   \leq M_1\\ [\jot]
+  &{}  \ \sum_{i=1}^{4}c_ix_{2,i}  &{} &{}   \leq M_2\\ [\jot]
+ &{} &{}    \sum_{i=1}^{4}c_ix_{3,i}  &{}   \leq M_1+M_2\\ [\jot]
+ \sum_{i=1}^{4}P_ix_{1,i} &{} &{} &{}   \geq K_AP_S/M_1\\ [\jot]
+  &{}  \sum_{i=1}^{4}P_ix_{2,i}  &{} &{}   \geq K_BP_B/M_2\\ [\jot]
+ &{} &{}   \sum_{i=1}^{4}P_ix_{3,i}  &{}   \geq K_CP_S/(M_1+M_2)\\ [\jot]
+ \sum_{i=1}^{4}N_ix_{1,i} &{} &{} &{}   \geq K_AN_S/M_1\\ [\jot]
+  &{}   \sum_{i=1}^{4}N_ix_{2,i}  &{} &{}   \geq K_BN_B/M_2\\ [\jot]
+ &{} &{}    \sum_{i=1}^{4}N_ix_{3,i}  &{}   \geq K_CN_S/(M_1+M_2)\\ [\jot]               
+ \multicolumn{4}{c}{x_{i,j} \geq 0, \quad i=1,2,3, j=1,2,3,4}
+  \end{array}
+\end{align*}
 
+\item The $c_i$'s, $P_i$'s and $N_i$'s will unique for each plant thus we will have $c_{p,i}$'s, $P_{p,i}$ and $N_{p,i}$ for $p \in \{A, B, C\}$.
+\end{enumerate}
+\item[1.20] Let $x_t = x_t^+-x_t^-$ denote the change in production from month $t$ to month $t+1$ and $d_t$ denote the sales forecast for month $t$. Letting the units to be in thousands below:
 
+\begin{align*}
+  \begin{array}{r@{}r@{}r@{}r@{}r@{}l}
+    \text{min} \quad 0.5\sum_{t=1}^{12}x_t^+ &{} + 0.25\sum_{t=1}^{12}x_t^-&{}&{}&{} \\[\jot]
+    \text{s.t.}\qquad x_6 &{}+4&{} +2 &{}  -4 &{}  \leq 10\\ [\jot]      
+    x_6 &{}+4&{} +2 &{}  -4 &{}  \leq 10\\ [\jot]     
+ \multicolumn{4}{c}{x_i^+, x_i^- \geq 0, \quad i=1,\ldots,12}
+  \end{array}
+\end{align*}
+\item[1.25]
 \end{enumerate}
 
 \end{document}
