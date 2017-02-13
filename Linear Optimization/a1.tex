@@ -104,8 +104,8 @@
     \text{min} \quad c_1x_1 &{} + c_2x_2&{}+ c_3x_3&{}+ c_4x_4&{} \\[\jot]
     \text{s.t.}\qquad x_1 &{} +\phantom{c_2}x_2 &{} + \phantom{c_3}x_3 &{}+\phantom{c_3} x_4&{}  \geq K\\ [\jot]
     x_1 &{} +\phantom{c_2}x_2 &{} + \phantom{c_3}x_3 &{}+\phantom{c_3} x_4&{}  \leq M\\ [\jot]
-P_1x_1 &{}+P_2x_2 &{}+P_3x_3 &{}+P_4x_4 &{}\leq KP/M\\        [\jot]          
-N_1x_1 &{}+N_2x_2 &{}+N_3x_3 &{}+N_4x_4 &{}\leq KN/M\\    [\jot]              
+P_1x_1 &{}+P_2x_2 &{}+P_3x_3 &{}+P_4x_4 &{}\leq PM\\        [\jot]          
+N_1x_1 &{}+N_2x_2 &{}+N_3x_3 &{}+N_4x_4 &{}\leq NM\\    [\jot]              
  \multicolumn{4}{c}{x_j \geq 0, \quad j=1,\ldots,4}
   \end{array}
 \end{align*}
@@ -115,8 +115,8 @@ N_1x_1 &{}+N_2x_2 &{}+N_3x_3 &{}+N_4x_4 &{}\leq KN/M\\    [\jot]
     \text{min} \quad c_1x_1 &{} + c_2x_2&{}+ c_3x_3&{}+ c_4x_4&{} \\[\jot]
     \text{s.t.}\qquad x_1 &{} +\phantom{c_2}x_2 &{} + \phantom{c_3}x_3 &{}+\phantom{c_3} x_4&{}  \geq K\\ [\jot]
     x_1 &{} +\phantom{c_2}x_2 &{} + \phantom{c_3}x_3 &{}+\phantom{c_3} x_4&{}  \leq M\\ [\jot]
-P_1x_1 &{}+P_2x_2 &{}+P_3x_3 &{}+P_4x_4 &{}\leq P\\        [\jot]          
-N_1x_1 &{}+N_2x_2 &{}+N_3x_3 &{}+N_4x_4 &{}\leq N\\    [\jot]              
+(P_1-P)x_1 &{}+(P_2-P)x_2 &{}+(P_3-P)x_3 &{}+(P_4-P)x_4 &{}\leq 0\\        [\jot]          
+(N_1x-N)_1 &{}+(N_2-N)x_2 &{}+(N_3-N)x_3 &{}+(N_4-N)x_4 &{}\leq 0\\    [\jot]              
  \multicolumn{4}{c}{x_j \geq 0, \quad j=1,2,3,4}
   \end{array}
 \end{align*}
@@ -127,18 +127,18 @@ N_1x_1 &{}+N_2x_2 &{}+N_3x_3 &{}+N_4x_4 &{}\leq N\\    [\jot]
 \begin{align*}
   \begin{array}{r@{}r@{}r@{}l}
     \text{min} \quad \sum_{i=1}^{4}c_ix_{1,i} &{} + \sum_{i=1}^{4}c_ix_{2,i}&{}+ \sum_{i=1}^{4}c_ix_{3,i}&{} \\[\jot]
-    \text{s.t.}\qquad \sum_{i=1}^{4}c_ix_{1,i} &{} &{} &{}   \geq K_A\\ [\jot]
-  &{}  \ \sum_{i=1}^{4}c_ix_{2,i}  &{} &{}   \geq K_B\\ [\jot]
- &{} &{}    \sum_{i=1}^{4}c_ix_{3,i}  &{}   \geq K_C\\ [\jot]
- \sum_{i=1}^{4}c_ix_{1,i} &{} &{} &{}   \leq M_1\\ [\jot]
-  &{}  \ \sum_{i=1}^{4}c_ix_{2,i}  &{} &{}   \leq M_2\\ [\jot]
- &{} &{}    \sum_{i=1}^{4}c_ix_{3,i}  &{}   \leq M_1+M_2\\ [\jot]
- \sum_{i=1}^{4}P_ix_{1,i} &{} &{} &{}   \geq K_AP_S/M_1\\ [\jot]
-  &{}  \sum_{i=1}^{4}P_ix_{2,i}  &{} &{}   \geq K_BP_B/M_2\\ [\jot]
- &{} &{}   \sum_{i=1}^{4}P_ix_{3,i}  &{}   \geq K_CP_S/(M_1+M_2)\\ [\jot]
- \sum_{i=1}^{4}N_ix_{1,i} &{} &{} &{}   \geq K_AN_S/M_1\\ [\jot]
-  &{}   \sum_{i=1}^{4}N_ix_{2,i}  &{} &{}   \geq K_BN_B/M_2\\ [\jot]
- &{} &{}    \sum_{i=1}^{4}N_ix_{3,i}  &{}   \geq K_CN_S/(M_1+M_2)\\ [\jot]               
+    \text{s.t.}\qquad \sum_{i=1}^{4}x_{1,i} &{} &{} &{}   \geq K_A\\ [\jot]
+  &{}  \ \sum_{i=1}^{4}x_{2,i}  &{} &{}   \geq K_B\\ [\jot]
+ &{} &{}    \sum_{i=1}^{4}x_{3,i}  &{}   \geq K_C\\ [\jot]
+ \sum_{i=1}^{4}x_{1,i} &{} &{} &{}   \leq M_1\\ [\jot]
+  &{}  \ \sum_{i=1}^{4}x_{2,i}  &{} &{}   \leq M_2\\ [\jot]
+ &{} &{}    \sum_{i=1}^{4}x_{3,i}  &{}   \leq M_1+M_2\\ [\jot]
+ \sum_{i=1}^{4}P_ix_{1,i} &{} &{} &{}   \geq P_SM_1\\ [\jot]
+  &{}  \sum_{i=1}^{4}P_ix_{2,i}  &{} &{}   \geq P_BM_2\\ [\jot]
+ &{} &{}   \sum_{i=1}^{4}P_i(x_{1,i}+x_{2,i}+x_{3,i})  &{}   \geq P_S(M_1+M_2)\\ [\jot]
+ \sum_{i=1}^{4}N_ix_{1,i} &{} &{} &{}   \geq N_SM_1\\ [\jot]
+  &{}   \sum_{i=1}^{4}N_ix_{2,i}  &{} &{}   \geq N_BM_2\\ [\jot]
+ &{} &{}    \sum_{i=1}^{4}N_i(x_{1,i}+x_{2,i}+x_{3,i})  &{}   \geq N_S(M_1+M_2)\\ [\jot]               
  \multicolumn{4}{c}{x_{i,j} \geq 0, \quad i=1,2,3, j=1,2,3,4}
   \end{array}
 \end{align*}
