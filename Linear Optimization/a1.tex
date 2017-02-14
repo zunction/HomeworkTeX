@@ -203,13 +203,12 @@ Let the units be in pounds below, and $x_1, x_2$ and $x_3$ denoting amount of in
 \begin{align*}
   \begin{array}{r@{}r@{}r@{}l}
     \text{min} \quad 4x_1 &{}+ 3x_2&{}+2x_3 \\[\jot]
-    \text{s.t.}\qquad x_1 &{}&{}&{} \geq 200 \\
-    &{}x_2&{}&{} \geq 400 \\
-   &{}&{}x_3&{} \leq 800 \\ 
-     \multicolumn{2}{c}{x_1, x_2 , x_3 \geq 0}
+    \text{s.t.}\qquad    x_1 &{}+ x_2&{}+x_3&{}=2000 \\[\jot]
+     \multicolumn{4}{c}{x_1 \geq 200, x_2 \geq 400 , 0 \leq x_3 \leq 800}
   \end{array}
 \end{align*}
-The bounded-variable simplex method cannot be used to solve this problem as it will lead to a matrix $A$ that is of not full rank.
+The bounded variable index method can be used to solve this problem.
+
 \item[2.9]
 Phase I:
 \begin{align*}
