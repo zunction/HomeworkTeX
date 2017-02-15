@@ -179,12 +179,12 @@ Combination&24 &40 & 32 & trim waste\\
 \end{table}
 Let $x_i$ denote the number of combination $i$ used.
 \begin{align*}
-  \begin{array}{r@{}r@{}r@{}r@{}r@{}r@{}r@{}l}
-    \text{min} \quad 4x_1 &+ 20x_2&+ 4x_3&+ 4x_4&+ 12x_5&+ 20x_6&+ 12x_7 \\[\jot]
-    \text{s.t.}\qquad  4x_1 & & & +x_4 & +2x_5&+2x_6&+x_7  & \geq 75\\[\jot]
-    & 2x_2& & +x_4 & +x_5&& & \geq 50\\[\jot]
-    & & 3x_3& +x_4 & &+x_6&+2x_7  & \geq 110\\[\jot]
- \multicolumn{4}{c}{x_j \geq 0, \quad j=1,\ldots,7}
+  \begin{array}{r@{}r@{}r@{}r@{}r@{}r@{}r@{}r@{}r@{}r@{}l}
+    \text{min} \quad 4x_1 &{}+ 20x_2&{}+ 4x_3&{}+ 4x_4&{}+ 12x_5&{}+ 20x_6&{}+ 12x_7&{}+24x_8 &{} +40x_9 &{} +32x_{10}\\[\jot]
+    \text{s.t.}\qquad  4x_1 &{} &{} &{} +x_4 &{} +2x_5&{}+2x_6&{}+x_7  &{} +x_8&{}&{}&{}= 75\\[\jot]
+    &{} 2x_2&{} &{} +x_4 &{} +x_5&{}&{} &{}&{}+x_9&{}&{}= 50\\[\jot]
+    &{} &{} 3x_3&{} +x_4 &{} &{}+x_6&{}+2x_7  &{} &{}&{}+x_{10}&{}= 110\\[\jot]
+ \multicolumn{4}{c}{x_j \geq 0, \quad j=1,\ldots,10}
   \end{array}
 \end{align*}
 
@@ -195,7 +195,7 @@ Letting the units be in thousands below:
     \text{max} \quad 2x_1 &{}+ 1.8x_2 \\[\jot]
     \text{s.t.}\qquad x_1 &{}+ x_2&{} \leq 10 \\
     2x_1 &{}+ x_2&{} \leq 9 \\
-     \multicolumn{2}{c}{x_1, x_2 \geq 0}
+     \multicolumn{3}{c}{x_1, x_2 \geq 0}
   \end{array}
 \end{align*}
 \item[2.8]
@@ -214,7 +214,7 @@ Phase I:
 \begin{align*}
   \begin{array}{r@{}r@{}r@{}r@{}r@{}r@{}r@{}r@{}r@{}l}
     \text{max} \quad x_0 &{}&{}\\[\jot]
-    \text{s.t.}\qquad x_0 &{}&{}&{}&{}&{}&{}+x_6&{}+x_7&{}+x_8&{}=0\\[\jot]
+    \text{s.t.}\qquad (-x_0) &{}&{}&{}&{}&{}&{}+x_6&{}+x_7&{}+x_8&{}=0\\[\jot]
     &{}+2x_1 &{}+3x_2&{}-x_3&{}+x_4 &{} &{} +x_6 &{} &{}&{}=9  \\[\jot]
     &{}&{}2x_2&{}+x_3&{} &{}-x_5 &{} &{}+x_7&{}&{} = 4 \\[\jot]
    &{}+x_1&{}&{}+x_3&{} &{}&{} &{}&{}+x_8&{}= 6 \\ [\jot]
@@ -232,7 +232,43 @@ $x_8$ & 1 & 0 & 0 & 6\\
 \end{tabular}
 \end{table}
 \item[2.12]
-\item[2.13]
+\begin{enumerate}[(a)]
+\item
+\begin{align*}
+  \begin{array}{r@{}r@{}r@{}r@{}r@{}r@{}r@{}r@{}l}
+    \text{min} \quad x_6 &{} + x_7 &{} +x_8 \\[\jot]
+    \text{s.t.}\qquad x_1 &{} -6x_2 &{} + \phantom{2}x_3 &{}- \phantom{3}x_4 &{}&{}+x_6&{}&{}&{}= 5 \\  
+                           x_1 &{} -2x_2         &{} +   2x_3 &{}-3x_4&{} - x_5&{}&{}+x_7&{}&{} = 3 \\            
+                     -3x_1 &{} &{}+2x_3&{}-4x_4    &{} &{}&{}&{}+x_8&{}= 1 \\         
+ \multicolumn{8}{c}{x_j \geq 0, \quad j=1,\dots,8.}
+  \end{array}
+\end{align*}
+
+\item
+\begin{align*}
+  \begin{array}{r@{}r@{}r@{}r@{}r@{}r@{}r@{}l}
+    \text{max} \quad -x_6 &{} - x_7  \\[\jot]
+    \text{s.t.}\qquad -3x_1 &{} -2x_2 &{} +\phantom{2}x_3 &{}-x_4 &{}&{}+x_6&{}&{}= 3 \\  
+                           x_1 &{} +x_2   &{} -   2x_3 &{}&{} - x_5&{}&{}+x_7&{}= 1 \\            
+ \multicolumn{8}{c}{x_j \geq 0, \quad j=1,\dots,7.}
+  \end{array}\\
+    \begin{array}{r@{}r@{}r@{}r@{}r@{}r@{}r@{}l}
+    \text{max} \quad -4 &{} -2x_1 &{} - x_2&{}-x_3&{}-x_4&{}-x_5  \\[\jot]
+    \text{s.t.}\qquad -3x_1 &{} -2x_2 &{} +\phantom{2}x_3 &{}-x_4 &{}&{}+x_6&{}&{}= 3 \\  
+                           x_1 &{} +x_2   &{} -   2x_3 &{}&{} - x_5&{}&{}+x_7&{}= 1 \\            
+ \multicolumn{8}{c}{x_j \geq 0, \quad j=1,\dots,7.}
+  \end{array}
+\end{align*}
+thus since all the coefficients of the objective function is $\leq 0$ the system contains no feasible solution.
 \end{enumerate}
 
+
+\item[2.13]
+\begin{enumerate}[(a)]
+\item
+\item
+\item
+\item
+\end{enumerate}
+\end{enumerate}
 \end{document}
