@@ -151,7 +151,7 @@ The second equality holds as $\mathbb{P}(\hat{\theta}^\ast \neq \hat{\theta})$ d
 \item For $X \sim \text{Uniform}(a,b)$
 \begin{align*}
 \hat{\mu}\overline{X}_n=\frac{1}{n}\sum_{i=1}^{n}X_i&=\frac{\hat{b}+\hat{a}}{2}\\
-\hat{\sigma}^2\frac{1}{n}\sum_{i=1}^{n}(\overline{X}_n-X_i)^2&=\frac{(b-a)^2}{12}
+\hat{\sigma}^2=\frac{1}{n}\sum_{i=1}^{n}(\overline{X}_n-X_i)^2&=\frac{(b-a)^2}{12}
 \end{align*}
 thus
 \begin{align*}
@@ -160,11 +160,16 @@ b &= \frac{1}{2}\left(\sqrt{12\hat{\sigma}^2}+2\hat{\mu}\right)\\
 a &=2\hat{\mu}-b 
 \end{align*}
 the positive root is taken as $b-a>0$.
-\item The log-likelihood function is given by
+\item Let $X_1,\ldots, X_n \sim \text{Uniform}(a,b)$, with $X_{max}=\max \{X_1,\ldots, X_n\}$. If $b < X_{max}$, then $f(X_j;a,b)=0$ for some $j$. Thus if $b \geq X_{max}$, then $f(X_i;a,b)=1/b-a$ for all $i$. In a similar fashion, letting $X_{min} = \{X_1,\ldots, X_n\}$, if $X_{min}<a$ we also have $f(X_j;a,b)=0$ for some $j$ and $f(X_i;a,b)=1/b-a$ for all $i$ if $X_{min} \geq a$. Therefore,
 \begin{align*}
-\ell_n(a,b) = \sum_{i=1}^{n}\log \frac{X_i}{b-a}
+\mathcal{L}_n(a,b):=\begin{cases}
+0, & X_{min} < a \text{ or }X_{max} >  b \\
+\left(\frac{1}{b-a}\right)^n, & \text{ otherwise }%X_{max} \leq b \text{ and } X_{min} \geq a
+\end{cases}
 \end{align*}
-\item
+$\mathcal{L}(a,b)$ strictly decreasing over $(-\infty,X_{min}]$ and $[X_{max},\infty)$, thus the maximum likelihood estimators $\hat{a}=X_{min}$ and $\hat{b}=X_{max}$.
+
+\item Let $\tau = \int x \,dF(x)$ be given,
 \item
 \end{enumerate}
 \item[9.6] 
