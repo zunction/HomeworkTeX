@@ -148,8 +148,22 @@ The second equality holds as $\mathbb{P}(\hat{\theta}^\ast \neq \hat{\theta})$ d
 \end{enumerate}
 \item[9.2]
 \begin{enumerate}[(a)]
-\item 
-\item
+\item For $X \sim \text{Uniform}(a,b)$
+\begin{align*}
+\hat{\mu}\overline{X}_n=\frac{1}{n}\sum_{i=1}^{n}X_i&=\frac{\hat{b}+\hat{a}}{2}\\
+\hat{\sigma}^2\frac{1}{n}\sum_{i=1}^{n}(\overline{X}_n-X_i)^2&=\frac{(b-a)^2}{12}
+\end{align*}
+thus
+\begin{align*}
+(b-a)+(b+a) &= +\sqrt{12\hat{\sigma}^2}+2\hat{\mu}\\
+b &= \frac{1}{2}\left(\sqrt{12\hat{\sigma}^2}+2\hat{\mu}\right)\\
+a &=2\hat{\mu}-b 
+\end{align*}
+the positive root is taken as $b-a>0$.
+\item The log-likelihood function is given by
+\begin{align*}
+\ell_n(a,b) = \sum_{i=1}^{n}\log \frac{X_i}{b-a}
+\end{align*}
 \item
 \item
 \end{enumerate}
