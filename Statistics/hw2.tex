@@ -134,6 +134,11 @@ with $80\%$ and $90\%$ confidence intervals given by
 &= \prod_{i=1}^{n}\mathbb{P}(X_i\leq k)\\
 &=\left(\frac{k}{\theta}\right)^n
 \end{align*}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1]{bootstrap.png}
+\caption{Comparison of the true distribution $\hat{\theta}$ to histrograms from bootstrap}
+\end{figure}
 \item Let $\hat{\theta} = X_{max} = \max\{X_1, \ldots, X_n\}$. Then
 \begin{align*}
 \mathbb{P}(\hat{\theta}^\ast = \hat{\theta})&=1-\mathbb{P}(\hat{\theta}^\ast \neq \hat{\theta})\\
@@ -142,7 +147,12 @@ with $80\%$ and $90\%$ confidence intervals given by
 The second equality holds as $\mathbb{P}(\hat{\theta}^\ast \neq \hat{\theta})$ denotes the probability that any random sampling with replacement of the $n$ samples drawn has probability of $1-1/n$ not being $x_{max}$ (which is fixed since a random sample of $n$ has been drawn). As each sampling process is iid due to replacement, probability of them all not being $x_{max}$ is $(1-1/n)^n$. Thus we have $\mathbb{P}(\hat{\theta}^\ast = \hat{\theta}) \to 0$ as $n \to \infty$ and $\mathbb{P}(\hat{\theta}^\ast = \hat{\theta}) = .632$ for $n=50$.
 \end{enumerate}
 \item[9.2]
-
+\begin{enumerate}[(a)]
+\item 
+\item
+\item
+\item
+\end{enumerate}
 \item[9.6] 
 
 \end{enumerate}
