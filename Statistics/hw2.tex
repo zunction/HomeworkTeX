@@ -148,16 +148,16 @@ The second equality holds as $\mathbb{P}(\hat{\theta}^\ast \neq \hat{\theta})$ d
 \end{enumerate}
 \item[9.2]
 \begin{enumerate}[(a)]
-\item For $X \sim \text{Uniform}(a,b)$
+\item For $X_1,\ldots, X_n \sim \text{Uniform}(a,b)$
 \begin{align*}
-\hat{\mu}\overline{X}_n=\frac{1}{n}\sum_{i=1}^{n}X_i&=\frac{\hat{b}+\hat{a}}{2}\\
-\hat{\sigma}^2=\frac{1}{n}\sum_{i=1}^{n}(\overline{X}_n-X_i)^2&=\frac{(b-a)^2}{12}
+\hat{\mu}=\overline{X}_n=\frac{1}{n}\sum_{i=1}^{n}X_i&=\frac{\hat{b}+\hat{a}}{2}\\
+\hat{\sigma}^2=\frac{1}{n}\sum_{i=1}^{n}(\overline{X}_n-X_i)^2&=\frac{(\hat{b}-\hat{a})^2}{12}
 \end{align*}
 thus
 \begin{align*}
-(b-a)+(b+a) &= +\sqrt{12\hat{\sigma}^2}+2\hat{\mu}\\
-b &= \frac{1}{2}\left(\sqrt{12\hat{\sigma}^2}+2\hat{\mu}\right)\\
-a &=2\hat{\mu}-b 
+(\hat{b}-\hat{a})+(\hat{b}+\hat{a}) &= +\sqrt{12\hat{\sigma}^2}+2\hat{\mu}\\
+\hat{b} &= \frac{1}{2}\left(\sqrt{12\hat{\sigma}^2}+2\hat{\mu}\right)\\
+\hat{a} &=2\hat{\mu}-\hat{b }
 \end{align*}
 the positive root is taken as $b-a>0$.
 \item Let $X_1,\ldots, X_n \sim \text{Uniform}(a,b)$, with $X_{max}=\max \{X_1,\ldots, X_n\}$. If $b < X_{max}$, then $f(X_j;a,b)=0$ for some $j$. Thus if $b \geq X_{max}$, then $f(X_i;a,b)=1/b-a$ for all $i$. In a similar fashion, letting $X_{min} = \{X_1,\ldots, X_n\}$, if $X_{min}<a$ we also have $f(X_j;a,b)=0$ for some $j$ and $f(X_i;a,b)=1/b-a$ for all $i$ if $X_{min} \geq a$. Therefore,
@@ -169,7 +169,7 @@ the positive root is taken as $b-a>0$.
 \end{align*}
 $\mathcal{L}(a,b)$ strictly decreasing over $(-\infty,X_{min}]$ and $[X_{max},\infty)$, thus the maximum likelihood estimators $\hat{a}=X_{min}$ and $\hat{b}=X_{max}$.
 
-\item Let $\tau = \int x \,dF(x)$ be given,
+\item Let $\tau = \int x \,dF(x)$ be given, then from (b) we know that {\sffamily MLE}'s $\hat{a}$ and $\hat{b}$ are given by $X_{min}$ and $X_{max}$ respectively. Then the {\sffamily MLE} of $\tau$ follows from {\sffamily MLE}'s $\hat{a}$ and $\hat{b}$. Thus {\sffamily MLE} of $\tau$ is $(X_{min} + X_{max})/2$. 
 \item
 \end{enumerate}
 \item[9.6] 
