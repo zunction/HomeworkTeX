@@ -170,7 +170,21 @@ the positive root is taken as $b-a>0$.
 $\mathcal{L}(a,b)$ strictly decreasing over $(-\infty,X_{min}]$ and $[X_{max},\infty)$, thus the maximum likelihood estimators $\hat{a}=X_{min}$ and $\hat{b}=X_{max}$.
 
 \item Let $\tau = \int x \,dF(x)$ be given, then from (b) we know that {\sffamily MLE}'s $\hat{a}$ and $\hat{b}$ are given by $X_{min}$ and $X_{max}$ respectively. Then the {\sffamily MLE} of $\tau$ follows from {\sffamily MLE}'s $\hat{a}$ and $\hat{b}$. Thus {\sffamily MLE} of $\tau$ is $(X_{min} + X_{max})/2$. 
-\item
+\item By simulation, the {\sffamily MSE} of $\hat{\tau} \approx 0.015$. Analytically, for the {\sffamily MSE} of the  nonparametric plugin estimator $\tilde{\tau}$ we have
+
+\begin{align*}
+\mathbb{E}(\hat{\theta}-\theta)^2&=\mathbb{E}(\hat{\theta}^2-2\hat{\theta}\theta+\theta^2)\\
+&=\mathbb{E}(\hat{\theta}^2)-2\theta\mathbb{E}(\hat{\theta})+\mathbb{E}(\theta^2)\\
+&=\mathbb{E}(\hat{\theta}^2)-2\theta\mathbb{E}(\hat{\theta})+\mathbb{E}(\theta^2)\\
+&=\mathbb{E}(\hat{\theta}^2)-4
+\end{align*}
+\begin{align*}
+\mathbb{E}(\hat{\theta})^2&=n^{-2}\left[\mathbb{E}\left(\sum_{i=1}^{n}X_i^2\right)+2\mathbb{E}\left(\sum_{i\neq j}X_iX_j\right)\right]\\
+&=n^{-2}\left[n\mathbb{E}\left(X^2\right)+n(n-1)\mathbb{E}\left(X_iX_j\right)\right]\\
+&=n^{-2}\left[n\mathbb{E}\left(X^2\right)+n(n-1)\mathbb{E}\left(X\right)^2\right]\\
+&=121/30
+\end{align*}
+using the substitution $\mathbb{E}(X^2) = 2 $, $\mathbb{E}(X) = 13/2$ and $n=10$. The expectations are computed with $a=1, b=2$. Thus we have {\sffamily MSE} to be $1/30$.
 \end{enumerate}
 \item[9.6] 
 
