@@ -187,7 +187,31 @@ $\mathcal{L}(a,b)$ strictly decreasing over $(-\infty,X_{min}]$ and $[X_{max},\i
 using the substitution $\mathbb{E}(X^2) = 2 $, $\mathbb{E}(X) = 13/2$ and $n=10$. The expectations are computed with $a=1, b=2$. Thus we have {\sffamily MSE} to be $1/30$.
 \end{enumerate}
 \item[9.6] 
-
+\begin{enumerate}[(a)]
+\item The log-likelihood function is given to be
+\begin{align*}
+\ell_n(\theta)&=n\log\frac{1}{\sqrt{2\pi}}-\sum_{i=1}^{n}\frac{(X_i-\theta)^2}{2}\\
+&=n\log\frac{1}{\sqrt{2\pi}}-\frac{n}{2}S^2-\frac{n}{2}(\overline{X}_n-\theta)^2\\
+\text{with } \frac{\partial \ell_n}{\partial \theta}&=n(\overline{X}_n-\theta)
+\end{align*}
+thus the maximum of the log-likelihood function is when $\theta = \overline{X}_n$. Now, $X_1 \sim N(\overline{X}_n,1)$
+\begin{align*}
+%X_1 >0 &\Leftrightarrow n\theta - \sum_{i=2}^{n}X_i > 0\Leftrightarrow \theta > n^{-1}\sum_{i=2}^{n}X_i \\
+\psi = \mathbb{P}(X_1 >0) &= \mathbb{P}\left(X_1 -\overline{X}_n > -\overline{X}_n\right)\\
+&= \mathbb{P}\left( Z> -\overline{X}_n\right)\\
+\end{align*}
+where the $Z$ refers to the standard normal distribution.
+\item The distribution of $\hat{\psi}$ is normally distributed with $\hat{se} = \sqrt{1/I_n(\hat{\theta})}$
+\begin{align*}
+I_n(\theta) &= nI(\theta)\\
+&= nI(\theta)\\
+\end{align*}
+\item Let $\tilde{\psi} = (1/n)\sum_iY_i$, to show $\tilde{\psi}$ is consistent, we need to show that $\mathbb{P}(|\tilde{\psi} - \psi|>\epsilon) \to 0$ as $n \to \infty$.
+\begin{align*}
+\mathbb{P}(|\tilde{\psi} - \psi|>\epsilon)
+\end{align*}
+\item
+\end{enumerate}
 \end{enumerate}
 
 \end{document}
