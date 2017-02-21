@@ -295,10 +295,10 @@ using the substitution $\mathbb{E}(X^2) = 2 $, $\mathbb{E}(X) = 13/2$ and $n=10$
 &=n\log\frac{1}{\sqrt{2\pi}}-\frac{n}{2}S^2-\frac{n}{2}(\overline{X}_n-\theta)^2\\
 \text{with } \frac{\partial \ell_n}{\partial \theta}&=n(\overline{X}_n-\theta)
 \end{align*}
-thus the maximum of the log-likelihood function is when $\theta = \overline{X}_n$. Now, $X_1 \sim N(\overline{X}_n,1)$
+where $\overline{X}_n = n^{-1}\sum_{i=1}^{n} X_i$. Thus the maximum of the log-likelihood function is when $\theta = \overline{X}_n$. Now, $X_1 \sim N(\overline{X}_n,1)$ and so the maximum likelihood of $\psi$ is given by:
 \begin{align*}
 %X_1 >0 &\Leftrightarrow n\theta - \sum_{i=2}^{n}X_i > 0\Leftrightarrow \theta > n^{-1}\sum_{i=2}^{n}X_i \\
-\psi = \mathbb{P}(X_1 >0) &= \mathbb{P}\left(X_1 -\overline{X}_n > -\overline{X}_n\right)\\
+\hat{\psi} = \mathbb{P}(X_1 >0) &= \mathbb{P}\left(X_1 -\overline{X}_n > -\overline{X}_n\right)\\
 &= \mathbb{P}\left( Z> -\overline{X}_n\right)\\
 \end{align*}
 where the $Z$ refers to the standard normal distribution.
@@ -314,12 +314,34 @@ Since $f(X;\theta) = 1/\sqrt{2\pi}\exp(-1/2(X-\theta)^2)$, we have the score fun
 &=\mathbb{P}\left(\left|\sum_iY_i - n\mathbb{P}(Y_1=1)\right|^2>(\epsilon n)^2\right)\\
 &\leq \mathbb{E}\left(\left[\sum_iY_i - n\mathbb{P}(Y_1=1)\right]^2\right)/(\epsilon n)^2\quad \text{by Markov's inequality}\\
 &=\frac{n\mathbb{E}(Y)-n\mathbb{E}(Y)^2+\left(n\mathbb{E}(Y)-n\mathbb{P}(Y_1=1)\right)^2}{\epsilon^2n^2}\\
-&\to \frac{\mathbb{E}(Y)-\mathbb{P}(Y_1=1)}{\epsilon^2}=0
+&\to \frac{(\mathbb{E}(Y)-\mathbb{P}(Y_1=1))^2}{\epsilon^2}=0 \text{ as } n \to \infty
 \end{align*}
-\item Using the delta method, we have the standard error of the {\sffamily MLE} denoted $\hat{\text{\sffamily se}}$....
-
-The standard error of $\tilde{\psi}$ denoted by $\tilde{\text{\sffamily se}}$
-\item
+\item We are given $\tilde{\psi} = \overline{Y}_n = n^{-1}\sum_{i=1}^{n}Y_i$ with $Y \sim \text{Bernoulli}(p)$, $p = \mathbb{P}(Z>-\theta)$. Thus by Central Limit Theorem,
+\begin{align*}
+\frac{\overline{Y}_n-\mathbb{E}(Y)}{\sqrt{\mathbb{V}(Y)/n}} \leadsto N(0,1)
+\end{align*}
+thus $\overline{Y}_n$ is normally distributed with mean $p$ and variance $p(1-p)/n$. Next we consider the {\sffamily MLE}, $\hat{\psi}$. We know from (a) that $\psi(\theta) = \mathbb{P}(Z > -\theta)$ with $X \sim N(\theta, 1)$ and $\hat{\psi} = \psi(\overline{X}_n)$. By Central Limit Theorem,
+\begin{align*}
+\frac{\overline{X}_n - \theta}{1/\sqrt{n}} \leadsto N(0,1)
+\end{align*}
+and $\hat{\psi}$ is differentiable since it is a complementary cumulative distribution function and its derivative is strictly greater than 0. Therefore,
+\begin{align*}
+\frac{\psi(\overline{X}_n) - \psi(\theta)}{|\psi'(\overline{X}_n)|} \leadsto N(0, 1)
+\end{align*}
+evaluating $\psi'(\overline{X}_n)$, we have the probability distribution function evaluated at $\overline{X}_n$ which is 
+\begin{align*}
+f_X(\overline{X}_n)=\frac{1}{\sqrt{2\pi}} \exp( 1/2(\overline{X}_n))
+\end{align*}
+Letting $f_Z(z)$ and $\overline{F}_Z(z)$ denote the pdf and complementary cdf of a normal distribution with mean $0$ and variance 1, the asymptotic relative efficiency of $\tilde{\psi}$ to $\hat{\psi}$ is 
+\begin{align*}
+\text{\sffamily ARE}(\tilde{\psi}, \hat{\psi}) = \frac{\overline{F}_Z(-\theta)(1-\overline{F}_Z(-\theta))}{\left(f_Z(\overline{X}_n)\right)^2}
+\end{align*}
+%Using the delta method, we have the standard error of the {\sffamily MLE} denoted $\hat{\text{\sffamily se}}$....
+%The standard error of $\tilde{\psi}$ denoted by $\tilde{\text{\sffamily se}}$
+\item If the data is not normal, unless it is a constant distribution, it will be consistent due to Central Limit Theorem. Let $X_i =-1$ for all $i$, i.e. no matter how many times you sample you only get -1. Thus 
+\begin{align*}
+\hat{\psi}= \mathbb{P}(Z > -1) \neq 0 = \mathbb{P}(Y_1=1) = \psi
+\end{align*}
 \end{enumerate}
 \end{enumerate}
 
