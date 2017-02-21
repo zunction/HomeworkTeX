@@ -178,9 +178,10 @@ with $80\%$ and $90\%$ confidence intervals given by
 \end{align*}
 \begin{figure}[h]
 \centering
-\includegraphics[scale=1]{bootstrap.png}
+\includegraphics[scale=1]{bootstrap1.png}
 \caption{Comparison of the true distribution $\hat{\theta}$ to histrograms from bootstrap}
 \end{figure}
+
 Code for the plot:
 \begin{python}
 import numpy as np
@@ -301,16 +302,23 @@ thus the maximum of the log-likelihood function is when $\theta = \overline{X}_n
 &= \mathbb{P}\left( Z> -\overline{X}_n\right)\\
 \end{align*}
 where the $Z$ refers to the standard normal distribution.
-\item The distribution of $\hat{\psi}$ is normally distributed with $\hat{se} = \sqrt{1/I_n(\hat{\theta})}$
+\item The distribution of $\hat{\psi}$ is normally distributed with $\hat{\text{\sffamily se}} = \sqrt{1/I_n(\hat{\theta})}$
 \begin{align*}
 I_n(\theta) &= nI(\theta)\\
 &= nI(\theta)\\
 \end{align*}
-\item Let $\tilde{\psi} = (1/n)\sum_iY_i$, to show $\tilde{\psi}$ is consistent, we need to show that $\mathbb{P}(|\tilde{\psi} - \psi|>\epsilon) \to 0$ as $n \to \infty$.
+Since $f(X;\theta) = 1/\sqrt{2\pi}\exp(-1/2(X-\theta)^2)$, we have the score function $s(X;\theta) = X - \theta$ and $s'(X;\theta) = 1$. Thus $I(\theta) = -\mathbb{E}_\theta(s'(X;\theta))=-1$. Hence $\hat{\text{\sffamily se}} = 1/\sqrt{n}$ which gives us a 95 percent confidence interval of $\mathbb{P}\left( Z> -\overline{X}_n\right) \pm 1.96/\sqrt{n}$
+\item Let $\tilde{\psi} = (1/n)\sum_iY_i$, to show $\tilde{\psi}$ is consistent, we need to show that $\mathbb{P}(|\tilde{\psi} - \psi|>\epsilon) \to 0$ as $n \to \infty$. We also observe that $Y\sim \text{Bernoulli}(p)$ where $p = \mathbb{P}(X>0)$
 \begin{align*}
-\mathbb{P}(|\tilde{\psi} - \psi|>\epsilon)
+\mathbb{P}(|\tilde{\psi} - \psi|>\epsilon) &= \mathbb{P}(|(1/n)\sum_iY_i - \mathbb{P}(Y_1=1)|>\epsilon)\\
+&=\mathbb{P}\left(\left|\sum_iY_i - n\mathbb{P}(Y_1=1)\right|^2>(\epsilon n)^2\right)\\
+&\leq \mathbb{E}\left(\left[\sum_iY_i - n\mathbb{P}(Y_1=1)\right]^2\right)/(\epsilon n)^2\quad \text{by Markov's inequality}\\
+&=\frac{n\mathbb{E}(Y)-n\mathbb{E}(Y)^2+\left(n\mathbb{E}(Y)-n\mathbb{P}(Y_1=1)\right)^2}{\epsilon^2n^2}\\
+&\to \frac{\mathbb{E}(Y)-\mathbb{P}(Y_1=1)}{\epsilon^2}=0
 \end{align*}
-\item
+\item Using the delta method, we have the standard error of the {\sffamily MLE} denoted $\hat{\text{\sffamily se}}$....
+
+The standard error of $\tilde{\psi}$ denoted by $\tilde{\text{\sffamily se}}$
 \item
 \end{enumerate}
 \end{enumerate}
