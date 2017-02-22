@@ -302,13 +302,26 @@ where $\overline{X}_n = n^{-1}\sum_{i=1}^{n} X_i$. Thus the maximum of the log-l
 &= \mathbb{P}\left( Z> -\overline{X}_n\right)\\
 \end{align*}
 where the $Z$ refers to the standard normal distribution.
-\item We observe that with $\psi = \mathbb{P}(Y_1=1)$ the $Y_i$'s have a Bernoulli distribution with parameter $\psi$. Thus the variance of $\psi$ is $\psi(1-\psi)$
-\item The distribution of $\hat{\psi}$ is normally distributed with $\hat{\text{\sffamily se}} = \sqrt{1/I_n(\hat{\theta})}$
+%\item We observe that with $\psi = \mathbb{P}(Y_1=1)$ the $Y_i$'s have a Bernoulli distribution with parameter $\psi$. Thus the variance of $\psi$ is $\psi(1-\psi)$
+\item
+By Central Limit Theorem, we know that 
 \begin{align*}
-I_n(\theta) &= nI(\theta)\\
-&= nI(\theta)\\
+\sqrt{n}(\overline{X}_n-\theta) \leadsto N(\theta, 1)
 \end{align*}
-Since $f(X;\theta) = 1/\sqrt{2\pi}\exp(-1/2(X-\theta)^2)$, we have the score function $s(X;\theta) = X - \theta$ and $s'(X;\theta) = 1$. Thus $I(\theta) = -\mathbb{E}_\theta(s'(X;\theta))=-1$. Hence $\hat{\text{\sffamily se}} = 1/\sqrt{n}$ which gives us a 95 percent confidence interval of $\mathbb{P}\left( Z> -\overline{X}_n\right) \pm 1.96/\sqrt{n}$
+defining $g(\theta) = \psi = \mathbb{P}(Y_1=1) = \mathbb{P}(X_1>0)$ we have
+\begin{align*}
+\frac{g(\overline{X}_n)-g(\theta)}{|g'(\overline{X}_n)|\hat{\text{\sffamily se}}(\overline{X}_n)}\leadsto N(0,1)
+\end{align*} 
+thus the $\hat{\text{\sffamily se}}$ for the confidence interval is $|g'(\overline{X}_n)|\hat{\text{\sffamily se}} = \frac{1}{\sqrt{2n\pi}}\exp (-1/2(\overline{X}_n)^2)$. Thus the confidence interval is given by:
+\begin{align*}
+\mathbb{P}\left( Z> -\overline{X}_n\right) \pm 1.96\frac{1}{\sqrt{2n\pi}}\exp (-1/2(\overline{X}_n)^2)
+\end{align*}
+%\item The distribution of $\hat{\psi}$ is normally distributed with $\hat{\text{\sffamily se}} = \sqrt{1/I_n(\hat{\theta})}$
+%\begin{align*}
+%I_n(\theta) &= nI(\theta)\\
+%&= nI(\theta)\\
+%\end{align*}
+%Since $f(X;\theta) = 1/\sqrt{2\pi}\exp(-1/2(X-\theta)^2)$, we have the score function $s(X;\theta) = X - \theta$ and $s'(X;\theta) = 1$. Thus $I(\theta) = -\mathbb{E}_\theta(s'(X;\theta))=-1$. Hence $\hat{\text{\sffamily se}} = 1/\sqrt{n}$ which gives us a 95 percent confidence interval of $\mathbb{P}\left( Z> -\overline{X}_n\right) \pm 1.96/\sqrt{n}$
 \item Let $\tilde{\psi} = (1/n)\sum_iY_i$, to show $\tilde{\psi}$ is consistent, we need to show that $\mathbb{P}(|\tilde{\psi} - \psi|>\epsilon) \to 0$ as $n \to \infty$. We also observe that $Y\sim \text{Bernoulli}(p)$ where $p = \mathbb{P}(X>0)$
 \begin{align*}
 \mathbb{P}(|\tilde{\psi} - \psi|>\epsilon) &= \mathbb{P}(|(1/n)\sum_iY_i - \mathbb{P}(Y_1=1)|>\epsilon)\\
@@ -331,7 +344,7 @@ and $\hat{\psi}$ is differentiable since it is a complementary cumulative distri
 \end{align*}
 evaluating $\psi'(\overline{X}_n)$, we have the probability distribution function evaluated at $\overline{X}_n$ which is 
 \begin{align*}
-f_X(\overline{X}_n)=\frac{1}{\sqrt{2\pi}} \exp( 1/2(\overline{X}_n))
+f_X(\overline{X}_n)=\frac{1}{\sqrt{2\pi}} \exp( -1/2(\overline{X}_n))
 \end{align*}
 Letting $f_Z(z)$ and $\overline{F}_Z(z)$ denote the pdf and complementary cdf of a normal distribution with mean $0$ and variance 1, the asymptotic relative efficiency of $\tilde{\psi}$ to $\hat{\psi}$ is 
 \begin{align*}
