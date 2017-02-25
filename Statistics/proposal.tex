@@ -1,10 +1,11 @@
 \documentclass[a4paper,10pt]{article}
-\setlength{\parindent}{0cm}
+%\setlength{\parindent}{0cm}
 \usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
 \usepackage{graphicx,caption}
 \usepackage{verbatim}
 \usepackage{venndiagram}
-\usepackage[cm]{fullpage}
+%\usepackage[cm]{fullpage}
+\usepackage{fullpage}
 \usepackage{fancyhdr}
 \usepackage{tikz}
 \usepackage{listings}
@@ -41,6 +42,7 @@ frame=tb,                         % Any extra options here
 showstringspaces=false            % 
 }}
 
+%\setlength{\parskip}{1em}
 
 % Python environment
 \lstnewenvironment{python}[1][]
@@ -54,6 +56,9 @@ showstringspaces=false            %
 \newcommand\pythonexternal[2][]{{
 \pythonstyle
 \lstinputlisting[#1]{#2}}}
+
+\usepackage{sectsty}
+\allsectionsfont{\centering}
 
 % Python for inline
 \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
@@ -118,17 +123,32 @@ showstringspaces=false            %
 
 
 \begin{document}
-
-\section*{Generalised Extreme Value Distributions}
-
-The proposal for my course project will first start by giving an introduction on the topic that I have chosen after which I will discuss my motivation for choosing this topic and finally end off by stating what I aim to achieve at the end of this project.
+\title{\large \bf GENERALIZED EXTREME VALUE DISTRIBUTIONS}
+\author{\small ZHANGSHENG LAI}
+\date{}
+\maketitle
 
 \subsection*{Introduction}
 
+For a given random variable $X$ with cumulative probability distribution $F$, we are able to learn the distribution function of the maximum of $n$ independent and identically distributed $X_i$'s i.e. $M_n = \max\{X_1,\ldots, X_n\}$ which is given by,
+\begin{align*}
+\mathbb{P}(M_n\leq k) = \prod_{i=1}^{n}\mathbb{P}(X_i \leq k) = \left(F(k)\right)^n
+\end{align*}
+Knowing the distribution of $X$ would easily allow us to obtain the distribution function for $X_n$ using the formula above. However, it is very often in real-life problems where we do not know the explicit distributions and can only find suitable models to describe the distribution of our data. With a suitable model in mind, we then depend on statistical methods like method of moments, maximum likelihood estimators and others to estimate the parameters of the hypothesized distribution. With the learnt parameters, we have an estimate of $F$ which might contain small errors when which raised to sufficiently large powers, the errors are not small anymore. 
 
-\subsection*{Motivation}
+An alternative approach is to not work with $F$, but instead look for approximate families of $F^n$ which is estimated using extreme data only. Looking at $F^n$ as $n \to \infty$, we see that $F^n(x) \to 0$ as $n \to \infty$ for any $x < x^+$ where $x^+$ is the upper end-point of $F$ and $M_n$ degenerates to a single point mass at $x^+$. By doing some linear renormalization of $M_n$
+\begin{align*}
+M_n^\ast = \frac{M_n-b_n}{a_n}
+\end{align*}
+the asymptotic of $M_n^\ast$ will belong to one of the three families: Gumbel, Fr\'echet or Weibull. These three families can be represented by a single distribution, the generalized extreme value (GEV) distribution,
+\begin{align*}
+G(x) = \exp \left\{-\left[1+\xi\left(\frac{x-\mu}{\sigma}\right)\right]^{-t/\xi}\right\}
+\end{align*}
+defined on the set $\{x : 1 + \xi(x-\mu)/\sigma>0\}$ where the parameters satisfy $-\infty<\mu, \xi<\infty$ and $\sigma >0$.
 
 \subsection*{Aims}
+Extreme value analysis is particular useful in the fields of hydrology, where the study of rainfall, extreme floods and others help in the design of hydraulic infrastructure. Underestimation will lead to infrastructure failures and overestimation will lead to high costs that are unnecessary. In the 10th Extreme Value Analysis Conference (EVA 2017\footnote{\url{http://www.eva2017.nl/Challenge/index.html}}), they proposed a challenge to predict spatio-temporal extremes where participants are to estimate high quantiles. From my learnings about extreme value theory, I would then like to apply it for the predictions for the challenge. In my project presentation, I will share about my learnings of extreme value theory and how it is applied for the challenge.
 
+%Other than extreme value theory, there are 
 
 \end{document}
