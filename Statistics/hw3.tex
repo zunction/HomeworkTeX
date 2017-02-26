@@ -172,9 +172,38 @@ thus by the property of  {\sffamily MLE},
 \end{align*}
 thus the size of of the Wald test
 \begin{align*}
-\mathbb{P}\left(\left|\frac{\overline{X}_n-\lambda_0}{\sqrt{n/\lambda_0}}\right|>z_{\alpha/2}\right)
+\mathbb{P}\left(\left|\frac{\overline{X}_n-\lambda_0}{\sqrt{\lambda_0/n}}\right|>z_{\alpha/2}\right)
 \end{align*}
-\item
+\item 
+\begin{python}
+import numpy as np
+from scipy.stats import norm
+def poisson_sample(l, n):
+    """
+    Generates n Poisson distributed samples with parameter l.
+    """
+    return np.random.poisson(lam = 1, size = n)
+def wald_test(sample, n = 20, alpha = .05, null_lambda = 1):
+    """
+    Perfoms Wald test and returns p-value.
+    """
+    xbar = np.mean(sample)
+    test_statistic = np.absolute((xbar - null_lambda)/ (null_lambda / n) ** 0.5)
+    return  2 * (1 - norm.cdf(test_statistic))
+def multwald(l = 1, n = 20, alpha = .05, null_lambda = 1, B = 10000):
+    """
+    Performs Wald test B times and return proportion of test where null hypothesis is rejected.
+    """
+    count = 0
+    for i in np.arange(B):
+        sample = poisson_sample(l, n)
+        if wald_test(sample) < alpha:
+            count += 1
+
+    return count/B
+multwald()            
+\end{python}
+From performing the simulation of Wald 10000 times, the proportion of null rejected is 0.0564 which is very close to the type I error rate of $\alpha$.
 \end{enumerate}
 \item[11.3]
 \item[11.4]
