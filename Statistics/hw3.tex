@@ -153,14 +153,29 @@ Under this p-value, do we reject $H_0$ at a 5 percent level? How about 2.5 perce
 \item The size of this test with rejection region $R$ is
 \begin{align*}
 \mathbb{P}(T(X^n)>c| \theta = 0) & = \mathbb{P}(\overline{X}_n > c)\\
-& = \mathbb{P}\left(Z > c\right), \text{ $Z$ is the standard normal distribution}\\
-&= 1- \Phi(c), \text{ $\Phi$ is the cdf of the standard normal}
+& = \mathbb{P}\left(Z > \sqrt{n}c\right), \text{ $Z$ is the standard normal distribution}\\
+&= 1- \Phi(\sqrt{n}c), \text{ $\Phi$ is the cdf of the standard normal}
 \end{align*}
-for size $\alpha$, the $c$ is $\Phi^{-1}(1-\alpha)$
-\item Under $H_1: \theta = 1$, the power is $\beta(1) = \mathbb{P}(T(X^n)>c| \theta = 1) = 1- \Phi(c-1)$
+where by Central Limit Theorem, $\overline{X}_n\sim N(0,1/\sqrt{n})$. Thus given size $\alpha$, the $c$ is $\Phi^{-1}(1-\alpha)/\sqrt{n}$
+\item Under $H_1: \theta = 1$, the power is $\beta(1) = \mathbb{P}(T(X^n)>c| \theta = 1) = 1- \Phi\left(\sqrt{n}(c-1)\right)$. Thus when $n \to \infty$, $\sqrt{n}(c-1)\to \infty$ for $c \neq 1$ which then $1- \Phi\left(\sqrt{n}(c-1)\right) \to 1$.
 \item 
 \end{enumerate}
 \item[10.12]
+\begin{enumerate}[(a)]
+\item We known that the {\sffamily MLE} for $\lambda$ is $\overline{X}_n = n^{-1}\sum_{i=1}^{n}X_i$. The Fisher information $I_n(\lambda)$ is 
+\begin{align*}
+I_n(\lambda) = nI(\lambda)=-n\mathbb{E}_\lambda\left(\frac{\partial^2 f_X(X;\lambda)}{\partial \lambda^2}\right) = -n\mathbb{E}_\lambda\left(-\frac{X}{\lambda^2}\right)=\frac{n}{\lambda}
+\end{align*}
+thus by the property of  {\sffamily MLE}, 
+\begin{align*}
+\frac{\overline{X}_n-\lambda}{\hat{\text{\sffamily se}}} \leadsto N(0,1)
+\end{align*}
+thus the size of of the Wald test
+\begin{align*}
+\mathbb{P}\left(\left|\frac{\overline{X}_n-\lambda_0}{\sqrt{n/\lambda_0}}\right|>z_{\alpha/2}\right)
+\end{align*}
+\item
+\end{enumerate}
 \item[11.3]
 \item[11.4]
 \end{enumerate}
