@@ -1,0 +1,168 @@
+\documentclass[a4paper,10pt]{article}
+\setlength{\parindent}{0cm}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{graphicx,caption}
+\usepackage{verbatim}
+\usepackage{venndiagram}
+\usepackage[cm]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color,enumerate,framed}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+\usepackage[utf8]{inputenc}
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false            % 
+}}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+%\usepackage{tgadventor}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{parskip}
+%\usepackage{picins} %for \parpic.
+%\newtheorem*{notation}{Notation}
+%\newtheorem{example}{Example}[section]
+%\newtheorem*{problem}{Problem}
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem*{solution}{Solution}
+%\newtheorem*{definition}{Definition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{remark}{Remark}
+%\setcounter{section}{1}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{examp}{Example}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{nte}{Note}
+\newtheorem*{notat}{Notation}
+
+%\diagramstyle[labelstyle=\scriptstyle]
+
+\lstset{frame=tb,
+  language=Oz,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\pagestyle{fancy}
+
+
+
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\rfoot{\color{black!60}{\sffamily\thepage}}
+
+
+
+\begin{document}
+\flushright{Zhangsheng Lai\\1002554}
+\section*{Statistics: Homework 3}
+
+\begin{enumerate}
+\item[10.5] Given $X_1,\ldots,X_n \sim \text{Uniform}(0, \theta)$ and $Y = \max\{X_1,\ldots,X_n\}$, we have the cdf of $Y$ to be $F_Y(y)=(y/\theta)^n$ for $y \in [0,1/2]$.
+\begin{enumerate}[(a)]
+\item When we choose to reject $H_0$ when $Y>c$, the power function is $\beta(\theta) = 1-(c/\theta)^n$, $c \in [0,1/2]$.
+\item Given size of the test to be .05, we need to solve,
+\begin{align*}
+1-(2c)^n = .05
+\end{align*}
+which gives us a solution of $c = 1/2(.95)^{1/n}$
+
+\item The size, $\alpha = \beta(1/2) = 1- (2c)^{n}$, $c \in [0,1/2]$. Thus, when $n=20, Y = .48$, the p-value is 
+\begin{align*}
+\inf\{ \alpha:X^n \in R_\alpha\} = 1-(2 \times.48)^{20} = 0.557997566
+\end{align*}
+We would conclude that we do not reject $H_0$ with an approximate probability of 0.56, which does not give a strong evidence to reject $H_0$
+\item When $n=20, Y = .52$, using the $\alpha$ formula in (c) gives us $1-(2\times.52)^{20} = -1.19112314$. But the given $Y=.52>1/2$ which is out of the defined boundaries of the size, i.e. $F_Y(0.52; \theta=1/2)=0$. Hence the p-value is 0. This allows us to conclude that $H_0$ is to be rejected as the p-value always lies in the criteria region; a very strong reason to reject $H_0$.
+\end{enumerate}
+
+\item[10.7b] 
+Let $H_0: F_T = F_S$ and $H_1: F_T \neq F_S$, where the subscripts denote Twain and Snodgrass respectively. The observed value of the test statistic given by the absolute difference of their means, $|\overline{T} - \overline{S}|$ is 
+\begin{align*}
+|0.231875 - 0.2097 |=0.022175
+\end{align*}
+\begin{python}
+Have to do some simulation here.
+\end{python}
+Under this p-value, do we reject $H_0$ at a 5 percent level? How about 2.5 percent level?
+\item[10.8]
+\begin{enumerate}[(a)]
+\item The size of this test with rejection region $R$ is
+\begin{align*}
+\mathbb{P}(T(X^n)>c| \theta = 0) & = \mathbb{P}(\overline{X}_n > c)\\
+& = \mathbb{P}\left(Z > c\right), \text{ $Z$ is the standard normal distribution}\\
+&= 1- \Phi(c), \text{ $\Phi$ is the cdf of the standard normal}
+\end{align*}
+for size $\alpha$, the $c$ is $\Phi^{-1}(1-\alpha)$
+\item Under $H_1: \theta = 1$, the power is $\beta(1) = \mathbb{P}(T(X^n)>c| \theta = 1) = 1- \Phi(c-1)$
+\item 
+\end{enumerate}
+\item[10.12]
+\item[11.3]
+\item[11.4]
+\end{enumerate}
+
+\end{document}
