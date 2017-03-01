@@ -213,11 +213,24 @@ f(\theta|x^n) &\propto (1/\theta)^n(1/\theta)
 Thus the posterior density is a uniform distribution on $(a,b)$ where $b-a=\theta^n$.
 \item[11.4]
 \begin{enumerate}
-\item The likelihood function where $\theta = (p_1, p_2)$, X_i \sim \text{Bernoulli}(p_1)$  and $Y_i \sim \text{Bernoulli}(p_2)$is 
+\item The likelihood function where $\theta = (p_1, p_2)$, $X_i \sim \text{Bernoulli}(p_1)$  and $Y_i \sim \text{Bernoulli}(p_2)$ is 
 \begin{align*}
-\mathcal{L}(\theta)=\prod_{i=1}^{n}p_1^{\sum X_i}(1-p_1)^{n - \sum X_i}\prod_{i=1}^{m}p_2^{\sum Y_i}(1-p_2)^{m-\sum Y_i}\\
-\text{with log-likelihood, } \ell(\theta) = \sum X_i
+\mathcal{L}(\theta)&=p_1^{\sum_{i=1}^{n} X_i}(1-p_1)^{n - \sum_{i=1}^{n} X_i}p_2^{\sum_{i=1}^{m} Y_i}(1-p_2)^{m-\sum_{i=1}^{m} Y_i}\\
+\text{with log-likelihood, } \ell(\theta) &=\sum_{i=1}^{n} X_i \log p_1 + \left(n - \sum_{i=1}^{n} X_i\right) \log (1-p_1) +\sum_{i=1}^{m} Y_i \log p_2 + \left(n - \sum_{i=1}^{m} Y_i\right) \log (1-p_2)
 \end{align*}
+differentiating with respect to $p_1$ and $p_2$ to get the {\sffamily MLE},
+\begin{align*}
+\frac{\partial \ell}{\partial p_1} &= \frac{\sum_{i=1}^{n} X_i}{p_1} - \frac{\left(n - \sum_{i=1}^{n} X_i\right)}{1-p_1}\\
+\frac{\partial \ell}{\partial p_2} &= \frac{\sum_{i=1}^{m} Y_i}{p_2} - \frac{\left(m - \sum_{i=1}^{m} Y_i\right)}{1-p_2}
+\end{align*}
+we get $\hat{p}_1 = \sum X_i /n$ and $\hat{p}_2 = \sum Y_i /m$ when we solve for the above to be equal to 0. Using the multiparameter delta method, with $\tau = g(\theta) = p_2-p_1$, we have $\hat{\tau} = \hat{p_2} - \hat{p_1}$. We then require $\Delta \hat{g}$ and $J_n(\hat{\theta})$ to evaluate $\hat{\text{\sffamily se}}(\hat{\tau})$. It is easy to see that $\Delta \hat{g} = \begin{pmatrix}-1 & 1\end{pmatrix}^T$ and 
+\begin{align*}
+I_n(\theta) &= \begin{pmatrix} \mathbb{E}_{p_1}\left(\frac{\sum X_i}{p_1^2}+\frac{\left(n - \sum X_i\right)}{(1-p_1)^2}\right) & 0 \\ 0 & \mathbb{E}_{p_1}\left(\frac{\sum Y_i}{p_2^2}+\frac{\left(n - \sum Y_i\right)}{(1-p_2)^2}\right)\end{pmatrix}\\
+&= \begin{pmatrix} \frac{n}{p_1}+\frac{n}{(1-p_1)} & 0 \\ 0 & \frac{m}{p_2}+\frac{m}{1-p_2}\end{pmatrix}\\
+J
+\end{align*}
+
+
 \item Using parametric bootstrap, we have {\sffamily MLE} of $p_1$ and $p_2$ to be $\hat{p}_1 = 3/5$ and $\hat{p}_2 = 4/5$ respectively and thus {\sffamily MLE} of $\tau$ to be $1/5$. The parametric bootstrap requires sampling from $X_P \sim \text{Bernoulli}(3/5)$ and $X_T \sim \text{Bernoulli}(4/5)$, where the subscripts denote placebo and treatment respectively. Using 1000 simulations, we get a standard error of 0.0895209919516.
 \begin{python}
 import numpy as np
