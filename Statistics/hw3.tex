@@ -213,8 +213,30 @@ f(\theta|x^n) &\propto (1/\theta)^n(1/\theta)
 Thus the posterior density is a uniform distribution on $(a,b)$ where $b-a=\theta^n$.
 \item[11.4]
 \begin{enumerate}
-\item 
-\item
+\item The likelihood function where $\theta = (p_1, p_2)$, X_i \sim \text{Bernoulli}(p_1)$  and $Y_i \sim \text{Bernoulli}(p_2)$is 
+\begin{align*}
+\mathcal{L}(\theta)=\prod_{i=1}^{n}p_1^{\sum X_i}(1-p_1)^{n - \sum X_i}\prod_{i=1}^{m}p_2^{\sum Y_i}(1-p_2)^{m-\sum Y_i}\\
+\text{with log-likelihood, } \ell(\theta) = \sum X_i
+\end{align*}
+\item Using parametric bootstrap, we have {\sffamily MLE} of $p_1$ and $p_2$ to be $\hat{p}_1 = 3/5$ and $\hat{p}_2 = 4/5$ respectively and thus {\sffamily MLE} of $\tau$ to be $1/5$. The parametric bootstrap requires sampling from $X_P \sim \text{Bernoulli}(3/5)$ and $X_T \sim \text{Bernoulli}(4/5)$, where the subscripts denote placebo and treatment respectively. Using 1000 simulations, we get a standard error of 0.0895209919516.
+\begin{python}
+import numpy as np
+
+mle_p1 = 3/5
+mle_p2 = 4/5
+mle_tau = mle_p2 - mle_p1
+n = 100000
+
+se2_boot = 0
+
+for i in np.arange(n):
+    p1_mean = np.mean(np.random.binomial(1, mle_p1, size = 50))
+    p2_mean = np.mean(np.random.binomial(1, mle_p2, size = 50))
+    se2_boot += ((p2_mean - p1_mean) - mle_tau) ** 2
+se_boot = np.sqrt(se2_boot/n)
+print (se_boot)
+\end{python}
+A 90\% confidence interval will then be $0.2 \pm 0.148$
 \item
 \item
 \item
