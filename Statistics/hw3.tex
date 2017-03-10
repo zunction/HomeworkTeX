@@ -158,7 +158,13 @@ Under this p-value, do we reject $H_0$ at a 5 percent level? How about 2.5 perce
 \end{align*}
 where by Central Limit Theorem, $\overline{X}_n\sim N(0,1/\sqrt{n})$. Thus given size $\alpha$, the $c$ is $\Phi^{-1}(1-\alpha)/\sqrt{n}$
 \item Under $H_1: \theta = 1$, the power is $\beta(1) = \mathbb{P}(T(X^n)>c| \theta = 1) = 1- \Phi\left(\sqrt{n}(c-1)\right)$. 
-\item Thus when $n \to \infty$, $\sqrt{n}(c-1)\to \infty$ for $c \neq 1$ which then $1- \Phi\left(\sqrt{n}(c-1)\right) \to 1$.
+\item Thus when $n \to \infty$, 
+\begin{align*}
+c = \frac{\Phi^{-1}(1-\alpha)}{\sqrt{n}} &\to 0, \text{ from the right} \\
+c-1&\to -1\\
+\sqrt{n}(c-1)&\to -\infty \implies \Phi^{-1}(\sqrt{n}(c-1))\to 0
+\end{align*}
+hence $1- \Phi\left(\sqrt{n}(c-1)\right) \to 1$.
 \end{enumerate}
 \item[10.12]
 \begin{enumerate}[(a)]
