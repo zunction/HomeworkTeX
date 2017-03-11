@@ -144,10 +144,28 @@ Let $H_0: F_T = F_S$ and $H_1: F_T \neq F_S$, where the subscripts denote Twain 
 \begin{align*}
 |0.231875 - 0.2097 |=0.022175
 \end{align*}
+
+
 \begin{python}
-Have to do some simulation here.
+T = np.array([.225, .262, .217, .240, .230, .229, .235, .217])
+S = np.array([.209, .205, .196, .210, .202, .207, .224, .223, .220, .201])
+TS = np.concatenate((T, S), axis = 0)
+def test_statistic(x):
+    return np.absolute(np.mean(x[: 8]) - np.mean(x[8: ]))
+def perm_compute(x):
+    f = lambda x : np.random.shuffle(x)
+    g = lambda x : test_statistic(x)
+    f (x)
+    return g(x)
+def perm_test(x, n = 1000):
+    ts_obs = test_statistic(x)
+    ts = [perm_compute(x) for m in np.arange(n)]
+    ts = np.array(ts)
+    return np.mean(ts > ts_obs)
 \end{python}
-Under this p-value, do we reject $H_0$ at a 5 percent level? How about 2.5 percent level?
+which then a p-value fo 0.0004 was obtained. Thus under this p-value, we reject the null hypothesis at both 5\% and 2.5\% levels.
+
+
 \item[10.8]
 \begin{enumerate}[(a)]
 \item The size of this test with rejection region $R$ is
