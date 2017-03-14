@@ -122,9 +122,16 @@ showstringspaces=false            %
 \section*{Statistics: Homework 3}
 
 \begin{enumerate}
-\item[10.5] Given $X_1,\ldots,X_n \sim \text{Uniform}(0, \theta)$ and $Y = \max\{X_1,\ldots,X_n\}$, we have the cdf of $Y$ to be $F_Y(y)=(y/\theta)^n$ for $y \in [0,1/2]$.
+\item[10.5] Given $X_1,\ldots,X_n \sim \text{Uniform}(0, \theta)$ and $Y = \max\{X_1,\ldots,X_n\}$, we have the cdf of $Y$ to be $F_Y(y)=(y/\theta)^n$ for $y \in [0,\theta]$.
 \begin{enumerate}[(a)]
-\item When we choose to reject $H_0$ when $Y>c$, the power function is $\beta(\theta) = 1-(c/\theta)^n$, $c \in [0,1/2]$.
+\item When we choose to reject $H_0$ when $Y>c$, the power function is $\beta(\theta) = 1-(c/\theta)^n$, $c \in [0,\theta]$.
+
+%\begin{align*}
+%\beta(\theta): = \begin{cases}
+%1-(c/\theta)^n & c \in [0,\theta]\\
+%0 & c > \theta
+%\end{cases}
+%\end{align*}
 \item Given size of the test to be .05, we need to solve,
 \begin{align*}
 1-(2c)^n = .05
