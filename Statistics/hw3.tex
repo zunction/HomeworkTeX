@@ -5,6 +5,7 @@
 \usepackage{verbatim}
 \usepackage{venndiagram}
 \usepackage[cm]{fullpage}
+\usepackage{bbm}
 \usepackage{fancyhdr}
 \usepackage{tikz}
 \usepackage{listings}
@@ -237,12 +238,25 @@ multwald()
 \end{python}
 From performing the simulation of Wald 10000 times, the proportion of null rejected is 0.0564 which is very close to the type I error rate of $\alpha$.
 \end{enumerate}
+
+\newpage
+
 \item[11.3] The posterior density 
 \begin{align*}
 f(\theta|x^n) &\propto \mathcal{L}_n(\theta)f(\theta)\\
-f(\theta|x^n) &\propto (1/\theta)^n(1/\theta)
+f(\theta|x^n) &\propto \prod_{i=1}^{n}\left(\frac{\mathbbm{1}_{X_i \leq \theta}}{\theta}\right)(1/\theta)
 \end{align*}
-Thus the posterior density is a uniform distribution on $(a,b)$ where $b-a=\theta^{n+1}$.
+Evaluating the partition function:
+\begin{align*}
+\int_{0}^{\infty}\left(\prod_{i=1}^{n}\mathbbm{1}_{X_i \leq \theta}\right)(1/\theta)^{n+1}\,d\theta &= \int_{X_{max}}^{\infty}\left(\prod_{i=1}^{n}\mathbbm{1}_{X_i \leq \theta}\right)(1/\theta)^{n+1}\,d\theta + \int^{X_{max}}_{0}\left(\prod_{i=1}^{n}\mathbbm{1}_{X_i \leq \theta}\right)(1/\theta)^{n+1}\,d\theta\\
+&=\int_{X_{max}}^{\infty}\left(\prod_{i=1}^{n}\mathbbm{1}_{X_i \leq \theta}\right)(1/\theta)^{n+1}\,d\theta
+\end{align*}
+where $X_{max} = \max \{X_1, \ldots, X_n\}$ and the second term goes to zero due to the indictor function $\mathbbm{1}_{X_i \leq \theta}$ which is zero for values of theta smaller than any of the $X_i$'s. Hence 
+\begin{align*}
+f(\theta | x^n) = \left(\prod_{i=1}^{n}\mathbbm{1}_{X_i \leq \theta}\right)(1/\theta)^{n+1}
+\end{align*}
+
+%Thus the posterior density is a uniform distribution on $(a,b)$ where $b-a=\theta^{n+1}$.
 
 
 \item[11.4]
@@ -259,7 +273,7 @@ differentiating with respect to $p_1$ and $p_2$ to get the {\sffamily MLE},
 \end{align*}
 we get $\hat{p}_1 = \sum X_i /n$ and $\hat{p}_2 = \sum Y_i /n$ when we solve for the above to be equal to 0. Using the multiparameter delta method, with $\tau = g(\theta) = p_2-p_1$, we have $\hat{\tau} = \hat{p_2} - \hat{p_1}$. We then require $\bigtriangledown \hat{g}$ and $J_n(\hat{\theta})$ to evaluate $\hat{\text{\sffamily se}}(\hat{\tau})$. It is easy to see that $\bigtriangledown \hat{g} = \begin{pmatrix}-1 & 1\end{pmatrix}^T$ and 
 \begin{align*}
-I_n(\theta) &= \begin{pmatrix} \mathbb{E}_{p_1}\left(\frac{\sum X_i}{p_1^2}+\frac{\left(n - \sum X_i\right)}{(1-p_1)^2}\right) & 0 \\ 0 & \mathbb{E}_{p_1}\left(\frac{\sum Y_i}{p_2^2}+\frac{\left(n - \sum Y_i\right)}{(1-p_2)^2}\right)\end{pmatrix}\\
+I_n(\theta) &= \begin{pmatrix} \mathbb{E}_{\theta}\left(\frac{\sum X_i}{p_1^2}+\frac{\left(n - \sum X_i\right)}{(1-p_1)^2}\right) & 0 \\ 0 & \mathbb{E}_{\theta}\left(\frac{\sum Y_i}{p_2^2}+\frac{\left(n - \sum Y_i\right)}{(1-p_2)^2}\right)\end{pmatrix}\\
 &= \begin{pmatrix} \frac{n}{p_1}+\frac{n}{(1-p_1)} & 0 \\ 0 & \frac{n}{p_2}+\frac{n}{1-p_2}\end{pmatrix}\\
 J_n(\theta) &= \begin{pmatrix} \frac{p_1(1-p_1)}{n} & 0 \\ 0 & \frac{p_2(1-p_2)}{n}\end{pmatrix}
 \end{align*}
