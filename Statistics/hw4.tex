@@ -160,6 +160,47 @@ r(f,\theta)=\frac{1}{2} \left(R(1,\hat{\theta}_{p,q})+ R(2,\hat{\theta}_{p,q})\r
 \end{align*}
 thus to the infimum of Bayes risk is when $q_B = q_W = p_G =1$.
 \end{enumerate}
+
+\item
+
+\item
+
+\item
+\begin{enumerate}[(a)]
+\item Using basic Monte Carlo,
+\begin{align*}
+I = \int_{1}^{2}f(x|1.5,2.3) \,dx= \frac{1}{N}\sum_{i=1}^{N}f(X_i|1.5,2.3)
+\end{align*}
+\begin{python}
+def mc_integrate(alpha, beta, N = 100000):
+    sample = np.random.uniform(1,2, size = (1, N))
+    return np.mean([gamma.pdf(x, alpha, loc = 0, scale = beta) for x in sample])   
+mc_integrate(1.5, 2.3)    
+\end{python}
+Estimate $I$ using Monte Carlo method is 0.20449041416849226.
+\begin{python}
+# Empirical distribution to draw bootstrap samples
+N = 100000
+sample = np.random.uniform(1,2, size = (1, N))
+emp_dist = [gamma.pdf(x, 1.5, loc = 0, scale = 2.3) for x in sample]
+# Creating the 10000 bootstrap samples
+bs_samples = [np.random.choice(emp_dist[0], 100000) for x in range(10000)]
+# Getting an estimate of I for each bootstrap sample
+bs_estimates = [np.mean(bs_samples[i]) for i in range(10000)]
+# Computing the standard error obtained using bootstrap method
+mean_bs_estimates = np.mean(bs_estimates)
+bs_se = np.mean([(mean_bs_estimates - bs_estimates[i])**2 for i in range(10000)])
+
+# Using the Monte Carlo method
+# Resampling the distribution 10000 times 
+mc_estimates = [mc_integrate(1.5, 2.3) for i in range(10000)]
+# Computing the standard error obtained from MC method
+mean_mc_estimates = np.mean(mc_estimates)
+mc_se = np.mean([(mean_mc_estimates - mc_estimates[i])**2 for i in range(10000)])
+\end{python}
+Bootstrap method gives a standard error of 3.23599044314e-10 and MC method gives a standard error of 3.32551091852e-10.
+\item The standard error of 
+\end{enumerate}
 \end{enumerate}
 
 \end{document}
