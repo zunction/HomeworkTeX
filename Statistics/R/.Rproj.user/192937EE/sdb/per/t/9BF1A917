@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(dplyr)\nlibrary(magrittr)\n\n\ndata.long <- read.csv('Data/precip_sample.csv',  # Read the csv file\n                     colClasses = c('NULL', 'integer', 'character', 'numeric'),\n                     col.names = c('NULL','station', 'date', 'prcp')                    ) # Skip first column\ndata.long$date <- as.Date(data.long$date, '%d-%m-%y') # Convert string to dates\n\n# library(tidyr)\n# data.wide <- spread(data.long, 'station', 'prcp')\n# write.csv(data.long, 'Data/data_long.csv')\n# write.csv(data.wide, 'Data/data_wide.csv')\n\n# \nstations <- read.csv('Data/stations_coord.csv')\ncolnames(stations) <- c('station', 'lat', 'long')\n\n\n# get all the groups\nC0 <- seq(1,40) # all stations\nC1 <- c(2,4,5,6,11,12,13,15,16,18,19,20,21,22,23,24,25,26,28,29,30,32,33,34,35,36,38,39,40) # the ones still active\nC2 <- c(C1,7,8,9,10,37) %>% sort # the ones without any data at all\n\n#data.long %<>% mutate(station=factor(station,levels=C0)) #change to desired set C\ndata.long %<>% \n  mutate(month = as.integer(format(date,'%m')),\n         year = as.integer(format(date,'%Y')))\n\n\n## which are the 'good' stations?\n\ncount.na <- function(x) sum(is.na(x))\n#data.long %>% group_by(station) %>% summarise(cna=count.na(prcp),n=n()) %>% print\n\ndata.long %>% \n  group_by(station) %>% \n  summarise(cna=count.na(prcp),n=n()) %>% \n  filter(n>8000 & cna < 200) %>%\n  .[['station']] -> good.stations #13 stations\n\n\nC3 <- good.stations\n\n\n\n",
+    "created" : 1490713304851.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1776136494",
+    "id" : "9BF1A917",
+    "lastKnownWriteTime" : 1490681724,
+    "last_content_update" : 1490681724,
+    "path" : "C:/Users/ZLAI/Desktop/eva/R/read_data_Harry.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

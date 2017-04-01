@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(leaps)\n\ncar <- read.csv('carmpgdat.csv')\n\nlm.1 <- lm(MPG~VOL+HP+SP+WT, data = car)\n\nleaps(x = car[,c('VOL','HP','SP','WT')], y = car[,'MPG'], names =c('VOL','HP','SP','WT'))\n\n\n\n#model1 <- glm(MPG~VOL+HP+SP+WT,data = car)\n#plot(model1)\n#summary(model1)\n\n#model2 <- glm(MPG~HP+SP+WT,data = car)\n#summary(model2)\n\n\n\n",
+    "created" : 1490713256761.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2685644442",
+    "id" : "493B5DEE",
+    "lastKnownWriteTime" : 1490792511,
+    "last_content_update" : 1490792511249,
+    "path" : "~/repos/HomeworkTeX/Statistics/q2.R",
+    "project_path" : "q2.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

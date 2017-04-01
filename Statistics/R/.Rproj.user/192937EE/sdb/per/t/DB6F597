@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "data.long %>% \n  ggplot(aes(date, prcp)) + \n    geom_point() + \n    facet_wrap(~month)\n\nto2chars <- function(x) {\n  sapply(x, function(y) ifelse(y < 10, \n                               paste0(\"0\", y),\n                               as.character(y)))\n}\n\n# bigplot <- data.long %>% \n#   mutate(station = to2chars(station),\n#          month = to2chars(month),\n#          group = paste0(station,'-',month)) %>% \n#   ggplot(aes(date, prcp)) + \n#     geom_point() + \n#     facet_wrap(~group, ncol = 24)\n\npdf('Plots/bigplot.pdf', width = 11.69, height = 16.53)\nprint(bigplot)\ndev.off()\n\ndata.long %>% \n  ggplot(aes(date, prcp)) + \n  geom_point() + \n  facet_wrap(~station) +\n  facet_wrap(~month)\n\nplotMonth <- function(m) {\n  data.long %>% \n    filter(month == m) %>% \n  ggplot(aes(date, prcp)) + \n    geom_point() + \n    facet_wrap(~station) +\n    ggtitle(month.abb[m]) %>% \n    print()\n}\n\nlapply(1:12, plotMonth)\n",
+    "created" : 1490748219110.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2055986925",
+    "id" : "DB6F597",
+    "lastKnownWriteTime" : 1490748204,
+    "last_content_update" : 1490750212371,
+    "path" : "~/repos/HomeworkTeX/Statistics/exploratory_plots.R",
+    "project_path" : "exploratory_plots.R",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
