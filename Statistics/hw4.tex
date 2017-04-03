@@ -209,8 +209,8 @@ tr_realistic <- realistic[1:6500,]
 val_realistic <- realistic[-(1:6500),]
 
 # Building the linear model
-lm <- lm(Rscore~R1, data = tr_realistic)
-avg_RSS_tr = mean(lm$residuals^2)
+lm_riasec <- lm(Rscore~R1, data = tr_realistic)
+avg_RSS_tr = mean(lm_riasec$residuals^2)
 
 # estimated regression function and residual sum of squares
 print(lm$coefficients)
@@ -238,48 +238,91 @@ print (avg_RSS_val) # 0.5376852
 \end{lstlisting}
 \item
 \begin{enumerate}[(a)]
-\item Using basic Monte Carlo,
-\begin{align*}
-I = \int_{1}^{2}f(x|1.5,2.3) \,dx= \frac{1}{N}\sum_{i=1}^{N}f(X_i|1.5,2.3)
-\end{align*}
-\begin{python}
-def mc_integrate(alpha, beta, N = 100000):
-    sample = np.random.uniform(1,2, size = (1, N))
-    return np.mean([gamma.pdf(x, alpha, loc = 0, scale = beta) for x in sample])   
-mc_integrate(1.5, 2.3)    
-\end{python}
-Estimate $I$ using Monte Carlo method is 0.20449041416849226.
-\begin{python}
-# Empirical distribution to draw bootstrap samples
-N = 100000
-sample = np.random.uniform(1,2, size = (1, N))
-emp_dist = [gamma.pdf(x, 1.5, loc = 0, scale = 2.3) for x in sample]
-# Creating the 10000 bootstrap samples
-bs_samples = [np.random.choice(emp_dist[0], 100000) for x in range(10000)]
-# Getting an estimate of I for each bootstrap sample
-bs_estimates = [np.mean(bs_samples[i]) for i in range(10000)]
-# Computing the standard error obtained using bootstrap method
-mean_bs_estimates = np.mean(bs_estimates)
-bs_se = np.mean([(mean_bs_estimates - bs_estimates[i])**2 for i in range(10000)])
+\item 
+%\begin{align*}
+%I = \int_{1}^{2}f(x|1.5,2.3) \,dx= \frac{1}{N}\sum_{i=1}^{N}f(X_i|1.5,2.3)
+%\end{align*}
 
-# Using the Monte Carlo method
-# Resampling the distribution 10000 times 
-mc_estimates = [mc_integrate(1.5, 2.3) for i in range(10000)]
-# Computing the standard error obtained from MC method
-mean_mc_estimates = np.mean(mc_estimates)
-mc_se = np.mean([(mean_mc_estimates - mc_estimates[i])**2 for i in range(10000)])
-\end{python}
-Bootstrap method gives a standard error of 3.23599044314e-10 and MC method gives a standard error of 3.32551091852e-10.
-\item The standard error of $\hat{I}$ which is the estimated $I$ value using Monte Carlo method where $X_i \sim U(1,2)$ is given by
+\begin{lstlisting}[language=R,commentstyle=\fontseries{lc}\color{gray}]
+# (a) Using Monte Carlo method with N samples
+
+N <- 100000
+I <- function(u){X = rgamma(1.5,1/2.3,n = N); return(sum(1<X & X<2)/N)}
+I_hat <- I
+
+# I_hat = 0.20146
+
+# Estimated standard error by resampling Monte Carlo 10000 times.
+se_mc <- sqrt(var(sapply(1:N,I)))
+
+# se_mc =   0.001272072
+
+# Estimated standard error using 10000 bootstrap samples.
+B <- 10000
+base_sample <- rgamma(1.5,1/2.3,n = N)
+I_bootstrap <- function(X){X = sample(base_sample, N, replace = TRUE);return(sum(1<X & X<2)/N)}
+se_bootstrap <- sqrt(var(sapply(1:B,I_bootstrap)))
+
+# se_bootstrap = 0.001273952
+
+\end{lstlisting}
+%\begin{python}
+%def mc_integrate(alpha, beta, N = 100000):
+%    sample = np.random.uniform(1,2, size = (1, N))
+%    return np.mean([gamma.pdf(x, alpha, loc = 0, scale = beta) for x in sample])   
+%mc_integrate(1.5, 2.3)    
+%\end{python}
+%Estimate $I$ using Monte Carlo method is 0.20449041416849226.
+%\begin{python}
+%# Empirical distribution to draw bootstrap samples
+%N = 100000
+%sample = np.random.uniform(1,2, size = (1, N))
+%emp_dist = [gamma.pdf(x, 1.5, loc = 0, scale = 2.3) for x in sample]
+%# Creating the 10000 bootstrap samples
+%bs_samples = [np.random.choice(emp_dist[0], 100000) for x in range(10000)]
+%# Getting an estimate of I for each bootstrap sample
+%bs_estimates = [np.mean(bs_samples[i]) for i in range(10000)]
+%# Computing the standard error obtained using bootstrap method
+%mean_bs_estimates = np.mean(bs_estimates)
+%bs_se = np.mean([(mean_bs_estimates - bs_estimates[i])**2 for i in range(10000)])
+%
+%# Using the Monte Carlo method
+%# Resampling the distribution 10000 times 
+%mc_estimates = [mc_integrate(1.5, 2.3) for i in range(10000)]
+%# Computing the standard error obtained from MC method
+%mean_mc_estimates = np.mean(mc_estimates)
+%mc_se = np.mean([(mean_mc_estimates - mc_estimates[i])**2 for i in range(10000)])
+%\end{python}
+%Bootstrap method gives a standard error of 3.23599044314e-10 and MC method gives a standard error of 3.32551091852e-10.
+\item 
+We see that we can rewrite $I$ as the following,
 \begin{align*}
-Var(\hat{I})&=Var\left(\frac{1}{N}\sum_{i=1}^{N}f(X_i|1.5,2.3)\right)\\
-&=\frac{1}{N}Var\left(f(X|1.5,2.3)\right), ~~\text{since the $X_i$'s are iid}
+I = \int_{1}^{2}f(x|1.5,2.3)\,dx = \int_{0}^{\infty}h(x)f(x|1.5,2.3)\,dx
 \end{align*}
-Thus we need the first and second moments of $Y= f(X|1.5,2.3)$ where $X \sim U(1,2)$
+where $h(x) = \mathbbm{1}(1\leq x \leq 2)$, an indicator function that is 1 when $1 \leq x \leq 2$ and 0 otherwise. Thus we can use the following estimator $\hat{I}$ for $I$ where $X_i\sim \text{Gamma}(1.5,2.3)$,
 \begin{align*}
-\mathbb{E}\left(Y\right) & = \int_{1}^{2}f(x|1.5,2.3)\,dx = \int_{0}^{2}f(x|1.5,2.3)\,dx-\int_{0}^{1}f(x|1.5,2.3)\,dx=0.37173-0.16723\\
-\mathbb{E}\left(Y^2\right) & = \int_{1}^{2}f(x|1.5,2.3)^2\,dx
+\hat{I} = \frac{1}{N}\sum_{i=1}^{N}h(X_i)
 \end{align*}
+Hence by viewing $h(X)\sim\text{Bernoulli}(p)$, where $p = \mathbb{P}(1\leq X \leq 2)$ for $X\sim \text{Gamma}(1.5,2.3)$ the standard error is given by 
+\begin{align*}
+Var(\hat{I}) = \frac{p(1-p)}{N}
+\end{align*}
+where we sourced for the value of $p$ from the website thus getting
+\begin{align*}
+\mathbb{P}(1\leq X \leq 2)=\int_{0}^{2}f(x|1.5,2.3)\,dx-\int_{0}^{1}f(x|1.5,2.3)\,dx=0.37173-0.16723
+\end{align*}
+Evaluating the value of the standard error we get $\text{\sffamily{se}} =$ 0.00127545972
+%
+%The standard error of $\hat{I}$ which is the estimated $I$ value using Monte Carlo method where $X_i \sim U(1,2)$ is given by
+%\begin{align*}
+%Var(\hat{I})&=Var\left(\frac{1}{N}\sum_{i=1}^{N}f(X_i|1.5,2.3)\right)\\
+%&=\frac{1}{N}Var\left(f(X|1.5,2.3)\right), ~~\text{since the $X_i$'s are iid}
+%\end{align*}
+%Thus we need the first and second moments of $Y= f(X|1.5,2.3)$ where $X \sim U(1,2)$
+%\begin{align*}
+%\mathbb{E}\left(Y\right) & = \int_{1}^{2}f(x|1.5,2.3)\,dx = \int_{0}^{2}f(x|1.5,2.3)\,dx-\int_{0}^{1}f(x|1.5,2.3)\,dx=0.37173-0.16723\\
+%\mathbb{E}\left(Y^2\right) & = \int_{1}^{2}f(x|1.5,2.3)^2\,dx
+%\end{align*}
 \end{enumerate}
 \end{enumerate}
 
