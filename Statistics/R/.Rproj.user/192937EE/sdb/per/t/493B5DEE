@@ -1,15 +1,15 @@
 {
     "collab_server" : "",
-    "contents" : "library(leaps)\n\ncar <- read.csv('carmpgdat.csv')\n\nlm.1 <- lm(MPG~VOL+HP+SP+WT, data = car)\n\nleaps(x = car[,c('VOL','HP','SP','WT')], y = car[,'MPG'], names =c('VOL','HP','SP','WT'))\n\n\n\n#model1 <- glm(MPG~VOL+HP+SP+WT,data = car)\n#plot(model1)\n#summary(model1)\n\n#model2 <- glm(MPG~HP+SP+WT,data = car)\n#summary(model2)\n\n\n\n",
+    "contents" : "library(leaps)\nlibrary(dplyr)\n\n# read csv file into dataframe car\ncar <- read.csv('carmpgdat.csv')\n\n# generate a linear model with normally distributed noise with the model MPG~VOL+HP+SP+WT\nlm <- lm(MPG~VOL+HP+SP+WT, data = car)\n\n# estimated regression function and residual sum of squares\nprint(lm$coefficients)\n\n# MPG = 192.43775332 - 0.01564501 * VOL + 0.39221231 * HP - 1.29481848 * SP - 1.85980373 * WT\nRSS = sum(lm$residuals^2)\nprint(RSS)\n\n\n\n\nleaps(x = car[,c('VOL','HP','SP','WT')], y = car[,'MPG'], names =c('VOL','HP','SP','WT'), method = 'Cp')\n\n\n\n#model1 <- glm(MPG~VOL+HP+SP+WT,data = car)\n#plot(model1)\n#summary(model1)\n\n#model2 <- glm(MPG~HP+SP+WT,data = car)\n#summary(model2)\n\n\n\n",
     "created" : 1490713256761.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2685644442",
+    "hash" : "1153746671",
     "id" : "493B5DEE",
-    "lastKnownWriteTime" : 1490792511,
-    "last_content_update" : 1490792511249,
-    "path" : "~/repos/HomeworkTeX/Statistics/q2.R",
+    "lastKnownWriteTime" : 1491065417,
+    "last_content_update" : 1491065417358,
+    "path" : "~/repos/HomeworkTeX/Statistics/R/q2.R",
     "project_path" : "q2.R",
     "properties" : {
         "tempName" : "Untitled1"
