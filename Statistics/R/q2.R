@@ -12,16 +12,15 @@ car <- read.csv('carmpgdat.csv')
 lm_car <- lm(MPG~VOL+HP+SP+WT, data = car)
 
 
-
 # estimated regression function and residual sum of squares
-print(lm_car$coefficients)
-
+coefficients(lm_car)
 # MPG = 192.43775332 - 0.01564501 * VOL + 0.39221231 * HP - 1.29481848 * SP - 1.85980373 * WT
+
 RSS = sum(lm_car$residuals^2)
-print(RSS)
+# RSS = 1027.381
 
 # (b) Mallows's Cp
-# Since the AIC criterion is equivalent ot Mallows's Cp, 
+# Since the AIC criterion is equivalent to Mallows's Cp, 
 
 # (i) Forward
 base <- lm(MPG~WT, data = car)
