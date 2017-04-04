@@ -1,0 +1,191 @@
+\documentclass[a4paper,10pt]{article}
+%\setlength{\parindent}{0cm}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{graphicx,caption}
+\usepackage{verbatim}
+\usepackage{venndiagram}
+%\usepackage[cm]{fullpage}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color,enumerate,framed}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+\usepackage[utf8]{inputenc}
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false            % 
+}}
+
+%\setlength{\parskip}{1em}
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+\usepackage{sectsty}
+%\allsectionsfont{\centering}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+%\usepackage{tgadventor}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{parskip}
+%\usepackage{picins} %for \parpic.
+%\newtheorem*{notation}{Notation}
+%\newtheorem{example}{Example}[section]
+%\newtheorem*{problem}{Problem}
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem*{solution}{Solution}
+%\newtheorem*{definition}{Definition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{remark}{Remark}
+%\setcounter{section}{1}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{examp}{Example}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{nte}{Note}
+\newtheorem*{notat}{Notation}
+
+%\diagramstyle[labelstyle=\scriptstyle]
+
+\lstset{frame=tb,
+  language=Oz,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\pagestyle{fancy}
+
+\numberwithin{equation}{section}
+
+
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\rfoot{\color{black!60}{\sffamily\thepage}}
+
+
+
+\begin{document}
+\title{\large \bf GENERALIZED EXTREME VALUE DISTRIBUTIONS}
+\author{\small ZHANGSHENG LAI}
+\date{}
+\maketitle
+
+\section{Asymptotic Models}
+\subsection{Model Formulation}
+The model focuses on the statistical behaviour of $M_n = \max\{X_1,\ldots,X_n\}$ where all the $X_i$'s are independent and identically distributed with distribution function $F$. The distribution of $M_n$ can be derived exactly for all values of $n$
+\begin{align}
+\mathbb{P}(M_n\leq z) &= \mathbb{P}(X_1\leq z , \ldots X_n \leq z)\nonumber\\
+&= \prod_{i=1}^{n}\mathbb{P}(X_i\leq z)\nonumber\\
+&=\{F(z)\}^n \label{eq:maxofrv}
+\end{align}
+
+Although we know how to find the distribution of $M_n$ the maximum of iid random variables, not knowing what $F$ makes knowing the above not helpful. We could utilise standard statistical techniques like maximum likelihood to get an estimate $\widehat{F}$ from the observed data the substitute into (\ref{eq:maxofrv}). However small errors in the estimate of $F$ can lead to substantial errors in $F^n$.
+
+The approach we are going to look at here is to accept that $F$ is unknown, instead of estimating $F$ to estimate $F^n$, we find an estimate of $F^n$ directly, which can be estimated using extreme data only. The idea is similar to the usual method of approximating the distribution of sample means by the normal distribution. So essentially we are doing the extreme value analogue of the central limit theory.
+
+Observe that for a distribution function $F$ with upper end-point $z^+$, i.e. $F(z^+) = 1$ for any $z<z^+$, $F^n(z) \to 0$ as $n \to \infty$, thus $M_n$ degenerates to a point mass on $z^+$. To avoid this problem, we do a linear renormalization of the variable $M_n$:
+\begin{align*}
+M_n^\ast = \frac{M_n - b_n}{a_n}
+\end{align*}
+for a sequence of constants $\{a_n>0\}$ and $\{b_n\}$. By choosing appropriate $\{a_n\}$ and $\{b_n\}$ it stabilizes the location and scale of $M_n^\ast$ as $n$ grows avoiding problems of degeneracy. Thus we seek limit distributions of $M_n^\ast$ instead of $M_n$ with appropriate choices of $\{a_n\}$ and $\{b_n\}$.
+
+\subsection{Extremal Types Theorem}
+
+\begin{thm}\label{thm:gfw}
+If there exists sequences of constants $\{a_n>0\}$ and $\{b_n\}$ such that 
+\begin{align*}
+\mathbb{P}(M_n-b_n/a_n \leq z) \to G(z) \quad \text{ as } n \to \infty
+\end{align*}
+where $G$ is a non-degenerate distribution function, then $G$ belongs to one of the following families:
+\begin{align*}
+\mathbb{I}:\quad G(z)\quad&= \quad\exp \left\{-\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\}, \quad -\infty<z<\infty\\
+\mathbb{II}: \quad G(z)\quad&= \quad\begin{cases}
+0, & z \leq b\\
+\exp\left\{-\left(\frac{z-b}{a}\right)^{-\alpha}\right\}, &z >b
+\end{cases}
+\\
+\mathbb{III}:\quad G(z)\quad&=  \quad\begin{cases}
+\exp\left\{-\left[-\left(\frac{z-b}{a}\right)^{-\alpha}\right]\right\}, & z \leq b\\
+1, &z >b
+\end{cases}
+\end{align*}
+for parameters $a>0, b$ and for families $\mathbb{II}, \mathbb{III}$, $\alpha >0$.
+\end{thm}
+These three classes of distribution are called \textbf{extreme value distributions} with the types $\mathbb{I},\mathbb{II}$ and $\mathbb{III}$ widely known as the \textbf{Gumbel}, \textbf{Fr\'echet} and \textbf{Weibull} families respectively. Theorem \ref{thm:gfw} implies that when $M_n$ can be stabilized with suitable sequences $\{a_n>0\}$ and $b_n$ the corresponding normalized $M_n^\ast$ has a limiting distribution that must be one of the three extreme distributions. It is in this sense that the theorem provides an extreme value analog of central limit theorem.
+
+\subsection{The Generalized Extreme Value Distribution}
+The three types of limits have different characteristic, corresponding to the different kind of tail behaviour for the distribution function $F$ of the $X_i$'s. We have the Gumbel to be unbounded, Fr\'echet bounded below and the Weibull bounded above. The density of Gumbel decays exponentially whereas it is polynomially for the Fr\'echet.
+
+These three families can be represented by a single distribution, the generalized extreme value (GEV) distribution,
+\begin{align*}
+G(x) = \exp \left\{-\left[1+\xi\left(\frac{x-\mu}{\sigma}\right)\right]^{-t/\xi}\right\}
+\end{align*}
+defined on the set $\{x : 1 + \xi(x-\mu)/\sigma>0\}$ where the parameters satisfy $-\infty<\mu, \xi<\infty$ and $\sigma >0$.
+
+
+
+
+
+
+
+
+\end{document}
