@@ -23,10 +23,20 @@ RSS = sum(lm_car$residuals^2)
 # Since the AIC criterion is equivalent to Mallows's Cp, 
 
 # (i) Forward
-base <- lm(MPG~WT, data = car)
+base <- lm(MPG~1, data = car)
 step(base, scope = list(upper = lm_car, lower=~1), direction = 'forward', trace = TRUE)
 
-# Start:  AIC=240.45
+# Start:  AIC=378.69
+# MPG ~ 1
+# 
+# Df Sum of Sq    RSS    AIC
+# + WT    1    6641.5 1466.0 240.45
+# + HP    1    5058.0 3049.4 300.51
+# + SP    1    3842.6 4264.9 328.02
+# + VOL   1    1101.6 7005.9 368.72
+# <none>              8107.5 378.69
+# 
+# Step:  AIC=240.45
 # MPG ~ WT
 # 
 # Df Sum of Sq    RSS    AIC
@@ -55,7 +65,7 @@ step(base, scope = list(upper = lm_car, lower=~1), direction = 'forward', trace 
 # 
 # Coefficients:
 #   (Intercept)           WT           SP           HP  
-# 194.1296      -1.9221      -1.3200       0.4052
+# 194.1296      -1.9221      -1.3200       0.4052 
 
 # (ii) Backward
 step(lm_car,direction = 'backward', trace = TRUE)
@@ -85,17 +95,18 @@ step(lm_car,direction = 'backward', trace = TRUE)
 # Coefficients:
 #   (Intercept)           HP           SP           WT  
 # 194.1296       0.4052      -1.3200      -1.9221  
-# 
+
+
 # For the forward stepwise approach, the base model is important
 # as it will change the outcome. For example for this, if we were
-# to start with VOL instead of any of the other covariates, we 
+# to start with VOL instead of any of the other covariates, we
 # will end up with also the VOL covariate. By not starting with with
-# the VOL covariate we will end up with a model without VOL which 
-# corresponds to the backward stepwise approach and also the 
+# the VOL covariate we will end up with a model without VOL which
+# corresponds to the backward stepwise approach and also the
 # Zheng-Loh model selection. As for the backward stepwise approach
-# we do not have such a problem as we start the model with all the 
+# we do not have such a problem as we start the model with all the
 # covariates and reduce it down by computing the AIC of the model
-# with different covariate missing then remove the covariate that 
+# with different covariate missing then remove the covariate that
 # gives the smallest AIC when removed.
 
 

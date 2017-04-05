@@ -196,7 +196,17 @@ RSS = sum(lm_car$residuals^2)
 base <- lm(MPG~WT, data = car)
 step(base, scope = list(upper = lm_car, lower=~1), direction = 'forward', trace = TRUE)
 
-# Start:  AIC=240.45
+# Start:  AIC=378.69
+# MPG ~ 1
+# 
+# Df Sum of Sq    RSS    AIC
+# + WT    1    6641.5 1466.0 240.45
+# + HP    1    5058.0 3049.4 300.51
+# + SP    1    3842.6 4264.9 328.02
+# + VOL   1    1101.6 7005.9 368.72
+# <none>              8107.5 378.69
+# 
+# Step:  AIC=240.45
 # MPG ~ WT
 # 
 # Df Sum of Sq    RSS    AIC
@@ -225,7 +235,7 @@ step(base, scope = list(upper = lm_car, lower=~1), direction = 'forward', trace 
 # 
 # Coefficients:
 #   (Intercept)           WT           SP           HP  
-# 194.1296      -1.9221      -1.3200       0.4052
+# 194.1296      -1.9221      -1.3200       0.4052 
 
 # (ii) Backward
 step(lm_car,direction = 'backward', trace = TRUE)
@@ -256,17 +266,23 @@ step(lm_car,direction = 'backward', trace = TRUE)
 #   (Intercept)           HP           SP           WT  
 # 194.1296       0.4052      -1.3200      -1.9221  
 # 
-# For the forward stepwise approach, the base model is important
-# as it will change the outcome. For example for this, if we were
-# to start with VOL instead of any of the other covariates, we 
-# will end up with also the VOL covariate. By not starting with with
-# the VOL covariate we will end up with a model without VOL which 
-# corresponds to the backward stepwise approach and also the 
-# Zheng-Loh model selection. As for the backward stepwise approach
-# we do not have such a problem as we start the model with all the 
-# covariates and reduce it down by computing the AIC of the model
-# with different covariate missing then remove the covariate that 
-# gives the smallest AIC when removed.
+# Both forward and backward stepwise approach give the same submodel to be selected.
+# The selected submodel is MPG ~ HP + SP + WT with the regression formula:
+# MPG = 194.1296 + HP * 0.4052 - SP * 1.3200 - WT * 1.9221 
+
+
+ 
+%# For the forward stepwise approach, the base model is important
+%# as it will change the outcome. For example for this, if we were
+%# to start with VOL instead of any of the other covariates, we 
+%# will end up with also the VOL covariate. By not starting with with
+%# the VOL covariate we will end up with a model without VOL which 
+%# corresponds to the backward stepwise approach and also the 
+%# Zheng-Loh model selection. As for the backward stepwise approach
+%# we do not have such a problem as we start the model with all the 
+%# covariates and reduce it down by computing the AIC of the model
+%# with different covariate missing then remove the covariate that 
+%# gives the smallest AIC when removed.
 
 
 
@@ -349,8 +365,10 @@ realistic_trait <- c('R1','R2','R3','R4','R5','R6','R7','R8')
 raw_realistic <- raw_riasec[,realistic_trait]
 
 # Removing rows with -1 from the dataframe
+# realistic <- raw_realistic[raw_realistic != -1, ]
+
 realistic <- raw_realistic %>%
-  filter(R1* R2 * R3 * R4 * R5 * R6 * R7 * R8 > 0)
+  filter(R1 > 0 &  R2 > 0 & R3 > 0 & R4 > 0 & R5 > 0 & R6 > 0 & R7 > 0 & R8 > 0)
   
 
 # (b)MODEL SELECTION
@@ -366,28 +384,33 @@ val_realistic <- realistic[-(1:6500),]
 
 # Building the linear model
 lm_riasec <- lm(Rscore~R1, data = tr_realistic)
-avg_RSS_tr = mean(lm_riasec$residuals^2)
+RSS_tr = sum(lm_riasec$residuals^2)
+print(RSS_tr)
+# RSS_tr = 2902.039
 
 # estimated regression function and residual sum of squares
-print(lm$coefficients)
-# R1 = 1.0011862 + 0.4282061 * R1
+print(lm_riasec$coefficients)
+# R1 = 1.0181052 + 0.4235993 * R1
 
 
 # (c)VALIDATION
-reg.fn <- function(x) 1.0011862 + 0.4282061 * x
+reg.fn <- function(x) 1.0181052 + 0.4235993 * x
 
 val_realistic %<>%
   mutate(pred_Rscore = reg.fn(R1),
          residuals = reg.fn(R1) - Rscore )
 
+avg_RSS_tr = mean(lm_riasec$residuals^2)
 avg_RSS_val = mean(val_realistic$residuals^2)
 
-print (avg_RSS_tr) # 0.4540176
-print (avg_RSS_val) # 0.5376852
+print (avg_RSS_tr) # 0.4464676
+print (avg_RSS_val) # 0.5201091
 
 # The residual sum of squares for the validation set using the regression function
 # is larger than the residual sum of square for the training set but are of the
 # same order. Thus the model generalizes well.
+
+
 
 
 
@@ -405,15 +428,15 @@ print (avg_RSS_val) # 0.5376852
 # (a) Using Monte Carlo method with N samples
 
 N <- 100000
-I <- function(u){X = rgamma(1.5,1/2.3,n = N); return(sum(1<X & X<2)/N)}
+I <- function(u){X = rgamma(1.5,2.3,n = N); return(sum(1<X & X<2)/N)}
 I_hat <- I
 
-# I_hat = 0.20146
+# I_hat = 0.17552
 
 # Estimated standard error by resampling Monte Carlo 10000 times.
 se_mc <- sqrt(var(sapply(1:N,I)))
 
-# se_mc =   0.001272072
+# se_mc =   0.001204692
 
 # Estimated standard error using 10000 bootstrap samples.
 B <- 10000
@@ -421,7 +444,9 @@ base_sample <- rgamma(1.5,1/2.3,n = N)
 I_bootstrap <- function(u){X = sample(base_sample, N, replace = TRUE);return(sum(1<X & X<2)/N)}
 se_bootstrap <- sqrt(var(sapply(1:B,I_bootstrap)))
 
-# se_bootstrap = 0.001273952
+# se_bootstrap = 0.001286245
+
+
 
 \end{lstlisting}
 %\begin{python}
@@ -467,9 +492,9 @@ Var(\hat{I}) = \frac{p(1-p)}{N}
 \end{align*}
 where we sourced for the value of $p$ from the website thus getting
 \begin{align*}
-\mathbb{P}(1\leq X \leq 2)=\int_{0}^{2}f(x|1.5,2.3)\,dx-\int_{0}^{1}f(x|1.5,2.3)\,dx=0.37173-0.16723
+\mathbb{P}(1\leq X \leq 2)=\int_{0}^{2}f(x|1.5,2.3)\,dx-\int_{0}^{1}f(x|1.5,2.3)\,dx=0.97325-0.79645%0.37173-0.16723
 \end{align*}
-Evaluating the value of the standard error we get $\text{\sffamily{se}} =$ 0.00127545972
+Evaluating the value of the standard error we get $\text{\sffamily{se}} =$ 0.0012064069
 %
 %The standard error of $\hat{I}$ which is the estimated $I$ value using Monte Carlo method where $X_i \sim U(1,2)$ is given by
 %\begin{align*}

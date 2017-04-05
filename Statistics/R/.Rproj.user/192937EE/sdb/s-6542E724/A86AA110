@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(dplyr)\nlibrary(magrittr)\n\n\n# Reading data with separator tab\nraw_riasec <- read.csv('RIASEC.csv',sep = '\\t')\n\n# (a)CLEANING UP\n# List of realistic traits\nrealistic_trait <- c('R1','R2','R3','R4','R5','R6','R7','R8')\n\n# Extracting out the realistic traits\nraw_realistic <- raw_riasec[,realistic_trait]\n\n# Removing rows with -1 from the dataframe\n# realistic <- raw_realistic[raw_realistic != -1, ]\n\nrealistic <- raw_realistic %>%\n  filter(R1 > 0 &  R2 > 0 & R3 > 0 & R4 > 0 & R5 > 0 & R6 > 0 & R7 > 0 & R8 > 0)\n  \n\n# (b)MODEL SELECTION\n\n# Computing the score for the R trait\nrealistic <- realistic %>%\n  rowwise() %>%\n  mutate(Rscore = mean(c(R1, R2, R3, R4, R5, R6, R7, R8))) \n\n# Generating the training and validation set \ntr_realistic <- realistic[1:6500,]\nval_realistic <- realistic[-(1:6500),]\n\n# Building the linear model\nlm_riasec <- lm(Rscore~R1, data = tr_realistic)\nRSS_tr = sum(lm_riasec$residuals^2)\nprint(RSS_tr)\n# RSS_tr = 2902.039\n\n# estimated regression function and residual sum of squares\nprint(lm_riasec$coefficients)\n# R1 = 1.0181052 + 0.4235993 * R1\n\n\n# (c)VALIDATION\nreg.fn <- function(x) 1.0181052 + 0.4235993 * x\n\nval_realistic %<>%\n  mutate(pred_Rscore = reg.fn(R1),\n         residuals = reg.fn(R1) - Rscore )\n\navg_RSS_tr = mean(lm_riasec$residuals^2)\navg_RSS_val = mean(val_realistic$residuals^2)\n\nprint (avg_RSS_tr) # 0.4464676\nprint (avg_RSS_val) # 0.5201091\n\n# The residual sum of squares for the validation set using the regression function\n# is larger than the residual sum of square for the training set but are of the\n# same order. Thus the model generalizes well.\n\n\n",
+    "created" : 1491193076215.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1529751073",
+    "id" : "A86AA110",
+    "lastKnownWriteTime" : 1491384345,
+    "last_content_update" : 1491384345124,
+    "path" : "~/repos/HomeworkTeX/Statistics/R/q3.R",
+    "project_path" : "q3.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

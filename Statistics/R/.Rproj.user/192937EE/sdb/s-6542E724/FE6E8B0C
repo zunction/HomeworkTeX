@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "source('./read_data_Harry.R')\nlibrary(evir)\n\n# computes quantile estimate based on gpd model\n# Input:    prcp\n# Output:   quantile estimate\n# Tuning parameters:  the nextremes=... specifies that the estimate \n#                     should be based on the 10% highest values in the\n#                     vector x, or at least 35 values.\nget.quantile <- function(x)\n  return(riskmeasures(gpd(x,\n                          nextremes=max(35,length(x)*0.1),\n                          method='pwm'\n                          ),0.998)[1,'quantile'])\n\n# sample usage\ndata.long %>%\n  filter(station==2,prcp>0) %>%\n  group_by(month) %>%\n  summarise(q.est=get.quantile(as.numeric(prcp)),n=n())",
+    "created" : 1491287046243.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3490610142",
+    "id" : "FE6E8B0C",
+    "lastKnownWriteTime" : 1490919954,
+    "last_content_update" : 1490919954,
+    "path" : "C:/Users/ZLAI/Desktop/eva/R/gpd_estimates.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

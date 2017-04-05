@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\n\n# Estimate for good stations, called set 1 ----------------\nset1 <- intersect(C1, poolID)\n\nq.quant <- function(s) {\n  data.long %>%\n    filter(station==s, prcp>0) %>%\n    group_by(month) %>%\n    summarise(station = first(station), q.est=get.quantile(as.numeric(prcp))) %>% \n    return()\n}\n\nq.set1 <- do.call(rbind.data.frame, lapply(set1, q.quant))\n\n# Estimates for bad stations, called set 2 ---------------\nset2 <- setdiff(C2, poolID)\n\nq.boot <- function(s, pool, B) {\n  do.call(rbind.data.frame,\n          replicate(B,\n                    bootstrapOne(s, pool) %>% \n                      filter(prcp>0) %>%\n                      group_by(month) %>%\n                      summarise(station = s, q.est=get.quantile(as.numeric(prcp))),\n                    simplify = FALSE\n                   )\n         ) %>% \n    group_by(station, month) %>% \n      summarise(q.est = mean(q.est))\n}\n\nq.set2 <- do.call(rbind.data.frame,\n                  lapply(set2, q.boot, pool = pool, B = 1000))\n\nest <- rbind.data.frame(q.set1, q.set2) %>% \n          mutate(q.est = round(q.est, 2))\n\n# Output challenge 1\nc1.result <- \n  est %>%\n    filter(station %in% C1) %>% \n    arrange(station) %>% \n    spread(month, q.est) %>% \n    setNames(c(\"stations\", sapply(1:12, function(x) paste0(\"X\",x))))\n\n# Output challenge 2\nc2.result <- \n  est %>%\n    filter(station %in% c(7,8,9,10,37)) %>% \n    arrange(station) %>% \n    spread(month, q.est) %>% \n    setNames(c(\"stations\", sapply(1:12, function(x) paste0(\"X\",x)))) %>% \n    rbind(c1.result, .)\n\nwrite.csv(c1.result,'Results/SUTD_C1.csv', row.names = FALSE)\nwrite.csv(c2.result,'Results/SUTD_C2.csv', row.names = FALSE)\n",
+    "created" : 1491287018383.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "336543052",
+    "id" : "DBB3194A",
+    "lastKnownWriteTime" : 1490951048,
+    "last_content_update" : 1490951048,
+    "path" : "C:/Users/ZLAI/Desktop/eva/R/first_report.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
