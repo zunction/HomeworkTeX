@@ -107,7 +107,6 @@ showstringspaces=false            %
   tabsize=3
 }
 
-
 \pagestyle{fancy}
 
 \numberwithin{equation}{section}
@@ -124,6 +123,7 @@ showstringspaces=false            %
 
 
 \begin{document}
+\bibliographystyle{apalike}
 \title{\large \bf GENERALIZED EXTREME VALUE DISTRIBUTIONS}
 \author{\small ZHANGSHENG LAI}
 \date{}
@@ -184,8 +184,18 @@ defined on the set $\{x : 1 + \xi(x-\mu)/\sigma>0\}$ where the parameters satisf
 
 
 
+\section{Hill's Estimator}
+The motivation of this paper came from considering a random sample $Z_1, \ldots, Z_k$ from a distribution of $F$ from a unit interval with $F(x) \sim Cx^\alpha$ as $x\to 0$. We would also like to be able to draw inference about $\alpha$ without making assumptions about the form of $F$ elsewhere.
+
+Suppose that a sample $Y_1,\ldots,Y_k$ is drawn from the population with distribution $G$ and let 
+\begin{align*}
+Y^{(1)} \geq Y^{(2)} \geq \ldots \geq Y^{(k)}
+\end{align*}
+be the order statistics. On the basis of theoretical arguments or previous data, it is believed, or at least the hypothesis is tentatively entertained, that $G$ has a known functional form, say $G(y) = w(y;\theta)$, for \emph{$y$ sufficiently large} and $\theta$ be a vector of parameters. The simplest case is that in which a number $D$ is known such that for $y \geq D$ this functional form is valid. Here $D$ need not be the smallest value for which this is true, and thus might be chosen quite conservatively in some situations. When the global form of $G$ is unknown, so that ordinary parametric models are unavailable, it is then perhaps intuitively plausible to base inference about $\theta$ on the order statistics that exceed $D$, since it is only these that lie in the region where $G$ is believed to have the specific form.
 
 
 
+%\cite{hill1975simple}
+%	\bibliography{evt}
 
 \end{document}
