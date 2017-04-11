@@ -111,7 +111,12 @@ showstringspaces=false            %
 
 \numberwithin{equation}{section}
 
+\usepackage[utf8]{inputenc}
 
+\newcommand\xqed[1]{%
+  \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
+  \quad\hbox{#1}}
+\newcommand\eqed{\xqed{$\blacktriangle$}}
 
 \fancyhead{}
 \renewcommand{\headrulewidth}{0pt}
@@ -133,8 +138,8 @@ showstringspaces=false            %
 \subsection{Model Formulation}
 The model focuses on the statistical behaviour of $M_n = \max\{X_1,\ldots,X_n\}$ where all the $X_i$'s are independent and identically distributed with distribution function $F$. The distribution of $M_n$ can be derived exactly for all values of $n$
 \begin{align}
-\mathbb{P}(M_n\leq z) &= \mathbb{P}(X_1\leq z , \ldots X_n \leq z)\nonumber\\
-&= \prod_{i=1}^{n}\mathbb{P}(X_i\leq z)\nonumber\\
+\mathbb{P}\{M_n\leq z\} &= \mathbb{P}\{X_1\leq z , \ldots X_n \leq z\}\nonumber\\
+&= \prod_{i=1}^{n}\mathbb{P}\{X_i\leq z\}\nonumber\\
 &=\{F(z)\}^n \label{eq:maxofrv}
 \end{align}
 
@@ -150,10 +155,10 @@ for a sequence of constants $\{a_n>0\}$ and $\{b_n\}$. By choosing appropriate $
 
 \subsection{Extremal Types Theorem}
 
-\begin{thm}\label{thm:gfw}
+\begin{thm}[Fisher-Tippett-Gnedenko]\label{thm:gfw}
 If there exists sequences of constants $\{a_n>0\}$ and $\{b_n\}$ such that 
 \begin{align*}
-\mathbb{P}(M_n-b_n/a_n \leq z) \to G(z) \quad \text{ as } n \to \infty
+\mathbb{P}\{M_n-b_n/a_n \leq z\} \to G(z) \quad \text{ as } n \to \infty
 \end{align*}
 where $G$ is a non-degenerate distribution function, then $G$ belongs to one of the following families:
 \begin{align*}
@@ -180,29 +185,29 @@ The three types of limits have different characteristic, corresponding to the di
 
 A much more flexible approach is to reformulate the three models into a single distribution which has the form,
 \begin{align}\label{eq:gev}
-G(x) = \exp \left\{-\left[1+\xi\left(\frac{x-\mu}{\sigma}\right)\right]^{-t/\xi}\right\}
+G(x) = \exp \left\{-\left[1+\xi\left(\frac{x-\mu}{\sigma}\right)\right]^{-1/\xi}\right\}
 \end{align}
 defined on the set $\{x : 1 + \xi(x-\mu)/\sigma>0\}$ where the parameters satisfy $-\infty<\mu, \xi<\infty$ and $\sigma >0$. The above distribution is the generalized extreme value (GEV) family of distributions, where $\mu$ is the location parameter, $\sigma$ is the scale parameter and $\xi$ is the shape parameter. The type $\mathbb{II}$ and $\mathbb{III}$ classes correspond to the case where $\xi >0$ and $\xi<0$ respectively and the subset of the family with $\xi = 0$ is interpreted as the limit of (\ref{eq:gev}) as $\xi \to 0$.
 
 \begin{thm}\label{thm:gev}
 If there exists sequence of constants $\{a_n\}$ and $\{b_n\}$ such that 
 \begin{align}\label{eq:gevlimit}
-\mathbb{P}((M_n - b_n)/a_n\leq z) \to G(z) \text{ as } n \to \infty
+\mathbb{P}\{(M_n - b_n)/a_n\leq z\} \to G(z) \text{ as } n \to \infty
 \end{align}
 for a non-degenerate distribution function $G$, then $G$ is a member of the GEV family
 \begin{align}
-G(x) = \exp \left\{-\left[1+\xi\left(\frac{x-\mu}{\sigma}\right)\right]^{-t/\xi}\right\}
+G(x) = \exp \left\{-\left[1+\xi\left(\frac{x-\mu}{\sigma}\right)\right]^{-1/\xi}\right\}
 \end{align}
 defined on the set $\{x : 1 + \xi(x-\mu)/\sigma>0\}$ where the parameters satisfy $-\infty<\mu, \xi<\infty$ and $\sigma >0$.
 \end{thm}
 
 By interpreting the limit in Theorem \ref{thm:gev} as an approximation for large values of $n$ suggests the use of the GEV family for modelling the distribution of maxima long sequences. With this result we can solve for the normalizing constants that are unknown is practice. Given (\ref{eq:gevlimit}) holds
 \begin{align*}
-\mathbb{P}((M_n-b_n)/a_n\leq z) \approx G(z)
+\mathbb{P}\{(M_n-b_n)/a_n\leq z\} \approx G(z)
 \end{align*}
 for large $n$. With some manipulation 
 \begin{align*}
-\mathbb{P}((M_n-b_n)/a_n\leq z) \approx G((z-b_n)/a_n) = G^\ast(z)
+\mathbb{P}\{(M_n-b_n)/a_n\leq z\} \approx G((z-b_n)/a_n) = G^\ast(z)
 \end{align*}
 where $G^\ast$ is another member of the GEV family. This says that we can approximate the distribution of $M_n^\ast$ by a member of the GEV for large $n$, we can do the same for the distribution of $M_n$. {\color{red} Since the parameters of the distribution have to be estimated anyway, it is irrelevant in practice that the parameters of the distribution of $G$ are different from those of $G^\ast$}. \textbf{Still got stuff on return level and period here!!}
 
@@ -222,19 +227,77 @@ We shall skip the forward direction proof as it utilizes machinery that are not 
 \begin{align*}
 G^n(z) &= \exp\left\{-n\left(\frac{z-b}{a}\right)^{-\alpha}\right\}\\
 &= \exp\left\{-\left(\frac{z-b}{an^{1/\alpha}}\right)^{-\alpha}\right\}\\
-&=G(\alpha_nz+b_n)
+&=G(\alpha_nz+\beta_n)
+%&=G(n^{-1/\alpha}z+(1 +  n^{-1/\alpha}))
 \end{align*}
 where $\alpha_n = n^{-1/\alpha}$ and $\beta_n = 1 +  n^{-1/\alpha}$. In a similar fashion we can prove it for Weibull. For Gumbel, we have
 \begin{align*}
 G^n(z) &= \exp\left\{-n\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\} \\
-&= \exp\left\{-\exp\Big(\log n\Big)\cdot\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\}
+&= \exp\left\{-\exp\Big(\log n\Big)\cdot\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\}\\
+&= \exp\left\{-\exp\left[\log n-\left(\frac{z-b}{a}\right)\right]\right\} \\
+&=G(\alpha_nz+\beta_n)
 \end{align*}
+where $\alpha_n = 1$ and $\beta_n = -a\log n$.
 \end{proof}
 \end{thm}
 
-\begin{examp}
+Theorem \ref{thm:maxstablegev} is used directly in the proof of extremal types theorems. We start be considering $M_{nk}$, the maximum random variable in a sequence of $n \times k$ variables for some large value of $n$. This can be regarded as the maximum of a single sequence of length $n \times k$ or as the maximum of $k$ maxima, each of which is a maximum of $n$ observations. Let's assume that the limit distribution of $(M_n-b_n)/a_n$ is $G$, thus for sufficiently large $n$
+\begin{align*}
+\mathbb{P}\{(M_n-b_n)/a_n\} \approx G(z)
+\end{align*}
+Hence for any integer $k$ we also have 
+\begin{align*}
+\mathbb{P}\{(M_{nk}-b_{nk})/a_{nk}\} \approx G(z)
+\end{align*}
+but now we recall the definitions of $M_n$ and $M_{nk}$, we have 
+\begin{align*}
+G\left(\frac{z-b_{nk}}{a_{nk}}\right)\approx\mathbb{P}\{(M_{nk}-b_{nk})/a_{nk}\leq z\}=\left[\mathbb{P}\{(M_{n}-b_{n})/a_{n}\leq z\}\right]^k \approx G^k\left(\frac{z-b_n}{a_n}\right)
+\end{align*}
+Therefore $G$ and $G^k$ are identically apart except for location and scale coefficients. Thus $G$ is max-stable and a member of GEV by Theorem \ref{thm:maxstablegev}
 
+\begin{defn}[Domain of Attraction]
+A distribution $\mu$ is said to be in the domain of attraction of an extreme value distribution $\nu$ (either Gumbel, Fr\'echet or Weibull) denoted by $\mu \in \mathcal{D}(\nu) $ if there exists $\{a_n>0\}$ and $\{b_n\}$ such that the distribution of $(M_n-b_n)/a_n$ converges weakly to $\nu$, where $M_n:=\max_{1\leq i \leq n}X_i$ for an independent and identically distributed sequence $X_1, X_2, \ldots$ with distribution $\mu$.
+\end{defn}
+
+\begin{examp}
+If $X_1, X_2, \ldots$ is a sequence of independent and identically distributed $\text{\sffamily Exp}(1)$ random variables, $F(x) = 1-e^{-x}$ for $x>0$, choosing $a_n = 1$ and $b_n = \log n$
+\begin{align*}
+\mathbb{P}\{(M_n-b_n)/a_n\} &= F^n(z + \log n)\\
+&= \bigg[1-e^{-(z+\log n)}\bigg]^n\\
+&= \bigg[1-n^{-1}e^{-z}\bigg]^n \to \exp(-e^{-z}) \text{ as } n \to \infty
+\end{align*}
+here we use the fact that $\lim_{n \to \infty} \left(1-\frac{1}{n}\right)^n = \frac{1}{e}$. Hence with the chosen $a_n$ and $b_n$, the limit of $M_n$ converges to the Gumbel distribution as $n \to \infty$. This corresponds to $\xi = 0$ in the GEV family. \eqed
 \end{examp}
+
+\begin{examp}
+If $X_1, X_2, \ldots$ is a sequence of independent Fr\'echet variables. $F(x) = \exp(-1/x)$ for $x>0$. Letting $a_n = n$ and $b_n = 0$
+\begin{align*}
+\mathbb{P}\{(M_n-b_n)/a_n\leq z\}  & = F^n(nz)\\
+& = \Big[\exp\{-1/nz\}\Big]^n\\
+& = \exp(-1/z)
+\end{align*}
+as $n \to \infty$, for each $z>0$. Hence the limit in this case which is an exact result for all $n$ since the Fr\'echet is max-stable is also the Fr\'echet distribution. This corresponds to $\xi = 1$ in the GEV family.
+\eqed
+\end{examp}
+
+\begin{examp}
+If $X_1, X_2, \ldots$ are a sequence of independent uniform $\text{\sffamily U}(0,1)$ variables, $F(x)=x$ for $0 \leq x \leq 1$. For fixed $z < 0$, suppose $n>-z$ and let $a_n = 1/n$ and $b_n = 1$. Then
+\begin{align*}
+\mathbb{P}\{(M_n-b_n)/a_n\leq z\} &= F^n(n^{-1}z+1)\\
+&= \left(1+\frac{z}{n}\right)^n\\
+&\to e^z \text{ as } n \to \infty
+\end{align*}
+Hence the distribution is Weibull type with $\xi=-1$ in the GEV family.
+\eqed
+\end{examp}
+
+\subsection{Inference for the GEV distribution}
+\subsubsection{General Considerations}
+
+
+
+\subsubsection{Maximum Likelihood Estimation}
+
 
 %\section{Hill's Estimator}
 %The motivation of this paper came from considering a random sample $Z_1, \ldots, Z_k$ from a distribution of $F$ from a unit interval with $F(x) \sim Cx^\alpha$ as $x\to 0$. We would also like to be able to draw inference about $\alpha$ without making assumptions about the form of $F$ elsewhere.
