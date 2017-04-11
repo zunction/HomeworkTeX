@@ -163,8 +163,11 @@ where $G$ is a non-degenerate distribution function, then $G$ belongs to one of 
 \exp\left\{-\left(\frac{z-b}{a}\right)^{-\alpha}\right\}, &z >b
 \end{cases}
 \\
+%\mathbb{III}:\quad G(z)\quad&=  \quad\begin{cases}
+%\exp\left\{-\left[-\left(\frac{z-b}{a}\right)^{-\alpha}\right]\right\}, & z \leq b\\
+%1, &z >b
 \mathbb{III}:\quad G(z)\quad&=  \quad\begin{cases}
-\exp\left\{-\left[-\left(\frac{z-b}{a}\right)^{-\alpha}\right]\right\}, & z \leq b\\
+\exp\left\{-\left(-\frac{z-b}{a}\right)^{\alpha}\right\}, & z \leq b\\
 1, &z >b
 \end{cases}
 \end{align*}
@@ -173,25 +176,74 @@ for parameters $a>0, b$ and for families $\mathbb{II}, \mathbb{III}$, $\alpha >0
 These three classes of distribution are called \textbf{extreme value distributions} with the types $\mathbb{I},\mathbb{II}$ and $\mathbb{III}$ widely known as the \textbf{Gumbel}, \textbf{Fr\'echet} and \textbf{Weibull} families respectively. Theorem \ref{thm:gfw} implies that when $M_n$ can be stabilized with suitable sequences $\{a_n>0\}$ and $b_n$ the corresponding normalized $M_n^\ast$ has a limiting distribution that must be one of the three extreme distributions. It is in this sense that the theorem provides an extreme value analog of central limit theorem.
 
 \subsection{The Generalized Extreme Value Distribution}
-The three types of limits have different characteristic, corresponding to the different kind of tail behaviour for the distribution function $F$ of the $X_i$'s. We have the Gumbel to be unbounded, Fr\'echet bounded below and the Weibull bounded above. The density of Gumbel decays exponentially whereas it is polynomially for the Fr\'echet.
+The three types of limits have different characteristic, corresponding to the different kind of tail behaviour for the distribution function $F$ of the $X_i$'s. We have the Gumbel to be unbounded, Fr\'echet bounded below and the Weibull bounded above. The density of Gumbel decays exponentially whereas it is polynomially for the Fr\'echet, corresponding to relative decay rates in the tail of $F$. Thus the different families give different representations of extreme value behaviour. Initially, extreme value theory was applied by choosing a family that is most suitable for the data we have and once the family was chosen, we assume that subsequent inferences be made based on the assumption that the choice of family is correct and do not allow for any uncertainty although there might be much uncertainty.
 
-These three families can be represented by a single distribution, the generalized extreme value (GEV) distribution,
-\begin{align*}
+A much more flexible approach is to reformulate the three models into a single distribution which has the form,
+\begin{align}\label{eq:gev}
 G(x) = \exp \left\{-\left[1+\xi\left(\frac{x-\mu}{\sigma}\right)\right]^{-t/\xi}\right\}
-\end{align*}
+\end{align}
+defined on the set $\{x : 1 + \xi(x-\mu)/\sigma>0\}$ where the parameters satisfy $-\infty<\mu, \xi<\infty$ and $\sigma >0$. The above distribution is the generalized extreme value (GEV) family of distributions, where $\mu$ is the location parameter, $\sigma$ is the scale parameter and $\xi$ is the shape parameter. The type $\mathbb{II}$ and $\mathbb{III}$ classes correspond to the case where $\xi >0$ and $\xi<0$ respectively and the subset of the family with $\xi = 0$ is interpreted as the limit of (\ref{eq:gev}) as $\xi \to 0$.
+
+\begin{thm}\label{thm:gev}
+If there exists sequence of constants $\{a_n\}$ and $\{b_n\}$ such that 
+\begin{align}\label{eq:gevlimit}
+\mathbb{P}((M_n - b_n)/a_n\leq z) \to G(z) \text{ as } n \to \infty
+\end{align}
+for a non-degenerate distribution function $G$, then $G$ is a member of the GEV family
+\begin{align}
+G(x) = \exp \left\{-\left[1+\xi\left(\frac{x-\mu}{\sigma}\right)\right]^{-t/\xi}\right\}
+\end{align}
 defined on the set $\{x : 1 + \xi(x-\mu)/\sigma>0\}$ where the parameters satisfy $-\infty<\mu, \xi<\infty$ and $\sigma >0$.
+\end{thm}
 
-
-
-
-\section{Hill's Estimator}
-The motivation of this paper came from considering a random sample $Z_1, \ldots, Z_k$ from a distribution of $F$ from a unit interval with $F(x) \sim Cx^\alpha$ as $x\to 0$. We would also like to be able to draw inference about $\alpha$ without making assumptions about the form of $F$ elsewhere.
-
-Suppose that a sample $Y_1,\ldots,Y_k$ is drawn from the population with distribution $G$ and let 
+By interpreting the limit in Theorem \ref{thm:gev} as an approximation for large values of $n$ suggests the use of the GEV family for modelling the distribution of maxima long sequences. With this result we can solve for the normalizing constants that are unknown is practice. Given (\ref{eq:gevlimit}) holds
 \begin{align*}
-Y^{(1)} \geq Y^{(2)} \geq \ldots \geq Y^{(k)}
+\mathbb{P}((M_n-b_n)/a_n\leq z) \approx G(z)
 \end{align*}
-be the order statistics. On the basis of theoretical arguments or previous data, it is believed, or at least the hypothesis is tentatively entertained, that $G$ has a known functional form, say $G(y) = w(y;\theta)$, for \emph{$y$ sufficiently large} and $\theta$ be a vector of parameters. The simplest case is that in which a number $D$ is known such that for $y \geq D$ this functional form is valid. Here $D$ need not be the smallest value for which this is true, and thus might be chosen quite conservatively in some situations. When the global form of $G$ is unknown, so that ordinary parametric models are unavailable, it is then perhaps intuitively plausible to base inference about $\theta$ on the order statistics that exceed $D$, since it is only these that lie in the region where $G$ is believed to have the specific form.
+for large $n$. With some manipulation 
+\begin{align*}
+\mathbb{P}((M_n-b_n)/a_n\leq z) \approx G((z-b_n)/a_n) = G^\ast(z)
+\end{align*}
+where $G^\ast$ is another member of the GEV family. This says that we can approximate the distribution of $M_n^\ast$ by a member of the GEV for large $n$, we can do the same for the distribution of $M_n$. {\color{red} Since the parameters of the distribution have to be estimated anyway, it is irrelevant in practice that the parameters of the distribution of $G$ are different from those of $G^\ast$}. \textbf{Still got stuff on return level and period here!!}
+
+\subsection{Outline Proof of the Extremal Types Theorem}
+
+\begin{defn}
+A distribution $G$ is said to be \textbf{max-stable} if, for every $n=2,3,\ldots$ there are constants $\alpha_n>0$ and $\beta_n$ such that
+\begin{align*}
+G^n(\alpha_nz+\beta_n) = G(z)
+\end{align*}
+\end{defn}
+
+\begin{thm}\label{thm:maxstablegev}
+A distribution is max-stable iff it is a generalized extreme value distribution.
+\begin{proof}
+We shall skip the forward direction proof as it utilizes machinery that are not trivial and show the converse. Let the Fr\'echet $G(x)$ be given, then 	
+\begin{align*}
+G^n(z) &= \exp\left\{-n\left(\frac{z-b}{a}\right)^{-\alpha}\right\}\\
+&= \exp\left\{-\left(\frac{z-b}{an^{1/\alpha}}\right)^{-\alpha}\right\}\\
+&=G(\alpha_nz+b_n)
+\end{align*}
+where $\alpha_n = n^{-1/\alpha}$ and $\beta_n = 1 +  n^{-1/\alpha}$. In a similar fashion we can prove it for Weibull. For Gumbel, we have
+\begin{align*}
+G^n(z) &= \exp\left\{-n\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\} \\
+&= \exp\left\{-\exp\Big(\log n\Big)\cdot\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\}
+\end{align*}
+\end{proof}
+\end{thm}
+
+\begin{examp}
+
+\end{examp}
+
+%\section{Hill's Estimator}
+%The motivation of this paper came from considering a random sample $Z_1, \ldots, Z_k$ from a distribution of $F$ from a unit interval with $F(x) \sim Cx^\alpha$ as $x\to 0$. We would also like to be able to draw inference about $\alpha$ without making assumptions about the form of $F$ elsewhere.
+%
+%Suppose that a sample $Y_1,\ldots,Y_k$ is drawn from the population with distribution $G$ and let 
+%\begin{align*}
+%Y^{(1)} \geq Y^{(2)} \geq \ldots \geq Y^{(k)}
+%\end{align*}
+%be the order statistics. On the basis of theoretical arguments or previous data, it is believed, or at least the hypothesis is tentatively entertained, that $G$ has a known functional form, say $G(y) = w(y;\theta)$, for \emph{$y$ sufficiently large} and $\theta$ be a vector of parameters. The simplest case is that in which a number $D$ is known such that for $y \geq D$ this functional form is valid. Here $D$ need not be the smallest value for which this is true, and thus might be chosen quite conservatively in some situations. When the global form of $G$ is unknown, so that ordinary parametric models are unavailable, it is then perhaps intuitively plausible to base inference about $\theta$ on the order statistics that exceed $D$, since it is only these that lie in the region where $G$ is believed to have the specific form. Thus the values of such order statistics might be taken as a conditioning event, or data, for the purpose of inference about $\theta$. In typical applications $D$ will not be known precisely and it will be necessarily to select a subset, consisting of the $\hat{r}+1$ largest order statistics, on the basis of prior knowledge and a combination of various data analytic techniques. Such an $\hat{r}$ will often depend upon the data in a highly complicated way, and questions as to the precise form of conditioning event become of lesser importance than the choice of $\hat{r}$. The approach advocated here is to consider the inference based upon the values of the $r+1$ largest order statistics, for $r = 1, 2, \ldots$, until upon the basis of data analytic guides and prior knowledge a stopping point $\hat{r}$ is reached, beyond which it is unwise to proceed.
 
 
 
