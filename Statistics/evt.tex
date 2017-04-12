@@ -143,11 +143,11 @@ The model focuses on the statistical behaviour of $M_n = \max\{X_1,\ldots,X_n\}$
 &=\{F(z)\}^n \label{eq:maxofrv}
 \end{align}
 
-Although we know how to find the distribution of $M_n$ the maximum of iid random variables, not knowing what $F$ makes knowing the above not helpful. We could utilise standard statistical techniques like maximum likelihood to get an estimate $\widehat{F}$ from the observed data the substitute into (\ref{eq:maxofrv}). However small errors in the estimate of $F$ can lead to substantial errors in $F^n$.
+Although we know how to find the distribution of $M_n$ the maximum of independent and identically distributed random variables, not knowing what $F$ makes knowing the above not helpful. We could utilise standard statistical techniques like maximum likelihood to get an estimate $\widehat{F}$ from the observed data the substitute into (\ref{eq:maxofrv}). However small errors in the estimate of $F$ can lead to substantial errors in $F^n$.
 
 The approach we are going to look at here is to accept that $F$ is unknown, instead of estimating $F$ to estimate $F^n$, we find an estimate of $F^n$ directly, which can be estimated using extreme data only. The idea is similar to the usual method of approximating the distribution of sample means by the normal distribution. So essentially we are doing the extreme value analogue of the central limit theory.
 
-Observe that for a distribution function $F$ with upper end-point $z^+$, i.e. $F(z^+) = 1$ for any $z<z^+$, $F^n(z) \to 0$ as $n \to \infty$, thus $M_n$ degenerates to a point mass on $z^+$. To avoid this problem, we do a linear renormalization of the variable $M_n$:
+Observe that for a distribution function $F$ with upper end-point $z^+$, i.e. $z^+$ is the smallest value of $z$ such that $F(z^+) = 1$, for any $z<z^+, F^n(z) \to 0$ as $n \to \infty$, thus $M_n$ degenerates to a point mass on $z^+$. To avoid this problem, we do a linear renormalization of the variable $M_n$:
 \begin{align*}
 M_n^\ast = \frac{M_n - b_n}{a_n}
 \end{align*}
@@ -190,9 +190,9 @@ G(x) = \exp \left\{-\left[1+\xi\left(\frac{x-\mu}{\sigma}\right)\right]^{-1/\xi}
 defined on the set $\{x : 1 + \xi(x-\mu)/\sigma>0\}$ where the parameters satisfy $-\infty<\mu, \xi<\infty$ and $\sigma >0$. The above distribution is the generalized extreme value (GEV) family of distributions, where $\mu$ is the location parameter, $\sigma$ is the scale parameter and $\xi$ is the shape parameter. The type $\mathbb{II}$ and $\mathbb{III}$ classes correspond to the case where $\xi >0$ and $\xi<0$ respectively and the subset of the family with $\xi = 0$ is interpreted as the limit of (\ref{eq:gev}) as $\xi \to 0$.
 
 \begin{thm}\label{thm:gev}
-If there exists sequence of constants $\{a_n\}$ and $\{b_n\}$ such that 
+If there exists sequence of constants $\{a_n>0\}$ and $\{b_n\}$ such that 
 \begin{align}\label{eq:gevlimit}
-\mathbb{P}\{(M_n - b_n)/a_n\leq z\} \to G(z) \text{ as } n \to \infty
+\mathbb{P}\{(M_n - b_n)/a_n\leq z\} \to G(z) \quad\text{ as } n \to \infty
 \end{align}
 for a non-degenerate distribution function $G$, then $G$ is a member of the GEV family
 \begin{align}
@@ -201,15 +201,18 @@ G(x) = \exp \left\{-\left[1+\xi\left(\frac{x-\mu}{\sigma}\right)\right]^{-1/\xi}
 defined on the set $\{x : 1 + \xi(x-\mu)/\sigma>0\}$ where the parameters satisfy $-\infty<\mu, \xi<\infty$ and $\sigma >0$.
 \end{thm}
 
-By interpreting the limit in Theorem \ref{thm:gev} as an approximation for large values of $n$ suggests the use of the GEV family for modelling the distribution of maxima long sequences. With this result we can solve for the normalizing constants that are unknown is practice. Given (\ref{eq:gevlimit}) holds
+By interpreting the limit in Theorem \ref{thm:gev} as an approximation for large values of $n$, suggests the use of the GEV family for modelling the distribution of maxima of long sequences. With this result we can solve for the normalizing constants that are unknown is practice. Given (\ref{eq:gevlimit}) holds
 \begin{align*}
 \mathbb{P}\{(M_n-b_n)/a_n\leq z\} \approx G(z)
 \end{align*}
 for large $n$. With some manipulation 
 \begin{align*}
-\mathbb{P}\{(M_n-b_n)/a_n\leq z\} \approx G((z-b_n)/a_n) = G^\ast(z)
+\mathbb{P}\{M_n\leq z\} \approx G((z-b_n)/a_n) = G^\ast(z)
 \end{align*}
-where $G^\ast$ is another member of the GEV family. This says that we can approximate the distribution of $M_n^\ast$ by a member of the GEV for large $n$, we can do the same for the distribution of $M_n$. {\color{red} Since the parameters of the distribution have to be estimated anyway, it is irrelevant in practice that the parameters of the distribution of $G$ are different from those of $G^\ast$}. \textbf{Still got stuff on return level and period here!!}
+where $G^\ast$ is another member of the GEV family. This says that we can approximate the distribution of $M_n^\ast$ by a member of the GEV for large $n$, {\color{red}the distribution of $M_n$ itself can also be approximated by a different member of the same family.}
+
+
+we can do the same for the distribution of $M_n$. {\color{red} Since the parameters of the distribution have to be estimated anyway, it is irrelevant in practice that the parameters of the distribution of $G$ are different from those of $G^\ast$}. \textbf{Still got stuff on return level and period here!!}
 
 \subsection{Outline Proof of the Extremal Types Theorem}
 
