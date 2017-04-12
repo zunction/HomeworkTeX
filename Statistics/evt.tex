@@ -273,7 +273,7 @@ here we use the fact that $\lim_{n \to \infty} \left(1-\frac{1}{n}\right)^n = \f
 \end{examp}
 
 \begin{examp}
-If $X_1, X_2, \ldots$ is a sequence of independent Fr\'echet variables. $F(x) = \exp(-1/x)$ for $x>0$. Letting $a_n = n$ and $b_n = 0$
+If $X_1, X_2, \ldots$ is a sequence of independent Fr\'echet variables, $F(x) = \exp(-1/x)$ for $x>0$. Letting $a_n = n$ and $b_n = 0$
 \begin{align*}
 \mathbb{P}\{(M_n-b_n)/a_n\leq z\}  & = F^n(nz)\\
 & = \Big[\exp\{-1/nz\}\Big]^n\\
@@ -300,8 +300,11 @@ Hence the distribution is Weibull type with $\xi=-1$ in the GEV family.
 
 
 \subsubsection{Maximum Likelihood Estimation}
-
-
+Given $Z_1, \ldots, Z_m$ are independent variables having GEV distribution, we have the probability density function to be 
+\begin{align*}
+g(z)=\frac{d}{dz}G(z) =\frac{1}{\sigma}\left[1+\xi\left(\frac{z-\mu}{\sigma}\right)\right]^{-\left(\frac{1}{\xi}+1\right)}  \exp \left\{-\left[1+\xi\left(\frac{z-\mu}{\sigma}\right)\right]^{-1/\xi}\right\}
+\end{align*}
+thus the maximum likelihood
 %\section{Hill's Estimator}
 %The motivation of this paper came from considering a random sample $Z_1, \ldots, Z_k$ from a distribution of $F$ from a unit interval with $F(x) \sim Cx^\alpha$ as $x\to 0$. We would also like to be able to draw inference about $\alpha$ without making assumptions about the form of $F$ elsewhere.
 %
