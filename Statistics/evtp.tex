@@ -72,6 +72,12 @@
            shorten >=2pt,}
 }
 
+
+\usepackage{listings}
+
+
+
+
 %\usepackage[hang]{footmisc}
 %\setlength\footnotemargin{10pt}
 
@@ -127,6 +133,15 @@
 %\begin{frame}
 %\tableofcontents
 %\end{frame}
+
+\begin{frame}{Motivation}
+\begin{alertblock}{Prediction of Extremal Precipitation}
+For the 10th Extreme Value Analysis Conference, they proposed a challenge to predict spatio-temporal extremes. Training data consisting of 30 years of rainfall from 40 weather stations around Paris are given for contestants to predict the extreme \textbf{monthly} precipitation over the next 20 years. On the daily range, this event corresponds to a quantile level 
+\begin{align*}
+0.998 = 1 - 0.002 \approx 1- \frac{1}{20 \times 30 \text{days}}
+\end{align*}
+\end{alertblock}
+\end{frame}
 
 \begin{frame}{Model Formulation}
 The model focuses on the statistical behaviour of $M_n = \max\{X_1,\ldots,X_n\}$ where all the $X_i$'s are independent and identically distributed with distribution function $F$. The distribution of $M_n$ can be derived exactly for all values of $n$
@@ -244,14 +259,14 @@ G^n(\alpha_nz+\beta_n) = G(z)
 \begin{theorem}\label{thm:maxstablegev}
 A distribution is max-stable iff it is a generalized extreme value distribution.
 \begin{proof}
-We shall skip the forward direction proof as it utilizes machinery that are not trivial. To show the converse, let the Fr\'echet $G(x)$ be given, then 	
+We shall skip the forward direction proof as it is very involved. To show the converse, let the Fr\'echet $G(x)$ be given, then 	
 \begin{align*}
 G^n(z) &= \exp\left\{-n\left(\frac{z-b}{a}\right)^{-\alpha}\right\}\\
 &= \exp\left\{-\left(\frac{z-b}{an^{1/\alpha}}\right)^{-\alpha}\right\}\\
 &=G(\alpha_nz+\beta_n)
 %&=G(n^{-1/\alpha}z+(1 +  n^{-1/\alpha}))
 \end{align*}
-where $\alpha_n = n^{-1/\alpha}$ and $\beta_n = 1 +  n^{-1/\alpha}$. In a similar fashion we can prove it for Weibull. 
+where $\alpha_n = n^{-1/\alpha}$ and $\beta_n = b(1 - n^{-1/\alpha})$. In a similar fashion we can prove it for Weibull. 
 \end{proof}
 \end{theorem}
 \end{frame}
@@ -283,9 +298,18 @@ Hence for any integer $k$ we also have
 \end{align*}
 but now we recall the definitions of $M_n$ and $M_{nk}$, we have 
 \begin{align*}
-G\left(\frac{z-b_{nk}}{a_{nk}}\right)&\approx\mathbb{P}\{(M_{nk}-b_{nk})/a_{nk}\leq z\}\\
-&=\left[\mathbb{P}\{(M_{n}-b_{n})/a_{n}\leq z\}\right]^k \approx G^k\left(\frac{z-b_n}{a_n}\right)
+\mathbb{P}\{(M_{nk}-b_{nk})/a_{nk}\leq z\}=\left[\mathbb{P}\{(M_{n}-b_{n})/a_{n}\leq z\}\right]^k
 \end{align*}
+using the equations above,
+\begin{align*}
+\mathbb{P}\{M_{nk}\leq z\} &\approx G\left(\frac{z-b_{nk}}{a_{nk}}\right)\\
+\text{ and }\quad\mathbb{P}\{M_{nk}\leq z\} &\approx G^k\left(\frac{z-b_{n}}{a_{n}}\right)
+\end{align*}
+
+%\begin{align*}
+%G\left(\frac{z-b_{nk}}{a_{nk}}\right)&\approx\mathbb{P}\{(M_{nk}-b_{nk})/a_{nk}\leq z\}\\
+%&=\left[\mathbb{P}\{(M_{n}-b_{n})/a_{n}\leq z\}\right]^k \approx G^k\left(\frac{z-b_n}{a_n}\right)
+%\end{align*}
 Therefore $G$ and $G^k$ are identically apart except for location and scale coefficients. Thus $G$ is max-stable and a member of GEV by Theorem \ref{thm:maxstablegev}
 \end{frame}
 
@@ -293,13 +317,16 @@ Therefore $G$ and $G^k$ are identically apart except for location and scale coef
 \begin{example}
 If $X_1, X_2, \ldots$ is a sequence of independent and identically distributed $\text{\sffamily Exp}(1)$ random variables, $F(x) = 1-e^{-x}$ for $x>0$, choosing $a_n = 1$ and $b_n = \log n$
 \begin{align*}
-\mathbb{P}\{(M_n-b_n)/a_n\} &= F^n(z + \log n)\\
+\mathbb{P}\{(M_n-b_n)/a_n\leq z\} &= F^n(z + \log n)\\
 &= \bigg[1-e^{-(z+\log n)}\bigg]^n\\
 &= \bigg[1-n^{-1}e^{-z}\bigg]^n \to \exp(-e^{-z}) \text{ as } n \to \infty
 \end{align*}
 here we use the fact that $\lim_{n \to \infty} \left(1-\frac{1}{n}\right)^n = \frac{1}{e}$. Hence with the chosen $a_n$ and $b_n$, the limit of $M_n$ converges to the Gumbel distribution as $n \to \infty$. This corresponds to $\xi = 0$ in the GEV family. \eqed
 \end{example}
 \end{frame}
+
+
+
 
 \begin{frame}{Example}
 \begin{example}
@@ -327,6 +354,15 @@ Hence the distribution is Weibull type with $\xi=-1$ in the GEV family.
 \end{example}
 \end{frame}
 
+\begin{frame}{Extreme Values of Exp(1) random variables}
+\lstinputlisting[language=Python]{example1.py}
+\end{frame}
 
+\begin{frame}{Extreme Values of Exp(1) random variables}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.75]{example1.png}
+\end{figure}
+\end{frame}
 \end{document}
 
