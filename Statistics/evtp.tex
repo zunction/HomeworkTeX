@@ -136,7 +136,7 @@
 
 \begin{frame}{Motivation}
 \begin{alertblock}{Prediction of Extremal Precipitation}
-For the 10th Extreme Value Analysis Conference, they proposed a challenge to predict spatio-temporal extremes. Training data consisting of 30 years of rainfall from 40 weather stations around Paris are given for contestants to predict the extreme \textbf{monthly} precipitation over the next 20 years. On the daily range, this event corresponds to a quantile level 
+For the 10th Extreme Value Analysis Conference, they proposed a challenge to predict spatio-temporal extremes. Training data consisting of 30 years of rainfall from 40 weather stations around Paris are given for contestants to predict the extreme monthly precipitation over the next 20 years. On the daily range, this event corresponds to a quantile level 
 \begin{align*}
 0.998 = 1 - 0.002 \approx 1- \frac{1}{20 \times 30 \text{days}}
 \end{align*}
@@ -235,11 +235,12 @@ defined on the set $\{x : 1 + \xi(x-\mu)/\sigma>0\}$ where the parameters satisf
 \end{frame}
 
 \begin{frame}{Extremal Types Theorem}
-By interpreting the limit in Theorem \ref{thm:gev} as an approximation for large values of $n$, suggests the use of the GEV family for modelling the distribution of maxima of long sequences. With this result we can solve for the normalizing constants that are unknown is practice. Given (\ref{eq:gevlimit}) holds
+By interpreting the limit in Theorem \ref{thm:gev} as an approximation for large values of $n$, suggests the use of the GEV family for modelling the distribution of maxima of long sequences. %With this result we can solve for the normalizing constants that are unknown in practice. 
+Given (\ref{eq:gevlimit}) holds
 \begin{align*}
 \mathbb{P}\{(M_n-b_n)/a_n\leq z\} \approx G(z)
 \end{align*}
-for large $n$. With some manipulation 
+for large $n$. Equivalently,
 \begin{align*}
 \mathbb{P}\{M_n\leq z\} \approx G((z-b_n)/a_n) = G^\ast(z)
 \end{align*}
@@ -282,7 +283,7 @@ G^n(z\alpha_n+\beta_n) &= \exp\left\{-n\exp\left[-\left(\frac{z+a\log n-b}{a}\ri
 &= \exp\left\{-\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\} \\
 &=G(z)
 \end{align*}
-where $\alpha_n = 1$ and $\beta_n = -a\log n$.
+%where $\alpha_n = 1$ and $\beta_n = -a\log n$.
 \end{proof}
 \end{frame}
 
