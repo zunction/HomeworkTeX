@@ -243,12 +243,12 @@ for large $n$. With some manipulation
 \begin{align*}
 \mathbb{P}\{M_n\leq z\} \approx G((z-b_n)/a_n) = G^\ast(z)
 \end{align*}
-where $G^\ast$ is another member of the GEV family. This says that we can approximate the distribution of $M_n^\ast$ by a member of the GEV for large $n$, the distribution of $M_n$ itself can also be approximated by a different member of the same family.
+where $G^\ast$ is another member of the GEV family. This says that if we can approximate the distribution of $M_n^\ast$ by a member of the GEV for large $n$, the distribution of $M_n$ itself can also be approximated by a different member of the same family.
 \end{frame}
 
 \begin{frame}{Outline Proof of the Extremal Types Theorem}
 \begin{definition}
-A distribution $G$ is said to be \textbf{max-stable} if, for every $n=2,3,\ldots$ there are constants $\alpha_n>0$ and $\beta_n$ such that
+A distribution $G$ is said to be \emph{max-stable} if, for every $n=2,3,\ldots$ there are constants $\alpha_n>0$ and $\beta_n$ such that
 \begin{align*}
 G^n(\alpha_nz+\beta_n) = G(z)
 \end{align*}
@@ -259,26 +259,28 @@ G^n(\alpha_nz+\beta_n) = G(z)
 \begin{theorem}\label{thm:maxstablegev}
 A distribution is max-stable iff it is a generalized extreme value distribution.
 \begin{proof}
-We shall skip the forward direction proof as it is very involved. To show the converse, let the Fr\'echet $G(x)$ be given, then 	
+We shall skip the forward direction proof as it is very involved. To show the converse, let the Fr\'echet $G(x)$ be given, then choosing $\alpha_n = n^{1/\alpha}$ and $\beta_n = b(1-n^{1/\alpha})$
 \begin{align*}
-G^n(z) &= \exp\left\{-n\left(\frac{z-b}{a}\right)^{-\alpha}\right\}\\
-&= \exp\left\{-\left(\frac{z-b}{an^{1/\alpha}}\right)^{-\alpha}\right\}\\
-&=G(\alpha_nz+\beta_n)
+G^n(z\alpha_n+\beta_n) &= \exp\left\{-n\left(\frac{zn^{1/\alpha}+b(1-n^{1/\alpha})-b}{a}\right)^{-\alpha}\right\}\\
+&= \exp\left\{-n\left(\frac{zn^{1/\alpha}-bn^{1/\alpha}}{a}\right)^{-\alpha}\right\}\\
+&= \exp\left\{-\left(\frac{z-b}{a}\right)^{-\alpha}\right\}=G(z)
 %&=G(n^{-1/\alpha}z+(1 +  n^{-1/\alpha}))
 \end{align*}
-where $\alpha_n = n^{-1/\alpha}$ and $\beta_n = b(1 - n^{-1/\alpha})$. In a similar fashion we can prove it for Weibull. 
+In a similar fashion we can prove it for Weibull. 
 \end{proof}
 \end{theorem}
 \end{frame}
 
 \begin{frame}{Outline Proof of the Extremal Types Theorem}
 \begin{proof}
-For Gumbel, we have
+For Gumbel, choose $\alpha_n = 1$ and $\beta_n = a\log n$, 
 \begin{align*}
-G^n(z) &= \exp\left\{-n\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\} \\
-&= \exp\left\{-\exp\Big(\log n\Big)\cdot\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\}\\
-&= \exp\left\{-\exp\left[\log n-\left(\frac{z-b}{a}\right)\right]\right\} \\
-&=G(\alpha_nz+\beta_n)
+G^n(z\alpha_n+\beta_n) &= \exp\left\{-n\exp\left[-\left(\frac{z+a\log n-b}{a}\right)\right]\right\} \\
+&= \exp\left\{-n\exp\left[-\left(\frac{z-b}{a}\right)-\log n\right]\right\} \\
+%G^n(z) &= \exp\left\{-n\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\} \\
+&= \exp\left\{-n\cdot n^{-1}\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\}\\
+&= \exp\left\{-\exp\left[-\left(\frac{z-b}{a}\right)\right]\right\} \\
+&=G(z)
 \end{align*}
 where $\alpha_n = 1$ and $\beta_n = -a\log n$.
 \end{proof}
