@@ -1,0 +1,143 @@
+\documentclass[a4paper,10pt]{article}
+\setlength{\parindent}{0cm}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{graphicx,caption}
+\usepackage{verbatim}
+\usepackage{venndiagram}
+\usepackage[cm]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color,enumerate,framed}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%\usepackage{tgadventor}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{parskip}
+%\usepackage{picins} %for \parpic.
+%\newtheorem*{notation}{Notation}
+%\newtheorem{example}{Example}[section]
+%\newtheorem*{problem}{Problem}
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem*{solution}{Solution}
+%\newtheorem*{definition}{Definition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{remark}{Remark}
+%\setcounter{section}{1}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{examp}{Example}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{nte}{Note}
+\newtheorem*{notat}{Notation}
+
+%\diagramstyle[labelstyle=\scriptstyle]
+
+\lstset{frame=tb,
+  language=Oz,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\pagestyle{fancy}
+
+
+
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\rfoot{\color{black!60}{\sffamily\thepage}}
+
+
+
+\begin{document}
+\flushright{Zhangsheng Lai\\1002554}
+\section*{Measure Theoretic Probability: Assignment 1}
+
+\begin{enumerate}
+\item[2.1] Since $\Omega$ is finite, then $|\Omega| = n$ for some $n$. Thus there are $2^n$ elements in the set of all subsets of $\Omega$ denoted by $2^\Omega$. Thus we have $\varnothing, \Omega \in 2^\Omega$. For any $A \in 2^\Omega$, $A^c \in 2^\Omega$ since $A^c$ is also a subset of $\Omega$. Lastly, there are only finite elements in $2^\Omega$, thus any finite union of sets in $2^\Omega$ is a subset of $\Omega$ thus also in $2^\Omega$ which shows that $2^\Omega$ is a $\sigma$-algebra.
+
+\item[2.2] We have $(\mathcal{G}_\alpha)_{\alpha\in A}$ be an arbitrary family of $\sigma$-algebras defined on an abstract space $\Omega$. Let $\mathcal{H} = \bigcap_{\alpha \in A}\mathcal{G}_\alpha$, it is a $\sigma$-algebra since:
+\begin{enumerate}[(a)]
+\item $\varnothing, \Omega \in \mathcal{H}$ since $\empty, \Omega \in \mathcal{G}_\alpha$ for all $\alpha \in A$.
+\item Let $H \in \mathcal{H}$, then $H^c \in \mathcal{H}$ since $H \in \bigcap_{\alpha \in A}\mathcal{G}_\alpha$ implies $H^c \in \bigcap_{\alpha \in A}\mathcal{G}_\alpha$.
+\item Let $H_n \in \mathcal{H}$ for all $n$, then $\bigcup_{n}H_n \in \mathcal{H}$ since $\bigcup_{n}H_n \in \bigcap_{\alpha \in A}\mathcal{G}_\alpha$.
+\end{enumerate}
+
+\item[2.3]
+\begin{enumerate}[a)]
+\item Let $X \in \left(\bigcup_{n=1}^{\infty}A_n\right)^c$, thus $X \notin A_n$ for any $n$ if and only if  $X \in \bigcap_{n=1}^{\infty}A^c_n$. 
+\item Let $X \in (\bigcap_{n=1}^{\infty}A_n)^c$ thus $X \notin A_n$ for all $n$, so $X \in \bigcup_{n=1}^{\infty}A_n^c$. For the other containment, let $X \in \bigcup_{n=1}^{\infty}A_n^c$, then $X \notin A_n$ for some $n$, thus $X \notin \bigcap_{n=1}^{\infty}A_n$ and we are done.
+\end{enumerate}
+
+\item[2.4] We are given $\mathcal{A}$ to be a $\sigma$-algebra and $(A_n)_{n \leq 1}$ be a sequence of events in $\mathcal{A}$. Then 
+\begin{align*}
+\liminf_{n \to \infty}A_n = \bigcup_n^{\infty} \bigcap_{k\geq n}^{\infty} A_k
+= \bigcup_n^{\infty}\left(\bigcup_{k\geq n}^{\infty} A_k^c\right)^c
+\end{align*}
+since $A_k \in \mathcal{A}$, $A_k^c \in \mathcal{A}$ we have $\bigcup_{k\geq n}^{\infty} A_k^c$ and its complement to be in $\mathcal{A}$ for all $n$. Thus $\liminf_{n \to \infty} A_n \in \mathcal{A}$. Next we observe that 
+\begin{align*}
+\limsup_{n \to \infty}A_n = \bigcap_n^\infty \bigcup_{k \geq n}^\infty A_k = \left(\bigcup_n^\infty \left(\bigcup_{k \geq n}^\infty A_k\right)^c\right)^c
+\end{align*}
+again $\bigcup_{k \geq n}^\infty A_k$ and its complement are in $\mathcal{A}$ for all $n$, thus the complement of countably unions of them is also in $\mathcal{A}$. Lastly, let $X \in \liminf_{n \to \infty}A_n$, thus $X \in \bigcap_{k\geq n}^\infty A_k$ for some sufficiently large $n$ and since $\bigcap_{k\geq n}^\infty A_k \subseteq \bigcup_{k\geq n}^\infty A_k$, $X \in \bigcup_{k\geq n}^\infty A_k$ for some sufficiently large $n$. Thus $X \in \bigcap_n^\infty \bigcup_{k \geq n}^\infty A_k$ which shows $\liminf_{n \to \infty}A_n \subset \limsup_{n \to \infty}A_n$.
+
+\item[2.5] We consider the cases where $X \in \limsup_{n} A_n\backslash \liminf_{n} A_n$ and $X \notin \limsup_{n} A_n\backslash \liminf_{n} A_n$. For the former, we have $\limsup_{n}1_{A_n}-\liminf_{n}1_{A_n} = 1-0$
+
+\item[2.6] Given $\mathcal{A}$ be a $\sigma$-algebra of $\Omega$, $B \in \mathcal{A}$ and $\mathcal{F}=\{A \cap B: A \in \mathcal{A}\}$. 
+\begin{enumerate}[(a)]
+\item $\varnothing, \Omega \in \mathcal{A}$, thus $\varnothing = \varnothing \cap B = \varnothing$ and $\Omega \cap B = B$ are elements of $\mathcal{F}$.
+\item Let $K \in \mathcal{F}$, then $K = H \cap B$ for some $H \in \mathcal{A}$. Then $K^c = B \backslash K \in \mathcal{F}$ as $K^c = H^c \cap B$.
+\item Let $H_n \in \mathcal{A}$ for all $n$. Then $H_n \cap B \in \mathcal{F}$ for all $n$. Thus $\bigcup_{n}^\infty (H_n \cap B) = \left(\bigcup_{n}^\infty H_n\right) \cap B \in \mathcal{F}$.  
+\end{enumerate}
+
+\item[2.9]
+
+\item[2.10]
+
+\item[2.11]
+
+\item[2.12]
+
+\item[2.13] We shall prove by induction. For $n = 2$, $P(A_1 \cup A_2) = P(A_1) + P(A_2) - P(A_1 \cap A_2)$. Suppose it is true for up to $n = k$, i.e.
+\begin{align*}
+P(\cup^{k}_{i=1}A_i) = \sum_iP(A_i) - \sum_{i<j}P(A_i \cap A_j) + \sum_{i<j<k}P(A_i \cap A_j \cap A_k) -\ldots + (-1)^{k+1}P(A_1\cap A_2 \cap \ldots \cap A_k)
+\end{align*}
+thus when $n=k+1$,
+\begin{align*}
+P(\cup^{k+1}_{i=1}A_i) =
+\end{align*}
+
+\item[2.14] $P(A \cap B) \leq \min\{P(A),P(B)\} = 1/3$. Then $P(A \cap B) =  P(A) + P(B) - P(A \cup B) \geq  P(A) + P(B) -1 = 1/12$.
+\item[2.15]
+
+\item[2.16]
+
+\item[2.17] Let $\mathcal{A}$ be the family of all subsets of the infinite set $\Omega$ where $\mathcal{A}:=\{A \subseteq \Omega: A\text{ or }A^c \text{ is finite.}\}$ We have $\varnothing, \Omega \in \mathcal{A}$ as the null set is finite. For any $A \in \mathcal{A}$, either $A$ or $A^c$ is finite, thus $A^c \in \mathcal{A}$. For $A, B \in \mathcal{A}$, $A \cup B$ is also finite since finite union of finite sets is also finite. Thus $\mathcal{A}$ is an algebra. Countably union does not hold since countably union of finite sets is not necessarily finite.
+\end{enumerate}
+
+\end{document}
