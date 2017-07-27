@@ -1,0 +1,96 @@
+\documentclass[a4paper,10pt]{article}
+\setlength{\parindent}{0cm}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{graphicx,caption}
+\usepackage{verbatim}
+\usepackage{venndiagram}
+\usepackage[cm]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color,enumerate,framed}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%\usepackage{tgadventor}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{parskip}
+%\usepackage{picins} %for \parpic.
+%\newtheorem*{notation}{Notation}
+%\newtheorem{example}{Example}[section]
+%\newtheorem*{problem}{Problem}
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem*{solution}{Solution}
+%\newtheorem*{definition}{Definition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{remark}{Remark}
+%\setcounter{section}{1}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{examp}{Example}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{nte}{Note}
+\newtheorem*{notat}{Notation}
+
+%\diagramstyle[labelstyle=\scriptstyle]
+
+\lstset{frame=tb,
+  language=Oz,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\pagestyle{fancy}
+
+
+
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\rfoot{\color{black!60}{\sffamily\thepage}}
+
+
+
+\begin{document}
+\flushright{Zhangsheng Lai\\1002554}
+\section*{Problems to Ponder}
+
+\begin{enumerate}
+\item Let $(\Omega, \mathcal{F}, \mathbb{P})$ be a given probability space with $A_n \uparrow A$ and $B_n \downarrow B$ where $A_n, B_n \in \mathcal{F}$ for $n \geq 1$. WLOG, consider $A_n \uparrow A$, then since $A = \bigcup_nA_n$, $A \in \mathcal{F}$. By considering the complements of $B_n^c = H_n$, $H_n \uparrow H = \bigcup_n B_n^c \in \mathcal{F}$ implies $\bigcap_nB_n \in \mathcal{F}$. Use countably additive property to prove $\lim_{n\to\infty}\mathbb{P}(A_n)$. 
+
+\item We are given $\Omega$ to be infinite, $\mathcal{F} = \{A \subset \Omega: A \text{ is finite or } A^c \text{ is finite}\}$ and $\mu: \mathcal{F}\to [0,\infty)$ by $\mu(A)=0$ if $A$ is finite and $\mu(A) = 1$ if $A^c$ is finite. We shall show that $\mathcal{F}$ is an algebra,
+\begin{enumerate}[(a)]
+\item $\varnothing, \Omega \in \mathcal{F}$ since $\varnothing = \Omega^c$ is finite. 
+\item For $A \in \mathcal{F}$ either $A$ or $A^c$ is finite, thus $A^c \in \mathcal{F}$.
+\item For $A, B \in \mathcal{F}$, if both are finite, $A \cup B \in \mathcal{F}$. If both $A^c, B^c$ are finite, $(A \cup B)^c = A^c \cap B^c \in \mathcal{F}$. If $A, B^c$ is finite, $(A \cup B)^c \subset B^c$, thus $A \cup B$ is finite.
+\end{enumerate}
+Therefore, $\mathcal{F}$ is an algebra. To show that $\mu$ is finitely additive on $\mathcal{F}$, we have to show that for $A_k \in \mathcal{F}$, $k \geq 1$ and pairwise disjoint, $\mu(\cup_{k=1}^nA_k) = \sum_{i=1}^n\mu(A_k)$. This trivially holds when the $A_k$'s are finite. When we have $A_k$ infinite, we can have at most one since if $A_k, A_j$ are infinite, since they are disjoint, $A_j \subset A_k^c$ which is a contradiction. Thus for any collection of disjoint $A_k$'s there is at most one of them which is infinite and thus it satisfies the finite additivity property.
+
+\item Let $\mu$ be the Lebesgue probability measure on the $\sigma$-algebra $\mathcal{F}$ of $[0,1]$ and $\mu_\ast$ the outer measure on all subsets of $[0,1]$ defined to be $\mu_\ast(A)=\inf \{\sum_{k=1}^{\infty}|I_k|; \text{ each }I_k \text{ is an interval and }\{I_k\} \text{ is a countable cover for } A\}$. We also define $\mathcal{B}$ to be the Borel $\sigma$-algebra on $[0,1]$ and $N$ is called a null set if $\mu_\ast(N)=0$ where $N \subset [0,1]$. We want to show that $\overline{\mathcal{B}}:=\{B \cup N: B \in \mathcal{B}\}=\mathcal{F}$.
+\end{enumerate}
+
+\end{document}
