@@ -90,7 +90,13 @@
 \end{enumerate}
 Therefore, $\mathcal{F}$ is an algebra. To show that $\mu$ is finitely additive on $\mathcal{F}$, we have to show that for $A_k \in \mathcal{F}$, $k \geq 1$ and pairwise disjoint, $\mu(\cup_{k=1}^nA_k) = \sum_{i=1}^n\mu(A_k)$. This trivially holds when the $A_k$'s are finite. When we have $A_k$ infinite, we can have at most one since if $A_k, A_j$ are infinite, since they are disjoint, $A_j \subset A_k^c$ which is a contradiction. Thus for any collection of disjoint $A_k$'s there is at most one of them which is infinite and thus it satisfies the finite additivity property.
 
-\item Let $\mu$ be the Lebesgue probability measure on the $\sigma$-algebra $\mathcal{F}$ of $[0,1]$ and $\mu_\ast$ the outer measure on all subsets of $[0,1]$ defined to be $\mu_\ast(A)=\inf \{\sum_{k=1}^{\infty}|I_k|; \text{ each }I_k \text{ is an interval and }\{I_k\} \text{ is a countable cover for } A\}$. We also define $\mathcal{B}$ to be the Borel $\sigma$-algebra on $[0,1]$ and $N$ is called a null set if $\mu_\ast(N)=0$ where $N \subset [0,1]$. We want to show that $\overline{\mathcal{B}}:=\{B \cup N: B \in \mathcal{B}\}=\mathcal{F}$.
+\item Let $\mu$ be the Lebesgue probability measure on the $\sigma$-algebra $\mathcal{F}$ of $[0,1]$ and $\mu_\ast$ the outer measure on all subsets of $[0,1]$ defined to be $\mu_\ast(A)=\inf \{\sum_{k=1}^{\infty}|I_k|; \text{ each }I_k \text{ is an interval and }\{I_k\} \text{ is a countable cover for } A\}$. We also define $\mathcal{B}$ to be the Borel $\sigma$-algebra on $[0,1]$ and $N$ is called a null set if $\mu_\ast(N)=0$ where $N \subset [0,1]$. We want to show that $\overline{\mathcal{B}}:=\{B \cup N: B \in \mathcal{B}\}=\mathcal{F}$. Take $B \cup N \in \overline{\mathcal{B}}$ for some $B \in \mathcal{B}$, then for any $E \subseteq [0,1]$
+\begin{align*}
+ \mu_\ast((B \cup N) \cap E) + \mu_\ast((B \cup N)^c \cap E)&= \mu_\ast((B \cap E)\cup (N\cap E)) ) + \mu_\ast((B^c \cap N^c) \cap E)\\
+&= \mu_\ast(B \cap E)+ \mu_\ast(N\cap E ) + \mu_\ast(B^c  \cap E) - \mu_\ast(N \cap E)\\
+&=\mu_\ast(E)
+\end{align*}
+thus $\overline{\mathcal{B}} \subseteq \mathcal{F}$. For the converse, take $A \in \mathcal{F}$, then we want to show $A = B \cup N$ for some $B \in \mathcal{B}$.
 \end{enumerate}
 
 \end{document}
