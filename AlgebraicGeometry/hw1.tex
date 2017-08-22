@@ -1,0 +1,129 @@
+\documentclass[a4paper,10pt]{article}
+\setlength{\parindent}{0cm}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{graphicx,caption}
+\usepackage{verbatim}
+\usepackage{venndiagram}
+\usepackage[cm]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color,enumerate,framed}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%\usepackage{tgadventor}
+%\usepackage[nohug]{diagrams}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{parskip}
+%\usepackage{picins} %for \parpic.
+%\newtheorem*{notation}{Notation}
+%\newtheorem{example}{Example}[section]
+%\newtheorem*{problem}{Problem}
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem*{solution}{Solution}
+%\newtheorem*{definition}{Definition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{remark}{Remark}
+%\setcounter{section}{1}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{examp}{Example}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{nte}{Note}
+\newtheorem*{notat}{Notation}
+
+%\diagramstyle[labelstyle=\scriptstyle]
+
+\lstset{frame=tb,
+  language=Oz,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\pagestyle{fancy}
+
+
+
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lfoot{\color{black!60}{\sffamily Zhangsheng Lai}}
+\cfoot{\color{black!60}{\sffamily Last modified: \today}}
+\rfoot{\textsc{\thepage}}
+
+
+
+\begin{document}
+\flushright{Zhangsheng Lai\\1002554}
+\section*{Algebraic Geometry: Homework 1}
+
+\begin{enumerate}[1.]
+\item $R$ be a ring and $S$ a multiplicative subset of $R$ with $1 \in S$ and $0 \notin S$
+\begin{enumerate}[(i)]
+\item It is reflexive, since for any $t \in S$, $t(rs-rs)=0$, thus $(r,s) \sim (r,s)$. Suppose $(r,s) \sim (r',s')$, so there exist $t \in S$ such that $t(rs'-r's)=0$ which also means $t(r's-rs')=0$ and we have symmetry. Lastly, let $(r,s)\sim(t,u)$ and $(t,u)\sim(v,w)$, then there exist $a, b \in S$ such that 
+\begin{align*}
+a(ru-ts)&=0\\
+b(tw-vu)&=0
+\end{align*}
+Then $abwru-abwts=0$, $bastw-basvu=0$ and summing them gives $abu(rw-vs)=0$ with $abu \in S$ which shows transitivity.
+\item Same as part (i).
+\item Define the action of $R_s$ on $M_s$, $\phi:R_s \times M_s \to M_s$, $((r,s),(m,s'))\mapsto (rm,ss')$. We first show that the action is well-defined. Let $(r_1,s_1)\sim (r_2,s_2) \in R_s$ and $(m_1,t_1)\sim (m_1,t_1) \in M_s$. Then $\phi((r_i,s_i),(m_i,t_i)) = (r_im_i,s_it_i)$ for $i=1,2$. Since $a(r_{1}s_2-r_2s_{1})=0$ and $b(m_{1}t_2-m_2t_{1})=0$ with some $a, b \in S$,
+\begin{align*}
+ab(r_1s_2m_1t_2-r_2s_1m_1t_2)=0\\
+ab(r_2s_1m_{1}t_2-r_2s_1m_2t_{1})=0\\
+\end{align*}
+thus we have $ab(r_1m_1s_2t_2 -r_2m_2s_1t_1 )$, so $(r_1m_1,s_1t_1)\sim(r_2m_2,s_2t_2)$. $M_s$ is a $R_s$-module, since for $m_i \in M$, $r_i \in R$ and $s_i, t_i \in S$,
+\begin{align*}
+\bullet &(r,s) ((m_1,t_1)+(m_2,t_2)) = (r,s)((m_1t_2+m_2t_1,t_1t_2))=(rm_1t_2+rm_2t_1,st_1t_2)=(rm_1,st_1)+(rm_2,st_2)\\
+\bullet &((r_1,s_1)+(r_2,s_2))(m,t) = (mr_1s_2+mr_2s_1,s_1s_2t) = (r_1m,s_1t) + (r_2m,s_2t)\\
+\bullet &((r_1,s_1)(r_2,s_2))(m,t) = (r_1r_2m,s_1s_2t) = (r_1,s_1)(r_2m,s_2t)= ((r_1,s_1)(r_2,s_2))(m,t)\\
+\bullet &(1_R,1_S)(m,t) = (m,t)
+\end{align*}
+\end{enumerate}
+\item Given morphisms of $R$-modules, $\phi:M \to N$ and $\psi:N\to P$, it is an \emph{exact sequence} if the image of $\phi$ is equal to the kernel of $\psi$ in $N$.
+\begin{enumerate}[(i)]
+\item If $M=0_M$, then $\phi(0_M) = \{0_N\} = \ker(\psi)$, thus $\psi$ is injective.
+\item If $P=0_P$, then $\phi(M) = \ker(\psi) = N$, thus $\phi$ is surjective.
+\item For a prime ideal $\mathfrak{p}$ with $S = R - \mathfrak{p}$, and $R_S = R_\mathfrak{p}$, $M_S = M_\mathfrak{p}$. Let $p(r,s) \in \mathfrak{p}R_{\mathfrak{p}}$ with $p \in \mathfrak{p}$ and $(r,s) \in R_{\mathfrak{p}}$. It is an ideal since, $p(r,s)(r',s')=p(rr',ss') \in \mathfrak{p}R_{\mathfrak{p}}$. 
+
+
+$\mathfrak{p}$ does not contain any unit of $R$, else $\mathfrak{p} = R$ and $S = \varnothing$. Thus for $(p,s) \in \mathfrak{p}R_{\mathfrak{p}}$, it is not a unit in $R_{\mathfrak{p}}$ and thus it is a proper ideal. It is maximal since for any $(r,s) \in R_{\mathfrak{p}}-\mathfrak{p}R_{\mathfrak{p}}$, it is a unit of $R_{\mathfrak{p}}$ since $r \in S$ and its inverse is $(s,r)$. Thus $\mathfrak{p}R_{\mathfrak{p}}+((r,s)) = R_{\mathfrak{p}}$ for any $(r,s) \in R_{\mathfrak{p}}-\mathfrak{p}R_{\mathfrak{p}}$
+
+\item Given the natural maps $\phi_\mathfrak{p}:M_{\mathfrak{p}} \to N_{\mathfrak{p}}$ and $\psi_\mathfrak{p}:N_{\mathfrak{p}} \to P_{\mathfrak{p}}$ given by $(m,s) \mapsto (\phi(m),s)$ and $(n,s) \mapsto (\psi(n),s)$. Let $(m_1,s_1) \sim (m_2,s_2)$ thus $t(m_1s_2-m_2s_1)$ for some $t \in S$.
+\item
+\end{enumerate}
+\item
+\begin{enumerate}[(i)]
+\item
+\end{enumerate}
+\item
+\begin{enumerate}[(i)]
+\item
+\end{enumerate}
+
+
+\end{enumerate}
+
+\end{document}
