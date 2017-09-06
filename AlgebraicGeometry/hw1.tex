@@ -137,7 +137,7 @@ $R_{\mathfrak{p}}$
 
 
 
-\item $I(V(I(X))) = I(X)$
+\item Since $I(X) = I$ is a radical ideal, by Hilbert's Nullstellensatz, $I(V(I)) = \text{Rad}(I) = I$.
 \end{enumerate}
 \item
 \begin{enumerate}[(i)]
@@ -150,10 +150,10 @@ $R_{\mathfrak{p}}$
 
 Since we have a one to one correspondence between $\{\text{Ideals }J \supseteq I\}$ and $\{\text{Ideals }J' \subseteq R/I\}$, if ...
 
-\item Let $J'$ be a radical ideal, i.e. $J' = \text{Rad}(J'):=\{r +I\in R/I | r^n+I \in J' \text{ for some integer } n > 0\}$. Then $\pi^{-1}(J'):=\{j \in R | j+I \in J'\}$ ideal. Take $j^n \in \pi^{-1}(J')$ for some integer $n>0$ and $\pi(j^n) = j^n+ I \in J'$, which also implies $j +I \in J'$ since $J'$ is a radical ideal. Thus $j = \pi^{-1}(j+I) \in \pi^{-1}(J')$ and we are done.
+\item Let $J'$ be a radical ideal, i.e. $J' = \text{Rad}(J'):=\{r +I\in R/I | r^n+I \in J' \text{ for some integer } n > 0\}$. Then $J = \pi^{-1}(J'):=\{j \in R | j+I \in J'\}$ ideal. Take $j^n \in J$ for some integer $n>0$ and $\pi(j^n) = j^n+ I \in J'$, which also implies $j +I \in J'$ since $J'$ is a radical ideal. Thus $j = \pi^{-1}(j+I) \in J$, i.e. $J$ is a radical ideal. Conversely, let $J\subseteq R$ radical ideal. Then for $j^n+I \in J'$, $\pi^{-1}(j^n+I) = j^n \in J$ and so $j \in J$. Hence, $\pi(j) = j+I \in J'$ which proves $J'$ is a radical ideal.
 \\
-Let $J'$ be a prime ideal, then for $ab+I\in J'$, either $a+I$ or $b+I$ is in $J'$. Let $cd \in \pi^{-1}(J')$ ideal, then $\pi(cd) = cd +I \in J'$, thus $c +I$ or $d+I$ is in $J'$. Thus $\pi^{-1}(c +I) = c \in J$ or $\pi^{-1}(d +I) = d \in J$, thus $\pi^{-1}(J')$ is also a prime ideal.
-\\Let $J'$ be a maximal ideal thus for $J' \subseteq K' \subseteq R/I$, $K'=J'$ or $K'=R/I$.
+Let $J'$ be a prime ideal, then for $ab+I\in J'$, either $a+I$ or $b+I$ is in $J'$. Let $cd \in \pi^{-1}(J')$ ideal, then $\pi(cd) = cd +I \in J'$, thus $c +I$ or $d+I$ is in $J'$. Thus $\pi^{-1}(c +I) = c \in J$ or $\pi^{-1}(d +I) = d \in J$, thus $\pi^{-1}(J')$ is also a prime ideal. Conversely, let $J\subseteq R$ prime ideal. Take $ab+I\in J'$, then $ab = \pi^{-1}(ab+I) \in J$. Thus $a \in J$ or $b \in J$ and we have $a+I \in J'$ or $b+I \in J'$. Thus $J'$ is a prime ideal.
+\\The proof for maximal ideals follows from the result from (iii). Suppose $J'$ is maximal, thus for $J'\subseteq K' \subseteq R/I$, $K' = J'$ or $K' = R/I$. So if $J = \pi^{-1}(J')$ is not maximal, there exists a $K \neq J, R$ such that $J \subseteq K \subseteq R$, then $\pi(K)$ is an ideal in $R/I$ that will contradict the maximality of $J'$. The converse direction follows the same argument.
 \end{enumerate}
 
 
