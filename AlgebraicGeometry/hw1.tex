@@ -114,32 +114,46 @@ $\mathfrak{p}$ does not contain any unit of $R$, else $\mathfrak{p} = R$ and $S 
 \item Given the natural maps $\phi_\mathfrak{p}:M_{\mathfrak{p}} \to N_{\mathfrak{p}}$ and $\psi_\mathfrak{p}:N_{\mathfrak{p}} \to P_{\mathfrak{p}}$ given by $(m,s) \mapsto (\phi(m),s)$ and $(n,s) \mapsto (\psi(n),s)$. Let $(m_1,s_1) \sim (m_2,s_2)$ thus $t(m_1s_2-m_2s_1)=0_M$ for some $t \in S$. Then $\phi(t(m_1s_2-m_2s_1))=t(\phi(m_1)s_2-\phi(m_2)s_1)=\phi(0_M)=0_N$. Thus $(\phi(m_1),s_1)\sim(\phi(m_2),s_2)$. Similar argument for $\psi_{\mathfrak{p}}$. 
 \item Let $(\phi(m),s) \in \phi_{\mathfrak{p}}(M_{\mathfrak{p}})$, then $(\psi_{\mathfrak{p}}\circ\phi_{\mathfrak{p}}(m),s)$
 \end{enumerate}
+
+\item
+$R_{\mathfrak{p}}$
+
+
+\item
+
 \item
 \begin{enumerate}[(i)]
-\item
-\end{enumerate}
-\item
-\begin{enumerate}[(i)]
-\item
-\end{enumerate}
-\item
-\begin{enumerate}[(i)]
-\item Let $S$ be any subset of $k[\underline{x}]$.
+\item Let $S$ be any subset of $k[x_1,\ldots,x_n]$. For every $\mathbf{a} \in V(S)$, $F(\mathbf{a}) = 0$ for every $F \in S$. Thus $F \in I(V(S))$ for every $F \in S$ and $S \subseteq I(V(S))$.
 
 
 
-Let $S \subseteq k[\underline{x}]$, then $V(S)=\{p \in A^n|F(p)=0,~ \forall p \in S\}$. Thus $I(V(S))=\{F \in k[\underline{x}]|F(\underline{a})=0,~\forall \underline{a}\in V(S)\}$.
+\item $V(I(V(S))) = V(S)$
+\end{enumerate}
+\item
+\begin{enumerate}[(i)]
+\item Let $X \subseteq A^n(k)$, then $I(X):=\{F \in k[x_1,\ldots,x_n]|F(\mathbf{a})=0 \text{ for all } \mathbf{a} \in X\}$. For each $F^n \in I(X)$ where $n>0$ integer, suppose $F \notin I(X)$, i.e. there exists $\mathbf{a} \in X $ such that $F(\mathbf{a}) \neq 0$. But $(F(\mathbf{a}))^n = F^n(\mathbf{a})=0$ which implies $F(\mathbf{a}) \in k$ is a zero divisor, a contradiction since fields do not have zero divisors. Thus $F^n \in I(X)$ and shows $I(X) \supseteq \text{Rad}(I(X))$. The other containment is obvious since for $F \in I(X), F \in\text{Rad}(I(X))$ by choosing $n=1$.
 
-$I(V(S)) \supseteq S$
-\item
+\item Let $X \subseteq A^n(k)$, then for any $F \in I(X)$, $F(\mathbf{a})=0$ for all $\mathbf{a} \in X$, thus $\mathbf{a} \in V(I(X))$, thus $V(I(X)) \supseteq X$.
+
+
+
+\item $I(V(I(X))) = I(X)$
 \end{enumerate}
 \item
 \begin{enumerate}[(i)]
-\item
-\end{enumerate}
-\item
-\begin{enumerate}[(i)]
-\item
+\item Let $J$ be an ideal of $R$ and $\pi(J):=\{j + I | j \in J\}$. Thus for $r + I 
+\in R/I, j+I \in \pi(J)$, $(j+I)(r+I) = jr +I$ and $(r+I)(j+I) = rj +I$ are both in $\pi(J)$ since $rj, jr \in J$. It is easy to see that $\pi(J)$ is closed under addition, and $\pi(J)$ is an ideal of $R/I$.
+
+\item Let $J'$ be an ideal of $R/I$ and $\pi^{-1}(J'):=\{j \in R | j+I \in J'\}$. Let $j,j' \in \pi^{-1}(J')$, then $j-j' \in \pi^{-1}(J')$ as $(j-j') + I \in J'$. Also for $r \in R, j \in \pi^{-1}(J')$, $rj, jr \in \pi^{-1}(J')$ as $rj +I, jr +I \in J'$. Thus $\pi^{-1}(J')$ is an ideal in $R$. $J \supseteq I$ as $0_{R/I} \in J'$ and thus $\pi^{-1}(0_{R/I}) \supseteq I$.
+
+\item To show the bijection, we have to show that $\pi \circ \pi^{-1} = 1_{R/I}$ and $\pi^{-1} \circ \pi = 1_{R}$. For $J' \subseteq R/I$ ideal, $\pi^{-1}(J'):=\{j \in R | j+I \in J'\}$, thus $\pi(j) = j+I \in J'$ for $j \in \pi^{-1}(J')$ and so $\pi \circ \pi^{-1}(J') =  J'$. Now let $J \subseteq R$ ideal, $\pi(J):=\{j+I|j\in J\}$ and so $\pi^{-1}(j+I)=j \in J$ so $\pi^{-1}\circ \pi = 1_R$.
+
+Since we have a one to one correspondence between $\{\text{Ideals }J \supseteq I\}$ and $\{\text{Ideals }J' \subseteq R/I\}$, if ...
+
+\item Let $J'$ be a radical ideal, i.e. $J' = \text{Rad}(J'):=\{r +I\in R/I | r^n+I \in J' \text{ for some integer } n > 0\}$. Then $\pi^{-1}(J'):=\{j \in R | j+I \in J'\}$ ideal. Take $j^n \in \pi^{-1}(J')$ for some integer $n>0$ and $\pi(j^n) = j^n+ I \in J'$, which also implies $j +I \in J'$ since $J'$ is a radical ideal. Thus $j = \pi^{-1}(j+I) \in \pi^{-1}(J')$ and we are done.
+\\
+Let $J'$ be a prime ideal, then for $ab+I\in J'$, either $a+I$ or $b+I$ is in $J'$. Let $cd \in \pi^{-1}(J')$ ideal, then $\pi(cd) = cd +I \in J'$, thus $c +I$ or $d+I$ is in $J'$. Thus $\pi^{-1}(c +I) = c \in J$ or $\pi^{-1}(d +I) = d \in J$, thus $\pi^{-1}(J')$ is also a prime ideal.
+\\Let $J'$ be a maximal ideal thus for $J' \subseteq K' \subseteq R/I$, $K'=J'$ or $K'=R/I$.
 \end{enumerate}
 
 
