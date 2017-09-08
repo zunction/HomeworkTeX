@@ -96,7 +96,7 @@
 % \def \margin {8}
  \def \n {6}
  \foreach \s in {1,...,\n}
-  \node[unit] (\s) at ({360/\n * (\s - 1) - 180}:\radius) {$$};
+  \node[unit] (\s) at ({360/\n * (\s - 1) - 180}:\radius) {$\s$};
  \foreach \s in {1,...,\n}
   \foreach \t in {\s,...,\n}
    \draw (\t) -- (\s);
@@ -134,8 +134,42 @@
 %   \node[spike] (#1) at ({360/\n * (#1 - 1) - 180}:\radius) {};
 \end{tikzpicture}
 \end{figure}
-
 }
+
+\newcommand{\networkwcww}[6]{
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt];
+    \tikzstyle{unit}=[neuron, fill=red!50];
+    \tikzstyle{spike}=[neuron, fill=blue!50];
+ \def \radius {2cm}
+% \def \margin {8}
+ \def \n {6}
+% \foreach \s in {1,...,\n}
+  \node[unit] (1) at (- 180:\radius) {{\color{white}#1}};
+   \node[unit] (2) at (- 120:\radius) {{\color{white}#2}};
+     \node[unit] (3) at (- 60:\radius) {{\color{white}#3}};
+   \node[unit] (4) at (0:\radius) {{\color{white}#4}};
+  \node[unit] (5) at (60:\radius) {{\color{white}#5}};
+   \node[unit] (6) at (120:\radius) {{\color{white}#6}};
+ \draw (1) edge node[below left] {\small $-1$} (2);
+ \draw (2) edge node[below] {\small $-3$} (3);
+  \draw (3) edge node[below right] {\small $-1$} (4);
+   \draw (4) edge node[above right] {\small $3$} (5);
+    \draw (5) edge node[above] {\small $-2$} (6);
+         \draw (6) edge node[above left] {\small $3$} (1);
+     \draw (2) edge node[right] {\small $2$} (6);
+      \draw (3) edge node[left] {\small $3$} (5);
+%  \draw (i) edge node[right] {\small $W_{ij} = W_{ji}$} (j);
+
+ % \foreach \s in {1,...,\n}
+%   \draw[very thick] (#1) -- (\s);
+%   \node[spike] (#1) at ({360/\n * (#1 - 1) - 180}:\radius) {};
+\end{tikzpicture}
+\end{figure}
+}
+
 
 
 \title{Simulating RNNs on GPUs}
@@ -229,7 +263,19 @@
 \end{figure}
 \end{frame}
 
+\begin{frame}{}
+\section{Hopfield Networks}
+\end{frame}
 
+
+
+\begin{frame}{Hopfield Networks}
+\networkwc{1}{-1}{1}{1}{-1}{1}
+\end{frame}
+
+\begin{frame}{Hopfield Networks}
+\networkwc{1}{0}{1}{1}{0}{1}
+\end{frame}
 
 \begin{frame}{Hopfield Networks}
 \begin{figure}[h]
@@ -249,26 +295,27 @@
    \draw (\t) -- (\s);
    \node[unit](i) at ({60 }:\radius) {{\color{white}$b_i$}};
    \node[unit](j) at ({360}:\radius) {{\color{white}$b_j$}};
-   \draw (i) edge node[right] {\small $W_{ij}$} (j);
+   \draw (i) edge node[right] {\small $W_{ij} = W_{ji}$} (j);
 
    \end{tikzpicture}
 \end{figure}
 \begin{align*}
 \text{Energy configuration, }E &= -\sum_{i<j}W_{ij}s_is_j - \sum_ib_i s_i \\
-s_i:&=\begin{cases}
-~1 & \sum_jW_{ij}s_j +b_i>0\\
+\text{Energy gap, } \Delta E_i &= E(s_i = 0) - E(s_i = 1) = \sum_jW_{ij}s_j +b_i\\
+\text{Update rule, }s_i:&=\begin{cases}
+~1 & \sum_jW_{ij}s_j +b_i \geq 0\\
 -1 & \text{otherwise}
 \end{cases}
 \end{align*}
 \end{frame}
 
-\note{
+\note{\scriptsize
 \begin{itemize}
 \item composed of primitive computing elements called units
-\item connected to each other by bidirectional links
 \item units has two states, on or off, represented by $\{1,-1\}$ or $\{1,0\}$
-\item adopts these states as a probabilistic function of the states of its neighbouring units and weights of its links to them
-%\item weights can take on any real value
+\item connected to each other by bi-directional links
+\item adopts these states as a function of the states of its neighbouring units and weights of its links to them, it is a probabilistic function for a Boltzmann machine.
+\item weights can take on any real value
 \item a unit being on or off is taken to mean that the system currently accepts or rejects some elemental hypothesis of the domain
 \item weight on a link represents a weak pairwise constrain between two hypothesis
 \item positive (negative) weights indicate that two hypothesis support (contradict) one another with other things being equal
@@ -276,8 +323,21 @@ s_i:&=\begin{cases}
 \end{itemize}
 }
 
-\note{
 
+\begin{frame}{Hopfield Networks}
+\networkwcww{1}{0}{0}{0}{0}{1}
+\end{frame}
+
+\begin{frame}{Hopfield Networks}
+\networkwcww{1}{1}{0}{0}{0}{1}
+\end{frame}
+
+\begin{frame}{Hopfield Networks}
+\networkwcww{0}{0}{1}{1}{1}{0}
+\end{frame}
+
+\note{
+\scriptsize
 \begin{itemize}
 \item Updating of Hopfield networks:\\
 Asynchronous: one unit is updated at a time, can be done randomly or in a pre-defined order. Synchronous: all units are updated at the same time.
@@ -287,42 +347,50 @@ Asynchronous: one unit is updated at a time, can be done randomly or in a pre-de
 }
 
 
-\begin{frame}{Hopfield Networks}
-\networkwc{1}{0}{1}{1}{0}{1}
+\begin{frame}{Boltzmann Machines}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt];
+    \tikzstyle{unit}=[neuron, fill=red!50,thick];
+ \def \radius {2cm}
+% \def \margin {8}
+ \def \n {6}
+ \foreach \s in {1,...,\n}{
+  \node[unit] (\s) at ({360/\n * (\s - 1) - 180}:\radius) {};
+%  \node (S-\s) at ($(\s) + {360/\n * (\s - 1) - 180}:5mm$) {$s_i$};
+}  
+ \foreach \s in {1,...,\n}
+  \foreach \t in {\s,...,\n}
+   \draw (\t) -- (\s);
+   \node[unit](i) at ({60 }:\radius) {{\color{white}$b_i$}};
+   \node[unit](j) at ({360}:\radius) {{\color{white}$b_j$}};
+   \draw (i) edge node[right] {\small $W_{ij} = W_{ji}$} (j);
+
+   \end{tikzpicture}
+\end{figure}
+\begin{align*}
+E &= -\sum_{i<j}W_{ij}s_is_j - \sum_ib_i s_i \\
+\Delta E_i &= E(s_i = 0) - E(s_i = 1) = \sum_jW_{ij}s_j +b_i\\
+&\mathbb{P}(s_i=1) = \frac{1}{1+e^{-\Delta E_i/T}}
+\end{align*}
 \end{frame}
 
-
-
-\begin{frame}{Hopfield Networks}
-\network{1}
-\end{frame}
-
-\begin{frame}{Hopfield Networks}
-\network{3}
-\end{frame}
+\note{
+\scriptsize
+\begin{itemize}
+\item replace the binary threshold units by binary stochastic units that make biased random decisions
+\item temperature variable controls the amount of noise 
+\end{itemize}
+}
 
 
 
 \begin{frame}{Boltzmann Machines}
-\begin{tikzpicture}
- \def \radius {2cm}
- \def \margin {8}
- \def \n {6}
- \foreach \s in {1,...,\n}
-  \node[draw, circle] (\s) at ({360/\n * (\s - 1)}:\radius) {};
- \foreach \s in {1,...,\n}
-  \foreach \t in {\s,...,\n}
-   \draw (\t) -- (\s);
-\end{tikzpicture}
+\begin{align*}
+\mathbb{P}(s_i=1) = \frac{1}{1+e^{-\Delta E_i/T}}
+\end{align*}
 \end{frame}
-
-
-
-
-
-
-
-
 
 
 
