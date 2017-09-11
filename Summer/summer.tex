@@ -351,7 +351,7 @@
 \text{Energy configuration, }E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i x_i \\
 \text{Energy gap, } \Delta E_i &= E(x_i = 0) - E(x_i = 1) = \sum_jW_{ij}x_j +b_i\\
 \text{Update rule, }x_i:&=\begin{cases}
-~1 & \sum_jW_{ij}x_j +b_i \geq 0\\
++1 & \sum_jW_{ij}x_j +b_i \geq 0\\
 -1 & \text{otherwise}
 \end{cases}
 \end{align*}
@@ -387,8 +387,8 @@
 \note{
 \scriptsize
 \begin{itemize}
-\item Updating of Hopfield networks:\\
-Asynchronous: one unit is updated at a time, can be done randomly or in a pre-defined order. Synchronous: all units are updated at the same time.
+\item Updating of Hopfield networks is done 	sequentially usually in a randomized order. Parallel updating might increase the energy instead.
+%Asynchronous: one unit is updated at a time, can be done randomly or in a pre-defined order. Synchronous: all units are updated at the same time.
 \item Hopfield networks always make decisions to reduce the energy and makes it impossible to escape from local minima.
 \item random noise can help us escape from poor minima, by starting with lots of noise so its easy to cross energy barriers and gradually decrease the noise so the system ends in a deep minimum. This is called simulated annealing.
 \end{itemize}
@@ -418,26 +418,52 @@ Asynchronous: one unit is updated at a time, can be done randomly or in a pre-de
    \end{tikzpicture}
 \end{figure}
 \begin{align*}
-E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i s_i \\
+E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i x_i \\
 \Delta E_i &= E(x_i = 0) - E(x_i = 1) = \sum_jW_{ij}x_j +b_i\\
-&\mathbb{P}(x_i=1) = \frac{1}{1+e^{-\Delta E_i/T}}
+&\mathbb{P}(x_i=1) = \frac{1}{1+e^{-\Delta E_i/\tau}}
 \end{align*}
 \end{frame}
 
 \note{
 \scriptsize
 \begin{itemize}
+
 \item replace the binary threshold units by binary stochastic units that make biased random decisions
 \item temperature variable controls the amount of noise 
+\item when $\tau \to 0$ we get back the Hopfield network
+\item for $\tau_1 > \tau_2$, we are less likely to go to a lower energy state compared to in $\tau_1$ compared to $\tau_2$, i.e. more likely to go to a higher energy state when the temperature is higher. This allows us to escape from local minimum and arrive at the global minimum.
 \end{itemize}
 }
 
 
 
 \begin{frame}{Boltzmann Machines}
-\begin{align*}
-\mathbb{P}(x_i=1) = \frac{1}{1+e^{-\Delta E_i/T}}
-\end{align*}
+%\begin{align*}
+%\mathbb{P}(x_i=1) = \frac{1}{1+e^{-\Delta E_i/\tau}}
+%\end{align*}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+        domain=-80:80,
+        xmin=-40, xmax=40,
+        ymin=-0.1, ymax=1.1,
+        samples=400,
+        axis y line=center,
+        axis x line=middle,
+        >=stealth,
+        x label style={at={(axis description cs:0.5,0)},anchor=north},
+    y label style={at={(axis description cs:0,.5)},rotate=90,anchor=south},
+        xlabel = $\Delta E_i$,
+        ylabel = {$\mathbb{P}(x_i=1)$}
+    ]
+        \addplot+[mark=none,thick,dashed,color=blue] {1/(1+e^(-x/5))};
+        \addplot+[mark=none,thick,dotted] {1/(1+e^(-x/15))};
+        \addplot+[mark=none,thick] {1/(1+e^(-x/0.01))};
+    \end{axis}
+\end{tikzpicture}
+\caption{$\tau=0$ (solid), $\tau=5$ (dashed), $\tau=15$ (dotted)}
+\end{figure}
 \end{frame}
 
 
