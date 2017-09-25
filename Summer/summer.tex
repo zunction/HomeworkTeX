@@ -927,7 +927,7 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
     }
 
     %\def\block{2}
-q    %\foreach \k in {0,...,3}
+   %\foreach \k in {0,...,3}
     %  \drawthread{thread}{\block}{\k}{43};
     %\foreach \k in {4,...,\lastblockbody}
     %  \drawthread{thread}{\block}{\k}{42};
@@ -961,48 +961,48 @@ q    %\foreach \k in {0,...,3}
     \node[anchor=base] (interactionanchor) at (\currentx + 0.5, \currenty + 1.0) {};
     \node[anchor=base] (tileanchor)        at (\currentx + 2.5, \currenty + 1.1) {};
     \node[anchor=base] (evalanchor)        at (\currentx - 8.5, \currenty + 1.2) {};
-
-    \node[imglabel] (interactionlabel) at (49.5, \currenty +  4.5) {\verb!particle_interaction!};
-    \node[imglabel] (tilelabel)        at (49.5, \currenty +  7.5) {\verb!update_tile!};
-    \node[imglabel] (evallabel)        at (49.5, \currenty + 10.5) {\verb!eval_derivatives!};
-
-    \draw[kernelarrow, orange]        (interactionanchor.base) to (interactionlabel);
-    \draw[kernelarrow, blue!50!black] (tileanchor.base)        to (tilelabel);
-    \draw[kernelarrow, brown]         (evalanchor.base)        to (evallabel);
-
-    \drawthread{thread}{\block}{2}{\to};
-
-    \def\examplex{21}
-    \def\exampley{5}
-    \draw[examplecell] (\examplex, \exampley) rectangle ++(1, 1);
-    \node[anchor=base] (cellanchor) at (\examplex + .5, \exampley + .5) {};
-
-    \draw (35, -4) node[imglabel, anchor=west] (interaction) {
-      \(
-       \left\{
-       \begin{aligned}
-         {\vec U}_{pq} &= α_q\,\K_ε(\x_p - \x_q) \\
-         A_{pq}        &= [α_q - α_p]\,η_ε(\x_p - \x_q) \\
-       \end{aligned}
-       \right.
-      \)
-    };
-    \draw[->, out=-45, in=180] (cellanchor.base) to (interaction);
-    \node[imglabel, anchor=east]  (plabel) at (\examplex - 7,  \exampley + .5) {\((x_p, y_p, α_p)\)};
-    \node[imglabel, anchor=south] (qlabel) at (\examplex + .5, -1) {\((x_q, y_q, α_q)\)};
-    \draw[dotted, very thick] (plabel) -- (cellanchor.base);
-    \draw[dotted, very thick] (qlabel) -- (cellanchor.base);
-
-    \foreach \block in {1,2,4} {
-      \pgfmathsetmacro{\ybot}{(1 + \nrblockbodies) * \block}
-      \foreach \thread in {0,...,\lastblockbody} {
-        \node[font=\tiny, anchor=east] at (0, .5 + \ybot + \thread) {\thread};
-      }
-    }
-
-    \def\nridlethreads{3}
-    \fill[pattern=north east lines] (0, 50) rectangle ++(\nrbodies, 3);
-    \node[imglabel, anchor=center] (idlelabel) at (\nrbodies / 2, 51.5) {idle threads};
+%
+%    \node[imglabel] (interactionlabel) at (49.5, \currenty +  4.5) {\verb!particle_interaction!};
+%    \node[imglabel] (tilelabel)        at (49.5, \currenty +  7.5) {\verb!update_tile!};
+%    \node[imglabel] (evallabel)        at (49.5, \currenty + 10.5) {\verb!eval_derivatives!};
+%
+%    \draw[kernelarrow, orange]        (interactionanchor.base) to (interactionlabel);
+%    \draw[kernelarrow, blue!50!black] (tileanchor.base)        to (tilelabel);
+%    \draw[kernelarrow, brown]         (evalanchor.base)        to (evallabel);
+%
+%    \drawthread{thread}{\block}{2}{\to};
+%
+%    \def\examplex{21}
+%    \def\exampley{5}
+%    \draw[examplecell] (\examplex, \exampley) rectangle ++(1, 1);
+%    \node[anchor=base] (cellanchor) at (\examplex + .5, \exampley + .5) {};
+%
+%    \draw (35, -4) node[imglabel, anchor=west] (interaction) {
+%      \(
+%       \left\{
+%       \begin{aligned}
+%         {\vec U}_{pq} &= α_q\,\K_ε(\x_p - \x_q) \\
+%         A_{pq}        &= [α_q - α_p]\,η_ε(\x_p - \x_q) \\
+%       \end{aligned}
+%       \right.
+%      \)
+%    };
+%    \draw[->, out=-45, in=180] (cellanchor.base) to (interaction);
+%    \node[imglabel, anchor=east]  (plabel) at (\examplex - 7,  \exampley + .5) {\((x_p, y_p, α_p)\)};
+%    \node[imglabel, anchor=south] (qlabel) at (\examplex + .5, -1) {\((x_q, y_q, α_q)\)};
+%    \draw[dotted, very thick] (plabel) -- (cellanchor.base);
+%    \draw[dotted, very thick] (qlabel) -- (cellanchor.base);
+%
+%    \foreach \block in {1,2,4} {
+%      \pgfmathsetmacro{\ybot}{(1 + \nrblockbodies) * \block}
+%      \foreach \thread in {0,...,\lastblockbody} {
+%        \node[font=\tiny, anchor=east] at (0, .5 + \ybot + \thread) {\thread};
+%      }
+%    }
+%
+%    \def\nridlethreads{3}
+%    \fill[pattern=north east lines] (0, 50) rectangle ++(\nrbodies, 3);
+%    \node[imglabel, anchor=center] (idlelabel) at (\nrbodies / 2, 51.5) {idle threads};
 
   \end{tikzpicture}
 \end{figure}
