@@ -1,4 +1,4 @@
-\documentclass[a4paper,10pt]{article}
+\documentclass[a4paper,12pt]{article}
 \setlength{\parindent}{0cm}
 \usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
 \usepackage{graphicx,caption}
@@ -82,14 +82,30 @@
 \begin{enumerate}
 
 \item
+\begin{enumerate}
+\item $\mathbb{R}$ is second-countable by considering the countable basis 
+\begin{align*}
+\mathcal{B}:=\{(r-\epsilon,r+\epsilon)| r \in \mathbb{Q}, \text{ for some arbitrary }\epsilon >0\}
+\end{align*}
+We now claim that $\mathcal{B}^n = \{U_1\times \ldots\times U_n)|\text{ each }U_i\in \mathcal{B}\text{ for }i=1,\ldots, n\}$ is a countable basis for $\mathbb{R}^n$. It is clear that $\mathcal{B}^n$ is countable as the Cartesian product of countable sets is still countable. To show $\mathcal{B}^n$ is a basis for $\mathbb{R}^n$:
+\begin{enumerate}[(1)]
+\item Pick $x = (x_1\ldots, x_n) \in \mathbb{R}^n$ and consider the projection map $\pi_i: \mathbb{R}^n \to \mathbb{R}$, $(x_1\ldots, x_n) \mapsto x_i$. Thus for each $\pi_i(x) = x_i$ we can find $B_i \subseteq \mathcal{B}$ such that $x_i \in B_i$. Thus $B_1 \times \ldots \times B_n$ is the basis element in $\mathcal{B}^n$ containing $x$.
+\item Let $x$ belong to the intersection of two basis elements $U = B_1 \times \ldots \times B_n, U' = B'_1 \times \ldots \times B'_n$. Using the projection map, $\pi_i(U) = B_i, \pi_i(U') = B'_i$ and thus there is a basis element $A_i \subseteq B_i \cap B'_i$ for some $A_i \in \mathcal{B}$. Thus $A = A_i \times \ldots \times A_n$ is the basis element in $\mathcal{B}^n$ such that $A \subseteq U \cap U'$.
+\end{enumerate}
+Thus we have shown that $\mathcal{B}^n$ is a countable basis for $\mathbb{R}^n$.
+
+
+
+\item
+\end{enumerate}
+
+\item Let $f : (X, \tau_X) \to (Y, \tau_Y)$ be a continuous function. Let $(X,\tau'_X)$ be a finer topology than $(X, \tau_X)$ then $\tau'_X \supseteq \tau_X$. Thus for any $U \in \tau_Y$, $f^{-1}(U) \in \tau_X \subseteq \tau'_X$. Thus $f^{-1}(U) \in \tau'_X$ and $f : (X, \tau'_X) \to (Y, \tau_Y)$ remains continuous. Let $(Y,\tau'_Y)$ is a topology coarser than $(Y, \tau_Y)$ and so $\tau_Y \supseteq\tau'_Y$. Hence for $U \in \tau'_Y \subseteq \tau_Y$, we have $f^{-1}(U)\in \tau_X$. Thus  $f : (X, \tau_X) \to (Y, \tau'_Y)$ remains continuous.
 
 \item
 
 \item
 
 \item
-
-\itemqs
 \end{enumerate}
 
 
