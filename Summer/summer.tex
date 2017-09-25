@@ -17,10 +17,9 @@
 \usepackage{animate}
 \usepackage[compatibility=false]{caption}
 
-\usepackage{subcaption}
-\usepackage{graphicx}
+
+\usepackage{graphicx,subfigure}
 \usetikzlibrary{spy,calc,patterns,arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri,mindmap,trees,intersections}
-\usepackage{graphicx}
 \usepackage{keystroke}
 \usepackage{color}
 \usepackage{multicol}
@@ -89,7 +88,7 @@
 \newcommand{\network}[1]{
 \begin{figure}[h]
 \centering
-\begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep]
+\begin{tikzpicture}[scale = 0.75,-,draw=black!50, node distance=\layersep]
     \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt];
     \tikzstyle{unit}=[neuron, fill=red!50];
     \tikzstyle{spike}=[neuron, fill=blue!50];
@@ -222,12 +221,11 @@
 
 
 \title{Simulating RNNs on GPUs}
-\subtitle{Working Title}
+\subtitle{Summer Project}
 %\institute{SUTD}
 \author{Zhangsheng Lai}
 %\date{\today}
 
-\newcommand{\sol}{\textbf{Solution\\}}
 \pgfmathdeclarefunction{gauss}{2}{%
   \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
 }
@@ -375,14 +373,28 @@
 
 \begin{frame}{Hopfield Networks}
 \networkwcww{1}{0}{0}{0}{0}{1}
+\begin{align*}
+(1,0,0,0,0,1)
+\end{align*}
 \end{frame}
 
 \begin{frame}{Hopfield Networks}
 \networkwcww{1}{1}{0}{0}{0}{1}
+\begin{align*}
+(1,0,0,0,0,1)\\
+(1,1,0,0,0,1)
+\end{align*}
+
 \end{frame}
 
 \begin{frame}{Hopfield Networks}
 \networkwcww{0}{0}{1}{1}{1}{0}
+\begin{align*}
+(1,0,0,0,0,1)\\
+(1,1,0,0,0,1)\\
+(0,0,1,1,1,0)
+\end{align*}
+
 \end{frame}
 
 \note{
@@ -469,10 +481,10 @@ E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i x_i \\
 
 
 \begin{frame}{}
-\section{McCulloh-Pitts Machines}
+\section{McCulloch-Pitts Machines}
 \end{frame}
 
-\begin{frame}{McCulloh-Pitts Machines}
+\begin{frame}{McCulloch-Pitts Machines}
 \mpm{1}{0}{1}{0}{0}{1}
 \note{\scriptsize
 \begin{itemize}
@@ -483,7 +495,7 @@ E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i x_i \\
 \end{frame}
 
 
-\begin{frame}{McCulloh-Pitts Machines}
+\begin{frame}{McCulloch-Pitts Machines}
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep,>=stealth]
@@ -526,15 +538,17 @@ E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i x_i \\
 \note{
 \scriptsize
 \begin{itemize}
+\item digraph, $G=(V,E)$, weights $W: V \to \mathbb{R}$, biases $b:E \to \mathbb{R}$, binary states $\mathbb{B}=\{0,1\}$ with an initial distribution $\mathbb{B}^{|V|} \to \delta$ and a temperature $\tau$
 \item allow transitions where $y$ and $x$ differ by only one bit
 \item here the $W$ matrix need not be symmetrical with zero diagonals like what we had in the Hopfield network and Boltzmann machine models
 \item for each $y \neq x$, start a Poisson process with rate $\Gamma_{yx}$
+\item as such, we can talk about the interarrival timings of the Poisson process and our simulation of the McCulloch-Pitts machine not only gives us a binary tuple, but also the time taken from it to transit from its earlier state
  \end{itemize}
 }
 
 \end{frame}
 
-\begin{frame}{McCulloh-Pitts Machines}
+\begin{frame}{McCulloch-Pitts Machines}
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep,>=stealth]
@@ -582,11 +596,15 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 \scriptsize
 \begin{itemize}
 \item when doing the updates we can just update the linear responses $z_j$ and apply softmax on the $\lambda_j$'s to get the probability distribution of the transitions.
+\item it seems counter-intuitive to think of 0 as armed and 1 as refractory, but it is in fact the most natural thinking
+\item a transition from $0 \to 1$ is a act of firing and a transition from $1 \to 0$ is the act of recovery
+\item when a neuron transit from $0 \to 1$, it changes the value of the linear response; for a transiting neuron $i$, if $W_{ji}>0$, then such a transition increases the linear response of neuron $j$ and if $W_{ji}<0$ it decreases the linear response of neuron $j$
+\item the sign $s$ depends on the state of the neuron, it preserves the sign of the linear response if it is armed and flips the sign of the linear response if it is refractory
  \end{itemize}
 }
 
 
-\begin{frame}{McCulloh-Pitts Machines}
+\begin{frame}{McCulloch-Pitts Machines}
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep,>=stealth]
@@ -625,16 +643,23 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 \begin{align*}
 \text{Transition probability from $x$ to $y$, }p_{yx} = \frac{\lambda_j}{\sum_{j'}\lambda_{j'}}
 \end{align*}
+\note{
+\scriptsize
+\begin{itemize}
+\item when doing the updates we can just update the linear responses $z_j$ and apply softmax on the $\lambda_j$'s to get the probability distribution of the transitions.
+ \end{itemize}
+}
+
 \end{frame}
 
 %spiking starts here
 
 
-\begin{frame}{McCulloh-Pitts Machines}
+\begin{frame}{McCulloch-Pitts Machines}
 \mpm{1}{0}{0}{0}{1}{1}
 \end{frame}
 
-\begin{frame}{McCulloh-Pitts Machines}
+\begin{frame}{McCulloch-Pitts Machines}
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep,>=stealth]
@@ -678,6 +703,10 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 %   \draw[color=None] (i) edge node[left] {\small $W_{ij}$} (j);
 \end{tikzpicture}
 \end{figure}
+\begin{align*}
+\left(T_0,(1,0,0,0,1,1)\right)
+\end{align*}
+
 %\begin{align*}
 %\text{Transition Energy, }E(y,x|\theta) &= -\sum_{ji \in E}W_{ji}y_jx_i- \sum_{j \in V}b_j s_j- \sum_{i \in V}b_i s_i\\
 %\Gamma_{yx} &=\exp\left(-\frac{1}{2\tau}E(y,x|\theta)+\frac{1}{2\tau}E(x,x|\theta)\right)\\
@@ -686,7 +715,7 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 \end{frame}
 
 
-\begin{frame}{McCulloh-Pitts Machines}
+\begin{frame}{McCulloch-Pitts Machines}
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep,>=stealth]
@@ -702,34 +731,39 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 %  \node (S-\s) at ($(\s) + {360/\n * (\s - 1) - 180}:5mm$) {$s_i$};
 }  
 
-   \DoubleLine{1}{2}{<-,draw=black!50,very thick}{}{->,draw=black!50}{};
+   \DoubleLine{1}{2}{<-,draw=black!50}{}{->,draw=black!50}{};
    \DoubleLine{1}{3}{<-,draw=black!50}{}{->,draw=black!50}{};
    \DoubleLine{1}{4}{<-,draw=black!50}{}{->,draw=black!50}{};
    \DoubleLine{1}{5}{<-,draw=black!50}{}{->,draw=black!50}{};
-   \DoubleLine{1}{6}{<-,draw=black!50}{}{->,draw=black!50}{};
-    \DoubleLine{2}{3}{<-,draw=black!50}{}{->,draw=black!50,very thick}{};
-   \DoubleLine{2}{4}{<-,draw=black!50}{}{->,draw=black!50,very thick}{};
-   \DoubleLine{2}{5}{<-,draw=black!50}{}{->,draw=black!50,very thick}{};
-   \DoubleLine{2}{6}{<-,draw=black!50}{}{->,draw=black!50,very thick}{};
+   \DoubleLine{1}{6}{<-,draw=black!50,very thick}{}{->,draw=black!50}{};
+    \DoubleLine{2}{3}{<-,draw=black!50}{}{->,draw=black!50}{};
+   \DoubleLine{2}{4}{<-,draw=black!50}{}{->,draw=black!50}{};
+   \DoubleLine{2}{5}{<-,draw=black!50}{}{->,draw=black!50}{};
+   \DoubleLine{2}{6}{<-,draw=black!50,very thick}{}{->,draw=black!50}{};
    \DoubleLine{3}{4}{<-,draw=black!50}{}{->,draw=black!50}{};
    \DoubleLine{3}{5}{<-,draw=black!50}{}{->,draw=black!50}{};
-   \DoubleLine{3}{6}{<-,draw=black!50}{}{->,draw=black!50}{};
+   \DoubleLine{3}{6}{<-,draw=black!50,very thick}{}{->,draw=black!50}{};
     \DoubleLine{4}{5}{<-,draw=black!50}{}{->,draw=black!50}{};
-   \DoubleLine{4}{6}{<-,draw=black!50}{}{->,draw=black!50}{};
-   \DoubleLine{5}{6}{<-,draw=black!50}{}{->,draw=black!50}{};
+   \DoubleLine{4}{6}{<-,draw=black!50,very thick}{}{->,draw=black!50}{};
+   \DoubleLine{5}{6}{<-,draw=black!50,very thick}{}{->,draw=black!50}{};
 
    \node[unit](i) at ({60 }:\radius) {{\color{white}$b_i$}};
-   \node[spike](j) at ({360}:\radius) {{\color{white}$b_j$}};
+   \node[spike](j) at ({120}:\radius) {{\color{white}$b_j$}};
    \node[unit] (1) at (- 180:\radius) {{\color{white}1}};
-   \node[spike] (2) at (- 120:\radius) {{\color{white}0}};
+   \node[unit] (2) at (- 120:\radius) {{\color{white}0}};
      \node[unit] (3) at (- 60:\radius) {{\color{white}0}};
    \node[unit] (4) at (0:\radius) {{\color{white}1}};
   \node[unit] (5) at (60:\radius) {{\color{white}1}};
-   \node[unit] (6) at (120:\radius) {{\color{white}1}};
+   \node[spike] (6) at (120:\radius) {{\color{white}1}};
 %   \draw[color=None] (i) edge node[right] {\small $W_{ij}$} (j);
 %   \draw[color=None] (i) edge node[left] {\small $W_{ij}$} (j);
 \end{tikzpicture}
 \end{figure}
+\begin{align*}
+\left(T_0,(1,0,0,0,1,1)\right)\\
+\left(T_1,(1,0,0,1,1,1)\right)
+\end{align*}
+
 %\begin{align*}
 %\text{Transition Energy, }E(y,x|\theta) &= -\sum_{ji \in E}W_{ji}y_jx_i- \sum_{j \in V}b_j s_j- \sum_{i \in V}b_i s_i\\
 %\Gamma_{yx} &=\exp\left(-\frac{1}{2\tau}E(y,x|\theta)+\frac{1}{2\tau}E(x,x|\theta)\right)\\
@@ -737,7 +771,7 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 %where $G=(V,E)$ digraph, $\theta = (W, b, \tau)$
 \end{frame}
 
-\begin{frame}{McCulloh-Pitts Machines}
+\begin{frame}{McCulloch-Pitts Machines}
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep,>=stealth]
@@ -770,15 +804,21 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
    \DoubleLine{5}{6}{<-,draw=black!50}{}{->,draw=black!50}{};
 
    \node[spike] (1) at (- 180:\radius) {{\color{white}1}};
-   \node[unit] (2) at (- 120:\radius) {{\color{white}1}};
+   \node[unit] (2) at (- 120:\radius) {{\color{white}0}};
      \node[unit] (3) at (- 60:\radius) {{\color{white}0}};
    \node[unit] (4) at (0:\radius) {{\color{white}1}};
   \node[unit] (5) at (60:\radius) {{\color{white}1}};
-   \node[unit] (6) at (120:\radius) {{\color{white}1}};
+   \node[unit] (6) at (120:\radius) {{\color{white}0}};
 %   \draw[color=None] (i) edge node[right] {\small $W_{ij}$} (j);
 %   \draw[color=None] (i) edge node[left] {\small $W_{ij}$} (j);
 \end{tikzpicture}
 \end{figure}
+\begin{align*}
+\left(T_0,(1,0,0,0,1,1)\right)\\
+\left(T_1,(1,0,0,1,1,1)\right)\\
+\left(T_2,(1,0,0,1,1,0)\right)
+\end{align*}
+
 %\begin{align*}
 %\text{Transition Energy, }E(y,x|\theta) &= -\sum_{ji \in E}W_{ji}y_jx_i- \sum_{j \in V}b_j s_j- \sum_{i \in V}b_i s_i\\
 %\Gamma_{yx} &=\exp\left(-\frac{1}{2\tau}E(y,x|\theta)+\frac{1}{2\tau}E(x,x|\theta)\right)\\
@@ -788,38 +828,72 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 
 %spiking ends here
 
-\note{
-\scriptsize
-\begin{itemize}
-\item digraph, $G=(V,E)$, weights $W: V \to \mathbb{R}$, biases $b:E \to \mathbb{R}$, binary states $\mathbb{B}=\{0,1\}$ with an initial distribution $\mathbb{B}^{|V|} \to \delta$ and a temperature $\tau$
-\item allow transitions where $y$ and $x$ differ by only one bit
-\item for each $y \neq x$, start a Poisson process with rate $\Gamma_{yx}$
-\item if the Poisson process for state $y'$ is the first to fire, or the interarrival timing from $x$ to $y'$ is the shortest, 
- \end{itemize}
-}
 
-\begin{frame}{McCulloh-Pitts Machines}
-
-%\begin{align*}
-%E(y,x|\theta) &= -\sum_{ji \in E}W_{ji}y_jx_i- \sum_{j \in V}b_j s_j- \sum_{i \in V}b_i s_i\\
-%\Gamma_{yx} &=\exp\left(-\frac{1}{2\tau}E(y,x|\theta)+\frac{1}{2\tau}E(x,x|\theta)\right):=\lambda_j = \exp\left(\frac{1}{2\tau}s_jz_j\right)\\
-%\end{align*}
-%$s_j = 1 - 2x_j$ and $z_j = \sum_{ji \in E}W_{ji}x_i + b_j$
-\end{frame}
-
-\begin{frame}{McCulloh-Pitts Machines}
-
-\begin{align*}
-E(x^{(n+1)},x^{(n)}|\theta) &= -\sum_{ji \in E}W_{ji}x^{(n+1)}_jx^{(n)}_i- \sum_{j \in V}b_j s_j- \sum_{i \in V}b_i s_i\\
-\Gamma_{x^{(n+1)}x^{(n)}} &=\exp\left(-\frac{1}{2\tau}E(x^{(n+1)},x^{(n)}|\theta)+\frac{1}{2\tau}E(x^{(n)},x^{(n)}|\theta)\right)\\
-\end{align*}
-\end{frame}
-
-\begin{frame}{McCulloh-Pitts Machines}
+\begin{frame}{McCulloch-Pitts Machines}
 
 \end{frame}
 
+\begin{frame}{McCulloch-Pitts Machines}
 
+\end{frame}
+
+\begin{frame}{}
+\section{Simulating on GPUs}
+\end{frame}
+
+\begin{frame}{Simulating on GPUs}
+\begin{figure}[h]
+  \centering
+  \tikzstyle{trans-name}=[anchor=north west]
+  \tikzstyle{alu}=[fill=green!80!black!30]
+  \tikzstyle{data}=[fill=orange!50]
+  \tikzstyle{ctrl}=[fill	=red!70!black!10]
+  \subfigure[CPU] {
+    \begin{tikzpicture}[scale=0.8]
+      \draw[ctrl] (0, 6)   rectangle +(3, -2);
+      \draw[data] (0, 4)   rectangle +(6, -2);
+      \draw[data] (0, 1.5) rectangle +(6, -1);
+      \node[trans-name] at (0, 6) {Control};
+      \node[trans-name] at (0, 4) {Cache};
+      \node[trans-name] at (0, 1.5) {DRAM};
+      \foreach \x in {3, 4.5}
+        \foreach \y in {5, 6} {
+          \draw[alu] (\x, \y) rectangle +(1.5, -1);
+          \node[trans-name] at (\x, \y) {ALU};
+        }
+    \end{tikzpicture}
+  }
+  \subfigure[GPU] {
+    \begin{tikzpicture}[scale=0.8]
+      \draw[data] (0, 1.5) rectangle +(6, -1);
+      \node[trans-name] at (0, 1.5) {DRAM};
+      \foreach \x in {0.5, 1, ..., 5.5}
+        \foreach \y in {2.5, 3, ..., 6}
+          \draw[alu] (\x, \y) rectangle +(0.5, -0.46);
+      \foreach \y in {2.5, 3, ..., 6}
+        \draw[ctrl] (0, \y) rectangle +(0.5, -0.23);
+      \foreach \y in {2.27, 2.77, ..., 6}
+        \draw[data] (0, \y) rectangle +(0.5, -0.23);
+    \end{tikzpicture}
+  }
+  \caption[Comparison between CPU and GPU layout]{
+    Comparison between the amount of transistors
+    devoted to different functions inside a CPU and a GPU.
+    %Arithmetic logic units (ALUs) perform data processing.
+%    (This picture is copied from~\cite[\S1]{cudaprog2}).
+  }
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{Simulating on GPUs}
+
+\end{frame}
+
+
+\begin{frame}{Simulating on GPUs}
+
+\end{frame}
 
 
 
