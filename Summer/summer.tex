@@ -234,6 +234,56 @@
   \draw [#1] (0.5, \ybot + 0.5 + #3) -- ++(#4 - 1, 0);%
 }
 
+\def\dogcoordinates{ ( 3.666,15.100) 
+( 2.833,14.900) ( 2.233,14.366) ( 2.133,13.966)  
+( 1.733,13.966) ( 1.433,13.366) ( 1.433,13.000)  
+( 1.566,12.633) ( 2.066,12.333) ( 2.466,12.200)  
+( 2.766,12.200) ( 3.000,12.333) ( 3.333,12.300)
+( 3.533,12.033) ( 3.666,11.400) ( 4.033,10.566) 
+( 4.000, 9.133) ( 4.833, 7.300) ( 5.300, 4.400)  
+( 5.333, 3.400) ( 5.233, 2.700) ( 4.700, 2.466)
+( 4.633, 2.100) ( 5.133, 1.933) ( 5.600, 1.933) 
+( 5.833, 2.033) ( 6.033, 2.333) ( 6.166, 3.166)
+( 6.300, 3.300) ( 6.366, 5.366) ( 6.566, 6.966)  
+( 8.233, 7.133) (11.033, 8.033) (11.600, 7.733) 
+(12.266, 6.600) (13.300, 5.500) (14.066, 4.933)  
+(14.600, 4.300) (14.733, 3.966) (14.700, 2.866) 
+(14.600, 2.666) (14.233, 2.466) (14.166, 2.066)  
+(14.333, 1.933) (14.666, 1.900) (15.133, 1.966)  
+(15.400, 2.200) (15.733, 4.833) (15.333, 5.400) 
+(14.600, 6.100) (14.266, 7.033) (14.000, 9.800)  
+(13.833,10.433) (13.666,10.666) (14.033,11.366)  
+(14.033,11.633) (13.666,11.666) (13.200,11.200)  
+(12.100,11.433) (10.400,11.400) ( 8.366,11.533)  
+( 7.966,11.833) ( 7.233,11.966) ( 6.966,12.200) 
+( 6.666,12.233) ( 5.700,13.600) ( 4.966,14.266) 
+( 4.933,14.533) ( 4.733,14.733) ( 4.366,14.900)  
+( 4.300,15.033) ( 3.700,15.100) }
+
+
+\makeatletter
+\newif\iftikztransformnodecoordinates
+\tikzset{transform node coordinates/.is if=tikztransformnodecoordinates}
+
+
+\def\tikz@parse@node#1(#2){%
+    \pgfutil@in@.{#2}%
+    \ifpgfutil@in@
+        \tikz@calc@anchor#2\tikz@stop%
+    \else%
+        \tikz@calc@anchor#2.center\tikz@stop%
+        \expandafter\ifx\csname pgf@sh@ns@#2\endcsname\tikz@coordinate@text%
+        \else
+            \tikz@shapebordertrue%
+            \def\tikz@shapeborder@name{#2}%
+        \fi%
+    \fi%
+    \iftikztransformnodecoordinates%
+        \pgf@pos@transform{\pgf@x}{\pgf@y}%
+    \fi
+    \edef\tikz@marshal{\noexpand#1{\noexpand\pgfqpoint{\the\pgf@x}{\the\pgf@y}}}%
+    \tikz@marshal%
+}
 
 \title{Simulating RNNs on GPUs}
 \subtitle{Summer Project}
@@ -279,7 +329,7 @@
 \begin{figure}[h]
 \centering
 
-\def\layersep{2cm}
+\def\layersep{1.8cm}
 
 \begin{tikzpicture}[scale = 1,draw=black!50, node distance=\layersep]
 %    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
@@ -332,10 +382,27 @@
             \path[color = red!50] (P-\source) edge (O-\dest);
 
     \node[annot,below=0.25cm of {H-6}, node distance=1cm] (hl2) {\small {\color{red!80}L3}};
-    \node[annot,left of=hl2](hl1) {\small {\color{blue!50!red!50}L2}};
+    \node[annot,left of ={hl2}](hl1) {\small {\color{blue!50!red!50}L2}};
         \node[annot,left of=hl1] {\small {\color{blue!70!red!70}L1}};
             \node[annot,right of=hl2](hl3) {\small {\color{red!50}L4}};
             \node[annot,right of=hl3] {\small {\color{orange!70}L5}};
+\node[left=1.25cm of {I-3},yshift=-.5cm] (dog) {};
+ \foreach \dest in {1,...,6}
+            \draw[color = black!30,->, decoration, decoration={snake}] (dog) -- (I-\dest);
+
+            \filldraw [black!50,scale=0.1,transform node coordinates,shift={(-25,-45)}]
+  plot  coordinates \dogcoordinates  -- cycle;
+  
+  \node[output neuron] at (O-2) {{\color{white}1}};
+    \node[hidden neuron 0] at (B-2) {{\color{white}1}};
+        \node[hidden neuron 1] at (H-4) {{\color{white}1}};
+            \node[hidden neuron 2] at (P-6) {{\color{white}1}};
+             \node[input neuron] at (I-4) {{\color{white}1}};
+             \path[color = blue!70!red!70, very thick] (I-4) edge (B-2);
+           \path[color = blue!50!red!50, very thick] (B-2) edge (H-4);
+            \path[color = red!80, very thick] (H-4) edge (P-6);
+      \path[color = red!50, very thick] (P-6) edge (O-2);
+      \node[right=0.25cm of {O-2}] {{\color{orange!70}``Dog''}};
 \end{tikzpicture}
 \caption{Multi-layer perceptron}
 \label{fig:neural network}
