@@ -1,8 +1,11 @@
 %\documentclass[handout]{beamer}
 \documentclass[10pt]{beamer}
+\usepackage{handoutWithNotes}
+%\pgfpagesuselayout{4 on 1 with notes}[a4paper,border shrink=5mm]
+\pgfpagesuselayout{1 on 1 with notes landscape}[a4paper,border shrink=5mm]
 \usetheme[
   outer/progressbar=foot,
-  outer/numbering=none
+%outer/numbering=fraction,
 ]{metropolis}
 \usepackage{amsmath, amssymb, amsthm, mathtools,media9}
 \usepackage[export]{adjustbox}
@@ -27,11 +30,12 @@
 \usepackage{enumerate}
 \usepackage{multirow}
 \usepackage{pgfplots,tikz,tcolorbox}
-\usepackage{appendixnumberbeamer}
+%\usepackage{appendixnumberbeamer}
 
-
+%\setbeamertemplate{frame footer}{My custom footer}
 
 \pgfplotsset{compat=newest}
+
 %\expandafter\def\expandafter\insertshorttitle\expandafter{%
  % \insertshorttitle\hfill\insertframenumber\,/\,\inserttotalframenumber}
 %\usepackage{enumitem}
@@ -82,7 +86,7 @@
   inner color=transparent!0, outer color=transparent!100]
 
 
-%\setbeameroption{show notes}
+\setbeameroption{show notes}
 
 
 \newcommand{\network}[1]{
@@ -285,11 +289,13 @@
     \tikz@marshal%
 }
 
-\title{Simulating Recurrent Neural Networks on GPUs}
+\title{Simulating Recurrent Neural Networks on Graphic Processing Units}
 \subtitle{Summer Project}
 %\institute{SUTD}
 \author{Zhangsheng Lai}
 %\date{\today}
+
+
 
 \pgfmathdeclarefunction{gauss}{2}{%
   \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
@@ -319,21 +325,19 @@
 \end{frame}
 
 
-%\begin{frame}
+%\begin{frame}{Contents}
 %\tableofcontents
 %\end{frame}
 
-\begin{frame}{}
 \section{Introduction}
-\end{frame}
 
 \begin{frame}{Introduction}
 \begin{definition}
-A \emph{feedforward neural network} is an artificial neural network wherein connections between the units do not form a cycle.
+A \alert{feedforward neural network} is an artificial neural network where connections between the units do not form a cycle.
 \end{definition}
 
 \begin{definition}
-A \emph{recurrent neural network} is a class of artificial neural network where connections between units form a directed cycle.
+A \alert{recurrent neural network} is an artificial neural network where connections between units form a directed cycle.
 \end{definition}
 
 \end{frame}
@@ -401,35 +405,49 @@ A \emph{recurrent neural network} is a class of artificial neural network where 
             \node[annot,right of=hl3] {\small {\color{orange!70}L5}};
 \node[left=1.25cm of {I-3},yshift=-.5cm] (dog) {};
  \foreach \dest in {1,...,6}
-            \draw[color = black!30,->, decoration, decoration={snake}] (dog) -- (I-\dest);
+            \draw[color = black!30,->,>=stealth, decoration, decoration={snake}] (dog) -- (I-\dest);
 
             \filldraw [black!50,scale=0.1,transform node coordinates,shift={(-25,-45)}]
   plot  coordinates \dogcoordinates  -- cycle;
   
-  \node[output neuron] at (O-2) {{\color{white}1}};
-    \node[hidden neuron 0] at (B-2) {{\color{white}1}};
-        \node[hidden neuron 1] at (H-4) {{\color{white}1}};
-            \node[hidden neuron 2] at (P-6) {{\color{white}1}};
-             \node[input neuron] at (I-4) {{\color{white}1}};
+%  \node[output neuron] at (O-2) {{\color{white}1}};
+%    \node[hidden neuron 0] at (B-2) {{\color{white}1}};
+%        \node[hidden neuron 1] at (H-4) {{\color{white}1}};
+%            \node[hidden neuron 2] at (P-6) {{\color{white}1}};
+%             \node[input neuron] at (I-4) {{\color{white}1}};
              \path[color = blue!70!red!70, very thick] (I-4) edge (B-2);
            \path[color = blue!50!red!50, very thick] (B-2) edge (H-4);
             \path[color = red!80, very thick] (H-4) edge (P-6);
       \path[color = red!50, very thick] (P-6) edge (O-2);
-      \node[right=0.25cm of {O-2}] {{\color{orange!70}``Dog''}};
+      \node[right=0.25cm of {O-2}](w) {{\color{orange!70}``Dog''}};
+            \draw[->,>=stealth, color=orange!70,very thick] (O-2) -- (w);
 \end{tikzpicture}
 \caption{Feedforward Neural Network}
 \label{fig:feedforwardnn}
 \end{figure}
 \end{frame}
 
-\begin{frame}{}
+\note{
+\scriptsize
+\begin{itemize}
+\item for feedforward neural networks, we have can have supervised or unsupervised
+\item supervised: MNIST digits classification, unsupervised: autoencoders
+\item these neural networks are the more popular and mainstream ones, but today we are going to look at RNNs and how to simulate them.
+\item I will begin with a brief introduction of some RNNs and then introduce a RNN that does not 
+\end{itemize}
+}
+
 \section{Recurrent Neural Network}
-\end{frame}
 
+\note{
+\scriptsize
+\begin{itemize}
+\item Long short term memory (LSTM) is a RNN architecture that remembers values over arbitrary intervals
+\item LSTMs able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame
+\end{itemize}
+}
 
-\begin{frame}{}
-\section{Hopfield Networks and Boltzmann Machines}
-\end{frame}
+%\subsection{Hopfield Networks and Boltzmann Machines}
 
 
 
@@ -517,7 +535,7 @@ A \emph{recurrent neural network} is a class of artificial neural network where 
 \note{
 \scriptsize
 \begin{itemize}
-\item Updating of Hopfield networks is done 	sequentially usually in a randomized order. Parallel updating might increase the energy instead.
+\item Updating of Hopfield networks is done sequentially usually in a randomized order. Parallel updating might increase the energy instead.
 %Asynchronous: one unit is updated at a time, can be done randomly or in a pre-defined order. Synchronous: all units are updated at the same time.
 \item Hopfield networks always make decisions to reduce the energy and makes it impossible to escape from local minima.
 \item random noise can help us escape from poor minima, by starting with lots of noise so its easy to cross energy barriers and gradually decrease the noise so the system ends in a deep minimum. This is called simulated annealing.
@@ -562,6 +580,7 @@ E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i x_i \\
 \item temperature variable controls the amount of noise 
 \item when $\tau \to 0$ we get back the Hopfield network
 \item for $\tau_1 > \tau_2$, we are less likely to go to a lower energy state compared to in $\tau_1$ compared to $\tau_2$, i.e. more likely to go to a higher energy state when the temperature is higher. This allows us to escape from local minimum and arrive at the global minimum
+\item we simulate the BM in the similar way to how it was in the Hopfield networks, but replace the binary threshold units with binary stochastic units
 \end{itemize}
 }
 
@@ -597,9 +616,7 @@ E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i x_i \\
 \end{frame}
 
 
-\begin{frame}{}
 \section{McCulloch-Pitts Machines}
-\end{frame}
 
 \begin{frame}{McCulloch-Pitts Machines}
 \mpm{1}{0}{1}{0}{0}{1}
@@ -768,6 +785,13 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 }
 
 \end{frame}
+
+\note{
+\scriptsize
+\begin{itemize}
+\item McCulloch-Pitts machine is continuous time; we have a
+\end{itemize}
+}
 
 %spiking starts here
 
@@ -954,9 +978,7 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 
 \end{frame}
 
-\begin{frame}{}
 \section{Simulating on GPUs}
-\end{frame}
 
 \begin{frame}{Simulating on GPUs}
 \begin{figure}[h]
@@ -1001,6 +1023,21 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
   }
 \end{figure}
 \end{frame}
+
+\note{
+\scriptsize
+\begin{itemize}
+\item To simplify quite a bit, think of a GPU as a factory and a CPU as Steven Hawking. Factory workers, each represented by a core, can complete lots of easy, similar tasks with incredible efficiency?tasks like geometry and shading. On the other hand Mr. Hawking, while incredibly smart and only occasionally baffled, is just one man. His skill set is better used on singular, complex problems like artificial intelligence.
+\item DRAM: dynamic random access memory, ALU: arithmetic logic unit,Cache, Control
+\item 
+\end{itemize}
+}
+
+
+\begin{frame}{Simulating on GPUs}
+
+\end{frame}
+
 
 
 \begin{frame}{Simulating on GPUs}
