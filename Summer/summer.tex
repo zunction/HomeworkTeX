@@ -285,7 +285,7 @@
     \tikz@marshal%
 }
 
-\title{Simulating RNNs on GPUs}
+\title{Simulating Recurrent Neural Networks on GPUs}
 \subtitle{Summer Project}
 %\institute{SUTD}
 \author{Zhangsheng Lai}
@@ -323,9 +323,22 @@
 %\tableofcontents
 %\end{frame}
 
+\begin{frame}{}
+\section{Introduction}
+\end{frame}
 
+\begin{frame}{Introduction}
+\begin{definition}
+A \emph{feedforward neural network} is an artificial neural network wherein connections between the units do not form a cycle.
+\end{definition}
 
-\begin{frame}{Mult-layer Perceptron}
+\begin{definition}
+A \emph{recurrent neural network} is a class of artificial neural network where connections between units form a directed cycle.
+\end{definition}
+
+\end{frame}
+
+\begin{frame}{Feedforward Neural Network}
 \begin{figure}[h]
 \centering
 
@@ -404,10 +417,15 @@
       \path[color = red!50, very thick] (P-6) edge (O-2);
       \node[right=0.25cm of {O-2}] {{\color{orange!70}``Dog''}};
 \end{tikzpicture}
-\caption{Multi-layer perceptron}
-\label{fig:neural network}
+\caption{Feedforward Neural Network}
+\label{fig:feedforwardnn}
 \end{figure}
 \end{frame}
+
+\begin{frame}{}
+\section{Recurrent Neural Network}
+\end{frame}
+
 
 \begin{frame}{}
 \section{Hopfield Networks and Boltzmann Machines}
