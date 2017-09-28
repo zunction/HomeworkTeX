@@ -484,14 +484,12 @@
 \begin{itemize}
 \item recurrent neural networks are artificial neural network where connections between units form a directed cycle.
 \item these neural networks are the more popular and mainstream ones, but today we are going to look at RNNs and how to simulate them.
-\item one of the more popular RNN is Long short term memory (LSTM), and they are able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame
-\item but the neurons in LSTMs communicate with real values, which do not 
+\item one of the more popular RNN is Long short term memory (LSTM), and they are able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame, but the neurons in LSTMs communicate with real values, which is different from the way neurons communicate in our brain
 \item we will look at some RNNs where their architecture is closer to our brains and by building such neural networks with the neurons matching the number of neurons in the brain, we hope to possibly arrive at some learning theories that is close to how learning is done in the brain, if not as good as the brain
 \item to construct such a big network of neurons, we have to rely on hardware that are more suitable to dealing with large numbers of computation, thus we would want to simulate these RNNs on GPUs
 
 \item today I'm going to talk about 2 types of RNNs, Boltzmann machines and McCulloch-Pitts machines
-\item their main differences is BM is discrete time and MPM is continuous time
-\item their similarities is that they both have the spiking characteristic in them when we simulate these machines
+\item their main differences is BM is discrete time and MPM is continuous time, their similarities is that they both have the spiking characteristic in them when we simulate these machines
 \end{itemize}
 }
 
@@ -668,7 +666,7 @@ where flip($x^{(i-1)}$) flips the state of the chosen neuron $k$.
 \note{
 \scriptsize
 \begin{itemize}
-\item digraph, $G=(V,E)$, weights $W: V \to \mathbb{R}$, biases $b:E \to \mathbb{R}$, binary states $\mathbb{B}=\{0,1\}$ with an initial distribution $\mathbb{B}^{|V|} \to \delta$ and a temperature $\tau$
+%\item digraph, $G=(V,E)$, weights $W: V \to \mathbb{R}$, biases $b:E \to \mathbb{R}$, binary states $\mathbb{B}=\{0,1\}$ with an initial distribution $\mathbb{B}^{|V|} \to \delta$ and a temperature $\tau$
 \item here the $W$ matrix need not be symmetrical with zero diagonals like what we had in the Boltzmann machine model
 \item we define a transition as a state that is one hop away from the current state, i.e. differs by one bit
 \item transition energy requires the current and the future state that it is transiting to
