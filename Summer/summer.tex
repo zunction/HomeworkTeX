@@ -1,8 +1,8 @@
 %\documentclass[handout]{beamer}
 \documentclass[10pt]{beamer}
-\usepackage{handoutWithNotes}
+%\usepackage{handoutWithNotes}
 %\pgfpagesuselayout{4 on 1 with notes}[a4paper,border shrink=5mm]
-\pgfpagesuselayout{1 on 1 with notes landscape}[a4paper,border shrink=5mm]
+%\pgfpagesuselayout{1 on 1 with notes landscape}[a4paper,border shrink=5mm]
 \usetheme[
   outer/progressbar=foot,
 %outer/numbering=fraction,
@@ -19,6 +19,10 @@
 \usetikzlibrary{mindmap,shadows}
 \usepackage{animate}
 \usepackage[compatibility=false]{caption}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{bm}
 
 
 \usepackage{graphicx,subfigure}
@@ -793,6 +797,26 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 \end{itemize}
 }
 
+
+\begin{frame}{McCulloch-Pitts Machines}
+
+\begin{algorithm}[H]
+\caption{CTMC Simulation.}
+\label{ctmc}
+\begin{algorithmic}[1]
+\STATE  Initialize $\bm{w},\bm{b}$
+\STATE Initialize $\bm{x}^{(0)}$
+\FOR {$i$ from $1$ to $N$}
+	\STATE Compute $\Gamma_{yx}$, $P_{yx}$ for each $\bm{y}$ 
+	\STATE Compute $a_x = \sum \Gamma_{yx}$
+	\STATE $\bm{x}^{(i)} \gets \text{flip}(\bm{x}^{(i-1)})$
+	\STATE Sample holding time $t_{(i-1)} \sim \text{Exp}(a_x)$ 
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+\end{frame}
+
+
 %spiking starts here
 
 
@@ -970,9 +994,7 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 %spiking ends here
 
 
-\begin{frame}{McCulloch-Pitts Machines}
 
-\end{frame}
 
 \begin{frame}{McCulloch-Pitts Machines}
 
