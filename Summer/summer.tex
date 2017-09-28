@@ -1,8 +1,8 @@
 %\documentclass[handout]{beamer}
-\documentclass[10pt]{beamer}
-%\usepackage{handoutWithNotes}
+\documentclass[10pt,appendixnumberbeamer]{beamer}
+\usepackage{handoutWithNotes}
 %\pgfpagesuselayout{4 on 1 with notes}[a4paper,border shrink=5mm]
-%\pgfpagesuselayout{1 on 1 with notes landscape}[a4paper,border shrink=5mm]
+\pgfpagesuselayout{1 on 1 with notes landscape}[a4paper,border shrink=5mm]
 \usetheme[
   outer/progressbar=foot,
 %outer/numbering=fraction,
@@ -336,15 +336,26 @@
 \section{Introduction}
 
 \begin{frame}{Introduction}
-\begin{definition}
-A \alert{feedforward neural network} is an artificial neural network where connections between the units do not form a cycle.
-\end{definition}
+\begin{figure}[h]
+\includegraphics[scale=0.1]{Blausen_0657_MultipolarNeuron.png}
+\caption{Anatomy of a neuron\footnote{By BruceBlaus - Own work, CC BY 3.0, https://commons.wikimedia.org/w/index.php?curid=28761830}}
 
-\begin{definition}
-A \alert{recurrent neural network} is an artificial neural network where connections between units form a directed cycle.
-\end{definition}
+\end{figure}
+
 
 \end{frame}
+
+
+%\begin{frame}{Introduction}
+%\begin{definition}
+%A \alert{feedforward neural network} is an artificial neural network where connections between the units do not form a cycle.
+%\end{definition}
+%
+%\begin{definition}
+%A \alert{recurrent neural network} is an artificial neural network where connections between units form a directed cycle.
+%\end{definition}
+
+%\end{frame}
 
 \begin{frame}{Feedforward Neural Network}
 \begin{figure}[h]
@@ -434,12 +445,32 @@ A \alert{recurrent neural network} is an artificial neural network where connect
 \note{
 \scriptsize
 \begin{itemize}
-\item for feedforward neural networks, we have can have supervised or unsupervised
+\item the features that define a neuron are electrical excitability, the presence of synapses, which are complex membrane junctions that transmit signals to other neurons
+\item there are approximately $10^{14}$ neurons in the human brain
+\item artifical neuron networks are inspired by these biological neurons 
+\item for example we have feedforward neural networks where connections between the units do not form a cycle
+\item the connections between the neurons in our brain are much more complex than those in the feedforward neural networks
+
+\item we have managed to use feedforward neural networks, to classify images very well
+\item however, the methodology used to do classification is based on learning parameters of the model and then do matrix multiplication to obtain a probability of it being classified as a particular class.
 \item supervised: MNIST digits classification, unsupervised: autoencoders
 \item these neural networks are the more popular and mainstream ones, but today we are going to look at RNNs and how to simulate them.
-\item I will begin with a brief introduction of some RNNs and then introduce a RNN that does not 
+\item we will look at some RNNs where their architecture is closer to our brains and by building such neural networks with the neurons matching the number of neurons in the brain, we hope to possibly arrive at some learning theories that is close to learning in the brain, if not as good as the brain
+\item to construct such a big network of neurons, we have to rely on hardware that are more suitable to dealing with large numbers of computation, thus we would want to simulate these RNNs on GPUs
 \end{itemize}
 }
+
+
+
+%\note{
+%\scriptsize
+%\begin{itemize}
+%\item for feedforward neural networks, we have can have supervised or unsupervised
+%\item supervised: MNIST digits classification, unsupervised: autoencoders
+%\item these neural networks are the more popular and mainstream ones, but today we are going to look at RNNs and how to simulate them.
+%\item we will look at some RNNs and discrete time steps and then look at one with continuous time steps.
+%\end{itemize}
+%}
 
 \section{Recurrent Neural Network}
 
@@ -454,51 +485,14 @@ A \alert{recurrent neural network} is an artificial neural network where connect
 %\subsection{Hopfield Networks and Boltzmann Machines}
 
 
-
-\begin{frame}{Hopfield Networks}
-\networkwc{1}{-1}{1}{1}{-1}{1}
-\end{frame}
-
-\begin{frame}{Hopfield Networks}
+\begin{frame}{Boltzmann Machines}
 \networkwc{1}{0}{1}{1}{0}{1}
-\end{frame}
-
-\begin{frame}{Hopfield Networks}
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt];
-    \tikzstyle{unit}=[neuron, fill=red!50,thick];
- \def \radius {2cm}
-% \def \margin {8}
- \def \n {6}
- \foreach \s in {1,...,\n}{
-  \node[unit] (\s) at ({360/\n * (\s - 1) - 180}:\radius) {};
-%  \node (S-\s) at ($(\s) + {360/\n * (\s - 1) - 180}:5mm$) {$s_i$};
-}  
- \foreach \s in {1,...,\n}
-  \foreach \t in {\s,...,\n}
-   \draw (\t) -- (\s);
-   \node[unit](i) at ({60 }:\radius) {{\color{white}$b_i$}};
-   \node[unit](j) at ({360}:\radius) {{\color{white}$b_j$}};
-   \draw (i) edge node[right] {\small $W_{ij} = W_{ji}$} (j);
-
-   \end{tikzpicture}
-\end{figure}
-\begin{align*}
-\text{Energy configuration, }E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i x_i \\
-\text{Energy gap, } \Delta E_i &= E(x_i = 0) - E(x_i = 1) = \sum_jW_{ij}x_j +b_i\\
-\text{Update rule, }x_i:&=\begin{cases}
-+1 & \sum_jW_{ij}x_j +b_i \geq 0\\
--1 & \text{otherwise}
-\end{cases}
-\end{align*}
 \end{frame}
 
 \note{\scriptsize
 \begin{itemize}
 \item composed of primitive computing elements called units
-\item units has two states, on or off, represented by $\{1,-1\}$ or $\{1,0\}$
+\item units has two states, on or off, represented by $\{1,0\}$
 \item connected to each other by bi-directional links
 \item adopts these states as a function of the states of its neighbouring units and weights of its links to them, it is a probabilistic function for a Boltzmann machine.
 \item weights can take on any real value
@@ -510,41 +504,7 @@ A \alert{recurrent neural network} is an artificial neural network where connect
 }
 
 
-\begin{frame}{Hopfield Networks}
-\networkwcww{1}{0}{0}{0}{0}{1}
-\begin{align*}
-(1,0,0,0,0,1)
-\end{align*}
-\end{frame}
 
-\begin{frame}{Hopfield Networks}
-\networkwcww{1}{1}{0}{0}{0}{1}
-\begin{align*}
-(1,0,0,0,0,1)\\
-(1,1,0,0,0,1)
-\end{align*}
-
-\end{frame}
-
-\begin{frame}{Hopfield Networks}
-\networkwcww{0}{0}{1}{1}{1}{0}
-\begin{align*}
-(1,0,0,0,0,1)\\
-(1,1,0,0,0,1)\\
-(0,0,1,1,1,0)
-\end{align*}
-
-\end{frame}
-
-\note{
-\scriptsize
-\begin{itemize}
-\item Updating of Hopfield networks is done sequentially usually in a randomized order. Parallel updating might increase the energy instead.
-%Asynchronous: one unit is updated at a time, can be done randomly or in a pre-defined order. Synchronous: all units are updated at the same time.
-\item Hopfield networks always make decisions to reduce the energy and makes it impossible to escape from local minima.
-\item random noise can help us escape from poor minima, by starting with lots of noise so its easy to cross energy barriers and gradually decrease the noise so the system ends in a deep minimum. This is called simulated annealing.
-\end{itemize}
-}
 
 
 \begin{frame}{Boltzmann Machines}
@@ -580,14 +540,30 @@ E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i x_i \\
 \scriptsize
 \begin{itemize}
 
-\item replace the binary threshold units by binary stochastic units that make biased random decisions
-\item temperature variable controls the amount of noise 
+%\item replace the binary threshold units by binary stochastic units that make biased random decisions
+\item temperature variable controls the amount of noise; higher temperature means more noise and also gives us a higher probability of transiting to a higher energy state and hence avoids local minimum
 \item when $\tau \to 0$ we get back the Hopfield network
 \item for $\tau_1 > \tau_2$, we are less likely to go to a lower energy state compared to in $\tau_1$ compared to $\tau_2$, i.e. more likely to go to a higher energy state when the temperature is higher. This allows us to escape from local minimum and arrive at the global minimum
 \item we simulate the BM in the similar way to how it was in the Hopfield networks, but replace the binary threshold units with binary stochastic units
 \end{itemize}
 }
 
+\begin{frame}{Boltzmann Machines}
+\begin{algorithm}[H]
+\caption{Boltzmann Machine Simulation.}
+\label{bm}
+\begin{algorithmic}[1]
+\STATE  Initialize $\bm{W},\bm{b}$
+\STATE Initialize $\bm{x}^{(0)}$
+\FOR {$i$ from $1$ to $N$}
+	\STATE Random $k \in \{1, \ldots ,d\}$, where $d$ is the number of neurons
+	\STATE Compute $p_k = \frac{1}{1+e^{-\Delta E_k/\tau}}$
+	\STATE $\bm{x}^{(i)} \gets \text{flip}(\bm{x}^{(i-1)})$
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+where flip($x^{(i-1)}$) flips the state of the chosen neuron $k$.
+\end{frame}
 
 
 \begin{frame}{Boltzmann Machines}
@@ -804,16 +780,17 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 \caption{CTMC Simulation.}
 \label{ctmc}
 \begin{algorithmic}[1]
-\STATE  Initialize $\bm{w},\bm{b}$
+\STATE  Initialize $\bm{W},\bm{b}$
 \STATE Initialize $\bm{x}^{(0)}$
 \FOR {$i$ from $1$ to $N$}
 	\STATE Compute $\Gamma_{yx}$, $P_{yx}$ for each $\bm{y}$ 
 	\STATE Compute $a_x = \sum \Gamma_{yx}$
 	\STATE $\bm{x}^{(i)} \gets \text{flip}(\bm{x}^{(i-1)})$
-	\STATE Sample holding time $t_{(i-1)} \sim \text{Exp}(a_x)$ 
+	\STATE Sample holding time $T_{i-1} \sim \text{Exp}(a_x)$ 
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
+where flip($x^{(i-1)}$) flips the state of the transiting neuron.
 \end{frame}
 
 
@@ -1051,7 +1028,10 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 \begin{itemize}
 \item To simplify quite a bit, think of a GPU as a factory and a CPU as Steven Hawking. Factory workers, each represented by a core, can complete lots of easy, similar tasks with incredible efficiency?tasks like geometry and shading. On the other hand Mr. Hawking, while incredibly smart and only occasionally baffled, is just one man. His skill set is better used on singular, complex problems like artificial intelligence.
 \item DRAM: dynamic random access memory, ALU: arithmetic logic unit,Cache, Control
-\item 
+\item trade off control for compute in the form of lots of simple compute units
+\item GPUs have an explicit programming model; we have to write programs in the way that we utilise as much of the parallel processing as much as possible
+\item GPUs optimize for throughput, not latency; they are willing to accept increase latency of any single individual computation in exchange for more computation being performed per second, the computation performed per second is measured by floating point operations per second (FLOPS)
+\item
 \end{itemize}
 }
 
@@ -1070,7 +1050,7 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
   \begin{tikzpicture}[scale=.2, yscale=-1, font=\small]
 
     \def\nrbodies{45}     \def\lastbody{44}
-    \def\nrblocks{6}      \def\lastblock{5}
+    \def\nrblocks{6}      \def\lastblock{3}
     \def\nrtiles{6}       \def\lasttile{5}
     \def\nrblockbodies{8} \def\lastblockbody{7}
 
@@ -1103,7 +1083,7 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
     \foreach \k in {0,...,\lastblockbody}
       \drawthread{thread}{\block}{\k}{24.5};
 
-    \def\block{4}
+    \def\block{3}
     \def\to{35}
     \foreach \k in {0,1,3,4,...,\lastblockbody}
       \drawthread{thread, gray}{\block}{\k}{\to};
@@ -1179,29 +1159,112 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 \begin{frame}
 \frametitle{References}
 \begin{thebibliography}{}
-\bibitem[Macor, 2015]{Macor}
-J. ~Macor.
-\newblock {\em A Brief Introduction to Type Theory and the Univalence Axiom}
-\newblock \href{http://math.uchicago.edu/~may/REU2015/REUPapers/Macor.pdf}{\footnotesize http://math.uchicago.edu/~may/REU2015/REUPapers/Macor.pdf}
+\bibitem[S. Lin, 2017]{sw}
+S. ~Lin.
+\newblock {\em Biological Plausible Deep Learning for Recurrent Spiking Neural Networks}
 
 
-\bibitem[UFP, 2013]{hottbook}
-The {Univalent Foundations Program}
-\newblock {\em Homotopy Type Theory: Univalent Foundations of Mathematics}.
-\newblock \href{https://homotopytypetheory.org/book}{\footnotesize https://homotopytypetheory.org/book}
 
-\bibitem[Caf$\acute{\text{e}}$, 2013]{settotype}
-    The n-Category Caf$\acute{\text{e}}$
-\newblock {\em From Set Theory to Type Theory}
-\newblock \href{https://golem.ph.utexas.edu/category/2013/01/from_set_theory_to_type_theory.html}{\footnotesize https://golem.ph.utexas.edu/category/2013/01/from\_set\_theory\_to\_type\_theory.html}
+\bibitem[CSC32, 2014]{hopfield}
+CSC321: Introduction to Neural Networks
+and machine Learning
+\newblock {\em Hopfield nets and simulated annealing}.
+\newblock \href{https://www.cs.toronto.edu/~hinton/csc321/notes/lec16.pdf}{\footnotesize https://www.cs.toronto.edu/~hinton/csc321/notes/lec16.pdf}
 
-\bibitem[ncatlab, 2015]{nlab}
-The $n$Lab
-\newblock {\em Function Type}
-\newblock \href{https://ncatlab.org/nlab/show/function+type}{\footnotesize https://ncatlab.org/nlab/show/function+type}
+\bibitem[CSC32, 2014]{hopfield}
+CSC321: Introduction to Neural Networks
+and machine Learning
+\newblock {\em Boltzmann Machines as Probabilistic Models}.
+\newblock \href{https://www.cs.toronto.edu/~hinton/csc321/notes/lec17.pdf}{\footnotesize https://www.cs.toronto.edu/~hinton/csc321/notes/lec17.pdf}
+
+
+%\bibitem[Caf$\acute{\text{e}}$, 2013]{settotype}
+%    The n-Category Caf$\acute{\text{e}}$
+%\newblock {\em From Set Theory to Type Theory}
+%\newblock \href{https://golem.ph.utexas.edu/category/2013/01/from_set_theory_to_type_theory.html}{\footnotesize https://golem.ph.utexas.edu/category/2013/01/from\_set\_theory\_to\_type\_theory.html}
+%
+%\bibitem[ncatlab, 2015]{nlab}
+%The $n$Lab
+%\newblock {\em Function Type}
+%\newblock \href{https://ncatlab.org/nlab/show/function+type}{\footnotesize https://ncatlab.org/nlab/show/function+type}
 
 \end{thebibliography}
 \end{frame}
+
+\appendix
+
+\begin{frame}{Hopfield Networks}
+\networkwc{1}{-1}{1}{1}{-1}{1}
+\end{frame}
+
+\begin{frame}{Hopfield Networks}
+\networkwc{1}{0}{1}{1}{0}{1}
+\end{frame}
+
+\begin{frame}{Hopfield Networks}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale = 1,-,draw=black!50, node distance=\layersep]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt];
+    \tikzstyle{unit}=[neuron, fill=red!50,thick];
+ \def \radius {2cm}
+% \def \margin {8}
+ \def \n {6}
+ \foreach \s in {1,...,\n}{
+  \node[unit] (\s) at ({360/\n * (\s - 1) - 180}:\radius) {};
+%  \node (S-\s) at ($(\s) + {360/\n * (\s - 1) - 180}:5mm$) {$s_i$};
+}  
+ \foreach \s in {1,...,\n}
+  \foreach \t in {\s,...,\n}
+   \draw (\t) -- (\s);
+   \node[unit](i) at ({60 }:\radius) {{\color{white}$b_i$}};
+   \node[unit](j) at ({360}:\radius) {{\color{white}$b_j$}};
+   \draw (i) edge node[right] {\small $W_{ij} = W_{ji}$} (j);
+
+   \end{tikzpicture}
+\end{figure}
+\begin{align*}
+\text{Energy configuration, }E &= -\sum_{i<j}W_{ij}x_ix_j - \sum_ib_i x_i \\
+\text{Energy gap, } \Delta E_i &= E(x_i = 0) - E(x_i = 1) = \sum_jW_{ij}x_j +b_i\\
+\text{Update rule, }x_i:&=\begin{cases}
+1 & \sum_jW_{ij}x_j +b_i \geq 0\\
+0 & \text{otherwise}
+\end{cases}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Hopfield Networks}
+\networkwc{1}{-1}{1}{1}{-1}{1}
+\end{frame}
+
+
+\begin{frame}{Hopfield Networks}
+\networkwcww{1}{0}{0}{0}{0}{1}
+\begin{align*}
+(1,0,0,0,0,1)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Hopfield Networks}
+\networkwcww{1}{1}{0}{0}{0}{1}
+\begin{align*}
+(1,0,0,0,0,1)\\
+(1,1,0,0,0,1)
+\end{align*}
+
+\end{frame}
+
+\begin{frame}{Hopfield Networks}
+\networkwcww{0}{0}{1}{1}{1}{0}
+\begin{align*}
+(1,0,0,0,0,1)\\
+(1,1,0,0,0,1)\\
+(0,0,1,1,1,0)
+\end{align*}
+
+\end{frame}
+
+
 
 \end{document}
 
