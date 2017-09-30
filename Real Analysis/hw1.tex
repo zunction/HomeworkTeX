@@ -96,7 +96,15 @@ Thus we have shown that $\mathcal{B}^n$ is a countable basis for $\mathbb{R}^n$.
 
 
 
-\item Let $U$ be an open set of $\mathbb{R}$. Then since $\mathbb{R}$ is second-countable, there exists a countable basis $\mathcal{B}$, for $\mathbb{R}$. Thus for each $x \in U$ we can find $B \in \mathcal{B}$ with $x \in B$. Suppose $\{B_{\alpha}\}_{\alpha\in A}$ is a countable set with $B_\alpha \in \mathcal{B}$ such that each $x \in U$ is in some $B_{\alpha}$. Still need some work...
+\item Let $U$ be an open set of $\mathbb{R}$. If $U$ is a union of countably many open sets we can simply pick the disjoint open intervals from that union and we are done. Suppose $U$ is an uncountable union of open sets, and without loss of generality assume that they are disjoint, $U = \sqcup_{\alpha \in A}V_\alpha$ for uncountable $A$, then since $\mathbb{R}$ is second-countable, there exists a countable basis $\mathcal{B}$ for $\mathbb{R}$. For each $x \in V_\alpha$, there exists $B_x \in \mathcal{B}$ such that $x \in B_x \subseteq V_\alpha$. Taking the $\bigcup_{x\in V_\alpha} B_x$ for all $\alpha \in A$, we claim that this set is at most countable and is a disjoint set of open intervals. It is open since it is a union of $B \in \mathcal{B}$. 
+For $\alpha_1, \alpha_2 \in A$ with $\alpha_1 \neq \alpha_2$, $\bigcup_{x\in V_{\alpha_i}} B_x\subseteq V_{\alpha_i}$,
+ thus $\left(\bigcup_{x\in V_{\alpha_1}}B_x\right) \cap \left(\bigcup_{x\in V_{\alpha_2}}B_x\right)$ are disjoint since $V_{\alpha} \cap V_{\alpha'} = \varnothing$.
+
+
+
+
+
+
 \end{enumerate}
 
 \item Let $f : (X, \tau_X) \to (Y, \tau_Y)$ be a continuous function. Let $(X,\tau'_X)$ be a finer topology than $(X, \tau_X)$ then $\tau'_X \supseteq \tau_X$. Thus for any $U \in \tau_Y$, $f^{-1}(U) \in \tau_X \subseteq \tau'_X$. Thus $f^{-1}(U) \in \tau'_X$ and $f : (X, \tau'_X) \to (Y, \tau_Y)$ remains continuous. Let $(Y,\tau'_Y)$ is a topology coarser than $(Y, \tau_Y)$ and so $\tau_Y \supseteq\tau'_Y$. Hence for $U \in \tau'_Y \subseteq \tau_Y$, we have $f^{-1}(U)\in \tau_X$. Thus  $f : (X, \tau_X) \to (Y, \tau'_Y)$ remains continuous.
@@ -116,7 +124,12 @@ which shows what is required and hence $\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}e^
 \log \left((x_1x_2^2 \ldots x_n^n)^{\frac{1}{n^2}}\right) = \sum_{i=1}^{n}\frac{i}{n^2}\log x_i
 \end{align*}
 
-\item
+\item 
+
+By Mean Value Theorem, there is some $c \in (0,1)$ such that
+\begin{align*}
+\int_{0}^{1}f(x)\,dx = f'(c)
+\end{align*}	 		
 \end{enumerate}
 
 

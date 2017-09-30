@@ -29,23 +29,12 @@
 
 \newcommand{\lstfont}[1]{\color{#1}\scriptsize\ttfamily}
 
-\lstset{
+\lstset { %
     language=[ANSI]C++,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\scriptsize,% basic font setting
     showstringspaces=false,
-    backgroundcolor=\color{black!90},
-    basicstyle=\lstfont{white},
-    identifierstyle=\lstfont{white},
-    keywordstyle=\lstfont{magenta!40},
-    numberstyle=\lstfont{white},
-    stringstyle=\lstfont{cyan},
-    commentstyle=\lstfont{yellow!30},
-    emph={
-        cudaMalloc, cudaFree,
-        __global__, __shared__, __device__, __host__,
-        __syncthreads,
-    },
-    emphstyle={\lstfont{green!60!white}},
-    breaklines=true
+    breaklines=true,
 }
 
 
@@ -114,7 +103,8 @@
   inner color=transparent!0, outer color=transparent!100]
 
 
-\setbeameroption{show notes}
+%\setbeameroption{show notes}
+%\setbeameroption{show only notes}
 
 
 \newcommand{\network}[1]{
@@ -1002,11 +992,6 @@ where flip($x^{(i-1)}$) flips the state of the transiting neuron.
 
 
 
-
-\begin{frame}{McCulloch-Pitts Machines}
-
-\end{frame}
-
 \section{Simulating on GPUs}
 
 \begin{frame}{Simulating on GPUs}
@@ -1017,7 +1002,7 @@ where flip($x^{(i-1)}$) flips the state of the transiting neuron.
   \tikzstyle{data}=[fill=orange!50]
   \tikzstyle{ctrl}=[fill	=red!40]
   \subfigure[CPU] {
-    \begin{tikzpicture}[scale=0.8]
+    \begin{tikzpicture}[scale=0.5]
       \draw[ctrl] (0, 6)   rectangle +(3, -2);
       \draw[data] (0, 4)   rectangle +(6, -2);
       \draw[data] (0, 1.5) rectangle +(6, -1);
@@ -1032,7 +1017,7 @@ where flip($x^{(i-1)}$) flips the state of the transiting neuron.
     \end{tikzpicture}
   }
   \subfigure[GPU] {
-    \begin{tikzpicture}[scale=0.8]
+    \begin{tikzpicture}[scale=0.5]
       \draw[data] (0, 1.5) rectangle +(6, -1);
       \node[trans-name] at (0, 1.5) {DRAM};
       \foreach \x in {0.5, 1, ..., 5.5}
@@ -1061,51 +1046,23 @@ where flip($x^{(i-1)}$) flips the state of the transiting neuron.
 \item trade off control for compute in the form of lots of simple compute units
 \item GPUs have an explicit programming model; we have to write programs in the way that we utilise as much of the parallel processing as much as possible
 \item GPUs optimize for throughput, not latency; they are willing to accept increase latency of any single individual computation in exchange for more computation being performed per second, the computation performed per second is measured by floating point operations per second (FLOPS)
-\item
+\item GPUs are good at efficiently launching lots of threads and running them in parallel
 \end{itemize}
 }
 
 
-\begin{frame}{Simulating on GPUs}
 
-\end{frame}
 
-\begin{frame}[fragile]
-
-\begin{lstlisting}
-mod = SourceModule("""
-        __global__ void global_reduce_kernel(float *d_out, float *d_in)
-        {
-            int myId = threadIdx.x + blockDim.x * blockIdx.x;
-            int tid = threadIdx.x;
-            // do reduction in global memory
-            for (unsigned int s = blockDim.x / 2; s > 0; s >>= 1)
-            {
-                if (tid < s)
-                {
-                    d_in[myId] += d_in[myId + s];
-                }
-                __syncthreads(); // make sure all adds at one stage are done
-            }
-            // only thread 0 writes result for this block back to global memory
-            if (tid == 0)
-            {
-                d_out[blockIdx.x] = d_in[myId];
-            }
-        }
-	""", arch='sm_60')
-\end{lstlisting}
-\end{frame}
 
 \begin{frame}{Simulating on GPUs}
 
-
+\textbf{GPU Algorithm: Reduction}
 \begin{figure}[h]
   \centering
   \begin{tikzpicture}[scale=.35, yscale=-1, font=\scriptsize]
 
     \def\nrbodies{32}     \def\lastbody{31}
-    \def\nrblocks{3}      \def\lastblock{3}
+    \def\nrblocks{3}      \def\lastblock{5}
     \def\nrtiles{6}       \def\lasttile{5}
     \def\nrblockbodies{1} \def\lastblockbody{20}
 
@@ -1117,8 +1074,8 @@ mod = SourceModule("""
 
       \draw[tile]      (0, \ybot) rectangle ++(\nrbodies, \nrblockbodies);
       %\draw (1 + \nrbodies, \ybot + \nrblockbodies / 2)
-      \draw (1, \ybot + \nrblockbodies / 2)
-          node[above=0.15cm] { block $\block$ };
+%      \draw (1, \ybot + \nrblockbodies / 2)
+%          node[above=0.15cm] { block $\block$ };
 
 %      \foreach \syncpoint in {1,...,\lasttile}
 %        \draw[sync] (\nrblockbodies * \syncpoint, \ybot) -- ++(0, \nrblockbodies);
@@ -1128,16 +1085,25 @@ mod = SourceModule("""
 \drawthread{thread}{\block}{\k}{0};
 
 \def\block{1}
-\foreach \k in {0,...,31}
+\foreach \k in {0,...,15}
 \drawthread{thread}{\block}{\k}{0};
 
 \def\block{2}
-\foreach \k in {0,...,31}
+\foreach \k in {0,...,7}
 \drawthread{thread}{\block}{\k}{0};
 
 \def\block{3}
-\foreach \k in {0,...,31}
+\foreach \k in {0,...,3}
 \drawthread{thread}{\block}{\k}{0};
+
+\def\block{4}
+\foreach \k in {0,1}
+\drawthread{thread}{\block}{\k}{0};
+
+\def\block{5}
+\drawthread{thread}{\block}{0}{0};
+
+
 
     %\def\block{2}
    %\foreach \k in {0,...,3}
@@ -1221,19 +1187,60 @@ mod = SourceModule("""
 \end{figure}
 \end{frame}
 
+\begin{frame}[fragile]{Simulating on GPUs}
 
-\begin{frame}{Simulating on GPUs}
-
+\begin{lstlisting}
+mod = SourceModule("""
+        __global__ void reduce_kernel(float *d_out, float *d_in)
+        {
+            int myId = threadIdx.x + blockDim.x * blockIdx.x;
+            int tid = threadIdx.x;
+            // do reduction in global memory
+            for (unsigned int s = blockDim.x / 2; s > 0; s >>= 1)
+            {
+                if (tid < s)
+                {
+                    d_in[myId] += d_in[myId + s];
+                }
+                __syncthreads(); // make sure all adds at one stage are done
+            }
+            // only thread 0 writes result for this block back to global memory
+            if (tid == 0)
+            {
+                d_out[blockIdx.x] = d_in[myId];
+            }
+        }
+	""", arch='sm_60')
+\end{lstlisting}
 \end{frame}
 
+\begin{frame}{Simulating on GPUs}
+\textbf{Importance to Simulating on GPUs}
+\begin{itemize}
+\item Faster matrix multiplication
+\item Larger neural networks
+\item Larger function space 
+\item Energy efficiency 
+\end{itemize}
+\end{frame}
+
+\note{
+\scriptsize
+\begin{itemize}
+\item train larger neural networks 
+\item learning from a larger function space
+\item GPUs are more energy efficient than CPUs; they are optimized for throughput and performance per watt and not absolute performance
+\end{itemize}
+}
 
 
 \begin{frame}
 \frametitle{References}
 \begin{thebibliography}{}
 \bibitem[S. Lin, 2017]{sw}
+Biological Plausible Deep Learning for Recurrent Spiking Neural Networks
 S. ~Lin.
-\newblock {\em Biological Plausible Deep Learning for Recurrent Spiking Neural Networks}
+\newblock {\em }
 
 
 
