@@ -101,8 +101,16 @@ Thus we have shown that $\mathcal{B}^n$ is a countable basis for $\mathbb{R}^n$.
 
 \item Let $f : (X, \tau_X) \to (Y, \tau_Y)$ be a continuous function. Let $(X,\tau'_X)$ be a finer topology than $(X, \tau_X)$ then $\tau'_X \supseteq \tau_X$. Thus for any $U \in \tau_Y$, $f^{-1}(U) \in \tau_X \subseteq \tau'_X$. Thus $f^{-1}(U) \in \tau'_X$ and $f : (X, \tau'_X) \to (Y, \tau_Y)$ remains continuous. Let $(Y,\tau'_Y)$ is a topology coarser than $(Y, \tau_Y)$ and so $\tau_Y \supseteq\tau'_Y$. Hence for $U \in \tau'_Y \subseteq \tau_Y$, we have $f^{-1}(U)\in \tau_X$. Thus  $f : (X, \tau_X) \to (Y, \tau'_Y)$ remains continuous.
 
-\item
-
+\item We shall show that $\int_{\mathbb{R}}e^{-x^2/2}\,dx = \sqrt{2\pi}$. Start by considering its square,
+\begin{align*}
+\left(\int_{\mathbb{R}}e^{-x^2/2}\,dx\right)^2 &= \left(\int_{\mathbb{R}}e^{-x^2/2}\,dx\right)\left(\int_{\mathbb{R}}e^{-y^2/2}\,dy\right)\\
+&=\int_{\mathbb{R}^2}e^{-\frac{x^2+y^2}{2}}\,dydx\\
+& = \int_{0}^{2\pi}\int_{0}^{\infty}e^{-r^2/2}r \,drd\theta \quad\text{   by polar change of coordinates.}\\
+&= 2\pi \int_{0}^{\infty}e^{-r^2/2}r \,dr \\
+&=2\pi \int_{0}^{\infty}\frac{1}{2}e^{-s/2} \,ds\quad \text{ change of coordinates, $s = r^2$}\\
+&=\pi \Big[-2e^{-s/2}\Big]_{0}^{\infty} = 2\pi
+\end{align*}
+which shows what is required and hence $\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}e^{-x^2/2}\,dx=1$.
 \item Let $x_n >0$ for all $n$ and $x_n \to a$ with $a >0$. Then
 \begin{align*}
 \log \left((x_1x_2^2 \ldots x_n^n)^{\frac{1}{n^2}}\right) = \sum_{i=1}^{n}\frac{i}{n^2}\log x_i
