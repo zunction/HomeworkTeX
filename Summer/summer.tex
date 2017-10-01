@@ -103,7 +103,7 @@
   inner color=transparent!0, outer color=transparent!100]
 
 
-%\setbeameroption{show notes}
+\setbeameroption{show notes}
 %\setbeameroption{show only notes}
 
 
@@ -314,8 +314,8 @@
 
 \title{Simulating Recurrent Neural Networks on Graphic Processing Units}
 \subtitle{Summer Project}
-%\institute{SUTD}
-\author{Zhangsheng Lai}
+%\institute{}
+\author{Zhangsheng Lai \\ Advisor: Shaowei Lin}
 %\date{\today}
 
 
@@ -523,11 +523,11 @@
 \begin{itemize}
 \item composed of primitive computing elements called units
 \item units has two states, on or off, represented by $\{1,0\}$
-\item connected to each other by bi-directional links
 \item weights can take on any real value
-\item a unit being on or off is taken to mean that the system currently accepts or rejects some elemental hypothesis of the domain
-\item weight on a link represents a weak pairwise constrain between two hypothesis
-\item positive (negative) weights indicate that two hypothesis support (contradict) one another with other things being equal
+\item connected to each other by bi-directional links
+%\item a unit being on or off is taken to mean that the system currently accepts or rejects some elemental hypothesis of the domain
+%\item weight on a link represents a weak pairwise constrain between two hypothesis
+%\item positive (negative) weights indicate that two hypothesis support (contradict) one another with other things being equal
 \item link weights are symmetric, having the same strength in both directions
 %\item adopts these states as a function of the states of its neighbouring units and weights of its links to them, it is a probabilistic function for a Boltzmann machine.
 
@@ -591,11 +591,12 @@
 \FOR {$i$ from $1$ to $N$}
 	\STATE Random $k \in \{1, \ldots ,d\}$, where $d$ is the number of neurons
 	\STATE Compute $p_k = \frac{1}{1+e^{-\Delta E_k/\tau}}$
-	\STATE $\bm{x}^{(i)} \gets \text{flip}(\bm{x}^{(i-1)})$
+	\STATE Sample from the Bernoulli distribution with $p = p_k$
+	\STATE $\bm{x}^{(i)} \gets \text{update}(\bm{x}^{(i-1)})$
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
-where flip($x^{(i-1)}$) flips the state of the chosen neuron $k$.
+where update($x^{(i-1)}$) updates the chosen neuron $k$ with the outcome of the sample from the Bernoulli distribution.
 \end{frame}
 
 
@@ -679,7 +680,7 @@ where flip($x^{(i-1)}$) flips the state of the chosen neuron $k$.
 \end{tikzpicture}
 \end{figure}
 \begin{align*}
-\text{Transition Energy, }E(y,x|\theta) &= -\sum_{ji \in E}W_{ji}y_jx_i- \sum_{j \in V}b_j s_j- \sum_{i \in V}b_i s_i\\
+\text{Transition Energy, }E(y,x|\theta) &= -\sum_{ji \in E}W_{ji}y_jx_i- \sum_{j \in V}b_j x_j- \sum_{i \in V}b_i x_i\\
 \Gamma_{yx} &=\exp\left(-\frac{1}{2\tau}E(y,x|\theta)+\frac{1}{2\tau}E(x,x|\theta)\right)\\
 \end{align*}
 \note{
@@ -688,8 +689,12 @@ where flip($x^{(i-1)}$) flips the state of the chosen neuron $k$.
 %\item digraph, $G=(V,E)$, weights $W: V \to \mathbb{R}$, biases $b:E \to \mathbb{R}$, binary states $\mathbb{B}=\{0,1\}$ with an initial distribution $\mathbb{B}^{|V|} \to \delta$ and a temperature $\tau$
 \item here the $W$ matrix need not be symmetrical with zero diagonals like what we had in the Boltzmann machine model
 \item we define a transition as a state that is one hop away from the current state, i.e. differs by one bit
+%\item here, state $y$ differs from state $x$ by the $j$ th bit for some $j$
+\item we shall think of $x$ as the current state and $y$ to be any state that is one hop away
 \item transition energy requires the current and the future state that it is transiting to
-\item for each $y \neq x$, start a Poisson process with rate $\Gamma_{yx}$
+\item for each $y \neq x$, start a Poisson process with rate $\Gamma_{yx} = \lambda_j$, hence for $d$ neurons, we start $d$ Poisson Processes
+\item the neuron chosen to transit is the neuron whose Poisson Process has the smallest interarrival time, which uniquely determines the new state
+\item we store the smallest interarrival time; this is the holding time for state $x$; time that the system stays in state $x$
 \item as such, we can talk about the interarrival timings of the Poisson process and our simulation of the McCulloch-Pitts machine not only gives us a binary tuple, but also the time taken from it to transit from its earlier state
  \end{itemize}
 }
@@ -733,23 +738,13 @@ where flip($x^{(i-1)}$) flips the state of the chosen neuron $k$.
 \end{tikzpicture}
 \end{figure}
 \begin{align*}
-\text{Transition Energy, }E(y,x|\theta) &= -\sum_{ji \in E}W_{ji}y_jx_i- \sum_{j \in V}b_j s_j- \sum_{i \in V}b_i s_i\\
-\Gamma_{yx} &:=\exp\left(\frac{1}{2\tau}s_jz_j\right)\\
+\text{Transition Energy, }E(y,x|\theta) &= -\sum_{ji \in E}W_{ji}y_jx_i- \sum_{j \in V}b_j x_j- \sum_{i \in V}b_i x_i\\
+\lambda_j:=\Gamma_{yx} &=\exp\left(\frac{1}{2\tau}s_jz_j\right)
 \end{align*}
 where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j$th unit.
 
 \end{frame}
 
-\note{
-\scriptsize
-\begin{itemize}
-\item when doing the updates we can just update the linear responses $z_j$ and apply softmax on the $\lambda_j$'s to get the probability distribution of the transitions.
-\item it seems counter-intuitive to think of 0 as armed and 1 as refractory, but it is in fact the most natural thinking
-\item a transition from $0 \to 1$ is a act of firing and a transition from $1 \to 0$ is the act of recovery
-\item when a neuron transit from $0 \to 1$, it changes the value of the linear response; for a transiting neuron $i$, if $W_{ji}>0$, then such a transition increases the linear response of neuron $j$ and if $W_{ji}<0$ it decreases the linear response of neuron $j$
-\item the sign $s$ depends on the state of the neuron, it preserves the sign of the linear response if it is armed and flips the sign of the linear response if it is refractory
- \end{itemize}
-}
 
 
 \begin{frame}{McCulloch-Pitts Machines}
@@ -789,9 +784,21 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 \end{tikzpicture}
 \end{figure}
 \begin{align*}
-\text{Transition probability from $x$ to $y$, }p_{yx} = \frac{\lambda_j}{\sum_{j'}\lambda_{j'}}
+\text{Transition probability from $x$ to $y$, }p_{yx} &= \frac{\lambda_j}{\sum_{j'}\lambda_{j'}}\\
+\text{Sample holding times, } T_{yx} \sim Exp(a_x), \text{ where } a_x &= \sum_j\lambda_{j}
 \end{align*}
 \end{frame}
+
+\note{
+\scriptsize
+\begin{itemize}
+\item when doing the updates we can just update the linear responses $z_j$ and apply softmax on the $\lambda_j$'s to get the probability distribution of the transitions.
+\item it seems counter-intuitive to think of 0 as armed and 1 as refractory, but it is in fact the most natural thinking
+\item a transition from $0 \to 1$ is the firing process and a transition from $1 \to 0$ is the recovery process
+\item when a neuron transit from $0 \to 1$, it changes the value of the linear response; for a transiting neuron $i$, if $W_{ji}>0$, then such a transition increases the linear response of neuron $j$ and if $W_{ji}<0$ it decreases the linear response of neuron $j$
+\item the sign $s$ depends on the state of the neuron, it preserves the sign of the linear response if it is armed and flips the sign of the linear response if it is refractory
+ \end{itemize}
+}
 
 
 \begin{frame}{McCulloch-Pitts Machines}
@@ -803,7 +810,7 @@ where $s_j = 1-2x_j$, $z_j = \sum_{j}W_{ji}x_i + b_j$ and $x,y$ differ by the $j
 \STATE  Initialize $\bm{W},\bm{b}$
 \STATE Initialize $\bm{x}^{(0)}$
 \FOR {$i$ from $1$ to $N$}
-	\STATE Compute $\Gamma_{yx}$, $p_{yx}$ for each $\bm{y}$ 
+	\STATE Compute $\Gamma_{yx}$, $p_{yx}$ for each $\bm{y} \neq \bm{x}$ 
 	\STATE Compute $a_x = \sum \Gamma_{yx}$
 	\STATE $\bm{x}^{(i)} \gets \text{flip}(\bm{x}^{(i-1)})$
 	\STATE Sample holding time $T_{i-1} \sim \text{Exp}(a_x)$ 
@@ -1188,7 +1195,7 @@ where flip($x^{(i-1)}$) flips the state of the transiting neuron.
 \end{frame}
 
 \begin{frame}[fragile]{Simulating on GPUs}
-
+\textbf{Reduction}
 \begin{lstlisting}
 mod = SourceModule("""
         __global__ void reduce_kernel(float *d_out, float *d_in)
@@ -1238,9 +1245,8 @@ mod = SourceModule("""
 \frametitle{References}
 \begin{thebibliography}{}
 \bibitem[S. Lin, 2017]{sw}
-Biological Plausible Deep Learning for Recurrent Spiking Neural Networks
 S. ~Lin.
-\newblock {\em }
+\newblock {\em Biological Plausible Deep Learning for Recurrent Spiking Neural Networks}
 
 
 
@@ -1255,6 +1261,13 @@ CSC321: Introduction to Neural Networks
 and machine Learning
 \newblock {\em Boltzmann Machines as Probabilistic Models}.
 \newblock \href{https://www.cs.toronto.edu/~hinton/csc321/notes/lec17.pdf}{\footnotesize https://www.cs.toronto.edu/~hinton/csc321/notes/lec17.pdf}
+
+
+
+\bibitem[cuda, 2017]{cuda}
+CUDA C Programming Guide
+\newblock {\em From Graphics Processing to General Purpose Parallel Computing}.
+\newblock \href{http://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html}{\footnotesize http://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html}
 
 
 %\bibitem[Caf$\acute{\text{e}}$, 2013]{settotype}
