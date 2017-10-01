@@ -96,14 +96,13 @@ Thus we have shown that $\mathcal{B}^n$ is a countable basis for $\mathbb{R}^n$.
 
 
 
-\item Let $U$ be an open set of $\mathbb{R}$. If $U$ is a union of countably many open sets we can simply pick the disjoint open intervals from that union and we are done. Suppose $U$ is an uncountable union of open sets, and without loss of generality assume that they are disjoint, $U = \sqcup_{\alpha \in A}V_\alpha$ for uncountable $A$, then since $\mathbb{R}$ is second-countable, there exists a countable basis $\mathcal{B}$ for $\mathbb{R}$. For each $x \in V_\alpha$, there exists $B_x \in \mathcal{B}$ such that $x \in B_x \subseteq V_\alpha$. Taking the $\bigcup_{x\in V_\alpha} B_x$ for all $\alpha \in A$, we claim that this set is at most countable and is a disjoint set of open intervals. It is open since it is a union of $B \in \mathcal{B}$. 
-For $\alpha_1, \alpha_2 \in A$ with $\alpha_1 \neq \alpha_2$, $\bigcup_{x\in V_{\alpha_i}} B_x\subseteq V_{\alpha_i}$,
- thus $\left(\bigcup_{x\in V_{\alpha_1}}B_x\right) \cap \left(\bigcup_{x\in V_{\alpha_2}}B_x\right)$ are disjoint since $V_{\alpha} \cap V_{\alpha'} = \varnothing$.
+\item Let $U$ be an open set of $\mathbb{R}$. If $U$ is a union of countably many open sets we can simply pick the disjoint open intervals from that union and we are done. Suppose $U$ is an uncountable union of open sets, and without loss of generality assume that they are disjoint, $U = \sqcup_{\alpha \in A}V_\alpha$ for uncountable $A$, then since $\mathbb{R}$ is second-countable, there exists a countable basis $\mathcal{B}$ for $\mathbb{R}$. Thus for each $x \in V_\alpha$, there exists $B_x \in \mathcal{B}$ such that $x \in B_x \subseteq V_\alpha$. Consider the set 
+\begin{align*}
+\left\{\bigcup_{x\in V_\alpha} B_x \text{ for all }\alpha \in A\right\}
+\end{align*}
 
 
-
-
-
+we claim that this set is at most countable and is a disjoint set of open intervals. Every element of the set is open since it is a union of $B \in \mathcal{B}$. It is disjoint since by construction $V_\alpha = \bigcup_{x\in V_\alpha} B_x$. Lastly, suppose that the set above is uncountable, then since there are countably many $B \in \mathcal{B}$, $\left(\bigcup_{x\in V_{\alpha_1}}B_x\right) \cap \left(\bigcup_{x\in V_{\alpha_2}}B_x\right)  = V_{\alpha_1} \cap V_{\alpha_2} \neq \varnothing$ for some distinct $\alpha_1, \alpha_2$ which contradicts the earlier assumption.
 
 \end{enumerate}
 
@@ -122,10 +121,26 @@ which shows what is required and hence $\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}e^
 
 
 
-\item Let $x_n >0$ for all $n$ and $x_n \to a$ with $a >0$. Then since $f(x) = \log x, g(x) = x^n$ for $n \in \mathbb{Z}_{>0}$ are continuous function on $[0,1]$ it suffice to prove that 
+\item Let $x_n >0$ for all $n$ and $x_n \to a$ with $a >0$. Then since $f(x) =  x^n, g(x) = \log x$ for $n \in \mathbb{Z}_{>0}$ are continuous functions, it suffice to prove that 
 \begin{align*}
-\frac{1}{n}\log \left(x_1x_2^2 \ldots x_n^n\right) = \log a
+\lim_{n\to \infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k = \log a
 \end{align*}
+Denote $s_n:=\frac{1}{n}\sum_{k=1}^{n}k\log x_k$, then
+\begin{align*}
+s_{n+1} &= \left(\frac{1}{n}\sum_{k=1}^{n}k\log x_k\right)\frac{n}{n+1}+\log x_{n+1}= \frac{n}{n+1}s_n+\log x_{n+1}
+\end{align*}
+
+
+We claim the following:
+\begin{align*}
+\limsup_{n\to\infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k &\leq \limsup_{n \to \infty} \log x_n = \log a\\
+\liminf_{n\to\infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k &\geq \liminf_{n \to \infty} \log x_n = \log a
+\end{align*}
+which shows the required. To show the claim,
+\begin{align*}
+\limsup_{n\to\infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k := \lim_{n\to\infty}\left(\sup_{m\geq n}\frac{1}{n}\sum_{k=1}^{n}k\log x_k\right) = 
+\end{align*}
+
 
 \item We first observe that 
 \begin{align*}
@@ -135,7 +150,7 @@ thus
 \begin{align*}
 \left|\sum_{j=0}^{n-1}\frac{f\left(j/n\right)}{n}-\int_{0}^{1}f(x)\,dx\right|&=\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}f\left(j/n\right)-f(x)\,dx\right|\\
 &=\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}(j/n-x)\cdot\frac{f\left(j/n\right)-f(x)}{j/n-x}\,dx\right|\\
-&\leq M\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}(j/n-x)\,dx\right| \text{ by MVT}\\ 
+&\leq M\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}(j/n-x)\,dx\right| \text{ by Mean Value Theorem}\\ 
 &= M \left|\sum_{j=0}^{n-1}-\frac{1}{2}\left(\frac{j}{n}-\frac{j+1}{n}\right)^2\right|\\
 &=\frac{M}{2n^2}\left|\sum_{j=0}^{n-1}1\right|=\frac{M}{2n}
 \end{align*}
