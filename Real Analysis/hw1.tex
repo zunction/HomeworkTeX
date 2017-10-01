@@ -122,17 +122,24 @@ which shows what is required and hence $\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}e^
 
 
 
-\item Let $x_n >0$ for all $n$ and $x_n \to a$ with $a >0$. Then
+\item Let $x_n >0$ for all $n$ and $x_n \to a$ with $a >0$. Then since $f(x) = \log x, g(x) = x^n$ for $n \in \mathbb{Z}_{>0}$ are continuous function on $[0,1]$ it suffice to prove that 
 \begin{align*}
-\log \left((x_1x_2^2 \ldots x_n^n)^{\frac{1}{n^2}}\right) = \sum_{i=1}^{n}\frac{i}{n^2}\log x_i
+\frac{1}{n}\log \left(x_1x_2^2 \ldots x_n^n\right) = \log a
 \end{align*}
 
-\item 
-
-By Mean Value Theorem, there is some $c \in (0,1)$ such that
+\item We first observe that 
 \begin{align*}
-\int_{0}^{1}f(x)\,dx = f'(c)
-\end{align*}	 		
+\int_{0}^{1}f(x)\,dx = \sum_{j=0}^{n-1}\int_{j/n}^{j+1/n}f(x)\,dx
+\end{align*}
+thus
+\begin{align*}
+\left|\sum_{j=0}^{n-1}\frac{f\left(j/n\right)}{n}-\int_{0}^{1}f(x)\,dx\right|&=\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}f\left(j/n\right)-f(x)\,dx\right|\\
+&=\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}(j/n-x)\cdot\frac{f\left(j/n\right)-f(x)}{j/n-x}\,dx\right|\\
+&\leq M\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}(j/n-x)\,dx\right| \text{ by MVT}\\ 
+&= M \left|\sum_{j=0}^{n-1}-\frac{1}{2}\left(\frac{j}{n}-\frac{j+1}{n}\right)^2\right|\\
+&=\frac{M}{2n^2}\left|\sum_{j=0}^{n-1}1\right|=\frac{M}{2n}
+\end{align*}
+
 \end{enumerate}
 
 
