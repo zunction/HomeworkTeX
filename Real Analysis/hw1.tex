@@ -85,7 +85,7 @@
 \begin{enumerate}
 \item $\mathbb{R}$ is second-countable by considering the countable basis 
 \begin{align*}
-\mathcal{B}:=\{(r-\epsilon,r+\epsilon)| r \in \mathbb{Q}, \text{ for any arbitrary }\epsilon >0\}
+\mathcal{B}:=\{(a,b)| a<b, a,b \in \mathbb{Q}\}
 \end{align*}
 We now claim that $\mathcal{B}^n = \{U_1\times \ldots\times U_n)|\text{ each }U_i\in \mathcal{B}\text{ for }i=1,\ldots, n\}$ is a countable basis for $\mathbb{R}^n$. It is clear that $\mathcal{B}^n$ is countable as the Cartesian product of countable sets is still countable. To show $\mathcal{B}^n$ is a basis for $\mathbb{R}^n$:
 \begin{enumerate}[(1)]
@@ -121,25 +121,37 @@ which shows what is required and hence $\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}e^
 
 
 
-\item Let $x_n >0$ for all $n$ and $x_n \to a$ with $a >0$. Then since $f(x) =  x^n, g(x) = \log x$ for $n \in \mathbb{Z}_{>0}$ are continuous functions, it suffice to prove that 
+\item Let $x_n >0$ for all $n$ and $x_n \to a$ with $a >0$. Since $f(x) = \log x$ is a continuous function, it suffices to show
 \begin{align*}
-\lim_{n\to \infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k = \log a
+\frac{1}{n^2}\sum_{k=1}^{n}k\log x_k \to \frac{1}{2}\log a
 \end{align*}
-Denote $s_n:=\frac{1}{n}\sum_{k=1}^{n}k\log x_k$, then
+Given $\epsilon >0$, there exists $N \in \mathbb{Z}_{>0}$ such that for all $n \geq N$, $\log x_n \in B(\log a,\epsilon)$, an epsilon ball centered at $\log a$. Consider the sequence $s_n:=\frac{1}{n^2}\sum_{i=1}^{n}i\log x_i$. Then for some positive integer $k$, there exists $N_1$ such that 
 \begin{align*}
-s_{n+1} &= \left(\frac{1}{n}\sum_{k=1}^{n}k\log x_k\right)\frac{n}{n+1}+\log x_{n+1}= \frac{n}{n+1}s_n+\log x_{n+1}
+s_n = \frac{1}{n^2}\sum_{i=1}^{k}i\log x_i+\frac{1}{n^2}\sum_{i=k+1}^{n}i\log x_i \to \frac{1}{n^2}\sum_{i=k+1}^{n}i\log x_i 
 \end{align*}
-
-
-We claim the following:
+for $n \geq N_1$. Let $s = \limsup_{n\to \infty}s_n$, for any $\epsilon >0$, then there exists $N_2$ such that we have $s_n < s + \epsilon$ for $n \geq N_2$. Taking $N = \max\{N_1, N_2\}$,
 \begin{align*}
-\limsup_{n\to\infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k &\leq \limsup_{n \to \infty} \log x_n = \log a\\
-\liminf_{n\to\infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k &\geq \liminf_{n \to \infty} \log x_n = \log a
+\frac{1}{n^2}\sum_{i=k+1}^{n}i\log x_i < s + \epsilon
 \end{align*}
-which shows the required. To show the claim,
-\begin{align*}
-\limsup_{n\to\infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k := \lim_{n\to\infty}\left(\sup_{m\geq n}\frac{1}{n}\sum_{k=1}^{n}k\log x_k\right) = 
-\end{align*}
+%Then since $f(x) =  x^n, g(x) = \log x$ for $n \in \mathbb{Z}_{>0}$ are continuous functions, it suffice to prove that 
+%\begin{align*}
+%\lim_{n\to \infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k = \log a
+%\end{align*}
+%Denote $s_n:=\frac{1}{n}\sum_{k=1}^{n}k\log x_k$, then
+%\begin{align*}
+%s_{n+1} &= \left(\frac{1}{n}\sum_{k=1}^{n}k\log x_k\right)\frac{n}{n+1}+\log x_{n+1}= \frac{n}{n+1}s_n+\log x_{n+1}
+%\end{align*}
+%
+%
+%We claim the following:
+%\begin{align*}
+%\limsup_{n\to\infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k &\leq \limsup_{n \to \infty} \log x_n = \log a\\
+%\liminf_{n\to\infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k &\geq \liminf_{n \to \infty} \log x_n = \log a
+%\end{align*}
+%which shows the required. To show the claim,
+%\begin{align*}
+%\limsup_{n\to\infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k := \lim_{n\to\infty}\left(\sup_{m\geq n}\frac{1}{n}\sum_{k=1}^{n}k\log x_k\right) = 
+%\end{align*}
 
 
 \item We first observe that 
@@ -150,9 +162,10 @@ thus
 \begin{align*}
 \left|\sum_{j=0}^{n-1}\frac{f\left(j/n\right)}{n}-\int_{0}^{1}f(x)\,dx\right|&=\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}f\left(j/n\right)-f(x)\,dx\right|\\
 &=\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}(j/n-x)\cdot\frac{f\left(j/n\right)-f(x)}{j/n-x}\,dx\right|\\
-&\leq M\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}(j/n-x)\,dx\right| \text{ by Mean Value Theorem}\\ 
+&\leq M\left|\sum_{j=0}^{n-1}\int_{j/n}^{(j+1)/n}(j/n-x)\,dx\right| \text{ by MVT for integrals and then MVT}\\ 
 &= M \left|\sum_{j=0}^{n-1}-\frac{1}{2}\left(\frac{j}{n}-\frac{j+1}{n}\right)^2\right|\\
-&=\frac{M}{2n^2}\left|\sum_{j=0}^{n-1}1\right|=\frac{M}{2n}
+%&=\frac{M}{2n^2}\left|\sum_{j=0}^{n-1}1\right|
+&=\frac{M}{2n}
 \end{align*}
 
 \end{enumerate}
