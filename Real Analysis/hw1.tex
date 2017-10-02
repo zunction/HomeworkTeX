@@ -125,14 +125,26 @@ which shows what is required and hence $\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}e^
 \begin{align*}
 \frac{1}{n^2}\sum_{k=1}^{n}k\log x_k \to \frac{1}{2}\log a
 \end{align*}
-Given $\epsilon >0$, there exists $N \in \mathbb{Z}_{>0}$ such that for all $n \geq N$, $\log x_n \in B(\log a,\epsilon)$, an epsilon ball centered at $\log a$. Consider the sequence $s_n:=\frac{1}{n^2}\sum_{i=1}^{n}i\log x_i$. Then for some positive integer $k$, there exists $N_1$ such that 
+%Given $\epsilon >0$, there exists $N \in \mathbb{Z}_{>0}$ such that for all $n \geq N$, $\log x_n \in B(\log a,\epsilon)$, an epsilon ball centered at $\log a$.
+Consider the sequence $s_n:=\frac{1}{n^2}\sum_{i=1}^{n}i\log x_i$. Then for some positive integer $k$, there exists $N_1$ such that 
 \begin{align*}
 s_n = \frac{1}{n^2}\sum_{i=1}^{k}i\log x_i+\frac{1}{n^2}\sum_{i=k+1}^{n}i\log x_i \to \frac{1}{n^2}\sum_{i=k+1}^{n}i\log x_i 
 \end{align*}
-for $n \geq N_1$. Let $s = \limsup_{n\to \infty}s_n$, for any $\epsilon >0$, then there exists $N_2$ such that we have $s_n < s + \epsilon$ for $n \geq N_2$. Taking $N = \max\{N_1, N_2\}$,
+for $n \geq N_1$. Since $\log x_n \to \log a$, $\limsup_{n\to \infty} \log x_n = \lim_{n\to \infty} \log x_n = \log a$. Thus there exists $N_2$ such that we have $\log x_n < \log a + \epsilon$ for $n \geq N_2$ and arbitrary $\epsilon >0$. Taking $N = \max\{N_1, N_2\}$, for $n \geq N$,
 \begin{align*}
-\frac{1}{n^2}\sum_{i=k+1}^{n}i\log x_i < s + \epsilon
+s_n \leq \frac{1}{n^2}\sum_{i=k+1}^{n}i(\log a + \epsilon) = (\log a + \epsilon)\frac{n^2-k^2+n+k}{2n^2}
 \end{align*}
+Then $\limsup_{n\to\infty}s_n \leq \limsup_{n\to\infty}\frac{1}{n^2}\sum_{i=k+1}^{n}i(\log a + \epsilon) = \frac{1}{2}(\log a + \epsilon)$. In a similar fashion, we have $\liminf_{n\to\infty}\log x_n = \log a$ and there exists $N_3$ such that $\log x_n > \log a - \epsilon$ for $n \geq N_3$ and arbitrary $\epsilon >0$. Taking $M =\max\{N_1,N_3\}$, for $n \geq M$,
+\begin{align*}
+s_n \geq \frac{1}{n^2}\sum_{i=k+1}^{n}i(\log a - \epsilon) = (\log a - \epsilon)\frac{n^2-k^2+n+k}{2n^2}
+\end{align*}
+Then $\liminf_{n\to\infty} s_n \geq \liminf_{n\to\infty}\frac{1}{n^2}\sum_{i=k+1}^{n}i(\log a - \epsilon) = \frac{1}{2}(\log a -\epsilon)$. As $\epsilon$ is arbitrarily chosen we have $\limsup_{n\to\infty} s_n=\frac{1}{2}\log a = \liminf_{n\to\infty}s_n$, this $s_n \to \frac{1}{2}\log a$.
+
+
+% Let $s = \limsup_{n\to \infty}s_n$, for any $\epsilon >0$, then there exists $N_2$ such that we have $s_n < s + \epsilon$ for $n \geq N_2$. Taking $N = \max\{N_1, N_2\}$,
+%\begin{align*}
+%\frac{1}{n^2}\sum_{i=k+1}^{n}i\log x_i < s + \epsilon
+%\end{align*}
 %Then since $f(x) =  x^n, g(x) = \log x$ for $n \in \mathbb{Z}_{>0}$ are continuous functions, it suffice to prove that 
 %\begin{align*}
 %\lim_{n\to \infty}\frac{1}{n}\sum_{k=1}^{n}k\log x_k = \log a
