@@ -360,11 +360,13 @@
 \caption{Anatomy of a neuron\footnote{By BruceBlaus - Own work, CC BY 3.0, https://commons.wikimedia.org/w/index.php?curid=28761830}}
 \note{
 \scriptsize
-\begin{itemize}
-\item the features that define a neuron are electrical excitability, where a neuron spikes and discharge electrical signals through the synapses, which are complex membrane junctions that transmit signals to other neurons
-\item there are approximately $10^{14}$ neurons in the human brain
-\item artifical neuron networks are inspired by these biological neurons 
-\end{itemize}
+%\begin{itemize}
+%\item the features that define a neuron are electrical excitability, where a neuron spikes and discharge electrical signals through the synapses, which are complex membrane junctions that transmit signals to other neurons
+%\item there are approximately $10^{14}$ neurons in the human brain
+%\item artifical neuron networks are inspired by these biological neurons 
+%\end{itemize}
+Let me start by motivating it by this picture of a neuron. The features that define a neuron are electrical excitability, where a neuron spikes and discharges electrical signals through the synapses, which are the complex membrance junctions that transmit signals to other neurons. In the human brain, there are approximately $10^{14}$ neurons and the artificial neural networks that we have in deep learning are inspired by these biological neurons.
+
 }
 \end{figure}
 
@@ -470,16 +472,13 @@
 
 \note{
 \scriptsize
-\begin{itemize}
-\item for example we have feedforward neural networks where connections between the units do not form a cycle
-\item we have managed to use feedforward neural networks, to classify images very well
-\item however the connections between the neurons in our brain are much more complex than those in the feedforward neural networks
-\item however, the methodology used to do classification is based on learning parameters of the model and then do matrix multiplication to obtain a probability of it being classified as a particular class.
-%\item supervised: MNIST digits classification, unsupervised: autoencoders
-%\item these neural networks are the more popular and mainstream ones, but today we are going to look at RNNs and how to simulate them.
-%\item we will look at some RNNs where their architecture is closer to our brains and by building such neural networks with the neurons matching the number of neurons in the brain, we hope to possibly arrive at some learning theories that is close to how learning is done in the brain, if not as good as the brain
-%\item to construct such a big network of neurons, we have to rely on hardware that are more suitable to dealing with large numbers of computation, thus we would want to simulate these RNNs on GPUs
-\end{itemize}
+%\begin{itemize}
+%\item for example we have feedforward neural networks where connections between the units do not form a cycle
+%\item we have managed to use feedforward neural networks, to classify images very well
+%\item however the connections between the neurons in our brain are much more complex than those in the feedforward neural networks
+%\item however, the methodology used to do classification is based on learning parameters of the model and then do matrix multiplication to obtain a probability of it being classified as a particular class.
+%\end{itemize}
+For example, we have feedforward networks where the connections between the units do not form a cycle. Feedforward networks are good for supervised learning like regression and classification in non-temporal data (data not related to time instances). Recurrent neural networks are more suited for temporal data like natural language processing and reinforcement learning and many DL researchers are now focused in understanding this kind of neural networks. Eventually we want to train large and deep RNNs and we like to parallelize the training over multiple GPUs, due to the large magnitude of linear operations involved. There are two kinds of parallelism, (1) data parallelism where data is partitioned into batches to be trained on each GPU and (2) model parallelism where the network is partitioned into subnets to be trained on each GPU. To train large networks, data parallelism will not be enough, we need model parallelism, and sampling from the RNN over several GPUs will be an important step in training. We will not be talking about the training step today, but will focus on the sampling.
 }
 
 
@@ -500,16 +499,19 @@
 
 \note{
 \scriptsize
-\begin{itemize}
-\item recurrent neural networks are artificial neural network where connections between units form a directed cycle.
-\item these neural networks are the more popular and mainstream ones, but today we are going to look at RNNs and how to simulate them.
-\item one of the more popular RNN is Long short term memory (LSTM), and they are able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame, but the neurons in LSTMs communicate with real values, which is different from the way neurons communicate in our brain
-\item we will look at some RNNs where their architecture is closer to our brains and by building such neural networks with the neurons matching the number of neurons in the brain, we hope to possibly arrive at some learning theories that is close to how learning is done in the brain, if not as good as the brain
-\item to construct such a big network of neurons, we have to rely on hardware that are more suitable to dealing with large numbers of computation, thus we would want to simulate these RNNs on GPUs
+%\begin{itemize}
+%\item recurrent neural networks are artificial neural network where connections between units form a directed cycle.
+%\item these neural networks are the more popular and mainstream ones, but today we are going to look at RNNs and how to simulate them.
+%\item one of the more popular RNN is Long short term memory (LSTM), and they are able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame, but the neurons in LSTMs communicate with real values, which is different from the way neurons communicate in our brain
+%\item we will look at some RNNs where their architecture is closer to our brains and by building such neural networks with the neurons matching the number of neurons in the brain, we hope to possibly arrive at some learning theories that is close to how learning is done in the brain, if not as good as the brain
+%\item to construct such a big network of neurons, we have to rely on hardware that are more suitable to dealing with large numbers of computation, thus we would want to simulate these RNNs on GPUs
+%
+%\item today I'm going to talk about 2 types of RNNs, Boltzmann machines and McCulloch-Pitts machines
+%\item their main differences is BM is discrete time and MPM is continuous time, their similarities is that they both have the spiking characteristic in them when we simulate these machines
+%\end{itemize}
+RNNs are networks where the connections between units form a directed cycle. One of the popular RNNs is long short term memory (LSTM), which are able to connect previous information to the present task. However, the neurons in LSTM communicate with real values, which is different from the way neurons communicate in our brain. Thus I'm going to talk about RNNs whose architecture is closer to the human brain and by building such neural network works with the number of artificial neurons coming  close to the number of neurons in the human brain, we hope to possibly arrive at some learning theories that is close to how learning is done in the brain, if not as good as the brain. Today the two RNNs I'm going to talk about is Boltzmann machines and McCulloch-Pitts machines. They both have the spiking characteristic when we simulate them, and what differs is that the sampling for BM is done in discrete time and continuous time for MPM.
 
-\item today I'm going to talk about 2 types of RNNs, Boltzmann machines and McCulloch-Pitts machines
-\item their main differences is BM is discrete time and MPM is continuous time, their similarities is that they both have the spiking characteristic in them when we simulate these machines
-\end{itemize}
+
 }
 
 
@@ -520,18 +522,18 @@
 \end{frame}
 
 \note{\scriptsize
-\begin{itemize}
-\item composed of primitive computing elements called units
-\item units has two states, on or off, represented by $\{1,0\}$
-\item weights can take on any real value
-\item connected to each other by bi-directional links
+%\begin{itemize}
+%\item composed of primitive computing elements called units
+%\item units has two states, on or off, represented by $\{1,0\}$
+%\item weights can take on any real value
+%\item connected to each other by bi-directional links
 %\item a unit being on or off is taken to mean that the system currently accepts or rejects some elemental hypothesis of the domain
 %\item weight on a link represents a weak pairwise constrain between two hypothesis
 %\item positive (negative) weights indicate that two hypothesis support (contradict) one another with other things being equal
-\item link weights are symmetric, having the same strength in both directions
+%\item link weights are symmetric, having the same strength in both directions
 %\item adopts these states as a function of the states of its neighbouring units and weights of its links to them, it is a probabilistic function for a Boltzmann machine.
-
-\end{itemize}
+%\end{itemize}
+In the BM, it is composed of primitive computing elements called units (neurons). Each unit has two possibly states, on or off, represented by $\{0,1\}$. The units are connected to each other by bi-directional edges and can take on any real value. Bi-directional also means that the edge weights are symmetric, having the same strength in both directions.
 }
 
 
@@ -569,16 +571,19 @@
 
 \note{
 \scriptsize
-\begin{itemize}
+%\begin{itemize}
 
 %\item replace the binary threshold units by binary stochastic units that make biased random decisions
-\item the neurons are binary stochastic units
-\item when $\Delta E_i >0 (<0)$, $p_i >0.5 (<0.5)$ 
-\item temperature variable controls the amount of noise; higher temperature means more noise and also gives us a higher probability of transiting to a higher energy state and hence avoids local minimum
-\item when $\tau \to 0$ we get Hopfield network
-\item for $\tau_1 > \tau_2$, we are less likely to go to a lower energy state compared to in $\tau_1$ compared to $\tau_2$, i.e. more likely to go to a higher energy state when the temperature is higher. This allows us to escape from local minimum and arrive at the global minimum
+%\item the neurons are binary stochastic units
+%\item when $\Delta E_i >0 (<0)$, $p_i >0.5 (<0.5)$ 
+%\item temperature variable controls the amount of noise; higher temperature means more noise and also gives us a higher probability of transiting to a higher energy state and hence avoids local minimum
+%\item when $\tau \to 0$ we get Hopfield network
+%\item for $\tau_1 > \tau_2$, we are less likely to go to a lower energy state compared to in $\tau_1$ compared to $\tau_2$, i.e. more likely to go to a higher energy state when the temperature is higher. This allows us to escape from local minimum and arrive at the global minimum
 %\item we simulate the BM in the similar way to how it was in the Hopfield networks, but replace the binary threshold units with binary stochastic units
-\end{itemize}
+%\end{itemize}
+
+The units are binary stochastic units and depending on the energy gap, $\Delta E_i >0 (<0)$, $p_i >0.5 (<0.5)$. Here, the temperature variable controls the amount of noise; higher temperature means more noise and also gives us a higher probability of transiting to a higher energy state and hence avoids local minimum when we do training. When $\tau \to 0$ we get Hopfield network. So in Hopfield networks, we have binary threshold units instead, meaning when the energy gap is positive, we update the state to 1 surely.
+
 }
 
 \begin{frame}{Boltzmann Machines}
@@ -635,11 +640,12 @@ where update($x^{(i-1)}$) updates the chosen neuron $k$ with the outcome of the 
 \begin{frame}{McCulloch-Pitts Machines}
 \mpm{1}{0}{1}{0}{0}{1}
 \note{\scriptsize
-\begin{itemize}
-\item state 1 is the refractory state, the neuron just fired and is unable to fire till it recovers
-\item state 0 is the armed state, the neuron just recovered and is waiting to fire
-\item here we model the units with the Nossenson-Messer neuron model, which explains biological firing rates in response to external stimuli
-\end{itemize}}
+%\begin{itemize}
+%\item state 1 is the refractory state, the neuron just fired and is unable to fire till it recovers
+%\item state 0 is the armed state, the neuron just recovered and is waiting to fire
+%\item here we model the units with the Nossenson-Messer neuron model, which explains biological firing rates in response to external stimuli
+%\end{itemize}}
+Now let's look at MPM. In MPM, the neurons also have binary states $\{0,1\}$. However, the states do not mean the same thing as in BM. State 1 is the refractory state, where the neuron just fired and is unable to fire till it recovers. State 0 is the armed state, the neuron just recovered and is waiting to fire. Here we model the units with the Nossenson-Messer neuron model, which explains biological firing rates in response to external stimuli.}
 \end{frame}
 
 
@@ -654,9 +660,10 @@ where update($x^{(i-1)}$) updates the chosen neuron $k$ with the outcome of the 
  \def \n {6}
  \foreach \s in {1,...,\n}{
   \node[unit] (\s) at ({360/\n * (\s - 1) - 180}:\radius) {};
+
 %  \node (S-\s) at ($(\s) + {360/\n * (\s - 1) - 180}:5mm$) {$s_i$};
 }  
-
+  \path[->] (4) edge[in = 135, out = 45, min distance = 1.5cm,color=black!50] node[above] {$W_{ii}$}(4);
    \DoubleLine{1}{2}{<-,draw=black!50}{}{->,draw=black!50}{};
    \DoubleLine{1}{3}{<-,draw=black!50}{}{->,draw=black!50}{};
    \DoubleLine{1}{4}{<-,draw=black!50}{}{->,draw=black!50}{};
@@ -696,7 +703,8 @@ where update($x^{(i-1)}$) updates the chosen neuron $k$ with the outcome of the 
 \item the neuron chosen to transit is the neuron whose Poisson Process has the smallest interarrival time, which uniquely determines the new state
 \item we store the smallest interarrival time; this is the holding time for state $x$; time that the system stays in state $x$
 \item as such, we can talk about the interarrival timings of the Poisson process and our simulation of the McCulloch-Pitts machine not only gives us a binary tuple, but also the time taken from it to transit from its earlier state
- \end{itemize}
+\end{itemize}
+In the MPM, we do not require the edges to be bi-directional, thus the matrix $W$ denoting the edge weights need not be symmetric
 }
 
 \end{frame}
@@ -1244,9 +1252,11 @@ mod = SourceModule("""
 \begin{frame}
 \frametitle{References}
 \begin{thebibliography}{}
-\bibitem[S. Lin, 2017]{sw}
-S. ~Lin.
-\newblock {\em Biological Plausible Deep Learning for Recurrent Spiking Neural Networks}
+
+\bibitem[ieee, 2010]{mn}
+2010 IEEE Sensor Array and Multichannel Signal Processing Workshop, 41-44
+\newblock {\em Modeling neuron firing pattern using a two state Markov chain}.
+\newblock \href{http://ieeexplore.ieee.org/document/5606761/}{\footnotesize http://ieeexplore.ieee.org/document/5606761/}
 
 
 
@@ -1268,6 +1278,10 @@ and machine Learning
 CUDA C Programming Guide
 \newblock {\em From Graphics Processing to General Purpose Parallel Computing}.
 \newblock \href{http://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html}{\footnotesize http://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html}
+
+\bibitem[S. Lin, 2017]{sw}
+S. ~Lin.
+\newblock {\em Biological Plausible Deep Learning for Recurrent Spiking Neural Networks}
 
 
 %\bibitem[Caf$\acute{\text{e}}$, 2013]{settotype}
