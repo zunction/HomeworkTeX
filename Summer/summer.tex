@@ -719,7 +719,7 @@ Now let's look at MPM. In MPM, the neurons also have binary states $\{0,1\}$. Ho
 %\item we store the smallest interarrival time; this is the holding time for state $x$; time that the system stays in state $x$
 %\item as such, we can talk about the interarrival timings of the Poisson process and our simulation of the McCulloch-Pitts machine not only gives us a binary tuple, but also the time taken from it to transit from its earlier state
 %\end{itemize}
-In the MPM, we do not require the edges to be bi-directional, thus the matrix $W$ denoting the edge weights need not be symmetric and there are also edges from a unit back to itself. We define a transition as a state that is one hop away from the current state, i.e. differs by one bit. We shall think of $x$ as the current state and $y$ to be any state that is one hop away. In the computation of the transition energy, we require both the current and the future state that it is transiting to. Thus for each possible future state $y$, start a Poisson process with rate $\Gamma_{yx}$, hence for $d$ neurons, we start $d$ Poisson Processes. The neuron chosen to transit is the neuron with the smallest interarrival time, which uniquely determines the new state. This smallest interarrival time is then stored as the holding time for state $x$; the length of time that the machine stays in state $x$. Thus for each simulation of MPM, we get the new state and the time spent in the previous state.
+In the MPM, we do not require the edges to be bi-directional, thus the matrix $W$ denoting the edge weights need not be symmetric and there are also edges from a unit back to itself. A transition occurs when state $x$ goes to another state $y$ which differs from $x$ by exactly one neuron. Here $x$ is the current state and $y$ is any state that is one hop away. In the computation of the transition energy, we require both the current and the future state that it is transiting to. Thus for each possible future state $y$, start a Poisson process with rate $\Gamma_{yx}$, hence for $d$ neurons, we start $d$ Poisson Processes. The neuron chosen to transit is the neuron with the smallest interarrival time, which uniquely determines the new state. This smallest interarrival time is then stored as the holding time for state $x$; the length of time that the machine stays in state $x$. Thus for each simulation of MPM, we get the new state and the time spent in the previous state.
 }
 
 \end{frame}
@@ -849,7 +849,7 @@ Practically, to identify the transiting neuron, we update the linear responses a
 	\STATE Compute $\Gamma_{yx}$, $p_{yx}$ for each $\bm{y} \neq \bm{x}$ 
 	\STATE Compute $a_x = \sum \Gamma_{yx}$
 	\STATE $\bm{x}^{(i)} \gets \text{flip}(\bm{x}^{(i-1)})$
-	\STATE Sample holding time $T_{i-1} \sim \text{Exp}(a_x)$ 
+	\STATE Sample holding time $T_{i} \sim \text{Exp}(a_x)$ 
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
@@ -1289,8 +1289,8 @@ mod = SourceModule("""
 \note{
 \scriptsize
 \begin{itemize}
-\item train larger neural networks 
-\item learning from a larger function space
+\item train larger neural networks over multiple GPUs
+\item larger neural networks allows us to then learn from a larger function space
 \item GPUs are more energy efficient than CPUs; they are optimized for throughput and performance per watt and not absolute performance
 \end{itemize}
 }
