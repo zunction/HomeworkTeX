@@ -702,7 +702,7 @@ Now let's look at MPM. In MPM, the neurons also have binary states $\{0,1\}$. Ho
 \end{tikzpicture}
 \end{figure}
 \begin{align*}
-\text{Transition Energy, }E(y,x|\theta) &= -\sum_{ji \in E}W_{ji}y_jx_i- \sum_{j \in V}b_j x_j- \sum_{i \in V}b_i x_i\\
+\text{Transition Energy, }E(y,x|\theta) &= -\sum_{ji \in E}W_{ji}y_jx_i- \sum_{j \in V}b_j y_j- \sum_{i \in V}b_i x_i\\
 \Gamma_{yx} &=\exp\left(-\frac{1}{2\tau}E(y,x|\theta)+\frac{1}{2\tau}E(x,x|\theta)\right)\\
 \end{align*}
 \note{
