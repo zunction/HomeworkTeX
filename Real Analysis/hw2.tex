@@ -83,14 +83,53 @@
 
 \item 
 \begin{enumerate}[(a)]
-\item Let $f(x,y) = \cosh x \cosh y$, then
+\item Let $f(x,y) = \cosh x \cosh y$, with $\vec{x} = (0,0)$, $\vec{v}=(x,y)$,
 \begin{align*}
-\left.\nabla f \right|_{(0,0)} = \left.\begin{bmatrix}\sinh x \cosh y \\ \cosh x \sinh y \end{bmatrix}\right|_{(0,0)} = \begin{bmatrix}0 \\ 0\end{bmatrix}\\
-\left.\nabla^2 f \right|_{(0,0)} = \left.\begin{bmatrix}\cosh x \cosh y & \sinh x \sinh y \\ \sinh x \sinh y &\cosh x \cosh y \end{bmatrix}\right|_{(0,0)} = \begin{bmatrix}1 & 0 \\ 0 & 1\end{bmatrix}
+F(h): = f(\vec{x}+h\vec{v}) = f(h\vec{v}) = \cosh hx\cosh hy
 \end{align*}
+%We first compute the following,
+%\begin{alignat*}{2}
+%\frac{\partial f(h\vec{v})}{\partial e_1^3} &= \sinh hx \cosh hy &\quad  \frac{\partial f(h\vec{v})}{\partial e_2^3} &= \cosh hx \sinh hy \\
+%\frac{\partial f(h\vec{v})}{\partial e_1e_2e_1}=\frac{\partial f(h\vec{v})}{\partial e_1^2e_2} &= \cosh hx \sinh hy &\quad  \frac{\partial f(h\vec{v})}{\partial e_2e_1e_2} &= \frac{\partial f(h\vec{v})}{\partial e_2^2e_1}=\sinh hx \cosh hy \\
+%\frac{\partial f(h\vec{v})}{\partial e_1e_2^2}&= \sinh hx \cosh hy &\quad  \frac{\partial f(h\vec{v})}{\partial e_2e_1^2} &= \cosh hx \sinh hy 
+%\end{alignat*}
+then
+\begin{align*}
+F'(h)=\left\langle\nabla f(h\vec{v}),\vec{v}\right\rangle  &= x \sinh hx \cosh hy + y \cosh hx \sinh hy\\
+F''(h)=\nabla^2 f(h\vec{v})(\vec{v},\vec{v})&=\begin{bmatrix}x & y\end{bmatrix}\begin{bmatrix}\cosh hx \cosh hy & \sinh hx \sinh hy \\ \sinh hx \sinh hy &\cosh hx \cosh hy \end{bmatrix}\begin{bmatrix}x \\ y\end{bmatrix}\\
+%F'''(h)=\nabla^3 f(h\vec{v})(\vec{v},\vec{v},\vec{v}) &= \sum_{i,j,k=1,2}\frac{f(h\vec{v})}{\partial e_i\partial e_j\partial e_k}v_iv_jv_k \\
+%&= (x^3 + 3xy^2)(\sinh hx \cosh hy) + (y^3+3x^2y)(\cosh hx \cosh hy)
+\end{align*}
+and 
+\begin{alignat*}{2}
+F(0) &= 0 \quad F'(0) &= 0 \quad  F''(0) &= x^2 + y^2
+\end{alignat*}
+Thus the polynomial of second degree that best approximate $f(x,y)$ is $\frac{1}{2}(x^2+y^2)$.
+
+%\begin{align*}
+%\left.\nabla f \right|_{(0,0)} &= \left.\begin{bmatrix}\sinh x \cosh y \\ \cosh x \sinh y \end{bmatrix}\right|_{(0,0)} = \begin{bmatrix}0 \\ 0\end{bmatrix}\\
+%\left.\nabla^2 f \right|_{(0,0)} &= \left.\begin{bmatrix}\cosh x \cosh y & \sinh x \sinh y \\ \sinh x \sinh y &\cosh x \cosh y \end{bmatrix}\right|_{(0,0)} = \begin{bmatrix}1 & 0 \\ 0 & 1\end{bmatrix}
+%\end{align*}
 
 
-\item
+\item Let $g(x,y) = \sin (x^2+y^2)$, with $\vec{x} = (0,0)$, $\vec{v}=(x,y)$,
+\begin{align*}
+F(h): = g(\vec{x}+h\vec{v}) = g(h\vec{v}) = \sin ((hx)^2+(hy)^2)
+\end{align*}
+then
+\begin{align*}
+F'(h)&=\left\langle\nabla g(h\vec{v}),\vec{v}\right\rangle  = x (2hx\cos((hx)^2+(hy)^2)) + y (2hy\cos((hx)^2+(hy)^2))\\
+F''(h)&=\nabla^2 g(h\vec{v})(\vec{v},\vec{v})\\
+&=x^2(2\cos((hx)^2+(hy)^2)-4(xh)^2\sin((hx)^2+(hy)^2))\\
+&-2xy(4xyh^2\sin((hx)^2+(hy)^2))\\
+&+y^2(2\cos((hx)^2+(hy)^2)-4(yh)^2\sin((hx)^2+(hy)^2))
+%\begin{bmatrix}x & y\end{bmatrix}\begin{bmatrix}2\cos((hx)^2+(hy)^2)-4x^2\sin((hx)^2+(hy)^2) & -4xy\sin((hx)^2+(hy)^2) \\ -4xy\sin((hx)^2+(hy)^2) &2\cos((hx)^2+(hy)^2)-4y^2\sin((hx)^2+(hy)^2) \end{bmatrix}\begin{bmatrix}x \\ y\end{bmatrix}\\
+\end{align*}
+and 
+\begin{alignat*}{2}
+F(0) &= 0 \quad F'(0) &= 0 \quad  F''(0) &= 2x^2 + 2y^2
+\end{alignat*}
+Thus the polynomial of second degree that best approximate $g(x,y)$ is $x^2+y^2$.	
 \end{enumerate}
 
 
@@ -100,12 +139,29 @@
 \item
 
 
-\item
+\item 
+\begin{align*}
+\frac{\partial^2f}{\partial x \partial y}
+\end{align*}
 \end{enumerate}
 
 \item
 
 \item
+\begin{enumerate}[(a)]
+\item
+
+
+\item
+\begin{enumerate}[(i)]
+\item 
+\begin{align*}
+H_n'(x = )
+\end{align*}
+\end{enumerate}
+
+\item
+\end{enumerate}
 \end{enumerate}
 
 
