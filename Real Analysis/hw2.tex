@@ -97,12 +97,12 @@ then
 \begin{align*}
 F'(h)=\left\langle\nabla f(h\vec{v}),\vec{v}\right\rangle  &= x \sinh hx \cosh hy + y \cosh hx \sinh hy\\
 F''(h)=\nabla^2 f(h\vec{v})(\vec{v},\vec{v})&=\begin{bmatrix}x & y\end{bmatrix}\begin{bmatrix}\cosh hx \cosh hy & \sinh hx \sinh hy \\ \sinh hx \sinh hy &\cosh hx \cosh hy \end{bmatrix}\begin{bmatrix}x \\ y\end{bmatrix}\\
-%F'''(h)=\nabla^3 f(h\vec{v})(\vec{v},\vec{v},\vec{v}) &= \sum_{i,j,k=1,2}\frac{f(h\vec{v})}{\partial e_i\partial e_j\partial e_k}v_iv_jv_k \\
-%&= (x^3 + 3xy^2)(\sinh hx \cosh hy) + (y^3+3x^2y)(\cosh hx \cosh hy)
+F'''(h)=\nabla^3 f(h\vec{v})(\vec{v},\vec{v},\vec{v}) &= \sum_{i,j,k=1,2}\frac{f(h\vec{v})}{\partial e_i\partial e_j\partial e_k}v_iv_jv_k \\
+&= (x^3 + 3xy^2)(\sinh hx \cosh hy) + (y^3+3x^2y)(\cosh hx \cosh hy)
 \end{align*}
 and 
 \begin{alignat*}{2}
-F(0) &= 0 \quad F'(0) &= 0 \quad  F''(0) &= x^2 + y^2
+F(0) &= 0 \quad F'(0) &= 0 \quad  F''(0) &= x^2 + y^2 \quad F'''(0) = 
 \end{alignat*}
 Thus the polynomial of second degree that best approximate $f(x,y)$ is $\frac{1}{2}(x^2+y^2)$.
 
