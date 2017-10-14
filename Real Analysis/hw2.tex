@@ -145,17 +145,32 @@ Thus the polynomial of second degree that best approximate $g(x,y)$ is $x^2+y^2$
 \end{align*}
 \end{enumerate}
 
-\item
+\item We recall the geometric series,
+\begin{align*}
+\frac{1}{1-x} &= \sum_{k=0}^{\infty}x^k~, \quad\text{ where $|x|<1$}\\
+\text{substituting $x$ with $-x$ }, \frac{1}{1+x} &= \sum_{k=0}^{\infty}(-1)^kx^k~, \quad\text{ where $|x|<1$}\\
+\text{substituting $x$ with $x^2$ }, \frac{1}{1+x^2} &= \sum_{k=0}^{\infty}(-1)^kx^{2k}~, \quad\text{ where $|x|<1$}
+\end{align*}
+we can then do integration term wise on the right hand side while integrating $\frac{1}{1+x^2}$,
+\begin{align*}
+\pi/4=\tan^{-1}(1) = \int_{0}^{1}\frac{1}{1+t^2}\,dt &= \sum_{k=0}^{\infty}(-1)^k\int_{0}^{1}t^{2k}\,dt\\
+&= \sum_{k=0}^{\infty}(-1)^k\frac{1}{2k+1}\\
+\end{align*}
+thus $\pi = 4\sum_{k=0}^{\infty}(-1)^k\frac{1}{2k+1} = 4\left(1-\frac{1}{3}+\frac{1}{5}-\frac{1}{7}+\ldots\right)$.
+
 
 \item
 \begin{enumerate}[(a)]
-\item
-
+\item We know that $e^x = \sum_{k=0}^{\infty}\frac{x^k}{k!}$, then 
+\begin{align*}
+H_n(x) &:= \frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\frac{d^n}{dx^n}e^{-\frac{x^2}{2}}\\
+e^{tx-\frac{t^2}{2}} &= \sum_{k=0}^{\infty}\frac{(tx-\frac{t^2}{2})^k}{k!} \\
+&=\sum_{k=0}^{\infty}t^k \frac{(-1)^k}{k!}e^{\frac{x^2}{2}}\frac{d^k}{dx^k}e^{-\frac{x^2}{2}}\\
+\end{align*}
 
 \item
 \begin{enumerate}[(i)]
-\item 
-\begin{align*}
+\item \begin{align*}
 H_n'(x = )
 \end{align*}
 \end{enumerate}
