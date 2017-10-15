@@ -142,9 +142,19 @@ Thus the polynomial of third degree that best approximate $g(x,y)$ is $x^2+y^2$.
 \begin{enumerate}[(a)]
 \item We observe that $f(x,y)$ is continuous at all points $(x,y) \neq (0,0)$ since the denominator is nonzero. Thus we need to show that $\lim_{(x,y) \to (0,0)}f(x,y)=0$ to show $f(x,y)$ is everywhere continuous.
 \begin{align*}
-\lim_{(x,y) \to (0,0)}\frac{xy(x^2-y^2)}{x^2+y^2} = \lim_{(x,y) \to (0,0)}xy\cdot \lim_{(x,y) \to (0,0)}\left(\frac{1}{1+(y/x)^2}+\frac{1}{1+(x/y)^2}\right)
+\lim_{(x,y) \to (0,0)}\frac{xy(x^2-y^2)}{x^2+y^2} = \lim_{(x,y) \to (0,0)}xy\frac{x^2}{x^2+y^2} - \lim_{(x,y) \to (0,0)}xy\frac{y^2}{x^2+y^2}
 \end{align*}
-Let $z = x/y$, then $h(z) = 1/(1+z^2)$ is a continuous function for all $x,y \in \mathbb{R}$. Thus if $\lim_{(x,y) \to (0,0)}z = z_0$, $\lim_{(x,y) \to (0,0)}h(z) = h(z_0)$. Using L' Hopital's Rule, we get $z_0=1$ and thus the limit of the second term above is 2. Since the limit of the first term above is 0, we show that as $(x,y)\to (0,0)$, $f(x,y)\to 0$. Thus $f(x,y)$ is everywhere continuous.
+then since,
+\begin{align*}
+0 \leq \frac{x^2}{x^2+y^2} \leq 1~,&\qquad -|xy| \leq xy \leq |xy|\\
+-|xy| \leq &xy\frac{x^2}{x^2+y^2} \leq|xy|\\
+\end{align*}
+and $\lim_{(x,y) \to (0,0)}\pm|xy|=0$, which by Squeeze theorem gives us $\lim_{(x,y) \to (0,0)}xy\frac{x^2}{x^2+y^2}=0$. We use the same argument and get the limit to be zero for the second term which shows the desired.
+%\begin{align*}
+%\lim_{(x,y) \to (0,0)}\frac{xy(x^2-y^2)}{x^2+y^2} = \lim_{(x,y) \to (0,0)}xy\cdot \lim_{(x,y) \to (0,0)}\left(\frac{1}{1+(y/x)^2}+\frac{1}{1+(x/y)^2}\right)
+%\end{align*}
+%Let $z = x/y$, then $h(z) = 1/(1+z^2)$ is a continuous function for all $x,y \in \mathbb{R}$. Thus if $\lim_{(x,y) \to (0,0)}z = z_0$, $\lim_{(x,y) \to (0,0)}h(z) = h(z_0)$. Using L' Hopital's Rule, we get $z_0=1$ and thus the limit of the second term above is 2. Since the limit of the first term above is 0, we show that as $(x,y)\to (0,0)$, $f(x,y)\to 0$. Thus $f(x,y)$ is everywhere continuous.
+We have $\nabla f = (f_x, f_y)$, which are given below,
 \begin{align*}
 f_x(x,y) = \frac{x^4y+4x^2y^3-y^5}{(x^2+y^2)^2},\qquad f_y(x,y) = \frac{x^5-4x^3y^2-xy^4}{(x^2+y^2)^2}
 \end{align*}
