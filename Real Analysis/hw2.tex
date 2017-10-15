@@ -102,9 +102,9 @@ F'''(h)=\nabla^3 f(h\vec{v})(\vec{v},\vec{v},\vec{v}) &= \sum_{i,j,k=1,2}\frac{f
 \end{align*}
 and 
 \begin{alignat*}{2}
-F(0) &= 0 \quad F'(0) &= 0 \quad  F''(0) &= x^2 + y^2 \quad F'''(0) = 
+F(0) &= 0 \quad F'(0) &= 0 \quad  F''(0) &= x^2 + y^2 \quad F'''(0) = y^3+3x^2y
 \end{alignat*}
-Thus the polynomial of second degree that best approximate $f(x,y)$ is $\frac{1}{2}(x^2+y^2)$.
+Thus the polynomial of third degree that best approximate $f(x,y)$ is $\frac{1}{2}(x^2+y^2)+ \frac{1}{6}(y^3+3x^2y)$.
 
 %\begin{align*}
 %\left.\nabla f \right|_{(0,0)} &= \left.\begin{bmatrix}\sinh x \cosh y \\ \cosh x \sinh y \end{bmatrix}\right|_{(0,0)} = \begin{bmatrix}0 \\ 0\end{bmatrix}\\
@@ -114,34 +114,49 @@ Thus the polynomial of second degree that best approximate $f(x,y)$ is $\frac{1}
 
 \item Let $g(x,y) = \sin (x^2+y^2)$, with $\vec{x} = (0,0)$, $\vec{v}=(x,y)$,
 \begin{align*}
-F(h): = g(\vec{x}+h\vec{v}) = g(h\vec{v}) = \sin ((hx)^2+(hy)^2)
+G(h): = g(\vec{x}+h\vec{v}) = g(h\vec{v}) = \sin ((hx)^2+(hy)^2)
 \end{align*}
 then
 \begin{align*}
-F'(h)&=\left\langle\nabla g(h\vec{v}),\vec{v}\right\rangle  = x (2hx\cos((hx)^2+(hy)^2)) + y (2hy\cos((hx)^2+(hy)^2))\\
-F''(h)&=\nabla^2 g(h\vec{v})(\vec{v},\vec{v})\\
+G'(h)&=\left\langle\nabla g(h\vec{v}),\vec{v}\right\rangle  = x (2hx\cos((hx)^2+(hy)^2)) + y (2hy\cos((hx)^2+(hy)^2))\\
+G''(h)&=\nabla^2 g(h\vec{v})(\vec{v},\vec{v})\\
 &=x^2(2\cos((hx)^2+(hy)^2)-4(xh)^2\sin((hx)^2+(hy)^2))\\
 &-2xy(4xyh^2\sin((hx)^2+(hy)^2))\\
-&+y^2(2\cos((hx)^2+(hy)^2)-4(yh)^2\sin((hx)^2+(hy)^2))
-%\begin{bmatrix}x & y\end{bmatrix}\begin{bmatrix}2\cos((hx)^2+(hy)^2)-4x^2\sin((hx)^2+(hy)^2) & -4xy\sin((hx)^2+(hy)^2) \\ -4xy\sin((hx)^2+(hy)^2) &2\cos((hx)^2+(hy)^2)-4y^2\sin((hx)^2+(hy)^2) \end{bmatrix}\begin{bmatrix}x \\ y\end{bmatrix}\\
+&+y^2(2\cos((hx)^2+(hy)^2)-4(yh)^2\sin((hx)^2+(hy)^2))\\
+G'''(h)&=\nabla^3 g(h\vec{v})(\vec{v},\vec{v},\vec{v}) = \sum_{i,j,k=1,2}\frac{g(h\vec{v})}{\partial e_i\partial e_j\partial e_k}v_iv_jv_k\\
+&=x^3(-8(hx)^3 \cos((hx)^2+(hy)^2) - 12 (hx) \sin((hx)^2+(hy)^2))\\
+&y^3(-8(hy)^3 \cos((hx)^2+(hy)^2) - 12 (hy) \sin((hx)^2+(hy)^2))\\
+&+3x^2y(-8(hx)^2(hy)\cos((hx)^2+(hy)^2)-4(hy)\sin((hx)^2+(hy)^2))\\
+&+3xy^2(-8(hx)(hy)^2\cos((hx)^2+(hy)^2)-4(hx)\sin((hx)^2+(hy)^2))
 \end{align*}
 and 
 \begin{alignat*}{2}
-F(0) &= 0 \quad F'(0) &= 0 \quad  F''(0) &= 2x^2 + 2y^2
+G(0) &= 0 \quad G'(0) &= 0 \quad  G''(0) &= 2x^2 + 2y^2 \quad G'''(0) = 0
 \end{alignat*}
-Thus the polynomial of second degree that best approximate $g(x,y)$ is $x^2+y^2$.	
+Thus the polynomial of third degree that best approximate $g(x,y)$ is $x^2+y^2$.	
 \end{enumerate}
 
 
 
 \item
 \begin{enumerate}[(a)]
-\item
-
-
-\item 
+\item We observe that $f(x,y)$ is continuous at all points $(x,y) \neq (0,0)$ since the denominator is nonzero. Thus we need to show that $\lim_{(x,y) \to (0,0)}f(x,y)=0$ to show $f(x,y)$ is everywhere continuous.
 \begin{align*}
-\frac{\partial^2f}{\partial x \partial y}
+\lim_{(x,y) \to (0,0)}\frac{xy(x^2-y^2)}{x^2+y^2} = \lim_{(x,y) \to (0,0)}xy\cdot \lim_{(x,y) \to (0,0)}\left(\frac{1}{1+(y/x)^2}+\frac{1}{1+(x/y)^2}\right)
+\end{align*}
+Let $z = x/y$, then $h(z) = 1/(1+z^2)$ is a continuous function for all $x,y \in \mathbb{R}$. Thus if $\lim_{(x,y) \to (0,0)}z = z_0$, $\lim_{(x,y) \to (0,0)}h(z) = h(z_0)$. Using L' Hopital's Rule, we get $z_0=1$ and thus the limit of the second term above is 2. Since the limit of the first term above is 0, we show that as $(x,y)\to (0,0)$, $f(x,y)\to 0$. Thus $f(x,y)$ is everywhere continuous.
+\begin{align*}
+f_x(x,y) = \frac{x^4y+4x^2y^3-y^5}{(x^2+y^2)^2},\qquad f_y(x,y) = \frac{x^5-4x^3y^2-xy^4}{(x^2+y^2)^2}
+\end{align*}
+\item The computation gives,
+\begin{align*}
+\frac{\partial^2f}{\partial x \partial y} = \frac{x^6+9x^4y^2-9x^2y^4-y^6}{(x^2+y^2)^3} = \frac{\partial^2f}{\partial y \partial x}
+\end{align*}
+To show it is continuous everywhere we have to show that $\lim_{(x,y)\to(0,0)}\frac{x^6+9x^4y^2-9x^2y^4-y^6}{(x^2+y^2)^3}$ exists and is well defined along different paths.
+\begin{align*}
+\text{Along $y=x$, }\lim_{(x,y)\to(0,0)}\frac{x^6+9x^4y^2-9x^2y^4-y^6}{(x^2+y^2)^3} &= 0\\
+\text{Along $y=2x$, } \lim_{(x,y)\to(0,0)}\frac{x^6+9x^4y^2-9x^2y^4-y^6}{(x^2+y^2)^3}&= \lim_{(x,y)\to(0,0)}\frac{x^6+36x^6-144x^6-64x^5}{(x^2+4x^2)^3} \\
+&=-171/125
 \end{align*}
 \end{enumerate}
 
@@ -161,7 +176,21 @@ thus $\pi = 4\sum_{k=0}^{\infty}(-1)^k\frac{1}{2k+1} = 4\left(1-\frac{1}{3}+\fra
 
 \item
 \begin{enumerate}[(a)]
-\item We know that $e^x = \sum_{k=0}^{\infty}\frac{x^k}{k!}$, then 
+\item We will show the result by doing Taylor's expansion at $0$, which requires us to compute the higher derivatives of $f(t) = e^{tx-\frac{t^2}{2}}$.
+\begin{align*}
+f'(t) &= (x-t) f(t) = P_1(t)f(t)\\
+f''(t) &= \left[(x-t)^2-1\right] f(t) = P_2(t)f(t)\\
+f'''(t) &= \left[(x-t)^3-3(x-t)\right] f(t)= P_3(t)f(t)\\
+&\vdots\\
+f^{(n)}(t) &= P_n(t)f(t)\\
+\end{align*}
+then we would now like to show that $P_i(t) = P'_{i-1}(t)+(x-t)P_{i-1}(t)$, $P_0 = 1$. It is clear that it is true for $i=1$. Suppose it is true for $i=k$, $f^{(k)}(t) = P_k(t)f(t)$, then
+\begin{align*}
+f^{(k+1)}(t) &= P'_k(t)f(t) + P_k(t)f'(t)\\
+&=P'_k(t)f(t)+(x-t)P_k(t)f(t)
+\end{align*}
+which completes the proof by induction.
+We know that $e^x = \sum_{k=0}^{\infty}\frac{x^k}{k!}$, then 
 \begin{align*}
 H_n(x) &:= \frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\frac{d^n}{dx^n}e^{-\frac{x^2}{2}}\\
 e^{tx-\frac{t^2}{2}} &= \sum_{k=0}^{\infty}\frac{(tx-\frac{t^2}{2})^k}{k!} \\
