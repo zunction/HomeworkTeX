@@ -239,9 +239,9 @@ It converges because it is a Taylor series of an exponential which has radius of
 \begin{enumerate}[(i)]
 \item 
 \begin{align*}
-\frac{d}{dx}H_n(x) &= xH_n(x)+\frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\frac{d^{n+1}}{dx^{n+1}}e^{-\frac{x^2}{2}}\\
+H'_n(x) &= xH_n(x)+\frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\frac{d^{n+1}}{dx^{n+1}}e^{-\frac{x^2}{2}}\\
 &= xH_n(x)+\frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\frac{d^{n}}{dx^{n}}(-xe^{-\frac{x^2}{2}})\\
-&= xH_n(x)+\frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\left[-x\frac{d^n}{dx^n}e^{-\frac{x^2}{2}}-n\frac{d^{n-1}}{dx^{n-1}}e^{-\frac{x^2}{2}}\right],\quad \text{by General Leibniz Rule}\\
+&= xH_n(x)+\frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\left[-x\frac{d^n}{dx^n}e^{-\frac{x^2}{2}}-n\frac{d^{n-1}}{dx^{n-1}}e^{-\frac{x^2}{2}}\right],~\text{by General Leibniz Rule}\\
 &=\frac{(-1)^{n-1}}{(n-1)!}e^{\frac{x^2}{2}}\frac{d^{n-1}}{dx^{n-1}}e^{-\frac{x^2}{2}}=H_{n-1}(x)
 \end{align*}
 %We first show a small result, for $f(x) = e^{-\frac{x^2}{2}}$, $f^{n}(x) = P_n(x)f(x)$ where
@@ -264,6 +264,12 @@ It converges because it is a Taylor series of an exponential which has radius of
 
 
 \item 
+\begin{align*}
+(n+1)H_n(x) & = (n+1)\frac{(-1)^{n+1}}{(n+1)!}e^{\frac{x^2}{2}}\frac{d^{n+1}}{dx^{n+1}}e^{-\frac{x^2}{2}}\\
+& = \frac{(-1)^{n+1}}{n!}e^{\frac{x^2}{2}}\frac{d^{n}}{dx^{n}}-xe^{-\frac{x^2}{2}}\\
+& = \frac{(-1)^{n+1}}{n!}e^{\frac{x^2}{2}}\left[-x\frac{d^n}{dx^n}e^{\frac{-x^2}{2}}-n\frac{d^{n-1}}{dx^{n-1}}e^{\frac{-x^2}{2}}\right]\\
+&=xH_n(x) - H_{n-1}(x)
+\end{align*}
 
 
 \item Let $y=-x$, then
