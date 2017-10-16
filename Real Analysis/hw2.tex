@@ -97,14 +97,15 @@ then
 \begin{align*}
 F'(h)=\left\langle\nabla f(h\vec{v}),\vec{v}\right\rangle  &= x \sinh hx \cosh hy + y \cosh hx \sinh hy\\
 F''(h)=\nabla^2 f(h\vec{v})(\vec{v},\vec{v})&=\begin{bmatrix}x & y\end{bmatrix}\begin{bmatrix}\cosh hx \cosh hy & \sinh hx \sinh hy \\ \sinh hx \sinh hy &\cosh hx \cosh hy \end{bmatrix}\begin{bmatrix}x \\ y\end{bmatrix}\\
-F'''(h)=\nabla^3 f(h\vec{v})(\vec{v},\vec{v},\vec{v}) &= \sum_{i,j,k=1,2}\frac{f(h\vec{v})}{\partial e_i\partial e_j\partial e_k}v_iv_jv_k \\
-&= (x^3 + 3xy^2)(\sinh hx \cosh hy) + (y^3+3x^2y)(\cosh hx \cosh hy)
+%F'''(h)=\nabla^3 f(h\vec{v})(\vec{v},\vec{v},\vec{v}) &= \sum_{i,j,k=1,2}\frac{f(h\vec{v})}{\partial e_i\partial e_j\partial e_k}v_iv_jv_k \\
+%&= (x^3 + 3xy^2)(\sinh hx \cosh hy) + (y^3+3x^2y)(\cosh hx \cosh hy)
 \end{align*}
 and 
 \begin{alignat*}{2}
-F(0) &= 0 \quad F'(0) &= 0 \quad  F''(0) &= x^2 + y^2 \quad F'''(0) = y^3+3x^2y
+F(0) &= 1 \quad F'(0) &= 0 \quad  F''(0) &= x^2 + y^2 %\quad F'''(0) = y^3+3x^2y
 \end{alignat*}
-Thus the polynomial of third degree that best approximate $f(x,y)$ is $\frac{1}{2}(x^2+y^2)+ \frac{1}{6}(y^3+3x^2y)$.
+%Thus the polynomial of third degree that best approximate $f(x,y)$ is $1+\frac{1}{2}(x^2+y^2)+ \frac{1}{6}(y^3+3x^2y)$.
+Thus the polynomial of second degree that best approximate $f(x,y)$ is $1+\frac{1}{2}(x^2+y^2)$.
 
 %\begin{align*}
 %\left.\nabla f \right|_{(0,0)} &= \left.\begin{bmatrix}\sinh x \cosh y \\ \cosh x \sinh y \end{bmatrix}\right|_{(0,0)} = \begin{bmatrix}0 \\ 0\end{bmatrix}\\
@@ -123,17 +124,18 @@ G''(h)&=\nabla^2 g(h\vec{v})(\vec{v},\vec{v})\\
 &=x^2(2\cos((hx)^2+(hy)^2)-4(xh)^2\sin((hx)^2+(hy)^2))\\
 &-2xy(4xyh^2\sin((hx)^2+(hy)^2))\\
 &+y^2(2\cos((hx)^2+(hy)^2)-4(yh)^2\sin((hx)^2+(hy)^2))\\
-G'''(h)&=\nabla^3 g(h\vec{v})(\vec{v},\vec{v},\vec{v}) = \sum_{i,j,k=1,2}\frac{g(h\vec{v})}{\partial e_i\partial e_j\partial e_k}v_iv_jv_k\\
-&=x^3(-8(hx)^3 \cos((hx)^2+(hy)^2) - 12 (hx) \sin((hx)^2+(hy)^2))\\
-&y^3(-8(hy)^3 \cos((hx)^2+(hy)^2) - 12 (hy) \sin((hx)^2+(hy)^2))\\
-&+3x^2y(-8(hx)^2(hy)\cos((hx)^2+(hy)^2)-4(hy)\sin((hx)^2+(hy)^2))\\
-&+3xy^2(-8(hx)(hy)^2\cos((hx)^2+(hy)^2)-4(hx)\sin((hx)^2+(hy)^2))
+%G'''(h)&=\nabla^3 g(h\vec{v})(\vec{v},\vec{v},\vec{v}) = \sum_{i,j,k=1,2}\frac{g(h\vec{v})}{\partial e_i\partial e_j\partial e_k}v_iv_jv_k\\
+%&=x^3(-8(hx)^3 \cos((hx)^2+(hy)^2) - 12 (hx) \sin((hx)^2+(hy)^2))\\
+%&y^3(-8(hy)^3 \cos((hx)^2+(hy)^2) - 12 (hy) \sin((hx)^2+(hy)^2))\\
+%&+3x^2y(-8(hx)^2(hy)\cos((hx)^2+(hy)^2)-4(hy)\sin((hx)^2+(hy)^2))\\
+%&+3xy^2(-8(hx)(hy)^2\cos((hx)^2+(hy)^2)-4(hx)\sin((hx)^2+(hy)^2))
 \end{align*}
 and 
 \begin{alignat*}{2}
-G(0) &= 0 \quad G'(0) &= 0 \quad  G''(0) &= 2x^2 + 2y^2 \quad G'''(0) = 0
+G(0) &= 0 \quad G'(0) &= 0 \quad  G''(0) &= 2x^2 + 2y^2 %\quad G'''(0) = 0
 \end{alignat*}
-Thus the polynomial of third degree that best approximate $g(x,y)$ is $x^2+y^2$.	
+%Thus the polynomial of third degree that best approximate $g(x,y)$ is $x^2+y^2$.	
+Thus the polynomial of second degree that best approximate $g(x,y)$ is $x^2+y^2$.	
 \end{enumerate}
 
 
@@ -158,6 +160,17 @@ We have $\nabla f = (f_x, f_y)$, which are given below,
 \begin{align*}
 f_x(x,y) = \frac{x^4y+4x^2y^3-y^5}{(x^2+y^2)^2},\qquad f_y(x,y) = \frac{x^5-4x^3y^2-xy^4}{(x^2+y^2)^2}
 \end{align*}
+Again it suffices to show that it is continuous at $(0,0)$. We see that 
+\begin{align*}
+f_x = y \left(1-\frac{2y^4}{(x^2+y^2)^2}\right), \qquad f_y = -x \left(1-\frac{2x^4}{(x^2+y^2)^2}\right)
+\end{align*}
+and $-1\leq 1-\frac{2y^4}{(x^2+y^2)^2},1-\frac{2x^4}{(x^2+y^2)^2}\leq 1$. Thus 
+\begin{align*}
+-y\leq &y\left(1-\frac{2y^4}{(x^2+y^2)^2}\right)\leq y\\
+-x \leq &-x\left(1-\frac{2x^4}{(x^2+y^2)^2}\right)\leq x
+\end{align*}
+which by Squeeze theorem, we get $\lim_{(x,y)\to (0,0)}f_x = 0 = \lim_{(x,y)\to (0,0)}f_y$.
+
 \item The computation gives,
 \begin{align*}
 \frac{\partial^2f}{\partial x \partial y} = \frac{x^6+9x^4y^2-9x^2y^4-y^6}{(x^2+y^2)^3} = \frac{\partial^2f}{\partial y \partial x}
@@ -186,35 +199,97 @@ thus $\pi = 4\sum_{k=0}^{\infty}(-1)^k\frac{1}{2k+1} = 4\left(1-\frac{1}{3}+\fra
 
 \item
 \begin{enumerate}[(a)]
-\item We will show the result by doing Taylor's expansion at $0$, which requires us to compute the higher derivatives of $f(t) = e^{tx-\frac{t^2}{2}}$.
+\item Let $f(t) = e^{-\frac{(x-t)^2}{2}} = e^{-x^2/2}\cdot e^{xt-\frac{t^2}{2}}$. Then $f(t) = \sum_{k=0}^{\infty}\frac{f^{(k)}(0)}{k!}t^k$, where
 \begin{align*}
-f'(t) &= (x-t) f(t) = P_1(t)f(t)\\
-f''(t) &= \left[(x-t)^2-1\right] f(t) = P_2(t)f(t)\\
-f'''(t) &= \left[(x-t)^3-3(x-t)\right] f(t)= P_3(t)f(t)\\
-&\vdots\\
-f^{(n)}(t) &= P_n(t)f(t)\\
+f^{(k)}(0) &= \left.\frac{d^k}{dt^k}e^{-\frac{(x-t)^2)}{2}}\right|_{t=0}\\
+&= \left.(-1)^k\frac{d^k}{du^k}e^{-\frac{u^2}{2}}\right|_{u=x}\quad \text{ letting $u=x-t$, so $\frac{d}{du}=-\frac{d}{dt}$}\\
+&= (-1)^k\frac{d^k}{dx^k}e^{-\frac{x^2}{2}}
 \end{align*}
-then we would now like to show that $P_i(t) = P'_{i-1}(t)+(x-t)P_{i-1}(t)$, $P_0 = 1$. It is clear that it is true for $i=1$. Suppose it is true for $i=k$, $f^{(k)}(t) = P_k(t)f(t)$, then
+then
 \begin{align*}
-f^{(k+1)}(t) &= P'_k(t)f(t) + P_k(t)f'(t)\\
-&=P'_k(t)f(t)+(x-t)P_k(t)f(t)
+e^{-x^2/2}\cdot e^{xt-\frac{t^2}{2}} &= \sum_{k=0}^{\infty}\frac{(-1)^kt^k}{k!}\frac{d^k}{dx^k}e^{-\frac{x^2}{2}}\\
+e^{xt-\frac{t^2}{2}} &= e^{x^2/2}\sum_{k=0}^{\infty}\frac{(-1)^kt^k}{k!}\frac{d^k}{dx^k}e^{-\frac{x^2}{2}}\\
+&= \sum_{k=0}^{\infty}t^kH_k(x)
 \end{align*}
-which completes the proof by induction.
-We know that $e^x = \sum_{k=0}^{\infty}\frac{x^k}{k!}$, then 
-\begin{align*}
-H_n(x) &:= \frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\frac{d^n}{dx^n}e^{-\frac{x^2}{2}}\\
-e^{tx-\frac{t^2}{2}} &= \sum_{k=0}^{\infty}\frac{(tx-\frac{t^2}{2})^k}{k!} \\
-&=\sum_{k=0}^{\infty}t^k \frac{(-1)^k}{k!}e^{\frac{x^2}{2}}\frac{d^k}{dx^k}e^{-\frac{x^2}{2}}\\
-\end{align*}
+It converges because it is a Taylor series of an exponential which has radius of convergence, $R < \infty$.
+
+
+%We will show the result by doing Taylor's expansion at $0$, which requires us to compute the higher derivatives of $f(t) = e^{tx-\frac{t^2}{2}}$.
+%\begin{align*}
+%f'(t) &= (x-t) f(t) = P_1(t)f(t)\\
+%f''(t) &= \left[(x-t)^2-1\right] f(t) = P_2(t)f(t)\\
+%f'''(t) &= \left[(x-t)^3-3(x-t)\right] f(t)= P_3(t)f(t)\\
+%&\vdots\\
+%f^{(n)}(t) &= P_n(t)f(t)\\
+%\end{align*}
+%then we would now like to show that $P_i(t) = P'_{i-1}(t)+(x-t)P_{i-1}(t)$, $P_0 = 1$. It is clear that it is true for $i=1$. Suppose it is true for $i=k$, $f^{(k)}(t) = P_k(t)f(t)$, then
+%\begin{align*}
+%f^{(k+1)}(t) &= P'_k(t)f(t) + P_k(t)f'(t)\\
+%&=P'_k(t)f(t)+(x-t)P_k(t)f(t)
+%\end{align*}
+%which completes the proof by induction.
+%We know that $e^x = \sum_{k=0}^{\infty}\frac{x^k}{k!}$, then 
+%\begin{align*}
+%H_n(x) &:= \frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\frac{d^n}{dx^n}e^{-\frac{x^2}{2}}\\
+%e^{tx-\frac{t^2}{2}} &= \sum_{k=0}^{\infty}\frac{(tx-\frac{t^2}{2})^k}{k!} \\
+%&=\sum_{k=0}^{\infty}t^k \frac{(-1)^k}{k!}e^{\frac{x^2}{2}}\frac{d^k}{dx^k}e^{-\frac{x^2}{2}}\\
+%\end{align*}
 
 \item
 \begin{enumerate}[(i)]
-\item \begin{align*}
-H_n'(x = )
+\item 
+\begin{align*}
+\frac{d}{dx}H_n(x) &= xH_n(x)+\frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\frac{d^{n+1}}{dx^{n+1}}e^{-\frac{x^2}{2}}\\
+&= xH_n(x)+\frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\frac{d^{n}}{dx^{n}}(-xe^{-\frac{x^2}{2}})\\
+&= xH_n(x)+\frac{(-1)^n}{n!}e^{\frac{x^2}{2}}\left[-x\frac{d^n}{dx^n}e^{-\frac{x^2}{2}}-n\frac{d^{n-1}}{dx^{n-1}}e^{-\frac{x^2}{2}}\right],\quad \text{by General Leibniz Rule}\\
+&=\frac{(-1)^{n-1}}{(n-1)!}e^{\frac{x^2}{2}}\frac{d^{n-1}}{dx^{n-1}}e^{-\frac{x^2}{2}}=H_{n-1}(x)
+\end{align*}
+%We first show a small result, for $f(x) = e^{-\frac{x^2}{2}}$, $f^{n}(x) = P_n(x)f(x)$ where
+%\begin{align*}
+%P_i(x) = P'_{i-1}(x) -xP_{i-1}(x), \quad \text{with $P_0=1$.}
+%\end{align*}
+%\begin{align*}
+%f'(x) &=-x f(x) = P_1(x)f(x)\\
+%f''(x) &= \left[-(1+x)^2\right] f(x) = P_2(x)f(x)\\
+%f'''(x) &= \left[x^3-x\right] f(t)= P_3(t)f(t)\\
+%&\vdots\\
+%f^{(n)}(t) &= P_n(t)f(t)\\
+%\end{align*}
+%It is clear that it is true for $i=1$. Suppose it is true for $i=k$, $f^{(k)}(t) = P_k(t)f(t)$, then
+%\begin{align*}
+%f^{(k+1)}(x) &= P'_k(x)f(x) + P_k(x)f'(x)\\
+%&=P'_k(x)f(x)-xP_k(x)f(x)
+%\end{align*}
+%which completes the proof by induction.
+
+
+\item 
+
+
+\item Let $y=-x$, then
+\begin{align*}
+H_n(y) &= \frac{(-1)^n}{n!}e^{\frac{y^2}{2}}\frac{d^n}{dy^n}e^{-\frac{y^2}{2}}\\
+&= \frac{(-1)^n}{n!}e^{\frac{x^2}{2}}(-1)^n\frac{d^n}{dx^n}e^{-\frac{x^2}{2}},\quad \text{ since $\frac{d}{dy}=-\frac{d}{dx}$}\\
+&=(-1)^nH_n(x)
 \end{align*}
 \end{enumerate}
 
 \item
+\begin{enumerate}[(i)]
+\item 
+\begin{align*}
+\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}e^{sx-\frac{s^2}{2}}\,e^{tx-\frac{t^2}{2}}\,e^{-\frac{x^2}{2}}\,dx &=e^{st}\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}e^{-\frac{(x-(s+t))^2}{2}}\,dx = e^{st}
+\end{align*}
+\item Applying the partial derivatives $\left.\frac{\partial^{n+m}}{\partial s^n\partial t^m}\right|_{s,t=0}$ to (i), we get
+\begin{align*}
+0=\left.\frac{\partial^{n+m}}{\partial s^n\partial t^m}\right|_{s,t=0}e^{st} &= \left.\frac{\partial^{n+m}}{\partial s^n\partial t^m}\right|_{s,t=0}\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}e^{sx-\frac{s^2}{2}}e^{tx-\frac{t^2}{2}}e^{-\frac{x^2}{2}}\,dx\\&= \frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}\left.\frac{\partial^{n}}{\partial s^n}\right|_{s=0}e^{sx-\frac{s^2}{2}}\left.\frac{\partial^{m}}{\partial t^m}\right|_{t=0}e^{tx-\frac{t^2}{2}}e^{-\frac{x^2}{2}}\,dx\\
+\end{align*}
+ and since from 4(a),
+\begin{align*}
+\left.\frac{\partial^{n}}{\partial s^n}\right|_{s=0}e^{sx-\frac{s^2}{2}}=H_n(x)
+\end{align*}
+we are done.
+\end{enumerate}
 \end{enumerate}
 \end{enumerate}
 
