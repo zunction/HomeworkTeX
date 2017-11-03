@@ -101,21 +101,43 @@ we see that the first derivate of $f(x)$ is continuous but the second derivate i
 
 
 \item
-Given $f:[0,1] \to \mathbb{R}$ continuous with $\int_{0}^{1}f(x)x^n\,dx=0$ for all $n \in \mathbb{Z}_{\geq 0}$. By MVT for integrals, for every $n \in \mathbb{Z}_{\geq 0}$ there exists $c_n \in (0,1)$ such that
+
+
+
+
+%Given $f:[0,1] \to \mathbb{R}$ continuous with $\int_{0}^{1}f(x)x^n\,dx=0$ for all $n \in \mathbb{Z}_{\geq 0}$. By MVT for integrals, for every $n \in \mathbb{Z}_{\geq 0}$ there exists $c_n \in (0,1)$ such that
+%\begin{align*}
+%0 = \int_{0}^{1}f(x)x^n\,dx = f(c_n) \int_{0}^{1}x^n\,dx = \frac{f(c_n)}{n+1}
+%\end{align*}
+
+
+
+\item Let $\phi$ be $\lambda$-H\"{o}lder bi-continuous then for $v_1, v_2, u_1, u_2 \in T$, we have
 \begin{align*}
-0 = \int_{0}^{1}f(x)x^n\,dx = f(c_n) \int_{0}^{1}x^n\,dx = \frac{f(c_n)}{n+1}
+\sup_{v \in [0,T]}|\phi(u_2,v)-\phi(u_1,v)| &\leq C_u|u_2-u_1|^\lambda\\
+\sup_{u \in [0,T]}|\phi(u,v_2)-\phi(u,v_1)| &\leq C_v|v_2-v_1|^\lambda
 \end{align*}
-
-
-
-\item
-
+then we also observe that 
+\begin{align*}
+|\phi(u_1,v_1)-\phi(u_1,v_2)-\phi(u_2,v_1)+\phi(u_2,v_2)| &\leq |\phi(u_1,v_1)-\phi(u_1,v_2)|+|\phi(u_2,v_2)-\phi(u_2,v_1)| \\
+|\phi(u_1,v_1)-\phi(u_1,v_2)-\phi(u_2,v_1)+\phi(u_2,v_2)| &\leq |\phi(u_1,v_1)-\phi(u_2,v_1)|+|\phi(u_2,v_2)-\phi(u_1,v_2)|
+\end{align*}
+which gives us 
+\begin{align*}
+|\phi(u_1,v_1)-\phi(u_1,v_2)-\phi(u_2,v_1)+\phi(u_2,v_2)| &\leq 2C_v|v_2-v_1|^\lambda \\
+|\phi(u_1,v_1)-\phi(u_1,v_2)-\phi(u_2,v_1)+\phi(u_2,v_2)| &\leq 2C_u|u_2-u_1|^\lambda
+\end{align*}
+multiplying them together, we have 
+\begin{align*}
+|\phi(u_1,v_1)-\phi(u_1,v_2)-\phi(u_2,v_1)+\phi(u_2,v_2)|^2 \leq 4C_vC_u|v_2-v_1|^\lambda |u_2-u_1|^\lambda
+\end{align*}
+squaring both sides, we have shown that all $\lambda$-H\"{o}lder bi-continuous are strongly $\lambda/2$-H\"{o}lder bi-continuous.
 
 
 
 \item
 \begin{enumerate}[(a)]
-\item
+\item 
 
 \item
 \end{enumerate}
