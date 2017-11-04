@@ -1,6 +1,6 @@
 \documentclass[a4paper,12pt]{article}
 \setlength{\parindent}{0cm}
-\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots}
+\usepackage{amsmath, amssymb, amsthm, mathtools,pgfplots,bbm}
 \usepackage{graphicx,caption}
 \usepackage{verbatim}
 \usepackage{venndiagram}
@@ -143,9 +143,25 @@ squaring both sides, we have shown that all $\lambda$-H\"{o}lder bi-continuous a
 \end{align*}
 
 \item 
+Given $\psi(u,v):= \mathbbm{1}_{[0,v)}(u)\tilde{\psi}(u,v)$ we can understand it as
 \begin{align*}
-|f(u,v)| \leq \int_{u}^{T}\int_{v}^{T}\left|\frac{\psi(u,v)-\psi(u,r_2)-\psi(r_1,v)+\psi(r_1,r_2)}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}\right|\,dr_2dr_1
+\psi(u,v):=\begin{cases}
+\tilde{\psi}(u,v) & u <v\\
+0 & u \geq v
+\end{cases}
 \end{align*}
+
+then to do the double integral of $f(u,v)^2$ over $R = [0,T] \times [0,T]$ is equivalent to integrating over the region $\{(u,v) \in R\mid u < v\}$. Thus 
+
+\begin{align*}
+\int_{0}^{T}\int_{0}^{T}f(u,v)^2\,du\,dv = \int_{0}^{T} \int_{0}^{v}f(u,v)^2\,du\,dv
+%=\int_{0}^{T}\int_{0}^{T}\left[ \int_{u}^{T}\int_{v}^{T}\frac{\psi(u,v)-\psi(u,r_2)-\psi(r_1,v)+\psi(r_1,r_2)}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}\,dr_2dr_1\right]^2 \,du\,dv
+\end{align*}
+
+%\begin{align*}
+%|f(u,v)| &\leq \int_{u}^{T}\int_{v}^{T}\left|\frac{\psi(u,v)-\psi(u,r_2)-\psi(r_1,v)+\psi(r_1,r_2)}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}\right|\,dr_2dr_1\\
+%&\leq \int_{u}^{T}\int_{v}^{T}\left|C\frac{||^\lambda||^\lambda}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}\right|\,dr_2dr_1\\
+%\end{align*}
 \end{enumerate}
 
 
