@@ -143,7 +143,7 @@ squaring both sides, we have shown that all $\lambda$-H\"{o}lder bi-continuous a
 
 \item
 \begin{enumerate}[(a)]
-\item For $0 \leq a < b \leq T$ with $0 \leq \alpha < 1/4$, we first make the following observations:
+\item For $0 \leq a < b \leq T$ with $0 \leq \alpha < 1/4$ and $b \leq r_1 \leq T$, we first make the following observations:
 \begin{align}
 (r_1-b)^{3/4} \leq (r_1-a)^{3/4}\\
 \frac{1}{(r_1-a)^{\alpha+1/4}} \leq \frac{1}{(b-a)^{\alpha+1/4}}
@@ -153,15 +153,15 @@ then
 \int_{b}^{T}\frac{1}{(r_1-b)^\alpha(r_1-a)^{\alpha+1}}\,dr_1 &= \int_{b}^{T}\frac{(r_1-b)^{-\alpha-3/4+3/4}}{(r_1-a)^{\alpha+1}}\,dr_1\\
 &\leq \int_{b}^{T}\frac{(r_1-b)^{-\alpha-3/4}(r_1-a)^{3/4}}{(r_1-a)^{\alpha+1}}\,dr_1\\
 &= \int_{b}^{T}\frac{(r_1-b)^{-\alpha-3/4}}{(r_1-a)^{\alpha+1/4}}\,dr_1\\
-&= \frac{1}{(b-a)^{\alpha+1/4}}\int_{b}^{T}(r_1-b)^{-\alpha-3/4}\,dr_1\\
+&\leq \frac{1}{(b-a)^{\alpha+1/4}}\int_{b}^{T}(r_1-b)^{-\alpha-3/4}\,dr_1\\
 &= \frac{1}{(b-a)^{\alpha+1/4}}\left[\frac{(r_1-b)^{1/4-\alpha}}{1/4-\alpha}\right]_{b}^{T}\\
 &= 4\frac{(T-b)^{1/4-\alpha}}{(b-a)^{\alpha+1/4}}
 \end{align*}
 
-WTS
-\begin{align*}
-\int_{b}^{T}\frac{1}{(r_1-b)^\alpha(r_1-a)^{\alpha+1}}\,dr_1 \leq \frac{(T-b)^{1/4-\alpha}}{(b-a)^{\alpha+1/4}}
-\end{align*}
+%WTS
+%\begin{align*}
+%\int_{b}^{T}\frac{1}{(r_1-b)^\alpha(r_1-a)^{\alpha+1}}\,dr_1 \leq \frac{(T-b)^{1/4-\alpha}}{(b-a)^{\alpha+1/4}}
+%\end{align*}
 
 \item 
 Given $\psi(u,v):= \mathbbm{1}_{[0,v)}(u)\tilde{\psi}(u,v)$ we can understand it as
@@ -175,10 +175,16 @@ Given $\psi(u,v):= \mathbbm{1}_{[0,v)}(u)\tilde{\psi}(u,v)$ we can understand it
 then to do the double integral of $f(u,v)^2$ over $R = [0,T] \times [0,T]$ is equivalent to integrating over the region $\{(u,v) \in R\mid u < v\}$. Thus 
 
 \begin{align*}
-\int_{0}^{T}\int_{0}^{T}f(u,v)^2\,du\,dv = \int_{0}^{T} \int_{0}^{v}f(u,v)^2\,du\,dv
+\int_{0}^{T}\int_{0}^{T}f(u,v)^2\,du\,dv = \int_{0}^{T} \int_{0}^{v}\left|\int_{u}^{T}\int_{v}^{T}\frac{\tilde{\psi}(u,v)-\tilde{\psi}(u,r_2)-\tilde{\psi}(r_1,v)+\tilde{\psi}(r_1,r_2)}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}dr_2\,dr_1\right|^2du\,dv
 %=\int_{0}^{T}\int_{0}^{T}\left[ \int_{u}^{T}\int_{v}^{T}\frac{\psi(u,v)-\psi(u,r_2)-\psi(r_1,v)+\psi(r_1,r_2)}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}\,dr_2dr_1\right]^2 \,du\,dv
 \end{align*}
-
+We will now massage the term inside the first double integral,
+\begin{align*}
+&\left|\int_{u}^{T}\int_{v}^{T}\frac{\tilde{\psi}(u,v)-\tilde{\psi}(u,r_2)-\tilde{\psi}(r_1,v)+\tilde{\psi}(r_1,r_2)}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}dr_2\,dr_1\right| \\
+\leq &\int_{u}^{T}\int_{v}^{T}\left|\frac{\tilde{\psi}(u,v)-\tilde{\psi}(u,r_2)-\tilde{\psi}(r_1,v)+\tilde{\psi}(r_1,r_2)}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}\right|dr_2\,dr_1\\
+\leq &\int_{u}^{T}\int_{v}^{T}\frac{\left|\tilde{\psi}(u,v)-\tilde{\psi}(u,r_2)-\tilde{\psi}(r_1,v)+\tilde{\psi}(r_1,r_2)\right|}{\left|(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}\right|}dr_2\,dr_1\\
+\leq &\int_{u}^{T}\int_{v}^{T}\frac{\left|(r_1-u)^\lambda(r_2-v)^\lambda\right|}{\left|(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}\right|}dr_2\,dr_1, \quad \text{ by strongly $\lambda$-H\"{o}lder bi-continuous property}
+\end{align*}
 %\begin{align*}
 %|f(u,v)| &\leq \int_{u}^{T}\int_{v}^{T}\left|\frac{\psi(u,v)-\psi(u,r_2)-\psi(r_1,v)+\psi(r_1,r_2)}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}\right|\,dr_2dr_1\\
 %&\leq \int_{u}^{T}\int_{v}^{T}\left|C\frac{||^\lambda||^\lambda}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}\right|\,dr_2dr_1\\
