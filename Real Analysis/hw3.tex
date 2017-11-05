@@ -100,8 +100,14 @@ we see that the first derivate of $f(x)$ is continuous but the second derivate i
 
 
 
-\item
-
+\item By Stone-Weierstrass Theorem, for the given function $f(x)$, there exists a sequence of polynomials $P_n(x)$ that converges uniformly to $f(x)$, i.e. $\sup_{x \in [0,1]}|f(x)-P_n(x)| <1/n$ as $n \to 0$. Now, we consider the inner product $\langle f(x), g(x)\rangle:= \int_{0}^{1}f(x)g(x)\,dx$, and if we managed to show that $\langle f(x),f(x)\rangle=0$, we are done. To show that, 
+\begin{align*}
+\left|\int_{0}^{1}f(x)^2\,dx\right| &= \left|\int_{0}^{1}f(x)^2\,dx-\int_{0}^{1}f(x)P_n(x)\,dx\right| ,\text{ since $\int_{0}^{1}f(x)x^n\,dx=0$ for all $n$.}\\
+&\leq \int_{0}^{1} \left|f(x)\right|\left| f(x)-P_n(x)\right|\,dx \\
+&\leq \int_{0}^{1} \left|f(x)\right|\,dx \cdot \sup_{x\in [0,1]}|f(x)-P_n(x)|\\
+&\leq \frac{1}{n}\int_{0}^{1} \left|f(x)\right|\,dx \text{ for all $n$.}
+\end{align*}
+Thus we need $\langle f(x), f(x) \rangle=0$, which completes the proof.
 
 
 
@@ -137,7 +143,22 @@ squaring both sides, we have shown that all $\lambda$-H\"{o}lder bi-continuous a
 
 \item
 \begin{enumerate}[(a)]
-\item For $0 \leq a < b \leq T$, WTS
+\item For $0 \leq a < b \leq T$ with $0 \leq \alpha < 1/4$, we first make the following observations:
+\begin{align}
+(r_1-b)^{3/4} \leq (r_1-a)^{3/4}\\
+\frac{1}{(r_1-a)^{\alpha+1/4}} \leq \frac{1}{(b-a)^{\alpha+1/4}}
+\end{align}
+then
+\begin{align*}
+\int_{b}^{T}\frac{1}{(r_1-b)^\alpha(r_1-a)^{\alpha+1}}\,dr_1 &= \int_{b}^{T}\frac{(r_1-b)^{-\alpha-3/4+3/4}}{(r_1-a)^{\alpha+1}}\,dr_1\\
+&\leq \int_{b}^{T}\frac{(r_1-b)^{-\alpha-3/4}(r_1-a)^{3/4}}{(r_1-a)^{\alpha+1}}\,dr_1\\
+&= \int_{b}^{T}\frac{(r_1-b)^{-\alpha-3/4}}{(r_1-a)^{\alpha+1/4}}\,dr_1\\
+&= \frac{1}{(b-a)^{\alpha+1/4}}\int_{b}^{T}(r_1-b)^{-\alpha-3/4}\,dr_1\\
+&= \frac{1}{(b-a)^{\alpha+1/4}}\left[\frac{(r_1-b)^{1/4-\alpha}}{1/4-\alpha}\right]_{b}^{T}\\
+&= 4\frac{(T-b)^{1/4-\alpha}}{(b-a)^{\alpha+1/4}}
+\end{align*}
+
+WTS
 \begin{align*}
 \int_{b}^{T}\frac{1}{(r_1-b)^\alpha(r_1-a)^{\alpha+1}}\,dr_1 \leq \frac{(T-b)^{1/4-\alpha}}{(b-a)^{\alpha+1/4}}
 \end{align*}
