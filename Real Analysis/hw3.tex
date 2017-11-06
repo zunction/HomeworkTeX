@@ -155,7 +155,7 @@ then
 &= \int_{b}^{T}\frac{(r_1-b)^{-\alpha-3/4}}{(r_1-a)^{\alpha+1/4}}\,dr_1\\
 &\leq \frac{1}{(b-a)^{\alpha+1/4}}\int_{b}^{T}(r_1-b)^{-\alpha-3/4}\,dr_1\\
 &= \frac{1}{(b-a)^{\alpha+1/4}}\left[\frac{(r_1-b)^{1/4-\alpha}}{1/4-\alpha}\right]_{b}^{T}\\
-&= 4\frac{(T-b)^{1/4-\alpha}}{(b-a)^{\alpha+1/4}}
+&= C\frac{(T-b)^{1/4-\alpha}}{(b-a)^{\alpha+1/4}} \text{ for some constant $C$.}
 \end{align*}
 
 %WTS
@@ -185,6 +185,9 @@ We will now massage the term inside the first double integral,
 \leq &\int_{u}^{T}\int_{v}^{T}\frac{\left|\tilde{\psi}(u,v)-\tilde{\psi}(u,r_2)-\tilde{\psi}(r_1,v)+\tilde{\psi}(r_1,r_2)\right|}{\left|(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}\right|}dr_2\,dr_1\\
 \leq &\int_{u}^{T}\int_{v}^{T}\frac{\left|(r_1-u)^\lambda(r_2-v)^\lambda\right|}{\left|(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}\right|}dr_2\,dr_1, \quad \text{ by strongly $\lambda$-H\"{o}lder bi-continuous property}
 \end{align*}
+but I'm stuck.
+
+
 %\begin{align*}
 %|f(u,v)| &\leq \int_{u}^{T}\int_{v}^{T}\left|\frac{\psi(u,v)-\psi(u,r_2)-\psi(r_1,v)+\psi(r_1,r_2)}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}\right|\,dr_2dr_1\\
 %&\leq \int_{u}^{T}\int_{v}^{T}\left|C\frac{||^\lambda||^\lambda}{(r_1-u)^{1+\alpha}(r_2-v)^{1+\alpha}}\right|\,dr_2dr_1\\
