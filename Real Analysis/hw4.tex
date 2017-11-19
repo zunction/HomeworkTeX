@@ -92,40 +92,90 @@
 thus as $s \to t$, we have $\mathbb{P}[|X_t-X_s|\geq \epsilon] \to 0$ which shows that $X_s \to X_t$ in probability as $s \to t$.
 
 
-\item We need to show that 
-\begin{align*}
-\mathbb{P}\left[\max_{1 \leq k \leq 2^n}\left|X_{\frac{kT}{2^n}}-X_{\frac{(k-1)T}{2^n}}\right|<2^{-\gamma n}\right]=1
-\end{align*}
+\item We need to show that for $n \geq N(\omega)$,
+\begin{align}
+\mathbb{P}\left[\max_{1 \leq k \leq 2^n}\left|X_{\frac{kT}{2^n}}-X_{\frac{(k-1)T}{2^n}}\right|<2^{-\gamma n}\right]=1\label{eq1}
+\end{align}
 so from (a), we get for all $1 \leq k \leq 2^n$,
 \begin{align*}
 \mathbb{P}\left[\left|X_{\frac{kT}{2^n}}-X_{\frac{(k-1)T}{2^n}}\right|<2^{-\gamma n}\right] &= 1- \mathbb{P}\left[\left|X_{\frac{kT}{2^n}}-X_{\frac{(k-1)T}{2^n}}\right|\geq 2^{-\gamma n}\right]\\
 & \geq 1 - (2^{-\gamma n})^{-\alpha}\left|\frac{T}{2^n}\right|^{1+\beta}\\
 & = 1 - |T|^{1+\beta}\cdot 2^{-n(1+\beta-\gamma\alpha)} \to 1 \text{ as } n \to \infty 
 \end{align*}
-which shows the desired.
+thus we have we result in (\ref{eq1}).
 
 \item
-For all $t,s \in D$ such that $|t-s| < 2^{-N(\omega)}$, we need to show that
+We first see that $D = \bigcup_{n=1}^{\infty}D_n$ where $D_n:=\{(k/2^n)\mid k=0,1,\ldots, 2^n\}$ is the partition of $[0,1]$ and show, for every $m>N(\omega)$, 
+\begin{align}
+|X_t - X_s| \leq 2 \sum_{j=n+1}^{m}2^{-\gamma j} ~~\text{ for all $t,s \in D_m$, }0 < t-s < 2^{-N(\omega)} \label{eq2}
+\end{align}
+For $m=n+1$, we can only have $t = (k/2^m), s = ((k-1)/2^m)$ and the result follows from (b). Suppose (\ref{eq2}) is true for $m = n+1, \ldots, M-1$. We take $s<t$ with $s,t \in D_{M}$ and consider the numbers $t^1 = \max \{u \in D_{M-1}: u \leq t\}$ and $s^1=\min\{u \in D_{M-1}:u \geq s\}$ which gives the relationship $s \leq s^1\leq t^1 \leq t$ and  $s-s^1 \leq 2^{-M},  t-t^1\leq 2^{-M}$ (need to explain this later). Hence from (\ref{eq1}) we have 
 \begin{align*}
-\mathbb{P}\left[\left|X_t - X_s\right| \leq 2 \sum_{j=n+1}^{\infty}2^{-\gamma j}\right] = 1
+|X_{s^1}-X_s| &\leq 2^{-\gamma M}\\
+|X_{t^1}-X_t| &\leq 2^{-\gamma M}
 \end{align*}
-From (a), 
+and from (\ref{eq2}) with $m=M-1$, 
 \begin{align*}
-\mathbb{P}\left[\left|X_t - X_s\right| > 2 \sum_{j=n+1}^{\infty}2^{-\gamma j}\right] &\leq \left(2 \sum_{j=n+1}^{\infty}2^{-\gamma j}\right)^{-\alpha}|t-s|^{1+\beta}\\
+|X_{t^1}-X_{s^1}| \leq 2 \sum_{j=n+1}^{M-1}2^{-\gamma j}
+\end{align*}
+so
+\begin{align*}
+|X_t-X_s|&\leq |X_t-X_{t^1}|+|X_{t^1}-X_{s^1}|+|X_{s^1}-X_s|\\
+&\leq 2^{-\gamma M} +2 \sum_{j=n+1}^{M-1}2^{-\gamma j} + 2^{-\gamma M}=2 \sum_{j=n+1}^{M}2^{-\gamma j}
+\end{align*}
+which proves (\ref{eq2}) for $m=M$. Thus by induction, we have shown
+\begin{align}
+|X_{t}-X_{s}| \leq 2 \sum_{j=n+1}^{\infty}2^{-\gamma j},\quad 0<t-s<2^{-N(\omega)}\label{eq3}
+\end{align}
+
+
+
+To show that $X$ is uniformly continuous with H\"{o}lder exponent $\gamma$ on the dyadic rationals, for any $s, t \in D$, with $0< t-s<h(\omega) \overset{\Delta}{=}2^{-N(\omega)}$, we choose the $n \geq N(\omega)$ such that $2^{-(n+1)}\leq t-s<2^{-n}$. Using the result from (\ref{eq3}),
+\begin{align}
+|X_t-X_s| \leq 2 \sum_{j=n+1}^{\infty}2^{-\gamma j}\leq 2^{-\gamma(n+1)}\left(2 \sum_{j=0}^{\infty}2^{-\gamma j}\right) \leq \delta |t-s|^\gamma, \quad 0<t-s<2^{-N(\omega)} \label{eq4}
+\end{align}
+where $\delta = 2/(1-2^{-\gamma})$ and shows it is uniformly continuous.
+
+
+
+
+
+
+\item Set $\widetilde{X}$ to be equal to $X$ on the dyadic rationals.  For $t\in [0,T] \backslash D$, we choose a sequence $\{s_n\}_{n=1}^{\infty} \subseteq D$ with $s_n \to t$, the uniform continuity and Cauchy criterion implies that $\{X_{s_n}(\omega)\}_{n=1}^{\infty}$ has a limit which depends on $t$ but not on the particular sequence $\{s_n\}_{n=1}^{\infty} \subseteq D$ chosen to converge to $t$ and we set $\widetilde{X}_t(\omega) = \lim_{s_n\to t}X_{s_n}(\omega)$. Thus $\widetilde{X}$ is continuous and satisfies (\ref{eq4}), since for $0<t-s<2^{-N(\omega)}$, for any $\epsilon>0$, where $t_n \to t, s_n \to s$, we can choose a sufficient large $n$ such that 
+\begin{align*}
+|\widetilde{X}_t(\omega) - X_{t_n}(\omega)| &< \epsilon/2\\
+|X_{s_n}(\omega) - \widetilde{X}_s(\omega)|&< \epsilon/2\\
+|X_{t_n}(\omega)- X_{s_n}(\omega)| &\leq \delta |t-s|^\gamma
+\end{align*}
+then we have
+\begin{align*}
+|\widetilde{X}_t(\omega) - \widetilde{X}_s(\omega)| & = |\widetilde{X}_t(\omega) - X_{t_n}(\omega) + X_{t_n}(\omega)- X_{s_n}(\omega) + X_{s_n}(\omega) - \widetilde{X}_s(\omega)|\\
+& = |\widetilde{X}_t(\omega) - X_{t_n}(\omega)| + |X_{t_n}(\omega)- X_{s_n}(\omega)| + |X_{s_n}(\omega) - \widetilde{X}_s(\omega)| \leq \delta |t-s|^\gamma + \epsilon
+\end{align*} 
+and since $\epsilon$ is arbitrary, it shows
+\begin{align*}
+\mathbb{P}\left[\omega; \sup_{0<t-s<h(\omega)}\left|\widetilde{X}_t(\omega)-\widetilde{X}_s(\omega)\right|\leq \delta|t-s|^\gamma\right]=1
 \end{align*}
 
 
 
-
-
-
-\item
-
-
+To see that $\widetilde{X}$ is a modification of $X$, we observe that $\widetilde{X}_t = X_t$ almost surely for $t \in D$ and for $t \in [0,T]  \backslash D$ and $\{s_n\}_{n=1}^{\infty}\subseteq D$ with $s_n \to t$, we have $X_{s_n} \to X_t$ in probability as $X_{s_n} \to \widetilde{X}_t$ almost surely, so $\widetilde{X}_t = X_t$ almost surely.
 
 \item
-
-
+\begin{align*}
+\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}x^ne^{-\frac{x^2}{2}}\,dx&=\frac{1}{\sqrt{2\pi}}\left[-x^{n-1}e^{-\frac{x^2}{2}}\right]_{-\infty}^{\infty}-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}-(n-1)x^{n-2}e^{-\frac{x^2}{2}}\,dx\\
+&=(n-1)\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}x^{n-2}e^{-\frac{x^2}{2}}\,dx\\
+&=(n-1)(n-3)\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}x^{n-4}e^{-\frac{x^2}{2}}\,dx\\
+\text{In general, } &=(n-1)(n-3)\ldots(n-(2k-1))\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}x^{n-2k}e^{-\frac{x^2}{2}}\,dx
+\end{align*}
+Thus we have
+\begin{align*}
+\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}x^ne^{-\frac{x^2}{2}}\,dx :=\begin{cases}
+0, & \text{$n$ is odd}\\
+(n-1)!! , & \text{$n$ is even}
+\end{cases}
+\end{align*}
+where $n!!$ is the double factorial, the product of all numbers from 1 to $n$ that have the same parity as $n$.
 
 
 
