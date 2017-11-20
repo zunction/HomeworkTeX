@@ -105,11 +105,11 @@ so from (a), we get for all $1 \leq k \leq 2^n$,
 thus we have we result in (\ref{eq1}).
 
 \item
-We first see that $D = \bigcup_{n=1}^{\infty}D_n$ where $D_n:=\{(k/2^n)\mid k=0,1,\ldots, 2^n\}$ is the partition of $[0,1]$ and show, for every $m>N(\omega)$, 
+We first see that $D = \bigcup_{n=1}^{\infty}D_n$ where $D_n:=\{(kT/2^n)\mid k=0,1,\ldots, 2^n\}$ is the partition of $[0,T]$ and show, for every $m>N(\omega)$, 
 \begin{align}
 |X_t - X_s| \leq 2 \sum_{j=n+1}^{m}2^{-\gamma j} ~~\text{ for all $t,s \in D_m$, }0 < t-s < 2^{-N(\omega)} \label{eq2}
 \end{align}
-For $m=n+1$, we can only have $t = (k/2^m), s = ((k-1)/2^m)$ and the result follows from (b). Suppose (\ref{eq2}) is true for $m = n+1, \ldots, M-1$. We take $s<t$ with $s,t \in D_{M}$ and consider the numbers $t^1 = \max \{u \in D_{M-1}: u \leq t\}$ and $s^1=\min\{u \in D_{M-1}:u \geq s\}$ which gives the relationship $s \leq s^1\leq t^1 \leq t$ and  $s-s^1 \leq 2^{-M},  t-t^1\leq 2^{-M}$. Hence from (\ref{eq1}) we have 
+For $m=n+1$, we can only have $t = (kT/2^m), s = ((k-1)T/2^m)$ and the result follows from (b). Suppose (\ref{eq2}) is true for $m = n+1, \ldots, M-1$. We take $s<t$ with $s,t \in D_{M}$ and consider the numbers $t^1 = \max \{u \in D_{M-1}: u \leq t\}$ and $s^1=\min\{u \in D_{M-1}:u \geq s\}$ which gives the relationship $s \leq s^1\leq t^1 \leq t$ and  $s-s^1 \leq 2^{-M},  t-t^1\leq 2^{-M}$. Hence from (\ref{eq1}) we have 
 \begin{align*}
 |X_{s^1}-X_s| &\leq 2^{-\gamma M}\\
 |X_{t^1}-X_t| &\leq 2^{-\gamma M}
