@@ -83,13 +83,60 @@
 \item 
 \begin{enumerate}[(a)]
 \item
-
+\begin{align*}
+\frac{\partial}{\partial \epsilon}F(\epsilon,t) &= \int_{0}^{\infty}\frac{\partial}{\partial \epsilon}e^{-\epsilon x}\frac{\sin xt}{x}\,dx\\\
+&=-\int_{0}^{\infty}e^{-\epsilon x} \sin xt\, dx\\
+&=-\left\{\left[\sin xt\cdot -\frac{1}{\epsilon}e^{-\epsilon x}\right]_{0}^{\infty}-\int_{0}^{\infty}-\frac{1}{\epsilon}e^{-\epsilon x} t \cos xt \, dx\right\}\\
+&=-\frac{t}{\epsilon}\int_{0}^{\infty}e^{-\epsilon x} \cos xt \, dx\\
+&=-\frac{t}{\epsilon}\left\{\left[\cos xt \cdot -\frac{1}{\epsilon}e^{-\epsilon x}\right]_{0}^{\infty}-\int_{0}^{\infty}-\frac{1}{\epsilon}e^{-\epsilon x}\cdot -t \sin xt \, dx\right\}\\
+&=\frac{t}{\epsilon^2}+\frac{t^2}{\epsilon^2}\int_{0}^{\infty}e^{-\epsilon x} \sin xt \, dx\\
+\end{align*}
+with some algebraic manipulation we obtain
+\begin{align*}
+\int_{0}^{\infty}e^{-\epsilon x} \sin xt \, dx = -\frac{t}{t^2+\epsilon^2}
+\end{align*}
 
 \item
+We observe that
+\begin{align*}
+\left|e^{-\epsilon x}\frac{\sin xt}{x}\right| \leq \frac{e^{-\epsilon x}}{x}
+\end{align*}
+thus
+\begin{align*}
+\sup_{x,t \in \mathbb{R}}\left|e^{-\epsilon x}\frac{\sin xt}{x} - 0\right| \to 0 \text{ as } \epsilon \to \infty 
+\end{align*}
+Hence,
+\begin{align*}
+\lim_{\epsilon \to \infty}F(\epsilon,t) = \int_{0}^{\infty}\lim_{\epsilon \to \infty}e^{-\epsilon x}\frac{\sin xt}{x}\,dx=0
+\end{align*}
 
 
 
-\item
+\item 
+As $e^{-\epsilon x}\frac{\sin xt}{x}$ is nonnegative, converges uniformly to $\frac{\sin xt}{x}$ as $\epsilon \to 0$, by Monotone convergence theorem, we have 
+\begin{align}
+\lim_{\epsilon \to 0}F(\epsilon,t) &= \int_{0}^{\infty}\frac{\sin xt}{x}\,dx \nonumber \\
+&= \int_{0}^{\infty}\int_{0}^{\infty}e^{-xy}\sin xt\,dy\,dx \nonumber \\
+&= \int_{0}^{\infty}\left(\int_{0}^{\infty}e^{-xy}\sin xt\,dx\right)\,dy \label{eq1}
+\end{align}
+we work on the inner integral first,
+\begin{align*}
+\int_{0}^{\infty}e^{-xy}\sin xt\,dx&=\left[\sin xt -\frac{1}{y}e^{-xy}\right]_{0}^{\infty}-\int_{0}^{\infty}-\frac{1}{y}e^{-xy} t\cos xt\,dx\\
+&=\left[-\frac{1}{y}e^{-xy}\sin xt -\frac{t}{y^2}e^{-xy}\cos xt \right]_{0}^{\infty}-\frac{t^2}{y^2}\int_{0}^{\infty}e^{-xy} \sin xt\,dx\\
+&=\left[\frac{-ye^{-xy}\sin xt-te^{-xy}\cos xt}{y^2} \right]_{0}^{\infty}-\frac{t^2}{y^2}\int_{0}^{\infty}e^{-xy} \sin xt\,dx\\
+&=\frac{t}{y^2}-\frac{t^2}{y^2}\int_{0}^{\infty}e^{-xy} \sin xt\,dx
+\end{align*}
+thus
+\begin{align*}
+\int_{0}^{\infty}e^{-xy}\sin xt\,dx = \frac{t}{t^2+y^2}
+\end{align*}
+which then we apply it to (\ref{eq1}) to get
+\begin{align*}
+\lim_{\epsilon \to 0}F(\epsilon,t) &= \int_{0}^{\infty}\frac{t}{t^2+y^2}\,dy\\
+&= \left[\tan^{-1}\frac{y}{t}\right]_{0}^{\infty}=\frac{\pi}{2}\text{sgn}(t)
+\end{align*}
+
+
 \end{enumerate}
 \item
 
