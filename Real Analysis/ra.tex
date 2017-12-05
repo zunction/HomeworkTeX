@@ -303,7 +303,15 @@ Showing that every norm $\|\cdot\|_a$ is continuous under the 1- norm allows us 
 \end{frame}
 
 \begin{frame}{Maximum and minimum of $\|\cdot\|_a$ on the $1-$norm unit sphere}
+Here we proof the claim that $S:=\{x \in \mathbb{R}^n| \|x\|_1=1\}$ is a compact set.
+\begin{proof}
+Let $y$ be any limit point of $S$, then given any $\delta >0$, we have an open ball of radius $\delta$ centered at $y$, denoted by $B_\delta(y)$\footnote{$B_\delta(y):=\{x \mid \|y-x\|_1 < \delta\}$} such that $B_\delta(y) \cap S \neq \varnothing$. Pick $z \in B_\delta(y) \cap S$, then 
+\begin{align*}
+\delta>\|y-z\|_1 > |\|y\|_1-\|z\|_1| = |\|y\|_1-1|
+\end{align*}
+since $\delta$ is arbitrary, we have $\|y\|_1=1$ and thus we have shown $S$ is closed since its limit points are all in $S$. $S$ is bounded by construction of the set. 
 
+\end{proof}
 \end{frame}
 
 
