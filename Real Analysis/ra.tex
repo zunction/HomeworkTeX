@@ -1,0 +1,311 @@
+%\documentclass[handout]{beamer}
+\documentclass[10pt,appendixnumberbeamer]{beamer}
+%\usepackage{handoutWithNotes}
+%\pgfpagesuselayout{4 on 1 with notes}[a4paper,border shrink=5mm]
+%\pgfpagesuselayout{1 on 1 with notes landscape}[a4paper,border shrink=5mm]
+\usetheme[
+  outer/progressbar=foot,
+%outer/numbering=fraction,
+]{metropolis}
+
+%\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage{amsmath, amssymb, amsthm, mathtools,media9}
+\usepackage[export]{adjustbox}
+
+\usepackage[default]{sourcesanspro}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\metroset{titleformat=smallcaps}
+
+\usepackage{tikz}
+\usetikzlibrary{mindmap,shadows}
+\usepackage{animate}
+\usepackage[compatibility=false]{caption}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{bm}
+
+\usepackage{listings}
+\usepackage{tcolorbox}
+
+\newcommand{\lstfont}[1]{\color{#1}\scriptsize\ttfamily}
+
+\lstset { %
+    language=[ANSI]C++,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\scriptsize,% basic font setting
+    showstringspaces=false,
+    breaklines=true,
+}
+
+
+\usepackage{graphicx,subfigure}
+\usetikzlibrary{spy,calc,patterns,arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri,mindmap,trees,intersections}
+\usepackage{keystroke}
+\usepackage{color}
+\usepackage{multicol}
+%\usepackage{multimedia}
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{pgfplots,tikz,tcolorbox}
+%\usepackage{appendixnumberbeamer}
+
+%\setbeamertemplate{frame footer}{My custom footer}
+
+\pgfplotsset{compat=newest}
+
+%\expandafter\def\expandafter\insertshorttitle\expandafter{%
+ % \insertshorttitle\hfill\insertframenumber\,/\,\inserttotalframenumber}
+%\usepackage{enumitem}
+
+
+%\usepackage[T1]{fontenc}
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+%\hypersetup{colorlinks,breaklinks,
+%            linkcolor=darkblue,urlcolor=darkblue,
+%            anchorcolor=darkblue,citecolor=darkblue}
+\usetikzlibrary{patterns}
+\usetikzlibrary{decorations.pathmorphing,backgrounds,positioning,fit,petri,mindmap,trees}
+\usepgflibrary{arrows,shapes.geometric}
+\usepgflibrary{shapes.symbols}
+%\hypersetup{colorlinks,breaklinks,linkcolor=darkblue,urlcolor=darkblue,anchorcolor=darkblue,citecolor=darkblue}
+\usetikzlibrary{spy,calc,patterns,arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri,mindmap,trees,intersections}
+\usepackage{color}
+\usepackage{multirow}
+\usetikzlibrary{arrows,positioning} 
+\tikzset{
+    %Define standard arrow tip
+    >=stealth',
+    %Define style for boxes
+    punkt/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           text width=8.5em,
+           minimum height=2em,
+           text centered},
+    % Define arrow style
+    pil/.style={
+           ->,
+           thick,
+           shorten <=2pt,
+           shorten >=2pt,}
+}
+
+%\usepackage[hang]{footmisc}
+%\setlength\footnotemargin{10pt}
+
+\setbeamertemplate{caption}[numbered]
+\usepgfplotslibrary{statistics}
+
+\usetikzlibrary{fadings}
+\tikzfading[name=fade out,
+  inner color=transparent!0, outer color=transparent!100]
+
+
+%\setbeameroption{show notes}
+%\setbeameroption{show only notes}
+
+
+\newcommand{\network}[1]{
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale = 0.75,-,draw=black!50, node distance=\layersep]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt];
+    \tikzstyle{unit}=[neuron, fill=red!50];
+    \tikzstyle{spike}=[neuron, fill=blue!50];
+ \def \radius {2cm}
+% \def \margin {8}
+ \def \n {6}
+ \foreach \s in {1,...,\n}
+  \node[unit] (\s) at ({360/\n * (\s - 1) - 180}:\radius) {$\s$};
+ \foreach \s in {1,...,\n}
+  \foreach \t in {\s,...,\n}
+   \draw (\t) -- (\s);
+ \foreach \s in {1,...,\n}
+   \draw[very thick] (#1) -- (\s);
+   \node[spike] (#1) at ({360/\n * (#1 - 1) - 180}:\radius) {};
+\end{tikzpicture}
+\end{figure}
+
+}
+
+
+
+\title{Equality of Norms in $\mathbb{R}^n$}
+\subtitle{Real Analysis Presentation}
+%\institute{}
+\author{Hung, Zhangsheng}
+%\date{\today}
+\date{}
+
+
+\pgfmathdeclarefunction{gauss}{2}{%
+  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+%\pgfmathdeclarefunction{gauss1}{2}{%
+  %\pgfmathparse{(1/(#2*sqrt(2*pi))*exp(-((-x-#1)^2)/(2*#2^2)))*exp(-x)}%
+%}
+\pgfmathdeclarefunction{gauss2}{2}{%
+  \pgfmathparse{(1/(#2*sqrt(2*pi))*exp(-0.5*abs(x)-#1)*(sqrt(abs(x)))}%
+}
+
+%\pgfmathdeclarefunction{gauss2}{2}{%
+  %\pgfmathparse{(1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2)))*exp(x)}%
+%}
+\pgfmathdeclarefunction{gauss1}{2}{%
+  \pgfmathparse{(1/(#2*sqrt(2*pi))*exp(-0.5*x-#1)*(sqrt(x))}%
+}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+\newcommand*{\Perm}[2]{{}^{#1}\!P_{#2}}%
+\newcommand*{\Comb}[2]{{}^{#1}C_{#2}}%
+\begin{document}
+
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+%\begin{frame}{Contents}
+%\tableofcontents
+%\end{frame}
+
+
+\begin{frame}{Preliminaries}
+\begin{definition}
+A norm on $\mathbb{R}^n$ is a function $\|\cdot\|:\mathbb{R}^n \to \mathbb{R}$ with the following properties:\\
+For all $x, y \in \mathbb{R}^n$ and $a \in \mathbb{R}$
+\begin{enumerate}[1.]
+\item $\|x\| \geq 0, \|x\| = 0$ iff $x=\mathbf{0}$
+\item $\|ax\| = |a| \|x\|$
+\item $\|x+y\| \leq \|x\|+\|y\|$
+\end{enumerate}
+\end{definition}
+\end{frame}
+
+\begin{frame}{Preliminaries}
+\begin{block}{1-norm}
+For $x \in \mathbb{R}^n$,
+\begin{align*}
+\|x\|_1 = \sum_{i=1}^{n} |x_i|
+\end{align*}
+It is easy to see that it satisfy properties 1 and 2, so we shall show the triangle of inequality property
+\begin{align*}
+\|x+y\|_1 =  \sum_{i=1}^{n} |x_i+y_i| \leq \sum_{i=1}^{n} |x_i|+|y_i| = \sum_{i=1}^{n} |x_i|+ \sum_{i=1}^{n} |y_i| = \|x\|_1+\|y\|_1
+\end{align*}
+\end{block}
+\end{frame}
+
+\begin{frame}{Preliminaries}
+\begin{definition}
+Two norms $\|\cdot\|_a$ and $\|\cdot\|_b$ on $\mathbb{R}^n$ are equivalent if there exists two constants $c_1, c_2 >0$ such that
+\begin{align*}
+c_1\|x\|_b \leq \|x\|_a \leq c_2\|x\|_b
+\end{align*} 
+\end{definition}
+\end{frame}
+
+\begin{frame}{Preliminaries}
+\begin{theorem}[Extreme Value Theorem]
+Let $f : X \to \mathbb{R}$ be continuous. If X is compact\footnote{closed and bounded by Heine-Borel theorem when in $X=\mathbb{R}^n$}, then there exists points $c$ and $d$ such that 
+\begin{align*}
+f(c) \leq f(x) \leq f(d)
+\end{align*}
+ for all $x \in X$.
+\end{theorem}
+\end{frame}
+
+
+%\begin{frame}{Preliminaries}
+%\begin{theorem}[Extreme Value Theorem]
+%If a real-valued function $f(x)$ is continuous in the closed and bounded interval $[a,b]$, then f must attain a maximum and a minimum, each at least once. That is, there exist numbers $c$ and $d$ in $[a,b]$ such that:
+%\begin{align*}
+%f(d) \leq f(x) \leq f(c)
+%\end{align*}
+%for all $x\in [a,b]$.
+%\end{theorem}
+%
+%\end{frame}
+
+
+%\begin{frame}{Preliminaries}
+%\begin{theorem}[Generalised Extreme Value Theorem]
+%If $K$ is a compact\footnote{closed and bounded in $\mathbb{R}^n$ by Heine-Borel theorem} set and $f:K\to \mathbb{R}$ is a continuous function, then $f$ is bounded and there exist $p,q\in K$ such that $f(p)=\sup_{x\in K}f(x)$ and $f(q)=\inf_{x\in K}f(x)$.
+%\end{theorem}
+%\end{frame}
+
+\begin{frame}{Idea of Proof}
+\begin{block}{Steps}
+\begin{enumerate}[1.]
+\item Transitivity property of norm equivalence
+\item Consideration of only $\|x\|_1 = 1$
+\item Continuity of any norm $\|\cdot\|_a$ under the $1-$norm
+\item Maximum and minimum of $\|\cdot\|_a$ on the $1-$norm unit sphere
+\end{enumerate}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Transitivity property of norm equivalence}
+Suppose we have two norms $\|\cdot\|_a, \|\cdot\|_{a'}$ that are equivalent to constants $c_1, c_2 >0$ and $c'_1, c'_2 >0$ respectively:
+\begin{align*}
+c_1 \|x\|_1\leq &\|x\|_a \leq c_2\|x\|_1\\
+c'_1 \|x\|_1\leq &\|x\|_{a'} \leq c'_2\|x\|_1
+\end{align*}
+then
+\begin{align*}
+\frac{c'_1}{c_2} \|x\|_a \leq c'_1 \|x\|_1\leq &\|x\|_{a'} \leq c'_2\|x\|_1 \leq  \frac{c'_2}{c_1}\|x\|_a
+\end{align*}
+which shows that if every norm in $\mathbb{R}^n$ is equivalent to the 1-norm, it implies that all the norms in $\mathbb{R}^n$ are equivalent.
+
+\end{frame}
+
+\begin{frame}{Transitivity property of norm equivalence}
+
+\end{frame}
+
+\begin{frame}{Consideration of only $\|x\|_1 = 1$}
+We want to show that for every norm $\|\cdot\|_a$ in $\mathbb{R}^n$,
+\begin{align*}
+c_1\|x\|_1 \leq \|x\|_a \leq c_2\|x\|_1
+\end{align*}
+this is trivially true for $x=0$ and thus for $x \neq 0$, we can normalize $x$ such that it is unit length in the 1-norm, by scaling $x$ be a multiple of $1/\|x\|_1$, i.e.
+\begin{align}
+c_1 = c_1 \|u\|_1\leq \|u\|_a\leq c_2 \|u\|_1 = c_2 \label{eq1}
+\end{align}
+where $u = x/ \|x\|_1$. This means if we can show that (\ref{eq1}) holds for the set $\{x \in \mathbb{R}^n|\|x\|_1=1\}$, it is same as showing for all $x \in \mathbb{R}^n$.
+\end{frame}
+
+\begin{frame}{Consideration of only $\|x\|_1 = 1$}
+
+\end{frame}
+
+
+\begin{frame}{Continuity of any norm $\|\cdot\|_a$ under the $1-$norm}
+Showing that every norm $\|\cdot\|_a$ is continuous under the 1- norm allows us to apply the generalised extreme value theorem from earlier. 
+
+{\color{red}Leave to Hung from here}
+
+\end{frame}
+
+\begin{frame}{Continuity of any norm $\|\cdot\|_a$ under the $1-$norm}
+
+\end{frame}
+
+
+\begin{frame}{Maximum and minimum of $\|\cdot\|_a$ on the $1-$norm unit sphere}
+
+\end{frame}
+
+\begin{frame}{Maximum and minimum of $\|\cdot\|_a$ on the $1-$norm unit sphere}
+
+\end{frame}
+
+
+\end{document}
+
