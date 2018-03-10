@@ -80,6 +80,27 @@ Zhangsheng Lai\\1002554
 
 
 \section*{Revenue Management}
+We consider the general case where the length of the buffer is $n$. Then the states are given by $\mathcal{X}:=A \cup B$, where $A= \{0,\ldots, n\}$ and $B= \{n+1,\ldots, 2n+1\}$, with $A$ denoting the states where the server is off and $B$ denoting the states where the server is on. The number of customers in the queue is exactly the state number for states in $A$ and the number of customers in the queue for states in $B$ is modulo $n+1$ of the state number. As for the action, we have $\mathcal{A}(x) = \{0,1\}$ where 0 (1) means the server is off (on).
+
+
+With that, we can get evaluate the reward function by considering cases.
+
+\paragraph{Action: $a=0$}server is switched off
+\begin{itemize}
+\item $x <n$, $R(x,a,w) = \frac{1}{4}(-x)+\frac{3}{4}(-x-1)$
+\item $x =n$, $R(x,a,w) = \frac{1}{4}(-n)+\frac{3}{4}(-n-1000)$
+\item $n< x < 2n+1$, $R(x,a,w) = \frac{1}{4}(-(x \mod n+1))+\frac{3}{4}(-(x \mod n+1)-1)$
+\item $x =2n+1$, $R(x,a,w) = \frac{1}{4}(-n)+\frac{3}{4}(-n-1000)$
+\end{itemize}
+
+\paragraph{Action: $a=1$}server is switched on
+\begin{itemize}
+\item $x <n$, $R(x,a,w) = \frac{1}{4}(-x)+\frac{3}{4}(-x-1)-10$
+\item $x =n$, $R(x,a,w) = \frac{1}{4}(-n)+\frac{3}{4}(-n-1)-10$
+\item $n< x < 2n+1$, $R(x,a,w) = \frac{1}{4}(-(x \mod n+1))+\frac{3}{4}(-(x \mod n+1)-1)$
+\item $x =2n+1$, $R(x,a,w) = \frac{1}{4}(-n)+\frac{3}{4}(-n-1)$
+\end{itemize}
+
 
 
 \subsection*{Value Iteration}
