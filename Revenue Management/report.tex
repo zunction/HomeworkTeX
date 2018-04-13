@@ -3,9 +3,9 @@
 
 
 \section{Introduction}
-\annotation{Introduction to talk about what we have learnt in class (Single Product DP) and how the model in the paper we have chosen is a generalizing from single to multi-products.}
+\annotation{Introduction to talk about what we learnt in class (Single Product DP) and how the model in the paper we have chosen is a generalizing from single to multi-products.}
 
-In the single product dynamic pricing model that we were introduced in class, we looked at a monopolist seller which finite units $x_0$ of a single indivisible product over a finite and continuous horizon $[0,T)$. The unit price $\pi_t$ is decided by the seller at each point of time $t \in [0,T)$ and customers product valuations follow a distribution over $\mathbb{R}_+$. However, practically, sellers often have a wide range of products that the customers can choose from, with the products having similar functionalities; catering to customers of varying purchasing power.
+In the single product dynamic pricing model that we were introduced in class, we looked at a monopolist seller which finite units $x_0$ of a single indivisible product with no replenishment over a finite and continuous horizon $[0,T)$. The unit price $\pi_t$ is decided by the seller at each point of time $t \in [0,T)$ and customers product valuations follow a distribution over $\mathbb{R}_+$. However, practically, sellers often have a wide range of products that the customers can choose from, with the products having similar functionalities; catering to customers of varying purchasing power.
 
 Thus we look to a multiproduct model \cite{Li2009}...
 
@@ -17,9 +17,46 @@ Thus we look to a multiproduct model \cite{Li2009}...
 \annotation{[Optional] We might like to discuss other papers like \cite{Gallego1997} that might be related to the paper we are looking at, e.g. the 1997 paper Yiwei told us to look at.}
 
 
-\section{Multinomial Logit Model}
+\section{The Multinomial Logit Model}
 \annotation{The model of course.}
 
+
+\subsection{Summary of the MNL model}
+The MNL model is a multiproduct dynamic pricing problem and assumes the products are nominal. It describes dynamic consumer choice preferences over substitute products as prices are varied. The customer makes choices from a range of products to maximise his or her utility. The utility of the $i$ product is defined by the logit demand function $v^i(r^i) = \exp ((q^i-r^i)/\mu)$ which is a positive function of the quality $q^i$, the price $r^i$ of product $i$ for $i=1,\ldots, n$ and $\mu$ is the constant representing the stochastic preference of the choice process. The customer expected demand probability of product $i$ is defined as 
+\begin{align}
+P^i(r) = \frac{v^i(r^i)}{v^0+\sum_{j=1}^{n}v^j(r^j)},\quad i = 1, \ldots n\label{eq:expecteddemandprob}
+\end{align}
+and $v^0$ denotes the utility of not making any purchase.
+
+
+The customer's arrivals are assumed to follow a nonhomogenous Poisson process with a time-dependent rate $\lambda(t)$ and in a small time interval $\delta t$, the probability of one arrival is $\lambda(t)\delta t$. The price of the products at time $t$ is $r_t = (r_t^1,\ldots,r_t^n) \in \mathbb{R}^n$ is decided according to the current inventory level. If some product $i$ is sold out before the end of the selling season, as we do not allow replenishments, the price is set to $r^i_t = \infty$ for all $t$ occuring after $c^i_t=0$. If all the products are sold at at $t < T$, then the selling season ends at $t$. All unsold products are salvaged at $t=0$. 
+
+
+Let $\mathbf{r}=\{r_t, t \in [T,0]\} = (r^1, \ldots, r^n)$ denote a pricing policy for the entire season, where $r^i$ denotes the trend of the price of product $i$ over the selling season. We denote the probabilty for a customer to arrive at time $t$ to choose product $i \in \mathbf{n} = \{1,\ldots, n\}$ by $P_t^i(r_t)$ and $P_t^0(r_t)$ denotes the no-purchase probability. Using (\ref{eq:expecteddemandprob}) with the no-purchase utility $v^0 = \exp (u_0/\mu)$, we have the demand of product $i$ and of no-purchase
+\begin{align*}
+P_t^i(r_t) &= \frac{\exp((q^i-r^i_t)/\mu)}{\sum_{i \in \mathbf{n}}\exp((q_i-r^i_t)/\mu)+\exp(u_0/\mu)} \\
+P_t^0(r_t)&= \frac{\exp(u_0/\mu)}{\sum_{i \in \mathbf{n}}\exp((q_i-r^i_t)/\mu)+\exp(u_0/\mu)}
+\end{align*}
+
+and by construction, $P_t^0(r_t) + \sum_{i \in \mathbf{n}}P_t^i(r_t) = 1$.
+
+The revenue rate at time $t$ is 
+\begin{align*}
+\Phi_t(r_t):=\lambda(t) \sum_{i=1}^{n}r_t^iP_t
+\end{align*}
+
+\subsection{Optimal control of the MNL model}
+
+
+
+%\subsection{Summary of the Hamilton-Jacobi-Bellman Equation}
+%The importance of the Hamilton-Jacobi-Bellman (HJB) equation is that it can be used as part of a strategy for solving the optimal control problem. Optimal control problems consist of some process that evolves over time, called a state, denoted by $x(\cdot)$, with the dynamics given by a stochastic differential equation (SDE). This process is then controllable to some extent by a person who wishes to optimize a performance indicator that depends on the process. The person does so by choosing a function $\alpha(\cdot)$, called a control, that takes valeus in a metric space $\Lambda$ and influences the dynamics of $x(\cdot)$ through the SDE. Different $\alpha(\cdot)$ leads to different states at time $t$, and hence different values for the performance indicator. The optimal control problem is then to answer the following questions:
+%\begin{enumerate}
+%\item Which control $\alpha(\cdot)$ optimizes the performance indicator?
+%\item What value does the performance indicator take for the best controls?
+%\end{enumerate}
+%
+%The strategy for solving the optimal control problem here is by using dynamic programming. However there are other methods like the Pontryagin maximum principle \annotation{find some reference here but do not present}.
 
 \section{Experiments}
 \annotation{If we manage to find time to run any experiments.}
