@@ -33,18 +33,30 @@ The customer's arrivals are assumed to follow a nonhomogenous Poisson process wi
 
 
 Let $\mathbf{r}=\{r_t, t \in [T,0]\} = (r^1, \ldots, r^n)$ denote a pricing policy for the entire season, where $r^i$ denotes the trend of the price of product $i$ over the selling season. We denote the probabilty for a customer to arrive at time $t$ to choose product $i \in \mathbf{n} = \{1,\ldots, n\}$ by $P_t^i(r_t)$ and $P_t^0(r_t)$ denotes the no-purchase probability. Using (\ref{eq:expecteddemandprob}) with the no-purchase utility $v^0 = \exp (u_0/\mu)$, we have the demand of product $i$ and of no-purchase
-\begin{align*}
-P_t^i(r_t) &= \frac{\exp((q^i-r^i_t)/\mu)}{\sum_{i \in \mathbf{n}}\exp((q_i-r^i_t)/\mu)+\exp(u_0/\mu)} \\
-P_t^0(r_t)&= \frac{\exp(u_0/\mu)}{\sum_{i \in \mathbf{n}}\exp((q_i-r^i_t)/\mu)+\exp(u_0/\mu)}
-\end{align*}
+\begin{align}
+P_t^i(r_t) &= \frac{\exp((q^i-r^i_t)/\mu)}{\sum_{i \in \mathbf{n}}\exp((q_i-r^i_t)/\mu)+\exp(u_0/\mu)} \label{eq:probi}\\
+P_t^0(r_t)&= \frac{\exp(u_0/\mu)}{\sum_{i \in \mathbf{n}}\exp((q_i-r^i_t)/\mu)+\exp(u_0/\mu)}\label{eq:prob0}
+\end{align}
 
 and by construction, $P_t^0(r_t) + \sum_{i \in \mathbf{n}}P_t^i(r_t) = 1$.
 
 The revenue rate at time $t$ is 
-\begin{align*}
-\Phi_t(r_t):=\lambda(t) \sum_{i=1}^{n}r_t^iP_t
-\end{align*}
+\begin{align}
+\Phi_t(r_t):=\lambda(t) \sum_{i=1}^{n}r_t^iP_t^i(r_t) \label{eq:revenuerate}
+\end{align}
 
+By setting the price $r_t$, the retailer controls the probability of customer choice process so the revenue rate is optimized. From (\ref{eq:probi}) and (\ref{eq:prob0}) we obtain $P_t^i(r_t)/P_t^0=\exp ((q^i-r_t^i-u_0)/\mu)$.
+\begin{align}
+r_t^i=q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0, \quad i=1,\ldots, n \label{eq:pricetoprob}
+\end{align}
+which is a mapping from the sales probability space to the price space, and in (\ref{eq:probi}) and (\ref{eq:prob0}) we have a mapping in the opposite direction. However, these two mappings are not inverses of each other as the mapping from the price space to the sales probability space is not injective and hence cannot be a bijection. This can be easily observed for given pricing $r_t = (r_t^1,\ldots,r_t^n)$, choosing $r'_t = (r_t^1\pm\ln k,\ldots,r_t^n\pm \ln k)$ for some positive real constant $k$ will produce the same demand probability of product. We can think of this increase or decrease in the pricing as some form of inflation or deflation of the prices that preserve the customers demand probability of the products.
+
+
+Thus, without factoring inflation or deflation, we have a one-to-one mapping from the price space to the sales probability space. The revenue rate as in (\ref{eq:revenuerate}) can be rewritten as 
+\begin{align}
+\Phi_t(P_t) = \lambda(t)\sum_{i=1}^{n}\left[q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0 \right]P_t^i
+\end{align}
+where $P_t = (P_t^1,\ldots, P_t^i)$
 \subsection{Optimal control of the MNL model}
 
 
