@@ -18,7 +18,7 @@ Thus we look to a multiproduct model \cite{Li2009}...
 
 
 \section{The Multinomial Logit Model}
-\annotation{The model of course.}
+%\annotation{The model of course.}
 
 
 \subsection{Summary of the MNL model}
@@ -100,11 +100,24 @@ where $\Delta^i \mathbf{w}_t^{\mathbf{P}}(c_t) = \mathbf{w}_t^{\mathbf{P}}(c_t) 
 \hat{\mathbf{w}}_t^{\mathbf{P}}(0) &= 0 \quad \forall t\\
 \hat{\mathbf{w}}_0^{\mathbf{P}}(c_0) &= 0 \quad \forall c_0
 \end{align}
-The boundary and initial conditions simply say that if there is zero inventory then at any time the optimal revenue rate is zero, and if the selling season has ended regardless of the amount of inventory left, the optimal revenue rate will also be zero. The HJB conditions are equivalent to maximizing the revenue rate $\Phi_t(c_T)$ at each $t$.
+The boundary and initial conditions simply say that if there is zero inventory then at any time the optimal revenue rate is zero, and if the selling season has ended regardless of the amount of inventory left, the optimal revenue rate will also be zero. The HJB conditions are equivalent to maximizing the revenue rate $\Phi_t(c_T)$ \annotation{(or is it $\Phi_t(P_t)$)} at each $t$.
+
+%The HJB provides limited utility for constructing optimal policies and value functions, but
+%does provide a relatively inexpensive way to verify optimality if one is able to ?guess? a
+%solution. 
 
 \subsection{Optimal Dynamic Pricing Policy}
 
-To find the optimal dynamic pricing policy, we just need to find the maximizer $P_t^\ast$ of the HJB equation in (\ref{eq:HJBsufficient}s)
+To find the optimal dynamic pricing policy, we just need to find the maximizer $P_t^\ast$ of the HJB equation in (\ref{eq:HJBsufficient}). Define
+\begin{align}
+\Psi_t^{\mathbf{P}}(c_t) = \sum_{i=1}^{n}\lambda(t)P_t^i\left[q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0- \Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)\right]
+\end{align}
+
+By checking that the Hessian of $\Psi_t^{\mathbf{P}}(c_t)$ is negative for all $P_t$, $\Psi_t^{\mathbf{P}}(c_t)$ is concave in $P_t$. Thus solving
+\begin{align*}
+\frac{\partial \Psi_t^{\mathbf{P}}(c_t)}{\partial P_t^i} = 0 
+\end{align*}
+for $i=1,\ldots, n$ gives us the global optimum. As $\sum_{i=1}^{n}P_t^i+P_t^0=1$, solving $P_t^i$ for $i>0$ gives us the sales probability for optimal $\Psi_t^{\mathbf{P}}(c_t)$.
 
 %\subsection{Summary of the Hamilton-Jacobi-Bellman Equation}
 %The importance of the Hamilton-Jacobi-Bellman (HJB) equation is that it can be used as part of a strategy for solving the optimal control problem. Optimal control problems consist of some process that evolves over time, called a state, denoted by $x(\cdot)$, with the dynamics given by a stochastic differential equation (SDE). This process is then controllable to some extent by a person who wishes to optimize a performance indicator that depends on the process. The person does so by choosing a function $\alpha(\cdot)$, called a control, that takes valeus in a metric space $\Lambda$ and influences the dynamics of $x(\cdot)$ through the SDE. Different $\alpha(\cdot)$ leads to different states at time $t$, and hence different values for the performance indicator. The optimal control problem is then to answer the following questions:
