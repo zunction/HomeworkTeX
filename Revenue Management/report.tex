@@ -13,8 +13,8 @@ Thus we look to a multiproduct model \cite{Li2009}...
 
 
 
-\section{Related Work}
-\annotation{[Optional] We might like to discuss other papers like \cite{Gallego1997} that might be related to the paper we are looking at, e.g. the 1997 paper Yiwei told us to look at.}
+%\section{Related Work}
+%\annotation{[Optional] We might like to discuss other papers like \cite{Gallego1997} that might be related to the paper we are looking at, e.g. the 1997 paper Yiwei told us to look at.}
 
 
 \section{The Multinomial Logit Model}
@@ -42,24 +42,67 @@ and by construction, $P_t^0(r_t) + \sum_{i \in \mathbf{n}}P_t^i(r_t) = 1$.
 
 The revenue rate at time $t$ is 
 \begin{align}
-\Phi_t(r_t):=\lambda(t) \sum_{i=1}^{n}r_t^iP_t^i(r_t) \label{eq:revenuerate}
+\Phi_t(r_t):=\lambda(t) \sum_{i=1}^{n}r_t^iP_t^i(r_t) \label{eq:revenuerate_reward}
 \end{align}
 
 By setting the price $r_t$, the retailer controls the probability of customer choice process so the revenue rate is optimized. From (\ref{eq:probi}) and (\ref{eq:prob0}) we obtain $P_t^i(r_t)/P_t^0=\exp ((q^i-r_t^i-u_0)/\mu)$.
 \begin{align}
 r_t^i=q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0, \quad i=1,\ldots, n \label{eq:pricetoprob}
 \end{align}
-which is a mapping from the sales probability space to the price space, and in (\ref{eq:probi}) and (\ref{eq:prob0}) we have a mapping in the opposite direction. However, these two mappings are not inverses of each other as the mapping from the price space to the sales probability space is not injective and hence cannot be a bijection. This can be easily observed for given pricing $r_t = (r_t^1,\ldots,r_t^n)$, choosing $r'_t = (r_t^1\pm\ln k,\ldots,r_t^n\pm \ln k)$ for some positive real constant $k$ will produce the same demand probability of product. We can think of this increase or decrease in the pricing as some form of inflation or deflation of the prices that preserve the customers demand probability of the products.
+which is a mapping from the sales probability space to the price space, and in (\ref{eq:probi}) and (\ref{eq:prob0}) we have a mapping in the opposite direction. However, these two mappings are not inverses of each other as the mapping from the price space to the sales probability space is not injective and hence cannot be a bijection. This can be easily observed for given pricing $r_t = (r_t^1,\ldots,r_t^n)$, choosing $r'_t = (r_t^1\pm\ln k,\ldots,r_t^n\pm \ln k)$ for some positive real constant $k$ will produce the same demand probability of product. Thus the vector of prices obtained from a given sales probability has to be chosen from a set of allowable prices  \cite{Gallego1997}.
 
 
-Thus, without factoring inflation or deflation, we have a one-to-one mapping from the price space to the sales probability space. The revenue rate as in (\ref{eq:revenuerate}) can be rewritten as 
+Thus, by choosing from the set of allowable prices, we have a one-to-one mapping from the price space to the sales probability space. The revenue rate as in (\ref{eq:revenuerate_reward}) can be rewritten as 
 \begin{align}
-\Phi_t(P_t) = \lambda(t)\sum_{i=1}^{n}\left[q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0 \right]P_t^i
+\Phi_t(P_t) = \lambda(t)\sum_{i=1}^{n}\left[q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0 \right]P_t^i\label{eq:revenuerate_prob}
 \end{align}
 where $P_t = (P_t^1,\ldots, P_t^i)$
+
+
 \subsection{Optimal control of the MNL model}
+Let $N_t^i$ be the Poisson counting process of the number of products sold up to time $t$. If a customer arrives and chooses the product $i$ at time $t$ then $dN_t^i = 1$, otherwise $dN_t^i=0$. We define $N_t = (N_t^1, \ldots, N_t^n)$ to be a multivariate stochastic process controlled by the price vector $r_t$ through the probability $P_t$. Given an initial inventory $c_T$, the expected revenue of the price scheme $\mathbf{r}$ 	for the entire selling season is 
+\begin{align}
+\mathbf{w}_T^{\mathbf{r}}(c_T) = \left(E_{\mathbf{r}}\left[\int_0^Tr^i_t\,dN^i_t\right]\right)_{i=1,\ldots,n}
+\end{align}
+Using the relationship between the pricing and the sales probability, the paper rewrites the expected reveue in terms of its corresponding probability scheme $\mathbf{P}=\{P_t, t \in [T,0)\}$ to get
+\begin{align}
+\mathbf{w}^{\mathbf{P}}_T(c_T) = \left[\int_{0}^{T}\lambda(t) \sum_{i=1}^{n}P_t^i[q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0]\,dt\right] = \int_{0}^{T}\Phi_t(P_t)\,dt
+\end{align}
+
+By writing the expected revenue in terms of sales probabilities instead of pricing, it reduces the space from $\mathbb{R}^n_+$ to $[0,1]^n$. This allows the search of the 	optimal control and value to be much more easier. The retailer searchs for a pricing policy $\hat{\mathbf{r}}$ that maximizes the expected revenue over the selling season, which we denote as
+\begin{align}
+\hat{\mathbf{w}}_T^{\mathbf{P}}(c_T) = \max_{P_t \in [0,1)^n, t \in [T,0)}\int_{0}^{T}\lambda(t)\sum_{i=1}^{n}P_t^i\left(q^i-u_0-\mu \ln P_t^i+\mu \ln P_T^0\right)\, dt
+\end{align}
+such that $dc_t^i = -dN_t^i$, which simply means any change in the inventory levels of product $i$ is the negative of the change in the Poisson counting process of the number of products $i$ sold up till time $i$. This formulation is observed to be a optimal control problem; our utility is $\mathbf{w}_T^{\mathbf{P}}(c_T)$, with scalar cost rate function $\Phi_t(\cdot)$, the system state vector is $c_t$ and the control vector we are trying to find is $P_t$ for some time $t$. If we used the expected revenue formulation in (\ref{eq:revenuerate_prob}) instead, the control vector we are trying to find will be $r_t$. Now let
+\begin{align}
+\mathbf{w}_t^{\mathbf{P}}(c_t) = \int_{0}^{t}\lambda(s)\sum_{i=1}^{n}P_s^i\left(q^i-u_0-\mu \ln P_s^i+\mu \ln P_s^0\right)\, ds
+\end{align}
+and 
+\begin{align}
+\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t) = \max_{P_s \in [0,1)^n, s \in [t,0)} \mathbf{w}_t^{\mathbf{P}}(c_t)
+\end{align}
+
+\annotation{
+\paragraph{Principle of Optimality}
+For every $(t,x) \in [t_0,t_1) \times \mathbb{R}^n$ and every $\Delta t \in (0, t_1-t]$, the value function $V$ satisfies the relation
+\begin{align*}
+V(t,x) = \inf_{u[t,t+\Delta t]} \left\{\int^{t + \Delta t}_{t} L(s,x(s),u(s))\, ds + V(t+\Delta t, x(t+\Delta t))\right\}
+\end{align*}
+}
 
 
+The authors then solve the optimal control problem by applying the Hamilton-Jacobi-Bellman (HJB) sufficient conditions. The HJB sufficient conditions say that the optimal revenue rate, $\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$, satisfies
+\begin{align}
+\frac{\partial \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)}{\partial t} = \max_{P_t \in [0,1)^n, t \in [T,0)}\sum_{i=1}^{n} \lambda(t)P_t^i \left(q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0- \Delta^i \mathbf{w}_t^{\mathbf{P}}(c_t)\right)
+\end{align}
+where $\Delta^i \mathbf{w}_t^{\mathbf{P}}(c_t) = \mathbf{w}_t^{\mathbf{P}}(c_t) - \mathbf{w}_t^{\mathbf{P}}(c_t-e^i)$, is the marginal value of product $i$, with $e^i$ being a $n$-dimensional vector with the $i$-th component being 1 and the rest zeros, and $\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$ satisfying the boundary and initial conditions
+\begin{align}
+\hat{\mathbf{w}}_t^{\mathbf{P}}(0) &= 0 \quad \forall t\\
+\hat{\mathbf{w}}_0^{\mathbf{P}}(c_0) &= 0 \quad \forall c_0
+\end{align}
+The boundary and initial conditions simply say that if there is zero inventory then at any time, or the selling season has ended regardless of the amount of inventory left, the optimal revenue rate is zero.
+
+\subsection{Optimal Dynamic Pricing Policy}
 
 %\subsection{Summary of the Hamilton-Jacobi-Bellman Equation}
 %The importance of the Hamilton-Jacobi-Bellman (HJB) equation is that it can be used as part of a strategy for solving the optimal control problem. Optimal control problems consist of some process that evolves over time, called a state, denoted by $x(\cdot)$, with the dynamics given by a stochastic differential equation (SDE). This process is then controllable to some extent by a person who wishes to optimize a performance indicator that depends on the process. The person does so by choosing a function $\alpha(\cdot)$, called a control, that takes valeus in a metric space $\Lambda$ and influences the dynamics of $x(\cdot)$ through the SDE. Different $\alpha(\cdot)$ leads to different states at time $t$, and hence different values for the performance indicator. The optimal control problem is then to answer the following questions:
@@ -70,16 +113,14 @@ where $P_t = (P_t^1,\ldots, P_t^i)$
 %
 %The strategy for solving the optimal control problem here is by using dynamic programming. However there are other methods like the Pontryagin maximum principle \annotation{find some reference here but do not present}.
 
-\section{Experiments}
-\annotation{If we manage to find time to run any experiments.}
+%\section{Experiments}
+%\annotation{If we manage to find time to run any experiments.}
 
 
-\section{Discussions}
-\annotation{This is where we can add our comments and our inputs, how the model can be further improved or how we can find estimates for the solution.}
+\section{Discussions and Conclusions}
+\annotation{This is where we can add our comments and our inputs, how the model can be further improved or how we can find estimates for the solution. Closing conclusions, futher areas that can be explored and research opportunities.}
 
 
-\section{Conclusions}
-\annotation{Closing conclusions, futher areas that can be explored and research opportunities (for Yiwei only haha).}
 
 
 \bibliographystyle{abbrv}
