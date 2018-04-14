@@ -82,27 +82,29 @@ and
 \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t) = \max_{P_s \in [0,1)^n, s \in [t,0)} \mathbf{w}_t^{\mathbf{P}}(c_t)
 \end{align}
 
-\annotation{
-\paragraph{Principle of Optimality}
-For every $(t,x) \in [t_0,t_1) \times \mathbb{R}^n$ and every $\Delta t \in (0, t_1-t]$, the value function $V$ satisfies the relation
-\begin{align*}
-V(t,x) = \inf_{u[t,t+\Delta t]} \left\{\int^{t + \Delta t}_{t} L(s,x(s),u(s))\, ds + V(t+\Delta t, x(t+\Delta t))\right\}
-\end{align*}
-}
+%\annotation{
+%\paragraph{Principle of Optimality}
+%For every $(t,x) \in [t_0,t_1) \times \mathbb{R}^n$ and every $\Delta t \in (0, t_1-t]$, the value function $V$ satisfies the relation
+%\begin{align*}
+%V(t,x) = \inf_{u[t,t+\Delta t]} \left\{\int^{t + \Delta t}_{t} L(s,x(s),u(s))\, ds + V(t+\Delta t, x(t+\Delta t))\right\}
+%\end{align*}
+%}
 
 
 The authors then solve the optimal control problem by applying the Hamilton-Jacobi-Bellman (HJB) sufficient conditions. The HJB sufficient conditions say that the optimal revenue rate, $\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$, satisfies
 \begin{align}
-\frac{\partial \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)}{\partial t} = \max_{P_t \in [0,1)^n, t \in [T,0)}\sum_{i=1}^{n} \lambda(t)P_t^i \left(q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0- \Delta^i \mathbf{w}_t^{\mathbf{P}}(c_t)\right)
+\frac{\partial \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)}{\partial t} = \max_{P_t \in [0,1)^n, t \in [T,0)}\sum_{i=1}^{n} \lambda(t)P_t^i \left(q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0- \Delta^i \mathbf{w}_t^{\mathbf{P}}(c_t)\right) \label{eq:HJBsufficient}
 \end{align}
 where $\Delta^i \mathbf{w}_t^{\mathbf{P}}(c_t) = \mathbf{w}_t^{\mathbf{P}}(c_t) - \mathbf{w}_t^{\mathbf{P}}(c_t-e^i)$, is the marginal value of product $i$, with $e^i$ being a $n$-dimensional vector with the $i$-th component being 1 and the rest zeros, and $\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$ satisfying the boundary and initial conditions
 \begin{align}
 \hat{\mathbf{w}}_t^{\mathbf{P}}(0) &= 0 \quad \forall t\\
 \hat{\mathbf{w}}_0^{\mathbf{P}}(c_0) &= 0 \quad \forall c_0
 \end{align}
-The boundary and initial conditions simply say that if there is zero inventory then at any time, or the selling season has ended regardless of the amount of inventory left, the optimal revenue rate is zero.
+The boundary and initial conditions simply say that if there is zero inventory then at any time the optimal revenue rate is zero, and if the selling season has ended regardless of the amount of inventory left, the optimal revenue rate will also be zero. The HJB conditions are equivalent to maximizing the revenue rate $\Phi_t(c_T)$ at each $t$.
 
 \subsection{Optimal Dynamic Pricing Policy}
+
+To find the optimal dynamic pricing policy, we just need to find the maximizer $P_t^\ast$ of the HJB equation in (\ref{eq:HJBsufficient}s)
 
 %\subsection{Summary of the Hamilton-Jacobi-Bellman Equation}
 %The importance of the Hamilton-Jacobi-Bellman (HJB) equation is that it can be used as part of a strategy for solving the optimal control problem. Optimal control problems consist of some process that evolves over time, called a state, denoted by $x(\cdot)$, with the dynamics given by a stochastic differential equation (SDE). This process is then controllable to some extent by a person who wishes to optimize a performance indicator that depends on the process. The person does so by choosing a function $\alpha(\cdot)$, called a control, that takes valeus in a metric space $\Lambda$ and influences the dynamics of $x(\cdot)$ through the SDE. Different $\alpha(\cdot)$ leads to different states at time $t$, and hence different values for the performance indicator. The optimal control problem is then to answer the following questions:
