@@ -91,20 +91,60 @@ and
 %}
 
 
-The authors then solve the optimal control problem by applying the Hamilton-Jacobi-Bellman (HJB) sufficient conditions. The HJB sufficient conditions say that the optimal revenue rate, $\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$, satisfies
+The authors then solve the optimal control problem by applying the Hamilton-Jacobi-Bellman (HJB) sufficient conditions. The HJB provide sufficient conditions for optimality, which says that the solution for the equation,
 \begin{align}
-\frac{\partial \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)}{\partial t} = \max_{P_t \in [0,1)^n, t \in [T,0)}\sum_{i=1}^{n} \lambda(t)P_t^i \left(q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0- \Delta^i \mathbf{w}_t^{\mathbf{P}}(c_t)\right) \label{eq:HJBsufficient}
+\frac{\partial \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)}{\partial t} = \max_{P_t \in [0,1)^n, t \in [T,0)}\sum_{i=1}^{n} \lambda(t)P_t^i \left(q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0- \Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)\right) \label{eq:HJBsufficient}
 \end{align}
-where $\Delta^i \mathbf{w}_t^{\mathbf{P}}(c_t) = \mathbf{w}_t^{\mathbf{P}}(c_t) - \mathbf{w}_t^{\mathbf{P}}(c_t-e^i)$, is the marginal value of product $i$, with $e^i$ being a $n$-dimensional vector with the $i$-th component being 1 and the rest zeros, and $\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$ satisfying the boundary and initial conditions
+gives us the optimal revenue rate, %$\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$, 
+where $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t) = \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t) - \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t-e^i)$, is the marginal value of product $i$, with $e^i$ being a $n$-dimensional vector with the $i$-th component being 1 and the rest zeros, and $\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$ satisfying the boundary and initial conditions
 \begin{align}
 \hat{\mathbf{w}}_t^{\mathbf{P}}(0) &= 0 \quad \forall t\\
 \hat{\mathbf{w}}_0^{\mathbf{P}}(c_0) &= 0 \quad \forall c_0
 \end{align}
-The boundary and initial conditions simply say that if there is zero inventory then at any time the optimal revenue rate is zero, and if the selling season has ended regardless of the amount of inventory left, the optimal revenue rate will also be zero. The HJB conditions are equivalent to maximizing the revenue rate $\Phi_t(c_T)$ at each $t$.
+The boundary and initial conditions states that if there is zero inventory then at any time the optimal revenue rate is zero, and if the selling season has ended regardless of the amount of inventory left, the optimal revenue rate will also be zero. The HJB conditions are equivalent to maximizing the revenue rate $\Phi_t(c_T)$ at each $t$.
 
 \subsection{Optimal Dynamic Pricing Policy}
 
-To find the optimal dynamic pricing policy, we just need to find the maximizer $P_t^\ast$ of the HJB equation in (\ref{eq:HJBsufficient})
+To find the optimal dynamic pricing policy, we just need to find the maximizer $P_t^\ast$ of the HJB equation in (\ref{eq:HJBsufficient}). Define
+
+\begin{align*}
+\Psi_t^{\mathbf{P}}(c_t) = \sum_{i=1}^{n}\lambda(t) P_t^i\left[q^i - u_0 = \mu \ln P_t^i + \mu \ln P_t^0 - \Delta^i\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)\right]
+\end{align*}
+
+and the fact that $\Psi_t^{\mathbf{P}}(c_t)$ is concave is derived from showing that its Hessian is negative and thus it is semi-negative definite. Thus it has a global maximum over $P_t$ which can be found by solving
+\begin{align}
+\frac{\partial \Psi_t^{\mathbf{P}}(c_t)}{\partial P_t^i} = \lambda(t) \left[q^i - u_0 + \mu \ln P_t^i - \mu \ln P_t^0 - \Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)-\mu\right]
+\end{align}
+as we have $\sum_{i=1}^{n}P_t^i + P_t^0 = 1$, it suffices to find $P_t^i$ for $i>0$. Without going into details, we see that the maximizer has the form
+\begin{align}
+(P_t^i)^\ast = \frac{\mu}{m_t(c_t)}\exp \left(\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)-u_0 - m_t(c_t)}{\mu}\right)\label{eq:maximizer}
+\end{align}
+where $i \in \mathbb{R}(c_t)$, the set of products with non-negative inventory and 
+\begin{align}
+m_t(c_t) = \frac{\mu}{1 - \sum_{i=1}^{n}(P_t^i)^\ast} = \frac{\mu}{P_t^{0\ast}}\label{eq:mtct}
+\end{align}
+By (\ref{eq:maximizer}), (\ref{eq:mtct}) and the probability simplex constrain, we obtain
+\begin{align}
+\left[\frac{m_t(c_t)}{\mu}-1\right] \exp \left[\frac{m_t(c_t)+u_0}{\mu}\right] = \sum_{i=1}^{n}\exp \left[\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)}{\mu}\right]
+\end{align}
+where $m_t(c_t)$ is the unique solution. This uniqueness follows from the concave property of $\Psi_t^{\mathbf{P}}(c_t)$ over probability simplex $P_t$. Using the results that we have derived above, the optimal price scheme is
+\begin{align}
+(r_t^i)^\ast = \Delta \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)+m_t(c_t)\label{eq:optpricescheme}
+\end{align}
+
+and updating the HJB optimality sufficiency conditions,
+\begin{align}
+\frac{\partial}{\partial t}\hat{\mathbf{w}}_t^{\mathbf{P}^\ast} = \lambda(t)(m_t(c_t) - \mu)
+\end{align}
+By integrating both sides with respect to $t$ from $0$ to $T$,  the maximum expected revenue at the beginning of the selling season in terms of $m_t(c_t)$ is 
+\begin{align}
+\hat{\mathbf{w}}_t^{\mathbf{P}^\ast} = \int_{0}^{T}\lambda(t)\left[m_t(c_t)-\mu\right]\,dt
+\end{align}
+
+
+
+
+
 
 %\subsection{Summary of the Hamilton-Jacobi-Bellman Equation}
 %The importance of the Hamilton-Jacobi-Bellman (HJB) equation is that it can be used as part of a strategy for solving the optimal control problem. Optimal control problems consist of some process that evolves over time, called a state, denoted by $x(\cdot)$, with the dynamics given by a stochastic differential equation (SDE). This process is then controllable to some extent by a person who wishes to optimize a performance indicator that depends on the process. The person does so by choosing a function $\alpha(\cdot)$, called a control, that takes valeus in a metric space $\Lambda$ and influences the dynamics of $x(\cdot)$ through the SDE. Different $\alpha(\cdot)$ leads to different states at time $t$, and hence different values for the performance indicator. The optimal control problem is then to answer the following questions:
@@ -115,8 +155,8 @@ To find the optimal dynamic pricing policy, we just need to find the maximizer $
 %
 %The strategy for solving the optimal control problem here is by using dynamic programming. However there are other methods like the Pontryagin maximum principle \annotation{find some reference here but do not present}.
 
-%\section{Experiments}
-%\annotation{If we manage to find time to run any experiments.}
+\section{Experiments}
+\annotation{Restoring this section back.}
 
 
 \section{Discussions and Conclusions}
