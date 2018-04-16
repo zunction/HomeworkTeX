@@ -60,7 +60,7 @@ where $P_t = (P_t^1,\ldots, P_t^i)$
 
 
 \subsection{Optimal control of the MNL model}
-Let $N_t^i$ be the Poisson counting process of the number of products sold up to time $t$. If a customer arrives and chooses the product $i$ at time $t$ then $dN_t^i = 1$, otherwise $dN_t^i=0$. We define $N_t = (N_t^1, \ldots, N_t^n)$ to be a multivariate stochastic process controlled by the price vector $r_t$ through the probability $P_t$. Given an initial inventory $c_T$, the expected revenue of the price scheme $\mathbf{r}$ 	for the entire selling season is 
+Let $N_t^i$ be the Poisson counting process of the number of products sold up to time $t$. If a customer arrives and chooses the product $i$ at time $t$ then $dN_t^i = 1$, otherwise $dN_t^i=0$. $N_t = (N_t^1, \ldots, N_t^n)$ is defined to be a multivariate stochastic process controlled by the price vector $r_t$ through the probability $P_t$. Given an initial inventory $c_T$, the expected revenue of the price scheme $\mathbf{r}$ 	for the entire selling season is 
 \begin{align}
 \mathbf{w}_T^{\mathbf{r}}(c_T) = \left(E_{\mathbf{r}}\left[\int_0^Tr^i_t\,dN^i_t\right]\right)_{i=1,\ldots,n}
 \end{align}
@@ -69,7 +69,7 @@ Using the relationship between the pricing and the sales probability, the paper 
 \mathbf{w}^{\mathbf{P}}_T(c_T) = \left[\int_{0}^{T}\lambda(t) \sum_{i=1}^{n}P_t^i[q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0]\,dt\right] = \int_{0}^{T}\Phi_t(P_t)\,dt
 \end{align}
 
-By writing the expected revenue in terms of sales probabilities instead of pricing, it reduces the space from $\mathbb{R}^n_+$ to $[0,1]^n$. This allows the search of the 	optimal control and value to be much more easier. The retailer searchs for a pricing policy $\hat{\mathbf{r}}$ that maximizes the expected revenue over the selling season, which we denote as
+By writing the expected revenue in terms of sales probabilities instead of pricing, it reduces the space from $\mathbb{R}^n_+$ to $[0,1]^n$. This allows the search of the optimal control and value to be much more managable as we are searching for a solution from a probability simplex. The retailer searchs for a pricing policy $\hat{\mathbf{r}}$ that maximizes the expected revenue over the selling season, which is denoted as
 \begin{align}
 \hat{\mathbf{w}}_T^{\mathbf{P}}(c_T) = \max_{P_t \in [0,1)^n, t \in [T,0)}\int_{0}^{T}\lambda(t)\sum_{i=1}^{n}P_t^i\left(q^i-u_0-\mu \ln P_t^i+\mu \ln P_T^0\right)\, dt
 \end{align}
@@ -104,7 +104,7 @@ The boundary and initial conditions simply say that if there is zero inventory t
 
 \subsection{Optimal Dynamic Pricing Policy}
 
-To find the optimal dynamic pricing policy, we just need to find the maximizer $P_t^\ast$ of the HJB equation in (\ref{eq:HJBsufficient}s)
+To find the optimal dynamic pricing policy, we just need to find the maximizer $P_t^\ast$ of the HJB equation in (\ref{eq:HJBsufficient})
 
 %\subsection{Summary of the Hamilton-Jacobi-Bellman Equation}
 %The importance of the Hamilton-Jacobi-Bellman (HJB) equation is that it can be used as part of a strategy for solving the optimal control problem. Optimal control problems consist of some process that evolves over time, called a state, denoted by $x(\cdot)$, with the dynamics given by a stochastic differential equation (SDE). This process is then controllable to some extent by a person who wishes to optimize a performance indicator that depends on the process. The person does so by choosing a function $\alpha(\cdot)$, called a control, that takes valeus in a metric space $\Lambda$ and influences the dynamics of $x(\cdot)$ through the SDE. Different $\alpha(\cdot)$ leads to different states at time $t$, and hence different values for the performance indicator. The optimal control problem is then to answer the following questions:
