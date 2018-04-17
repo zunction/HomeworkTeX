@@ -3,11 +3,11 @@
 
 
 \section{Introduction}
-\annotation{Introduction to talk about what we learnt in class (Single Product DP) and how the model in the paper we have chosen is a generalizing from single to multi-products.}
+%\annotation{Introduction to talk about what we learnt in class (Single Product DP) and how the model in the paper we have chosen is a generalizing from single to multi-products.}
 
-In the single product dynamic pricing model that we were introduced in class, we looked at a monopolist seller which finite units $x_0$ of a single indivisible product with no replenishment over a finite and continuous horizon $[0,T)$. The unit price $\pi_t$ is decided by the seller at each point of time $t \in [0,T)$ and customers product valuations follow a distribution over $\mathbb{R}_+$. However, practically, sellers often have a wide range of products that the customers can choose from, with the products having similar functionalities; catering to customers of varying purchasing power.
+In the single product dynamic pricing model that we were introduced in class, we looked at a monopolist seller which finite units $x_0$ of a single indivisible product with no replenishment over a finite and continuous horizon $[0,T)$. The unit price $\pi_t$ is decided by the seller at each point of time $t \in [0,T)$ and customers product valuations follow a distribution over $\mathbb{R}_+$. However, sellers often have a wide range of products that the customers can choose from, with the products having similar functionalities; catering to customers of varying purchasing power. 
 
-Thus we look to a multiproduct model \cite{Li2009}...
+Thus we look to a multiproduct model \cite{Li2009} where the retailer who encounters a long supply leadtime and short selling season with substitute products when replenishment products are unavailable. For example, when shopping, if the item of your choice is not available and its stock won't be replenish, then you will have to find a substitute product. Thus the retailer can control the price of the products with time so as to maximize his or her revenue. Instead of considering the customers product valuation as a general random variable, we explicitly construct a model that sees customer purchase probability as a function of the quality and the price. Also, a time dependent customer arrival rate is modeled by a nonhomogeneous Poisson process \annotation{(add that it is forcasted in the model)}. Lastly, the paper assumes that the products are equally dissimiliar; the addition or removal of one product affects the choice of all other products in the same portion.
 
 
 
@@ -18,7 +18,7 @@ Thus we look to a multiproduct model \cite{Li2009}...
 
 
 \section{The Multinomial Logit Model}
-\annotation{The model of course.}
+%\annotation{The model of course.}
 
 
 \subsection{Summary of the MNL model}
@@ -69,11 +69,11 @@ Using the relationship between the pricing and the sales probability, the paper 
 \mathbf{w}^{\mathbf{P}}_T(c_T) = \left[\int_{0}^{T}\lambda(t) \sum_{i=1}^{n}P_t^i[q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0]\,dt\right] = \int_{0}^{T}\Phi_t(P_t)\,dt
 \end{align}
 
-By writing the expected revenue in terms of sales probabilities instead of pricing, it reduces the space from $\mathbb{R}^n_+$ to $[0,1]^n$. This allows the search of the optimal control and value to be much more managable as we are searching for a solution from a probability simplex. The retailer searchs for a pricing policy $\hat{\mathbf{r}}$ that maximizes the expected revenue over the selling season, which is denoted as
+By writing the expected revenue in terms of sales probabilities instead of pricing, it reduces the space from $\mathbb{R}^n_+$ to $[0,1]^n$. This allows the search of the optimal control and value to be much more managable \annotation{(to remove or to justify it better)} as we are searching for a solution from a probability simplex. The retailer searchs for a pricing policy $\hat{\mathbf{r}}$ that maximizes the expected revenue over the selling season, which is denoted as
 \begin{align}
-\hat{\mathbf{w}}_T^{\mathbf{P}}(c_T) = \max_{P_t \in [0,1)^n, t \in [T,0)}\int_{0}^{T}\lambda(t)\sum_{i=1}^{n}P_t^i\left(q^i-u_0-\mu \ln P_t^i+\mu \ln P_T^0\right)\, dt
+\hat{\mathbf{w}}_T^{\mathbf{P}}(c_T) = \max_{P_t \in [0,1)^n, t \in [T,0)}\int_{0}^{T}\lambda(t)\sum_{i=1}^{n}P_t^i\left(q^i-u_0-\mu \ln P_t^i+\mu \ln P_t^0\right)\, dt
 \end{align}
-such that $dc_t^i = -dN_t^i$, which simply means any change in the inventory levels of product $i$ is the negative of the change in the Poisson counting process of the number of products $i$ sold up till time $i$. This formulation is observed to be a optimal control problem; our utility is $\mathbf{w}_T^{\mathbf{P}}(c_T)$, with scalar cost rate function $\Phi_t(\cdot)$, the system state vector is $c_t$ and the control vector we are trying to find is $P_t$ for some time $t$. If we used the expected revenue formulation in (\ref{eq:revenuerate_prob}) instead, the control vector we are trying to find will be $r_t$. Now let
+such that $dc_t^i = -dN_t^i$, which simply means any change in the inventory levels of product $i$ is the negative of the change in the Poisson counting process of the number of products $i$ sold up till time $i$. This formulation is observed to be a optimal control problem; our utility is $\mathbf{w}_T^{\mathbf{P}}(c_T)$, with scalar utility rate function $\Phi_t(\cdot)$, the system state vector is $c_t$ and the control vector we are trying to find is $P_t$ for some time $t$. If we used the expected revenue formulation in (\ref{eq:revenuerate_prob}) instead, the control vector we are trying to find will be $r_t$. Now let
 \begin{align}
 \mathbf{w}_t^{\mathbf{P}}(c_t) = \int_{0}^{t}\lambda(s)\sum_{i=1}^{n}P_s^i\left(q^i-u_0-\mu \ln P_s^i+\mu \ln P_s^0\right)\, ds
 \end{align}
@@ -101,7 +101,7 @@ where $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t) = \hat{\mathbf{w}}_t^{\math
 \hat{\mathbf{w}}_t^{\mathbf{P}}(0) &= 0 \quad \forall t\\
 \hat{\mathbf{w}}_0^{\mathbf{P}}(c_0) &= 0 \quad \forall c_0
 \end{align}
-The boundary and initial conditions states that if there is zero inventory then at any time the optimal revenue rate is zero, and if the selling season has ended regardless of the amount of inventory left, the optimal revenue rate will also be zero. The HJB conditions are equivalent to maximizing the revenue rate $\Phi_t(c_T)$ at each $t$.
+The boundary and initial conditions states that if there is zero inventory then at any time the optimal revenue rate is zero, and if the selling season has ended regardless of the amount of inventory left, the optimal revenue rate will also be zero. The HJB conditions are equivalent to maximizing the revenue rate $\Phi_t(P_t)$ at each $t$.
 
 \subsection{Optimal Dynamic Pricing Policy}
 
@@ -111,11 +111,13 @@ To find the optimal dynamic pricing policy, we just need to find the maximizer $
 \Psi_t^{\mathbf{P}}(c_t) = \sum_{i=1}^{n}\lambda(t) P_t^i\left[q^i - u_0 = \mu \ln P_t^i + \mu \ln P_t^0 - \Delta^i\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)\right]
 \end{align*}
 
-and the fact that $\Psi_t^{\mathbf{P}}(c_t)$ is concave is derived from showing that its Hessian is negative and thus it is semi-negative definite. Thus it has a global maximum over $P_t$ which can be found by solving
+and the fact that $\Psi_t^{\mathbf{P}}(c_t)$ is concave is derived from showing that its Hessian is negative and thus it is semi-negative definite. Thus it has a global maximum over $P_t$ which can be found by solving,
 \begin{align}
 \frac{\partial \Psi_t^{\mathbf{P}}(c_t)}{\partial P_t^i} = \lambda(t) \left[q^i - u_0 + \mu \ln P_t^i - \mu \ln P_t^0 - \Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)-\mu\right]
 \end{align}
-as we have $\sum_{i=1}^{n}P_t^i + P_t^0 = 1$, it suffices to find $P_t^i$ for $i>0$. Without going into details, we see that the maximizer has the form
+as we have $\sum_{i=1}^{n}P_t^i + P_t^0 = 1$, it suffices to find $P_t^i$ for $i>0$. 
+
+In the paper, they solved for the maximizer to be of the form
 \begin{align}
 (P_t^i)^\ast = \frac{\mu}{m_t(c_t)}\exp \left(\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)-u_0 - m_t(c_t)}{\mu}\right)\label{eq:maximizer}
 \end{align}
@@ -123,27 +125,57 @@ where $i \in \mathbb{R}(c_t)$, the set of products with non-negative inventory a
 \begin{align}
 m_t(c_t) = \frac{\mu}{1 - \sum_{i=1}^{n}(P_t^i)^\ast} = \frac{\mu}{P_t^{0\ast}}\label{eq:mtct}
 \end{align}
+
 By (\ref{eq:maximizer}), (\ref{eq:mtct}) and the probability simplex constrain, we obtain
 \begin{align}
-\left[\frac{m_t(c_t)}{\mu}-1\right] \exp \left[\frac{m_t(c_t)+u_0}{\mu}\right] = \sum_{i=1}^{n}\exp \left[\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)}{\mu}\right]
+\left[\frac{m_t(c_t)}{\mu}-1\right] \exp \left[\frac{m_t(c_t)+u_0}{\mu}\right] = \sum_{i=1}^{n}\exp \left[\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)}{\mu}\right]\label{eq:uniquesol}
 \end{align}
-where $m_t(c_t)$ is the unique solution. This uniqueness follows from the concave property of $\Psi_t^{\mathbf{P}}(c_t)$ over probability simplex $P_t$. Using the results that we have derived above, the optimal price scheme is
+where $m_t(c_t)$ is the unique solution. This uniqueness follows from the concave property of $\Psi_t^{\mathbf{P}}(c_t)$ over all probability simplex $P_t$.
+
+Using the results that we have derived above, the optimal price scheme is
 \begin{align}
 (r_t^i)^\ast = \Delta \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)+m_t(c_t)\label{eq:optpricescheme}
 \end{align}
 
 and updating the HJB optimality sufficiency conditions,
 \begin{align}
-\frac{\partial}{\partial t}\hat{\mathbf{w}}_t^{\mathbf{P}^\ast} = \lambda(t)(m_t(c_t) - \mu)
+\frac{\partial}{\partial t}\hat{\mathbf{w}}_t^{\mathbf{P}^\ast} = \lambda(t)(m_t(c_t) - \mu)\label{eq:pdw}
 \end{align}
 By integrating both sides with respect to $t$ from $0$ to $T$,  the maximum expected revenue at the beginning of the selling season in terms of $m_t(c_t)$ is 
 \begin{align}
 \hat{\mathbf{w}}_t^{\mathbf{P}^\ast} = \int_{0}^{T}\lambda(t)\left[m_t(c_t)-\mu\right]\,dt
 \end{align}
 
+From the discussion above, we see that the solution to the optimal pricing policy depends on the term $m_t(c_t)$. However, $m_t(c_t)$ is found both in the base and exponent of (\ref{eq:maximizer}) and thus there is no closed form solution for $m_t(c_t)$ and hence also $(r_t^i)^\ast$
 
 
 
+\subsubsection{Our observations}
+
+In our observations, contrary to (\ref{eq:maximizer}), we arrived at a different result
+\begin{align}
+(P_t^i)^\ast &= \frac{\mu}{m_t(c_t)}\exp \left(\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)-u_0 - \mu- m_t(c_t)(P_t^i)^\ast}{\mu}\right)\nonumber\\
+&= P_t^{0\ast}\exp \left(\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)-u_0 - \mu - m_t(c_t)(P_t^i)^\ast}{\mu}\right)\label{eq:our_maximizer}
+\end{align}
+%and if we know the value of $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)$ we can actually solve for the optimal probabilities $(P_t^i)^\ast$ by evaluating $x_i = \exp \left(\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)-u_0 - \mu}{\mu}\right)$ for all $i=1,\ldots, n$, then normalizing the vector
+%\begin{align*}
+%\left(1,x_1,\ldots, x_n\right)
+%\end{align*}
+%to get the vector of probabilities $\left(P_t^{0\ast},(P_t^{1})^\ast,\ldots,(P_t^{n})^\ast \right)$. 
+%
+However,  $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)$ relies on $P_t^{0\ast}$ and $(P_t^i)^\ast$s, thus we do not have a closed form solution for (\ref{eq:our_maximizer}). Updating the equation in (\ref{eq:uniquesol}), we have the equation below.
+\begin{align}
+\left[\frac{m_t(c_t)}{\mu}-1\right] \exp \left[1+\frac{u_0}{\mu}\right] &= \sum_{i=1}^{n}\exp \left[\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)}{\mu}\right]\label{eq:our_uniquesol}
+\end{align}
+
+
+
+
+
+
+
+
+\section{Dynamic Programming For Optimal Dynamic Pricing}
 
 
 %\subsection{Summary of the Hamilton-Jacobi-Bellman Equation}
@@ -155,9 +187,9 @@ By integrating both sides with respect to $t$ from $0$ to $T$,  the maximum expe
 %
 %The strategy for solving the optimal control problem here is by using dynamic programming. However there are other methods like the Pontryagin maximum principle \annotation{find some reference here but do not present}.
 
-\section{Experiments}
-\annotation{Restoring this section back.}
-
+%\section{Experiments}
+%\annotation{Restoring this section back.}
+%
 
 \section{Discussions and Conclusions}
 \annotation{This is where we can add our comments and our inputs, how the model can be further improved or how we can find estimates for the solution. Closing conclusions, futher areas that can be explored and research opportunities.}
