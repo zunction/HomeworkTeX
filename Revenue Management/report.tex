@@ -5,9 +5,9 @@
 \section{Introduction}
 %\annotation{Introduction to talk about what we learnt in class (Single Product DP) and how the model in the paper we have chosen is a generalizing from single to multi-products.}
 
-In the single product dynamic pricing model that we were introduced in class, we looked at a monopolist seller which finite units $x_0$ of a single indivisible product with no replenishment over a finite and continuous horizon $[0,T)$. The unit price $\pi_t$ is decided by the seller at each point of time $t \in [0,T)$ and customers product valuations follow a distribution over $\mathbb{R}_+$. However, sellers often have a wide range of products that the customers can choose from, with the products having similar functionalities; catering to customers of varying purchasing power. 
+In the single product dynamic pricing model that was introduced in class, we looked at a monopolist seller who sells finite units of a single indivisible product with no replenishment over a finite and continuous time horizon $[0,T]$. The unit price $\pi_t$ is decided by the seller at each point of time $t \in [0,T]$ and customers' product valuations follow a distribution over $\mathbb{R}_+$. However, sellers often have a wide range of products that customers can choose. Also the products might have similar or different functions and cater to customers' varying tastes and purchasing powers. 
 
-Thus we look to a multiproduct model \cite{Li2009} where the retailer who encounters a long supply leadtime and short selling season with substitute products when replenishment products are unavailable. For example, when shopping, if the item of your choice is not available and its stock won't be replenish, then you will have to find a substitute product. Thus the retailer can control the price of the products with time so as to maximize his or her revenue. Instead of considering the customers product valuation as a general random variable, we explicitly construct a model that sees customer purchase probability as a function of the quality and the price. Also, a time dependent customer arrival rate is modeled by a nonhomogeneous Poisson process \annotation{(add that it is forcasted in the model)}. Lastly, the paper assumes that the products are equally dissimiliar; the addition or removal of one product affects the choice of all other products in the same portion.
+Thus we look at multiproduct model \cite{Li2009} which has a long supply lead time and short selling season with substitute products available when replenishment is not allowed. For example, during shopping, if your favorite product is not available and its stock won't be replenished, then you will have to find a substitute. Thus the retailer can control the prices of the products upon each point of time to maximize his or her revenue. Instead of considering customers' product valuation as a general random variable, the paper explicitly constructs a model that sees customer purchase probability as a function of quality and price. Also, a time dependent customer arrival rate is modeled by a nonhomogeneous Poisson process and this paper forecasted corresponding data. Lastly, the paper assumes that the products are equally dissimiliar, which means the addition or removal of one product affects the choice of all other products with the same portion.
 
 
 
@@ -17,12 +17,12 @@ Thus we look to a multiproduct model \cite{Li2009} where the retailer who encoun
 %\annotation{[Optional] We might like to discuss other papers like \cite{Gallego1997} that might be related to the paper we are looking at, e.g. the 1997 paper Yiwei told us to look at.}
 
 
-\section{The Multinomial Logit Model}
+\section{The Multinomial Logit (MNL) Model}
 %\annotation{The model of course.}
 
 
 \subsection{Summary of the MNL model}
-The MNL model is a multiproduct dynamic pricing problem and assumes the products are nominal. It describes dynamic consumer choice preferences over substitute products as prices are varied. The customer makes choices from a range of products to maximise his or her utility. The utility of the $i$ product is defined by the logit demand function $v^i(r^i) = \exp ((q^i-r^i)/\mu)$ which is a positive function of the quality $q^i$, the price $r^i$ of product $i$ for $i=1,\ldots, n$ and $\mu$ is the constant representing the stochastic preference of the choice process. The customer expected demand probability of product $i$ is defined as 
+The MNL model is one of the most commonly used models to capture customers' preferences. It describes preferences dynamically as prices vary. A customer makes choices from a range of products to maximise his or her utility, which is represented by the features of products, such as price and quality. The utility of product i is defined by the logit demand function $v^i(r^i) = \exp ((q^i-r^i)/\mu)$, which is a positive function of quality $q^i$ and price $r^i$ of product $i$ for $i=1,\ldots, n$ and $\mu$ is the constant representing the stochastic preference of the choice process. The customer expected demand probability of product $i$ is defined as 
 \begin{align}
 P^i(r) = \frac{v^i(r^i)}{v^0+\sum_{j=1}^{n}v^j(r^j)},\quad i = 1, \ldots n\label{eq:expecteddemandprob}
 \end{align}
@@ -170,10 +170,11 @@ However,  $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)$ relies on $P_t^{0
 \end{align}
 
 
+We observe that by letting 
 
 
 
-
+\cite{Dong2009}
 
 
 \section{Dynamic Programming For Optimal Dynamic Pricing}
