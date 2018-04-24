@@ -5,9 +5,9 @@
 \section{Introduction}
 %\annotation{Introduction to talk about what we learnt in class (Single Product DP) and how the model in the paper we have chosen is a generalizing from single to multi-products.}
 
-In the single product dynamic pricing model that was introduced in class, we looked at a monopolist seller who sells finite units of a single indivisible product with no replenishment over a finite and continuous time horizon $[0,T]$. The unit price $\pi_t$ is decided by the seller at each point of time $t \in [0,T]$ and customers' product valuations follow a distribution over $\mathbb{R}_+$. However, sellers often have a wide range of products that customers can choose. Also the products might have similar or different functions and cater to customers' varying tastes and purchasing powers. 
+In the single product dynamic pricing model introduced in class, we looked at a monopolist seller who sells a single indivisible product which has finite amount of units with no replenishment over a continuous time horizon $[0,T]$. The unit price of the product, $\pi_t$, is decided by the seller at each point of time $t \in [0,T]$. Besides, customers' product valuations follow a distribution over $\mathbb{R}_+$. However, in practice, sellers often have a wide range of products with different features to cater to customers' varying preferences and purchasing powers. 
 
-Thus we look at multiproduct model \cite{Li2009} which has a long supply lead time and short selling season with substitute products available when replenishment is not allowed. For example, during shopping, if your favorite product is not available and its stock won't be replenished, then you will have to find a substitute. Thus the retailer can control the prices of the products upon each point of time to maximize his or her revenue. Instead of considering customers' product valuation as a general random variable, the paper explicitly constructs a model that sees customer purchase probability as a function of quality and price. Also, a time dependent customer arrival rate is modeled by a nonhomogeneous Poisson process and this paper forecasted corresponding data. Lastly, the paper assumes that the products are equally dissimiliar, which means the addition or removal of one product affects the choice of all other products with the same portion.
+Thus we look at this multiproduct model \cite{Li2009} which has a long supply lead time and short selling season with substitutes available when replenishment is not allowed. For example, if a customer' favorite product is not available and stock won't be replenished, then very likely the customer would like to find a substitute. Thus the retailer can control the prices of corresponding products upon each point of time to maximize his or her revenue. Instead of considering customers' product valuation as some random variable, this paper explicitly constructs a model that sees customer purchase probability as a function of quality and price. Also, a time dependent customer arrival rate is modeled by a nonhomogeneous Poisson process and the data of this paper is forecasted correspondingly. Lastly, this paper assumes that the products are equally dissimiliar, which means the addition or removal of one affects the choice for all other products with the same portion.
 
 
 
@@ -22,17 +22,17 @@ Thus we look at multiproduct model \cite{Li2009} which has a long supply lead ti
 
 
 \subsection{Summary of the MNL model}
-The MNL model is one of the most commonly used models to capture customers' preferences. It describes preferences dynamically as prices vary. A customer makes choices from a range of products to maximise his or her utility, which is represented by the features of products, such as price and quality. The utility of product i is defined by the logit demand function $v^i(r^i) = \exp ((q^i-r^i)/\mu)$, which is a positive function of quality $q^i$ and price $r^i$ of product $i$ for $i=1,\ldots, n$ and $\mu$ is the constant representing the stochastic preference of the choice process. The customer expected demand probability of product $i$ is defined as 
+The MNL model is one of the most commonly used models to capture customers' preferences. It describes preferences dynamically as prices vary. A customer makes choices from a range of products to maximise his or her utility, which is represented by the features of products, such as price and quality. The utility of product $i$ is defined by the logit demand function $v^i(r^i) = \exp ((q^i-r^i)/\mu)$, which is a positive function defined by quality $q^i$ and price $r^i$. And $\mu$ is a constant representing the stochastic preference of the choice process. Hence, the customer's expected demand probability of product $i$ is defined as 
 \begin{align}
 P^i(r) = \frac{v^i(r^i)}{v^0+\sum_{j=1}^{n}v^j(r^j)},\quad i = 1, \ldots n\label{eq:expecteddemandprob}
 \end{align}
 and $v^0$ denotes the utility of not making any purchase.
 
 
-The customer's arrivals are assumed to follow a nonhomogenous Poisson process with a time-dependent rate $\lambda(t)$ and in a small time interval $\delta t$, the probability of one arrival is $\lambda(t)\delta t$. The price of the products at time $t$ is $r_t = (r_t^1,\ldots,r_t^n) \in \mathbb{R}^n$ is decided according to the current inventory level. If some product $i$ is sold out before the end of the selling season, as we do not allow replenishments, the price is set to $r^i_t = \infty$ for all $t$ occuring after $c^i_t=0$. If all the products are sold at at $t < T$, then the selling season ends at $t$. All unsold products are salvaged at $t=0$. 
+Customer's arrivals are assumed to follow a nonhomogenous Poisson process with a time-dependent rate $\lambda(t)$. In a small time interval $\delta t$, the probability of one arrival is $\lambda(t)\delta t$. The prices of the products at time $t$ is $r_t = (r_t^1,\ldots,r_t^n) \in \mathbb{R}^n$ is related to the current inventory level. If certain product $i$ is sold out before the end of the selling season, as we do not allow replenishments, its price is set to $r^i_t = \infty$ for all $t$ occuring after $c^i_t=0$. If all the products are sold upon time $t < T$, then the selling season ends at $t$. All unsold products are salvaged at $t=0$. 
 
 
-Let $\mathbf{r}=\{r_t, t \in [T,0]\} = (r^1, \ldots, r^n)$ denote a pricing policy for the entire season, where $r^i$ denotes the trend of the price of product $i$ over the selling season. We denote the probabilty for a customer to arrive at time $t$ to choose product $i \in \mathbf{n} = \{1,\ldots, n\}$ by $P_t^i(r_t)$ and $P_t^0(r_t)$ denotes the no-purchase probability. Using (\ref{eq:expecteddemandprob}) with the no-purchase utility $v^0 = \exp (u_0/\mu)$, we have the demand of product $i$ and of no-purchase
+Let $\mathbf{r}=\{r_t, t \in [T,0]\} = (r^1, \ldots, r^n)$ denote a pricing policy for the entire season, where $r^i$ denotes the prices of product $i$ over the selling season. We denote the probabilty upon a customer's arrival at time $t$ to choose product $i \in \mathbf{n} = \{1,\ldots, n\}$ by $P_t^i(r_t)$ while $P_t^0(r_t)$ denotes the no-purchase probability. Using (\ref{eq:expecteddemandprob}) with the no-purchase utility $v^0 = \exp (u_0/\mu)$, we have the demand probability of product $i$ and of no-purchase
 \begin{align}
 P_t^i(r_t) &= \frac{\exp((q^i-r^i_t)/\mu)}{\sum_{i \in \mathbf{n}}\exp((q_i-r^i_t)/\mu)+\exp(u_0/\mu)} \label{eq:probi}\\
 P_t^0(r_t)&= \frac{\exp(u_0/\mu)}{\sum_{i \in \mathbf{n}}\exp((q_i-r^i_t)/\mu)+\exp(u_0/\mu)}\label{eq:prob0}
@@ -40,31 +40,31 @@ P_t^0(r_t)&= \frac{\exp(u_0/\mu)}{\sum_{i \in \mathbf{n}}\exp((q_i-r^i_t)/\mu)+\
 
 and by construction, $P_t^0(r_t) + \sum_{i \in \mathbf{n}}P_t^i(r_t) = 1$.
 
-The revenue rate at time $t$ is 
+Hence, the revenue rate at time $t$ is 
 \begin{align}
 \Phi_t(r_t):=\lambda(t) \sum_{i=1}^{n}r_t^iP_t^i(r_t) \label{eq:revenuerate_reward}
 \end{align}
 
-By setting the price $r_t$, the retailer controls the probability of customer choice process so the revenue rate is optimized. From (\ref{eq:probi}) and (\ref{eq:prob0}) we obtain $P_t^i(r_t)/P_t^0=\exp ((q^i-r_t^i-u_0)/\mu)$.
+By setting price $r_t$ to take different values, the retailer controls the probability of customers' buying so the revenue rate is optimized. From (\ref{eq:probi}) and (\ref{eq:prob0}) we obtain $P_t^i(r_t)/P_t^0=\exp ((q^i-r_t^i-u_0)/\mu)$. Furthermore, we have
 \begin{align}
 r_t^i=q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0, \quad i=1,\ldots, n \label{eq:pricetoprob}
 \end{align}
-which is a mapping from the sales probability space to the price space, and in (\ref{eq:probi}) and (\ref{eq:prob0}) we have a mapping in the opposite direction. However, these two mappings are not inverses of each other as the mapping from the price space to the sales probability space is not injective and hence cannot be a bijection. This can be easily observed for given pricing $r_t = (r_t^1,\ldots,r_t^n)$, choosing $r'_t = (r_t^1\pm\ln k,\ldots,r_t^n\pm \ln k)$ for some positive real constant $k$ will produce the same demand probability of product. Thus the vector of prices obtained from a given sales probability has to be chosen from a set of allowable prices  \cite{Gallego1997}.
+which is a mapping from the sales probability space to the price space. In (\ref{eq:probi}) and (\ref{eq:prob0}) we have a mapping in the opposite direction. However, these two mappings are not inverses of each other as the mapping from the price space to the sales probability space is not injective and hence cannot be a bijection. This can be easily observed for a given set of pricing $r_t = (r_t^1,\ldots,r_t^n)$, choosing $r'_t = (r_t^1\pm\ln k,\ldots,r_t^n\pm \ln k)$ for some positive real constant $k$ will produce the same demand probability of product. Thus the vector of prices obtained from a given sales probability has to be chosen from a set of allowable prices  \cite{Gallego1997}.
 
 
 Thus, by choosing from the set of allowable prices, we have a one-to-one mapping from the price space to the sales probability space. The revenue rate as in (\ref{eq:revenuerate_reward}) can be rewritten as 
 \begin{align}
 \Phi_t(P_t) = \lambda(t)\sum_{i=1}^{n}\left[q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0 \right]P_t^i\label{eq:revenuerate_prob}
 \end{align}
-where $P_t = (P_t^1,\ldots, P_t^i)$
+where $P_t = (P_t^1,\ldots, P_t^i)$. This is a very commonly used technique in this field to find the maximum revenue. As in the price space, revenue-price function is not quasi-concave which makes it difficult to observe the optimal solution.
 
 
 \subsection{Optimal control of the MNL model}
-Let $N_t^i$ be the Poisson counting process of the number of products sold up to time $t$. If a customer arrives and chooses the product $i$ at time $t$ then $dN_t^i = 1$, otherwise $dN_t^i=0$. $N_t = (N_t^1, \ldots, N_t^n)$ is defined to be a multivariate stochastic process controlled by the price vector $r_t$ through the probability $P_t$. Given an initial inventory $c_T$, the expected revenue of the price scheme $\mathbf{r}$ 	for the entire selling season is 
+Let $N_t^i$ be the Poisson counting process for the number of products sold up to time $t$. If a customer arrives and chooses the product $i$ at time $t$ then $dN_t^i = 1$, otherwise $dN_t^i=0$. $N_t = (N_t^1, \ldots, N_t^n)$ is defined to be a multivariate stochastic process controlled by the price vector $r_t$ through the probability $P_t$. Given an initial inventory $c_T$, the expected revenue of the price scheme $\mathbf{r}$ 	for the entire selling season is 
 \begin{align}
 \mathbf{w}_T^{\mathbf{r}}(c_T) = \left(E_{\mathbf{r}}\left[\int_0^Tr^i_t\,dN^i_t\right]\right)_{i=1,\ldots,n}
 \end{align}
-Using the relationship between the pricing and the sales probability, the paper rewrites the expected reveue in terms of its corresponding probability scheme $\mathbf{P}=\{P_t, t \in [T,0)\}$ to get
+Using the relationship between pricing and sales probability, the paper we studies rewrites the expected reveue in terms of corresponding probability scheme $\mathbf{P}=\{P_t, t \in [T,0)\}$ to get
 \begin{align}
 \mathbf{w}^{\mathbf{P}}_T(c_T) = \left[\int_{0}^{T}\lambda(t) \sum_{i=1}^{n}P_t^i[q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0]\,dt\right] = \int_{0}^{T}\Phi_t(P_t)\,dt
 \end{align}
@@ -73,7 +73,7 @@ By writing the expected revenue in terms of sales probabilities instead of prici
 \begin{align}
 \hat{\mathbf{w}}_T^{\mathbf{P}}(c_T) = \max_{P_t \in [0,1)^n, t \in [T,0)}\int_{0}^{T}\lambda(t)\sum_{i=1}^{n}P_t^i\left(q^i-u_0-\mu \ln P_t^i+\mu \ln P_t^0\right)\, dt
 \end{align}
-such that $dc_t^i = -dN_t^i$, which simply means any change in the inventory levels of product $i$ is the negative of the change in the Poisson counting process of the number of products $i$ sold up till time $i$. This formulation is observed to be a optimal control problem; our utility is $\mathbf{w}_T^{\mathbf{P}}(c_T)$, with scalar utility rate function $\Phi_t(\cdot)$, the system state vector is $c_t$ and the control vector we are trying to find is $P_t$ for some time $t$. If we used the expected revenue formulation in (\ref{eq:revenuerate_prob}) instead, the control vector we are trying to find will be $r_t$. Now let
+subject to $dc_t^i = -dN_t^i$, which simply means one reduce in the inventory is one increase in sales, or a unit change in the Poisson counting process. This formulation is observed to be a optimal control problem; our utility is $\mathbf{w}_T^{\mathbf{P}}(c_T)$, with scalar utility rate function $\Phi_t(\cdot)$, the system state vector is $c_t$ and the control vector we are trying to find is $P_t$ for some time $t$. If we used the expected revenue formulation in (\ref{eq:revenuerate_prob}) instead, the control vector we are trying to find will be $r_t$. Now let
 \begin{align}
 \mathbf{w}_t^{\mathbf{P}}(c_t) = \int_{0}^{t}\lambda(s)\sum_{i=1}^{n}P_s^i\left(q^i-u_0-\mu \ln P_s^i+\mu \ln P_s^0\right)\, ds
 \end{align}
@@ -91,18 +91,18 @@ and
 %}
 
 
-The authors then solve the optimal control problem by applying the Hamilton-Jacobi-Bellman (HJB) sufficient conditions. The HJB provide sufficient conditions for optimality, which says that the solution for the equation,
+The authors then solve the optimal control problem by applying the Hamilton-Jacobi-Bellman (HJB) sufficient conditions. The HJB sufficient conditions help us to find optimality by saying that the solution to the equation,
 \begin{align}
 \frac{\partial \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)}{\partial t} = \max_{P_t \in [0,1)^n, t \in [T,0)}\sum_{i=1}^{n} \lambda(t)P_t^i \left(q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0- \Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)\right) \label{eq:HJBsufficient}
 \end{align}
-gives us the optimal revenue rate, %$\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$, 
-where $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t) = \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t) - \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t-e^i)$, is the marginal value of product $i$, with $e^i$ being a $n$-dimensional vector with the $i$-th component being 1 and the rest zeros, and $\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$ satisfying the boundary and initial conditions
+will give us the optimal revenue rate, %$\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$, 
+where $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t) = \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t) - \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t-e^i)$, is the marginal value of product $i$. And $e^i$ is an $n$-dimensional vector with the $i$-th component being 1 and the rest zeros. Also $\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)$ satisfies the boundary and initial conditions
 \begin{align}
 \hat{\mathbf{w}}_t^{\mathbf{P}}(0) &= 0 \quad \forall t\\
 \hat{\mathbf{w}}_0^{\mathbf{P}}(c_0) &= 0 \quad \forall c_0
 \end{align}
 
-The boundary and initial conditions states that if there is zero inventory then at any time the optimal revenue rate is zero, and if the selling season has ended regardless of the amount of inventory left, the optimal revenue rate will also be zero. The HJB conditions are equivalent to maximizing the revenue rate $\Phi_t(P_t)$ at each $t$.
+The boundary and initial conditions state that if there is zero inventory then at any time the optimal revenue rate is zero; and if the selling season has ended regardless of the amount of inventory left, the optimal revenue rate will also be zero. The HJB conditions are equivalent to maximizing the revenue rate $\Phi_t(P_t)$ at each $t$.
 
 \subsection{Optimal Dynamic Pricing Policy}
 
@@ -112,7 +112,7 @@ To find the optimal dynamic pricing policy, we just need to find the maximizer $
 \Psi_t^{\mathbf{P}}(c_t) = \sum_{i=1}^{n}\lambda(t) P_t^i\left[q^i - u_0 = \mu \ln P_t^i + \mu \ln P_t^0 - \Delta^i\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)\right]
 \end{align*}
 
-and the fact that $\Psi_t^{\mathbf{P}}(c_t)$ is concave is derived from showing that its Hessian is negative and thus it is semi-negative definite. Thus it has a global maximum over $P_t$ which can be found by solving,
+and the fact that $\Psi_t^{\mathbf{P}}(c_t)$ is concave is derived from showing that its Hessian is negative and thus it is semi-negative definite. Thus it has a global maximum over $P_t$ which can be found by setting below formula to zero:
 \begin{align}
 \frac{\partial \Psi_t^{\mathbf{P}}(c_t)}{\partial P_t^i} = \lambda(t) \left[q^i - u_0 + \mu \ln P_t^i - \mu \ln P_t^0 - \Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)-\mu\right]
 \end{align}
@@ -127,13 +127,13 @@ where $i \in \mathbb{R}(c_t)$, the set of products with non-negative inventory a
 m_t(c_t) = \frac{\mu}{1 - \sum_{i=1}^{n}(P_t^i)^\ast} = \frac{\mu}{P_t^{0\ast}}\label{eq:mtct}
 \end{align}
 
-By (\ref{eq:maximizer}), (\ref{eq:mtct}) and the probability simplex constrain, we obtain
+By (\ref{eq:maximizer}), (\ref{eq:mtct}) and the probability simplex constraint, we obtain
 \begin{align}
 \left[\frac{m_t(c_t)}{\mu}-1\right] \exp \left[\frac{m_t(c_t)+u_0}{\mu}\right] = \sum_{i=1}^{n}\exp \left[\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)}{\mu}\right]\label{eq:uniquesol}
 \end{align}
-where $m_t(c_t)$ is the unique solution. This uniqueness follows from the concave property of $\Psi_t^{\mathbf{P}}(c_t)$ over all probability simplex $P_t$.
+where $m_t(c_t)$ is the unique solution. This uniqueness comes from the concave property of $\Psi_t^{\mathbf{P}}(c_t)$ over all probability simplex $P_t$.
 
-Using the results that we have derived above, the optimal price scheme is
+Using the results that we have derived, the optimal price scheme is
 \begin{align}
 (r_t^i)^\ast = \Delta \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)+m_t(c_t)\label{eq:optpricescheme}
 \end{align}
@@ -147,13 +147,13 @@ By integrating both sides with respect to $t$ from $0$ to $T$,  the maximum expe
 \hat{\mathbf{w}}_t^{\mathbf{P}^\ast} = \int_{0}^{T}\lambda(t)\left[m_t(c_t)-\mu\right]\,dt
 \end{align}
 
-From the discussion above, we see that the solution to the optimal pricing policy depends on the term $m_t(c_t)$. However, $m_t(c_t)$ is found both in the base and exponent of (\ref{eq:maximizer}) and thus there is no closed form solution for $m_t(c_t)$ and hence also $(r_t^i)^\ast$
+From the discussion above, we see that the solution to the optimal pricing policy depends on the term $m_t(c_t)$. However, $m_t(c_t)$ is found both in the base and exponent of (\ref{eq:maximizer}) and thus there is no closed form solution for $m_t(c_t)$ and hence $(r_t^i)^\ast$ is also intractable.
 
 
 
 \subsubsection{Our observations}
 
-In our observations, contrary to (\ref{eq:maximizer}), we arrived at a different result
+In our observations, contrary to (\ref{eq:maximizer}), we arrived at a different result, shown as below
 \begin{align}
 (P_t^i)^\ast &= \frac{\mu}{m_t(c_t)}\exp \left(\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)-u_0 - \mu- m_t(c_t)(P_t^i)^\ast}{\mu}\right)\nonumber\\
 &= P_t^{0\ast}\exp \left(\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)-u_0 - \mu - m_t(c_t)(P_t^i)^\ast}{\mu}\right)\label{eq:our_maximizer}
@@ -164,7 +164,7 @@ In our observations, contrary to (\ref{eq:maximizer}), we arrived at a different
 %\end{align*}
 %to get the vector of probabilities $\left(P_t^{0\ast},(P_t^{1})^\ast,\ldots,(P_t^{n})^\ast \right)$. 
 %
-However,  $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)$ relies on $P_t^{0\ast}$ and $(P_t^i)^\ast$s, thus we do not have a closed form solution for (\ref{eq:our_maximizer}). Updating the equation in (\ref{eq:uniquesol}), we have the equation below.
+However,  $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)$ relies on $P_t^{0\ast}$ and $(P_t^i)^\ast$, thus we do not have a closed form solution for (\ref{eq:our_maximizer}). Updating the equation in (\ref{eq:uniquesol}), we have the equation below.
 \begin{align}
 \left[\frac{m_t(c_t)}{\mu}-1\right] \exp \left[1+\frac{u_0}{\mu}\right] &= \sum_{i=1}^{n}\exp \left[\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)}{\mu}\right]\label{eq:our_uniquesol}
 \end{align}
