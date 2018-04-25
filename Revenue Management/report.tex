@@ -7,7 +7,7 @@
 
 In the single product dynamic pricing model introduced in class, we looked at a monopolist seller who sells a single indivisible product which has finite amount of units with no replenishment over a continuous time horizon $[0,T]$. The unit price of the product, $\pi_t$, is decided by the seller at each point of time $t \in [0,T]$. Besides, customers' product valuations follow a distribution over $\mathbb{R}_+$. However, in practice, sellers often have a wide range of products with different features to cater to customers' varying preferences and purchasing powers. 
 
-Thus we look at this multiproduct model \cite{Li2009} which has a long supply lead time and short selling season with substitutes available when replenishment is not allowed. For example, if a customer' favorite product is not available and stock won't be replenished, then very likely the customer would like to find a substitute. Thus the retailer can control the prices of corresponding products upon each point of time to maximize his or her revenue. Instead of considering customers' product valuation as some random variable, this paper explicitly constructs a model that sees customer purchase probability as a function of quality and price. Also, a time dependent customer arrival rate is modeled by a nonhomogeneous Poisson process and the data of this paper is forecasted correspondingly. Lastly, this paper assumes that the products are equally dissimiliar, which means the addition or removal of one affects the choice for all other products with the same portion.
+Thus we look at this multiproduct model \cite{Li2009} which has a long supply lead time and short selling season with substitutes available when replenishment is not allowed. For example, if a customer's favorite product is not available and stock won't be replenished, then very likely the customer would like to find a substitute. Thus the retailer can control the prices of corresponding products upon each point of time to maximize his or her revenue. Instead of considering customers' product valuation as some random variable, this paper explicitly constructs a model that sees customer purchase probability as a function of quality and price. Also, a time dependent customer arrival rate is modeled by a nonhomogeneous Poisson process and the data of this paper is forecasted correspondingly. Lastly, this paper assumes that the products are equally dissimiliar, which means the addition or removal of one affects the choice for all other products with the same portion.
 
 
 
@@ -49,7 +49,7 @@ By setting price $r_t$ to take different values, the retailer controls the proba
 \begin{align}
 r_t^i=q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0, \quad i=1,\ldots, n \label{eq:pricetoprob}
 \end{align}
-which is a mapping from the sales probability space to the price space. In (\ref{eq:probi}) and (\ref{eq:prob0}) we have a mapping in the opposite direction. However, these two mappings are not inverses of each other as the mapping from the price space to the sales probability space is not injective and hence cannot be a bijection. This can be easily observed for a given set of pricing $r_t = (r_t^1,\ldots,r_t^n)$, choosing $r'_t = (r_t^1\pm\ln k,\ldots,r_t^n\pm \ln k)$ for some positive real constant $k$ will produce the same demand probability of product. Thus the vector of prices obtained from a given sales probability has to be chosen from a set of allowable prices  \cite{Gallego1997}.
+which is a mapping from the sales probability space to the price space. In (\ref{eq:probi}) and (\ref{eq:prob0}) we have a mapping in the opposite direction. However, these two mappings are not inverses of each other as the mapping from the price space to the sales probability space is not injective and hence cannot be a bijection. This can be easily observed for a given set of pricing $r_t = (r_t^1,\ldots,r_t^n)$, choosing $r'_t = (r_t^1\pm\ln k,\ldots,r_t^n\pm \ln k)>0$ for some positive real constant $k$ will produce the same demand probability of product. Thus the vector of prices obtained from a given sales probability has to be chosen from a set of allowable prices  \cite{Gallego1997}.
 
 
 Thus, by choosing from the set of allowable prices, we have a one-to-one mapping from the price space to the sales probability space. The revenue rate as in (\ref{eq:revenuerate_reward}) can be rewritten as 
@@ -64,12 +64,12 @@ Let $N_t^i$ be the Poisson counting process for the number of products sold up t
 \begin{align}
 \mathbf{w}_T^{\mathbf{r}}(c_T) = \left(E_{\mathbf{r}}\left[\int_0^Tr^i_t\,dN^i_t\right]\right)_{i=1,\ldots,n}
 \end{align}
-Using the relationship between pricing and sales probability, the paper we studies rewrites the expected reveue in terms of corresponding probability scheme $\mathbf{P}=\{P_t, t \in [T,0)\}$ to get
+Using the relationship between pricing and sales probability, the paper we study rewrites the expected reveue in terms of corresponding probability scheme $\mathbf{P}=\{P_t, t \in [T,0)\}$ to get
 \begin{align}
 \mathbf{w}^{\mathbf{P}}_T(c_T) = \left[\int_{0}^{T}\lambda(t) \sum_{i=1}^{n}P_t^i[q^i-u_0-\mu \ln P_t^i + \mu \ln P_t^0]\,dt\right] = \int_{0}^{T}\Phi_t(P_t)\,dt
 \end{align}
 
-By writing the expected revenue in terms of sales probabilities instead of pricing, it reduces the space from $\mathbb{R}^n_+$ to $[0,1]^n$. This allows the search of the optimal control and value to be much more managable \annotation{(to remove or to justify it better)} as we are searching for a solution from a probability simplex. The retailer searchs for a pricing policy $\hat{\mathbf{r}}$ that maximizes the expected revenue over the selling season, which is denoted as
+By writing the expected revenue in terms of sales probabilities instead of pricing, it reduces the space from $\mathbb{R}^n_+$ to $[0,1]^n$. This allows the search of the optimal control and value to be much more managable as we are finding an optimal in a concave space. The retailer searchs for a pricing policy $\hat{\mathbf{r}}$ that maximizes the expected revenue over the selling season, which is denoted as
 \begin{align}
 \hat{\mathbf{w}}_T^{\mathbf{P}}(c_T) = \max_{P_t \in [0,1)^n, t \in [T,0)}\int_{0}^{T}\lambda(t)\sum_{i=1}^{n}P_t^i\left(q^i-u_0-\mu \ln P_t^i+\mu \ln P_t^0\right)\, dt
 \end{align}
@@ -109,12 +109,12 @@ The boundary and initial conditions state that if there is zero inventory then a
 To find the optimal dynamic pricing policy, we just need to find the maximizer $P_t^\ast$ of the HJB equation in (\ref{eq:HJBsufficient}). Define
 
 \begin{align*}
-\Psi_t^{\mathbf{P}}(c_t) = \sum_{i=1}^{n}\lambda(t) P_t^i\left[q^i - u_0 = \mu \ln P_t^i + \mu \ln P_t^0 - \Delta^i\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)\right]
+\Psi_t^{\mathbf{P}}(c_t) = \sum_{i=1}^{n}\lambda(t) P_t^i\left[q^i - u_0 - \mu \ln P_t^i + \mu \ln P_t^0 - \Delta^i\hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)\right]
 \end{align*}
 
 and the fact that $\Psi_t^{\mathbf{P}}(c_t)$ is concave is derived from showing that its Hessian is negative and thus it is semi-negative definite. Thus it has a global maximum over $P_t$ which can be found by setting below formula to zero:
 \begin{align}
-\frac{\partial \Psi_t^{\mathbf{P}}(c_t)}{\partial P_t^i} = \lambda(t) \left[q^i - u_0 + \mu \ln P_t^i - \mu \ln P_t^0 - \Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)-\mu\right]
+\frac{\partial \Psi_t^{\mathbf{P}}(c_t)}{\partial P_t^i} = \lambda(t) \left[q^i - u_0 - \mu \ln P_t^i + \mu \ln P_t^0 - \Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}}(c_t)-\mu\right]
 \end{align}
 as we have $\sum_{i=1}^{n}P_t^i + P_t^0 = 1$, it suffices to find $P_t^i$ for $i>0$. 
 
@@ -138,7 +138,7 @@ Using the results that we have derived, the optimal price scheme is
 (r_t^i)^\ast = \Delta \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)+m_t(c_t)\label{eq:optpricescheme}
 \end{align}
 
-and updating the HJB optimality sufficiency conditions,
+and updating the HJB optimality sufficiency conditions
 \begin{align}
 \frac{\partial}{\partial t}\hat{\mathbf{w}}_t^{\mathbf{P}^\ast} = \lambda(t)(m_t(c_t) - \mu)\label{eq:pdw}
 \end{align}
@@ -158,27 +158,42 @@ In our observations, contrary to (\ref{eq:maximizer}), we arrived at a different
 (P_t^i)^\ast &= \frac{\mu}{m_t(c_t)}\exp \left(\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)-u_0 - \mu- m_t(c_t)(P_t^i)^\ast}{\mu}\right)\nonumber\\
 &= P_t^{0\ast}\exp \left(\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)-u_0 - \mu - m_t(c_t)(P_t^i)^\ast}{\mu}\right)\label{eq:our_maximizer}
 \end{align}
+This new form of the optimal probabilities is in fact harder to solve for as it we are unable to derive a corresponding form for (\ref{eq:uniquesol}). This is due to the $-m_t(c_t)(P_t^i)^\ast$ term appearing in the denominator of (\ref{eq:our_maximizer}) which makes it not a common factor over different $i$'s. As such, to solve for the $(P_t^i)^\ast$s, we need to look for another method and use tools which might not be available to us for now.
+
 %and if we know the value of $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)$ we can actually solve for the optimal probabilities $(P_t^i)^\ast$ by evaluating $x_i = \exp \left(\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)-u_0 - \mu}{\mu}\right)$ for all $i=1,\ldots, n$, then normalizing the vector
 %\begin{align*}
 %\left(1,x_1,\ldots, x_n\right)
 %\end{align*}
 %to get the vector of probabilities $\left(P_t^{0\ast},(P_t^{1})^\ast,\ldots,(P_t^{n})^\ast \right)$. 
 %
-However,  $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)$ relies on $P_t^{0\ast}$ and $(P_t^i)^\ast$, thus we do not have a closed form solution for (\ref{eq:our_maximizer}). Updating the equation in (\ref{eq:uniquesol}), we have the equation below.
-\begin{align}
-\left[\frac{m_t(c_t)}{\mu}-1\right] \exp \left[1+\frac{u_0}{\mu}\right] &= \sum_{i=1}^{n}\exp \left[\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)}{\mu}\right]\label{eq:our_uniquesol}
-\end{align}
-
-
-We observe that by letting 
+%However,  $\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)$ relies on $P_t^{0\ast}$ and $(P_t^i)^\ast$, thus we do not have a closed form solution for (\ref{eq:our_maximizer}). Updating the equation in (\ref{eq:uniquesol}), we have the equation below.
+%\begin{align}
+%\left[\frac{m_t(c_t)}{\mu}-1\right] \exp \left[1+\frac{u_0}{\mu}\right] &= \sum_{i=1}^{n}\exp \left[\frac{q^i-\Delta^i \hat{\mathbf{w}}_t^{\mathbf{P}^\ast}(c_t)}{\mu}\right]\label{eq:our_uniquesol}
+%\end{align}
 
 
 
-\cite{Dong2009}
+
+
+%\cite{Dong2009}
 
 
 \section{Dynamic Programming For Optimal Dynamic Pricing}
 
+From the paper's dicussions, as there is no closed form solution for (\ref{eq:uniquesol}), thus they choose to solve for a solution by estimation using a discrete time model. The main idea is to discretize the time domain, $T = t_N > t_{N-1}>\ldots>t_0=0$, thus we can also have the inventory level $c_{t_k}$ with price $r_{t_k}$ at each time $t_k$ and the probability of a unit sale of product $i$ in a small time interval $\delta t$ is $\lambda(t_k)\delta t P_{t_k}^i(r_{t_k})$ and the probability of no sale is $\lambda(t_k)\delta t P_{t_k}^0(r_{t_k}) + (1 - \lambda(t_k)\delta t)$. Then a unit sale of inventory $i$ will lead to an inventory level update to $c_{t_k}-e_i$ and the inventory remains the same when there are no sales. Thus given $c_{t_k}$ and $r_{t_k}$, the expected revenue time at time $t_k$ is \cite{Dong2009}
+\begin{align*}
+\hat{\mathbf{w}}_{t_k}^{\mathbf{P}}(c_{t_k}) = &\max_{P_{t_k}\in[0,1)^n} \Bigg\{\sum_{i=1}^{n}\lambda(t_k)P^i_{t_k}(r_{t_k})\delta t [r_{t_k}^i + \hat{\mathbf{w}}_{t_{k-1}}^{\mathbf{P}}(c_{t_k}-e^i)] \\
+&+ [\lambda(t_k)P_{t_k}^0(r_{t_k})\delta t + 1 -\lambda(t_k) \delta t]\hat{\mathbf{w}}_{t_{k-1}}^{\mathbf{P}}(c_{t_k})]\Bigg\}
+\end{align*}
+with $\Delta^i\hat{\mathbf{w}}_{t_k}^{\mathbf{P}}(c_{t_k})$ and $\hat{\mathbf{w}}_{t_k}^{\mathbf{P}}(c_{t_k})$ satisfying the initial and boundary condition. In the similar manner that was done in the continuous time model, we have
+\begin{align}
+(r_{t_k}^i)^\ast (c_{t_k}) = \Delta^i \hat{\mathbf{w}}_{t_k}^{\mathbf{P}}(c_{t_k}) + m_{t_k}(c_{t_k}), \quad \forall i \in \mathbb{R}(c_{t_k}) \label{eq:rstar}
+\end{align}
+and the maximum expected revenue is
+\begin{align*}
+\hat{\mathbf{w}}_{T}^{\mathbf{P}}(c_{T}) = \sum_{k=1}^{N}\lambda(t_k)[m_{t_k}(c_{t_k})-\mu]
+\end{align*}
+after which a numerical algorithm based on backwards dynamic programming is used to compute the optimal pricing policy, in which at each step we computing $m_{t_k}(c_{t_k})$ by solving equation (\ref{eq:maximizer}); then substituing $m_{t_k}(c_{t_k})$ to (\ref{eq:rstar}), we obtain the numerical solution for $(r_{t_k}^i)^\ast(c_{t_k})$.
 %\subsection{Summary of the Hamilton-Jacobi-Bellman Equation}
 %The importance of the Hamilton-Jacobi-Bellman (HJB) equation is that it can be used as part of a strategy for solving the optimal control problem. Optimal control problems consist of some process that evolves over time, called a state, denoted by $x(\cdot)$, with the dynamics given by a stochastic differential equation (SDE). This process is then controllable to some extent by a person who wishes to optimize a performance indicator that depends on the process. The person does so by choosing a function $\alpha(\cdot)$, called a control, that takes valeus in a metric space $\Lambda$ and influences the dynamics of $x(\cdot)$ through the SDE. Different $\alpha(\cdot)$ leads to different states at time $t$, and hence different values for the performance indicator. The optimal control problem is then to answer the following questions:
 %\begin{enumerate}
@@ -193,7 +208,16 @@ We observe that by letting
 %
 
 \section{Discussions and Conclusions}
-\annotation{This is where we can add our comments and our inputs, how the model can be further improved or how we can find estimates for the solution. Closing conclusions, futher areas that can be explored and research opportunities.}
+The model we studied above has more assumptions that cater to realistic demands, such as multiple varieties of the products and non-homogeneous arrival rate of customers. However, it can still be further furnished by looking at below aspects:
+\begin{enumerate}
+\item The paper we studied proposed a non-homogeneous time-dependent customer arrival rate model. It is closer to virtual selling situations but difficult to solve mathematically. To handle the non-homogeneous arrival rate more smoothly, before doing dynamic programming and simulation, one method has been proposed to enable the difficult calculation easier. The method is to segmentize the entire selling horizon into multiple pieces where in each time segment the arrival rate is homogeneous. By doing so, the non-homogeneous arrival rate throughout the selling season can be modelled by multiple selling seasons with homogeneous arrival rate in each pieces. After doing so, by setting different time clocks for different time segments, the arrival rate difference between different time segments can be handled. 
+\item In the model set up, there is only one monopolist seller without competitors. In reality, however, monopolist players are a few but not the majority. Many products are sold by multiple sellers at the same time. Hence, a multiple-competitor model can be attractive. 
+
+\item Furthermore, in the model, there is almost no selling strategy but adapting the prices. To make the model more complicated but yet intriguing, some selling strategies can be adopted such as bundle sales, a very common sales strategy in real life, which is to encourage customers' purchase by selling product combinations with discounts than just selling one product without promotion.
+
+\item As mentioned in the class, another assumption can be challenged here is that customers can be not myopic. In both single-product and multiple product models, customers are myopic that they come, either purchase or not purchase, then leave the system and never come back. But a new model can be proposed by allowing customers to wait for the product to have a lower price set by the seller in the later timing. In this model, customers can come back later, which encourages more sales.
+
+\end{enumerate}
 
 
 
