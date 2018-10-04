@@ -52,3 +52,34 @@ def convert2color_3Dhist(filename, bin = 8):
     histr = cv2.calcHist([raw_img],[0,1,2],None,[bin]*3,[0,256]*3)
 
     return histr.flatten()
+
+def load_data(path, feature = 'raw'):
+    """
+    Loads data into pixel values from the list of path given. Returns
+    Input:
+    - path (list): list of path to load the data from.
+    - feature: either 'raw' or 'hist' for raw pixel values and 3D histogram respectively.
+    """
+    x_train=[]
+    y_train=[]
+    for c,i in enumerate(path):
+        os.chdir(i)
+        l = os.listdir()
+        for i in l:
+            if feature == 'raw':
+                vf = convert2pixel_value(i)
+            else:
+                vf = convert2color_3Dhist(i)
+            x_train.append(vf)
+            y_train.append(c)
+
+    x_train = np.concatenate([i[np.newaxis] for i in x_train])
+    y_train = np.array(y_train)
+
+    # comment below to remove the shuffling of the data
+    arr = np.arange(x_train.shape[0])
+    np.random.shuffle(arr)
+    x_train = x_train[arr]
+    y_train = y_train[arr]
+
+    return x_train, y_train
