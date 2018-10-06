@@ -83,3 +83,152 @@ def load_data(path, feature = 'raw'):
     y_train = y_train[arr]
 
     return x_train, y_train
+
+def sigmoid(x):
+    """
+    Applies the sigmoid function on the given vector.
+    Input(s):
+    - x : numpy vector of values
+    """
+    return 1/(1+np.exp(-x))
+
+def add_bias(dataset):
+    """
+    Add a one to each sample for bias. Dataset must be of the form rows: samples, columns: features
+    """
+    n, m = dataset.shape
+    out = np.ones((n, m+1))
+    out[:,:-1] = dataset
+    return out
+
+def initialize_params(size=3073, seed=123):
+    """
+    Initialize parameters W weights and b biases.
+    Input(s):
+    - size (int): size of the parameters
+    - seed (int): seed for the random number generator
+    """
+    rng = np.random.RandomState(seed)
+
+    return rng.normal(size=(size,))
+
+def log_loss(x_train, y_train, W):
+    """
+    Computes the loss value of the logistic loss.
+    Input(s):
+    - x_train, y_train: training data and labels. x_train takes different forms depending on the features used and y_train
+                        is {-1,+1}.
+    - W: value of the parameters.
+    """
+    z = y_train * np.dot(x_train, W)
+    h = sigmoid(z)
+
+    return -np.mean(np.log(h))
+
+def log_grad(x_train, y_train, W):
+    """
+    Computes the gradient of the logistic loss function.
+    Input(s):
+    - x_train, y_train: training data and labels. x_train takes different forms depending on the features used and y_train
+                        is {-1,+1}.
+    - W: value of the parameters.
+    """
+    z = y_train * np.dot(x_train, W)
+    h = sigmoid(z)
+    n = x_train.shape[0]
+
+    return 1/n * np.dot(x_train.T,(y_train * (h-1)))
+
+def next_batch(x_train, y_train, batch_size=2):
+    """
+    Returns a batch of size batch_size for stochastic gradient descent.
+    - x_train, y_train: training data and labels. x_train takes different forms depending on the features used and y_train
+                        is {-1,+1}.
+    - batch_size (int): size of each batch.
+    """
+    for i in np.arange(0, x_train.shape[0], batch_size):
+        yield (x_train[i:i+batch_size],y_train[i:i+batch_size])
+
+def log_classifier(x, learnt_W):
+    """
+    Takes in the test set and learnt parameters and returns the accuracy of the classifier on the test set.
+    Inputs:
+    -
+    """
+    return (sigmoid(np.dot(x, learnt_W)) >= .5) * 2 - 1
+
+def log_accuracy(x, y, learnt_W):
+    """
+    Returns the accuracy of the model with parameters learnt_W.
+    Input(s):
+    -
+    """
+    output = log_classifier(x, learnt_W)
+    return np.sum(np.absolute(y - output) == 0)/y.shape[0]
+
+def log_train(x_train, y_train, x_test, y_test, W, alpha=0.01, batch_size = 4, epoch = 100):
+    """
+    Trains the model with given learning rate alpha, batch_size, epoch and initialized parameters W.
+    """
+    loss_history = []
+    train_acc_history = []
+    test_acc_history = []
+    W_history = []
+    for e in np.arange(epoch):
+        epoch_loss = []
+        for (batchx, batchy) in next_batch(x_train, y_train):
+            loss = log_loss(batchx, batchy, W)
+            grad = log_grad(batchx, batchy, W)
+            epoch_loss.append(loss)
+            W += -alpha * grad
+        loss_history.append(np.average(epoch_loss))
+        train_acc = log_accuracy(x_train, y_train, W)
+        test_acc = log_accuracy(x_test, y_test, W)
+        train_acc_history.append(train_acc)
+        test_acc_history.append(test_acc)
+        W_temp = W.copy()
+        W_history.append(W_temp)
+
+    return loss_history, train_acc_history, test_acc_history, W_history    
+# def log_train(x_train, y_train, x_test, y_test, W, alpha=0.01, batch_size = 4, epoch = 100):
+#     """
+#     Trains the model with given learning rate alpha, batch_size, epoch and initialized parameters W.
+#     """
+#     loss_history = []
+#     train_acc_history = []
+#     test_acc_history = []
+#     for e in np.arange(epoch):
+#         epoch_loss = []
+#         for (batchx, batchy) in next_batch(x_train, y_train):
+#             loss = log_loss(batchx, batchy, W)
+#             grad = log_grad(batchx, batchy, W)
+#             epoch_loss.append(loss)
+#             W += -alpha * grad
+#         loss_history.append(np.average(epoch_loss))
+#         train_acc = log_accuracy(x_train, y_train, W)
+#         test_acc = log_accuracy(x_test, y_test, W)
+#         train_acc_history.append(train_acc)
+#         test_acc_history.append(test_acc)
+#
+#     return loss_history, train_acc_history, test_acc_history, W
+
+def display_plot(loss_history, train_acc_history, test_acc_history):
+    """
+    Plots out the loss function value for the different epochs and the accuracy of the test set for the
+    parameters learnt in the different epochs.
+    Input(s):
+    - loss_history: list containing the change in the loss value over the epochs
+    - acc_history: list containing the accuracy value of the test set over the epochs
+    """
+    f, (ax1, ax2) = plt.subplots(1, 2,figsize=(15,5))
+    ax1.plot(loss_history, color='r')
+    # ax1.plot(model_log.history['val_acc'])
+    ax1.set_title('Loss (Lower Better)')
+    ax1.set(xlabel='Epoch', ylabel='Loss')
+    ax1.legend(['train', 'validation'], loc='upper right')
+
+    ax2.plot(train_acc_history)
+    ax2.plot(test_acc_history)
+    ax2.set_title('Accuracy (Higher Better)')
+    ax2.set(xlabel='Epoch', ylabel='Accuracy')
+    ax2.legend(['train', 'test'], loc='center right')
