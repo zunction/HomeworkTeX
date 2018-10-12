@@ -97,15 +97,21 @@ and solving for the value of $\mu_j$ when we equate the equation above to 0 give
 \sum_{j=1}^{k}\left(\sum_{i=1}^{n}\gamma_{ij}\right)W_j(x) + nB(x) &= 
 \sum_{j=1}^{k}\sum_{i=1}^{n}\gamma_{ij}\left[ \lVert x_i-\mu_j \rVert^2 + \lVert \mu_j - \widehat{x}\rVert^2\right]\\
 &= 
-\sum_{j=1}^{k}\sum_{i=1}^{n}\gamma_{ij}\left[ \lVert x_i \rVert^2+\lVert\mu_j \rVert^2 + \lVert \mu_j \rVert^2 + \lVert\hat{x}\rVert^2 - 2x_i\mu_j - 2\mu_j\hat{x}\right]\\
+\sum_{j=1}^{k}\sum_{i=1}^{n}\gamma_{ij}\left[ \lVert x_i \rVert^2+\lVert\mu_j \rVert^2 + \lVert \mu_j \rVert^2 + \lVert\hat{x}\rVert^2 - 2x_i^{\mathsf{T}}\mu_j - 2\mu_j^{\mathsf{T}}\hat{x}\right]\\
 &= 
 \sum_{j=1}^{k}\sum_{i=1}^{n}\gamma_{ij} \lVert x_i -\hat{x} \rVert^2 + C\\
 &= 
 \sum_{i=1}^{n} \lVert x_i -\hat{x} \rVert^2 + C = nT(x) + C
 \end{align*}
-where $C = 2x_i\hat{x} -2 \lVert \mu_j \rVert^2 + 2x_i\mu_j + 2\mu_j\hat{x}$. 
+where $C = \sum_{j=1}^{k}\sum_{i=1}^{n}2x_i\hat{x} +2 \lVert \mu_j \rVert^2 - 2x_i\mu_j - 2\mu_j\hat{x} = 2n\sum_{j=1}^{k}\lVert\hat{x}-\mu_j\rVert^2$. 
 
-From the relationship we establised above, we see that $nT(x) + C$ is a constant for fixed $\{\mu_1,\ldots, \mu_k\}$. Thus, when we try to minimize intra-cluster deviation, $W_j(x)$, we obtain new $\mu_j$'s with $W_j(x) \geq W_j(x)'$ where $W_j(x)'$ is the intra-cluster deviation with new $\mu_j$'s.
+From the relationship we establised above, we see that $nT(x)$ is a constant that can be represented by
+\begin{align*}
+nT(x) = \sum_{j=1}^{k}\left(\sum_{i=1}^{n}\gamma_{ij}\right)W_j(x) + nB(x) -2n\sum_{j=1}^{k}\lVert\hat{x}-\mu_j\rVert^2
+\end{align*}
+Thus when the intra-cluster deviation is minimized, we need to corresponding maximize the inter-cluster deviation to keep $nT(x)$ constant.
+
+% + C$ is a constant for fixed $\{\mu_1,\ldots, \mu_k\}$. Thus, when we try to minimize intra-cluster deviation, $W_j(x)$, we obtain new $\mu_j$'s with $W_j(x) \geq W_j(x)'$ where $W_j(x)'$ is the intra-cluster deviation with new $\mu_j$'s. Thus 
 
 
 \item Let $k$ be given and assume that we have the indicator matrix $\gamma$ and the means of the clusters $\{\mu_1,\ldots,\mu_k\}$ such that $L(\gamma, \mu_1,\ldots, \mu_k)$ is a minimum. Now suppose we increase the number of clusters to $k+1$, and we initialize a new cluster mean $\mu_{k+1}$. Here we can assume that this newly added cluster mean will have a new point in its cluster when an iteration of the algorithm is being performed, otherwise, this newly added cluster will be removed the moment it is added. This means there exists a data point $x_a$ where $1\leq a \leq n$  such that 
