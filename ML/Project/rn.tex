@@ -120,17 +120,38 @@
 \section{Introduction}
 \begin{enumerate}
 \item Introduction to explain our interest in relational reasoning on QA task. 
-\item Brief introduction to bAbI dataset
+
 \item What are the current methods in text-based QA task. 
 \item Replication of the RN network with slight modifications: using universal sentence encoder (USE) instead of LSTMs to do sentence embedding and (if have time) adding attention to the network, since the relation obtained by $g_\theta(o_i,o_j,q)$ are weighted equally before feeding it into the $f_\phi$.
 \end{enumerate}
 
-\citet{Santoro2017} \citet{Bottou2011}  \citet{Weston2015} \citet{Cer2018}
+	Deep learning has made it possible to do classification of objects in images and translation of languages, often with incredible accuracy. This is achieved due to the ability of neural networks to pick out important patterns that are inconceivable to the human eye, from large quantities of labeled data. However, just being able to learn patterns is not sufficient as it is not the only ability associated to intelligence; reasoning is another essential ability \cite{Bottou2011} that separates humans from machines. Hence, in recent years there is much work on reasoning related research, like visual reasoning \cite{Johnson2017, Santoro2017} where the machine is able to give an answer given an image and a visual question about the image, and text-based question answering \cite{Santoro2017} where the machine is able to answer a question based on the earlier sentences given to it. For this project, we focus on the text-based question answering task using relation network (RN) \cite{Santoro2017} on the bAbI dataset \cite{Weston2015}.
+
+Other works on Memory networks \cite{Weston2015a}, DNC, Sparse DNC
+
+%\cite{Santoro2017} 
+
+%However, there are some tasks that, considered simple to humans, may be difficult or even impossible for the neural networks to perform. One of that is reasoning, where one uses prior knowledge to attain new information. 
+%
+%For example, learning to reason that mother’s husband is same as father is something that is challenging for neural networks to do. Thus, giving neural networks the ability to reason will allow us to learn new information from the data that is not obtainable from pattern recognition. 
+%
+%Therefore, we would like to investigate how the relational reasoning module allows the neural network to exhibit relational reasoning and its performance on the test-based question answer dataset.
+
+
+
+
+
+
+
+
+
+%\citet{Santoro2017}   \citet{Weston2015} \citet{Cer2018}
 \section{Related Work}
 KIV
 
 \section{Model}
 \begin{enumerate}
+\item Brief introduction to bAbI dataset
 \item Overview of the original RN model, comment on the strength and weaknesses
 \item Modifications to the RN model that will help improve the accuracy of the task. Motivations for the modifications.
 \item (Optional) A paragraph on USE?
