@@ -59,7 +59,9 @@
 
 
 
-\title{Relational Reasoning on Text-Based Question Answering Task}
+\title{Exploring Efficacy of Embeddings on \\ Relation Network for Natural Language \\ Question Answering Task}
+%Explore Relational Reasoning using Relation Networks
+
 
 % The \author macro works with any number of authors. There are two
 % commands used to separate the names and addresses of multiple
@@ -125,9 +127,24 @@
 \item Replication of the RN network with slight modifications: using universal sentence encoder (USE) instead of LSTMs to do sentence embedding and (if have time) adding attention to the network, since the relation obtained by $g_\theta(o_i,o_j,q)$ are weighted equally before feeding it into the $f_\phi$.
 \end{enumerate}
 
-	Deep learning has made it possible to do classification of objects in images and translation of languages, often with incredible accuracy. This is achieved due to the ability of neural networks to pick out important patterns that are inconceivable to the human eye, from large quantities of labeled data. However, just being able to learn patterns is not sufficient as it is not the only ability associated to intelligence; reasoning is another essential ability \cite{Bottou2011} that separates humans from machines. Hence, in recent years there is much work on reasoning related research, like visual reasoning \cite{Johnson2017, Santoro2017} where the machine is able to give an answer given an image and a visual question about the image, and text-based question answering \cite{Santoro2017} where the machine is able to answer a question based on the earlier sentences given to it. For this project, we focus on the text-based question answering task using relation network (RN) \cite{Santoro2017} on the bAbI dataset \cite{Weston2015}.
+	Deep learning has made it possible to do classification of objects in images and translation of languages, often with incredible accuracy. This is achieved due to the ability of neural networks to pick out important patterns that are inconceivable to the human eye, from large quantities of labeled data. However, just being able to learn patterns is not sufficient as it is not the only ability associated to intelligence; reasoning is another essential ability \cite{Bottou2011} that separates humans from machines. Hence, in recent years there is much work on reasoning related research, like visual reasoning \cite{Johnson2017, Santoro2017} where the machine is able to give an answer given an image and a visual question about the image, and text-based question answering \cite{Santoro2017} where the machine is able to answer a question based on the earlier sentences given to it. 
 
-Other works on Memory networks \cite{Weston2015a}, DNC, Sparse DNC
+\textbf{(impact of embedding and model performances)	}
+
+
+For this project, we focus on the text-based question answering task using relation network (RN) \cite{Santoro2017} on the bAbI dataset \cite{Weston2015}. RNs are networks that are designed based on relational reasoning, where its capacity to compute relations is baked into the architecture without having the neural network to learn it. 
+
+%This is done by learning the relationships between each pair of objects using a multi-layer perceptron (MLP), following which another MLP is used to predict the answer for the question 
+
+(short explanation on wat is RN - one line) 
+
+\textbf{(using both lstm and use)}
+
+Here, we use both LSTMs to produce objects, which are the basic units that are passed through the RN, we used the universal sentence encoder (USE) \cite{Cer2018} model to embed the sentences into the objects that are to be fed into the RN. In this project, we focus on task 2 of the bAbI task as it is one of the most commonly task failed, which we feel is due to its task design of requiring two supporting facts to arrive at the answer.
+
+
+
+%Other works on Memory networks \cite{Weston2015a}, DNC, Sparse DNC
 
 %\cite{Santoro2017} 
 
@@ -146,20 +163,66 @@ Other works on Memory networks \cite{Weston2015a}, DNC, Sparse DNC
 
 
 %\citet{Santoro2017}   \citet{Weston2015} \citet{Cer2018}
-\section{Related Work}
-KIV
+%\section{Related Work}
+%KIV
+
+\section{Task}
+\begin{enumerate}
+\item Brief introduction to bAbI dataset and focus on task 2.
+
+\end{enumerate}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.3]{relation_network_babi.png}
+%  \fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
+  \caption{Text based QA architecture. Contexts and questions are processed with an LSTM to produce a set of context and question embedding. Objects, colored yellow, red, and blue, are constructed using LSTMs or USE. The RN considers relations across all pairs of objects, conditioned on the question embedding, and integrates all these relations to answer the question.}
+\end{figure}
+
+\subsection{bAbI}
+The bAbI dataset is a pure text-based question answering (QA) dataset that contains a total of 20 tasks. Each task corresponds to a particular type of reasoning, such as deduction, induction and counting. Every questions is associated with a set of supporting facts, which provides the context for the question being asked. An example ``Sandra picked up the football'' and ``Sandra went to the office'' support the question ``Where is the football?'', which we humans can arrive at an easy at the answer ``office''. A task is considered to be successfully passed if it attains an accuracy of 95\% or higher.
+
+
+\subsection{Two Supporting Fact Task}
+The task 2 of bAbI...
 
 \section{Model}
+
 \begin{enumerate}
-\item Brief introduction to bAbI dataset
 \item Overview of the original RN model, comment on the strength and weaknesses
 \item Modifications to the RN model that will help improve the accuracy of the task. Motivations for the modifications.
 \item (Optional) A paragraph on USE?
 
 \item How long we take to train our model and the train/test accuracy, loss values etc. Use original RN paper as a guideline of what numbers to show.
-
 \end{enumerate}
 
+\subsection{Relation Network}
+RNs take in objects as its input and do not explicitly operate on natural language
+
+
+In their simplest form RNs operate on objects, and hence do not explicitly operate on images or natural language. A central contribution of this work is to demonstrate the flexibility with which relatively unstructured inputs, such as CNN or LSTM embeddings, can be considered as a set of objects for an RN. Although the RN expects object representations as input, the semantics of what an object is need not be specified. Our results below demonstrate that the learning process induces upstream processing, comprised of conventional neural network modules, to produce a set of useful “objects” from distributed representations.
+
+
+
+
+
+In the original RN model by \cite{Santoro2017} for the bAbI task,  
+
+
+
+In the model used by \cite{Santoro2017}, up to a maximum of 20 sentences in the support set was processed through a 32 unit LSTM to produce an object. The $g_{\theta}$ is a four-layer MLP which contains 256 units per layer, and takes as input all possible pairings of of the sentences in the support set, concatenated with the 
+
+
+\subsection{Embeddings}
+Short paragraph on embeddings,bert,  Elmo, glove, etc.
+
+
+\subsubsection{LSTM}
+hashing on the word level, the lstm to obtain an embedding on the sentence level.
+
+\subsubsection{Universal Sentence Encoder}
+paper, tensorflow blog
 
 \section{Results}
 
