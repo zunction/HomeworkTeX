@@ -158,8 +158,22 @@ we see that it fulfills the requirement that $A$ is independent of $B$ given $D$
 
 \begin{table}[h]
 \centering
+
+\begin{tabular}{c|c|c|c|c}
+ $a_{i,j}:$ $i \backslash j$ &$X$ & $Y$ & $Z$ & STOP\\
+ \hline
+ START & 1/2 &0&1/2&0\\
+\hline
+$X$ &2/5 & 2/5& 1/5\\
+\hline
+$Y$&1/5 &0 & 1/5 & 3/5 \\
+\hline
+$Z$ &2/5 &3/5 & 0 & 0\\
+\hline
+\end{tabular}
+\qquad
 \begin{tabular}{c|c|c|c}
-$b_u(o)$ $u \backslash o$ &$a$ & $b$ & $c$\\
+$b_j(0):$$b_u(o)$ $u \backslash o$ &$a$ & $b$ & $c$\\
 \hline
 $X$ &2/5 & 1/5& 2/5\\
 \hline
@@ -168,6 +182,7 @@ $Y$&2/5 &2/5 & 1/5 \\
 $Z$ &1/5 &3/5 & 1/5\\
 \hline
 \end{tabular}
+
 \end{table}
 
 \item To solve for the probability $p(x_1=a, x_2=b)$, we use the fact that 
@@ -180,7 +195,11 @@ The only nonzero term in the summation of (\ref{eq:sum}) is when $y_1=Z, y_2=X$ 
 We see that $X_1, X_6$ has no parents, $X_2,X_3,X_4,X_5,X_7,X_8,X_{10},X_{11}$ has one parent each and $X_9$ has 3 parents, thus the number of free parameters is $(2 \times 1) + (8\times 2) + (1 \times 8)=26$
 
 
-\item
+\item We see from the probability tables that $X_3$ is independent of $X_2$ and $X_{10}$ is independent of $X_9$. Thus $X_1$ is independent of $X_3$ and $X_{11}$ is independent of $X_9$. Thus 
+\begin{align*}
+P(X_5 = 2 | X_3 =1, X_{11}=2, X_1 = 1) = P(X_5=2|X_3=1)&=\sum_{v\in \{1,2\}}P(X_4=v|X_3)P(X_5|X_4)\\
+&=(0.1 \times 0.5)  + (0.9\times 0.4) = 0.41
+\end{align*}
 \end{enumerate}
 
 \end{enumerate}
