@@ -60,8 +60,6 @@
 
 
 \title{Exploring Efficacy of Embeddings on \\ Relation Network for Natural Language \\ Question Answering Task}
-%Explore Relational Reasoning using Relation Networks
-
 
 % The \author macro works with any number of authors. There are two
 % commands used to separate the names and addresses of multiple
@@ -74,20 +72,16 @@
 % author name.
 
 \author{
-  David S.~Hippocampus\thanks{Use footnote for providing further
-    information about author (webpage, alternative
-    address)---\emph{not} for acknowledging funding agencies.} \\
-  Department of Computer Science\\
-  Cranberry-Lemon University\\
-  Pittsburgh, PA 15213 \\
-  \texttt{hippo@cs.cranberry-lemon.edu} \\
+Zhangsheng Lai \\
+Engineering Systems Design\\
+  Singapore University of Technology and Design\\
+  \texttt{zhangsheng\_lai@mymail.sutd.edu.sg} \\
   %% examples of more authors
-  %% \And
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \AND
+\And
+Jin Xing Lim \\
+Engineering Systems Design\\
+  Singapore University of Technology and Design\\
+  \texttt{jinxing\_lim@mymail.sutd.edu.sg} \\  %% \AND
   %% Coauthor \\
   %% Affiliation \\
   %% Address \\
@@ -199,13 +193,13 @@ The RN succeeded on the basic induction task, which proved difficult for Sparse 
 
 
 \section{Model}
-\begin{enumerate}
-\item Overview of the original RN model, comment on the strength and weaknesses
-\item Modifications to the RN model that will help improve the accuracy of the task. Motivations for the modifications.
-\item (Optional) A paragraph on USE?
-
-\item How long we take to train our model and the train/test accuracy, loss values etc. Use original RN paper as a guideline of what numbers to show.
-\end{enumerate}
+%\begin{enumerate}
+%\item Overview of the original RN model, comment on the strength and weaknesses
+%\item Modifications to the RN model that will help improve the accuracy of the task. Motivations for the modifications.
+%\item (Optional) A paragraph on USE?
+%
+%\item How long we take to train our model and the train/test accuracy, loss values etc. Use original RN paper as a guideline of what numbers to show.
+%\end{enumerate}
 
 \subsection{Relation Network}
 
@@ -230,9 +224,9 @@ where the input is a set of ``objects'' $O=\{o_1,\ldots,o_n\}$, $o_i \in \mathbb
 
 \subsubsection{LSTM Embeddings}
 
-The bAbI suite of tasks requires transformation of the natural language inputs into a set of objects. In the original RN paper, to provide the prior knowledge for the RN to base on, 20 sentences in the support set that were prior to the question of interest were used as the context for answering the question, and each sentence was processed word-by-word with an 32 unit LSTM to obtain a sentence embedding, after which it is tagged with labels to indicate their relative position in the support set to obtain the objects that are the inputs to our RN. A separate LSTM with 32 units was used to process the question. Lastly, the softmax output was optimized with a cross-entropy loss function using the Adamn optimizer with a learning rate of $2e^{-4}$.
+The bAbI suite of tasks requires transformation of the natural language inputs into a set of objects. In the original RN paper, to provide the prior knowledge for the RN to base on, 20 sentences in the support set that were prior to the question of interest were used as the context for answering the question, and each sentence was processed word-by-word with an 32 unit LSTM to obtain a sentence embedding, after which it is tagged with indexs to indicate their relative position in the support set to obtain the objects that are the inputs to our RN. A separate LSTM with 32 units was used to process the question. Lastly, the softmax output was optimized with a cross-entropy loss function using the Adamn optimizer with a learning rate of $2e^{-4}$.
 
-From (\ref{eq:RNform}) we see that for a context of size $k$, there are $k(k-1)/2$ unique pairings of the objects. In its implementation, for questions with context sizes that are smaller than 20, we pad it with zeros such that we have a full context size of 20, then let the LSTM process the words to get the context embeddings. The labels that tagged the relative position in the support set, which are just one-hot vectors indicating the position of the sentence in the support set, are then concatenated to the embeddings. Lastly, for each given question embedding, it is concatenated to all possible combination of size 2 to obtain the inputs to the RN, which has dimensions $(190, 136)$, the first value reflecting the number of possible combinations and the other the sum of the dimension of the objects and question embeddings.
+From (\ref{eq:RNform}) we see that for a context of size $k$, there are $k(k-1)/2$ unique pairings of the objects. In its implementation, for questions with context sizes that are smaller than 20, we pad it with zeros such that we have a full context size of 20, then let the LSTM process the words to get the context embeddings. The indexs that tagged the relative position in the support set, which are just one-hot vectors indicating the position of the sentence in the support set, are then concatenated to the embeddings. Lastly, for each given question embedding, it is concatenated to all possible combination of size 2 to obtain the inputs to the RN, which has dimensions $(190, 136)$, the first value reflecting the number of possible combinations and the other the sum of the dimension of the objects and question embeddings.
 
 
 
@@ -241,7 +235,7 @@ From (\ref{eq:RNform}) we see that for a context of size $k$, there are $k(k-1)/
 
 For the USE embeddings, we followed the original RN paper of using up to 20 sentences in the support set as the prior for answering the question. The string form of the raw context and question sentences are fed into the USE which outputs a 512 dimensional vector sentence embedding for each sentence. As such we see that the USE embeddings gives the contexts and questions a much richer representation as compared to the LSTM embeddings.
 
-One main difference from the LSTM embedding approach is that we do not pad the context to the full size of 20 before passing through the USE, compared to padding the context to 20 sentences before letting the LSTM process the words. We note that to do something similar in the USE context, we have to pad the sentences to the same length with a special character, for example ``null''. Instead we keep the sentence length as it is, pass it through the USE to obtain the sentence embeddings and for context with size less than 20, pad it sufficiently with zeros we get 20 contexts. The addition of the one-hot vector labels, we only concatenate the one-hot vectors for those non-trivial contexts, for those padded contexts, the labels are just zero vectors of dimension 20. From experiments, if we were to label the trivial contexts with the one-hot vectors, it gives a very poor performance. As the dimensions of the representation of each sentence for both context and questions is increased from 32 to 512, our inputs to the RN has dimensions $(190,1536)$. 
+One main difference from the LSTM embedding approach is that we do not pad the context to the full size of 20 before passing through the USE, compared to padding the context to 20 sentences before letting the LSTM process the words. We note that to do something similar in the USE context, we have to pad the sentences to the same length with a special character, for example ``null''. Instead we keep the sentence length as it is, pass it through the USE to obtain the sentence embeddings and for context with size less than 20, pad it sufficiently with zeros we get 20 contexts. The addition of the one-hot vector indexs, we only concatenate the one-hot vectors for those non-trivial contexts, for those padded contexts, the indexs are just zero vectors of dimension 20. From experiments, if we were to label the trivial contexts with the one-hot vectors, it gives a very poor performance. As the dimensions of the representation of each sentence for both context and questions is increased from 32 to 512, our inputs to the RN has dimensions $(190,1536)$. 
 
 
 
@@ -252,9 +246,9 @@ One main difference from the LSTM embedding approach is that we do not pad the c
 
 
 \subsection{Embeddings}
-\textbf{(Short paragraph on embeddings,bert,  Elmo, glove, etc.)}
+%\textbf{(Short paragraph on embeddings,bert,  Elmo, glove, etc.)}
 
-There are various ways to embed words, from common unsupervised models like word2vec \cite{word2vec} and GloVe \cite{pennington2014glove}. Early this year we have ELMo \cite{N18-1202}, which improved the state of the art embeddings. ELMo differs from other unsupervised embeddings by having their inputs to be characters instead of words, allowing them to take advantage of sub-word units to compute meaningful representations even for out-of-vocabulary words. We shall now discuss the two different embeddings we have used in our experiments whose efficacy we are investigating.
+There are various ways to embed words, from common unsupervised models like word2vec \cite{word2vec} and GloVe \cite{pennington2014glove}. Early this year we have ELMo \cite{N18-1202}, which improved the state of the art embeddings. ELMo differs from other unsupervised embeddings by having their inputs to be characters instead of words, allowing them to take advantage of sub-word units to compute meaningful representations even for out-of-vocabulary words. Using ELMo representations to existing NLP systems have shown improvements to the state-of-the-art for tasks like SQuAD \cite{RajpurkarZLL16} and SNLI \cite{snli:emnlp2015}. Thus we hypothesise that a better representation, which we are proposing to be USE, can give our bAbI task 2 a better result. We shall now discuss the two different embeddings we have used in our experiments whose efficacy we are investigating.
 
 %There has been interesting developments in word embeddings
 
@@ -263,14 +257,16 @@ There are various ways to embed words, from common unsupervised models like word
 
 
 \subsubsection{LSTM}
-For the LSTM embeddings, a randomly initialized word embedding matrix is used to assign each word to a vector representation, which is then passed through a 32 unit LSTM
+For the LSTM embeddings, a randomly initialised word embedding matrix is used to assign each word to a vector representation, which is processes each sentence word-by-word through a 32 unit LSTM. A different word embedding matrix and LSTM is used to generate the context and question embedding respectively. The final state of the sentence-processing-LSTM is the object that is our input for the RN module.
 
-hashing on the word level, the lstm to obtain an embedding on the sentence level.
+\subsubsection{USE}
+The universal sentence encoder (USE) provides sentence level embeddings that shows strong transfer performance on multiple NLP tasks. It also performs better than transfer learning using on word embeddings alone \cite{Cer2018}. The USE is designed base on the observation that for a representation to be able to generalise over a range of diverse tasks, we have to encode multiple aspects of the sentence. Thus USE learns a universal sentence embedding by switching between several tasks. 
 
-\subsubsection{Universal Sentence Encoder}
-paper, tensorflow blog
+There are two encoding models available; DAN is efficient but with lower accuracy, and transformer, has greater model complexity but is more computationally expensive. In our experiment, we use the transformer model, as a better representation of the sentence would help improve the question answering task. The transformer based sentence encoding constructs sentence embeddings using the transformer architecture from \cite{NIPS2017_7181}.
 
-\section{Results}
+
+
+\section{Experiments and Results}
 
 
 We have made several comparison between different types of embeddings, different sample sizes, different types of inputs to feed to the RN module and different modifications to the RN module with our implementation of USE embeddings. We compared the accuracy of the test set for different modifications to the RN module and compared the accuracy of the validation set for the rest of the comparisons.
@@ -295,13 +291,15 @@ We have made comparisons between the two different embeddings of the sentences o
 
 \begin{itemize}
 
-\item Model LSTM: Use LSTM to embed the sentences of the contexts, questions and answers, and then to pass to the RN module
+\item \textbf{Model LSTM}: Use LSTM to embed the sentences of the contexts, questions and answers, and then to pass to the RN module
 
-\item Model USE: Use USE to embed the sentences of the contexts, questions and answers, and then to pass to the RN module
+\item \textbf{Model USE}: Use USE to embed the sentences of the contexts, questions and answers, and then to pass to the RN module
 
 \end{itemize}
 
  
+\begin{table}[H]
+
 
 \begin{center}
 
@@ -311,25 +309,28 @@ We have made comparisons between the two different embeddings of the sentences o
 
 \hline
 
-\textbf{Model}&\textbf{Training Accuracy ($\%$)}&\textbf{Training Accuracy ($\%$)}\\
+\textbf{Model}&\textbf{Training Accuracy (\%)}&\textbf{Validation Accuracy (\%)}\\
 
 \hline
 
-LSTM & &\\
+LSTM & - & 35.0\\
 
 \hline
 
-USE & & \\
+USE & 100 & 87.1\\
 
 \hline
 
  
-
 \end{tabular}
 
-\end{center}
 
- 
+\label{tab:diffembed}
+
+
+\end{center}
+\caption{Results between LSTM and USE Embeddings}
+\end{table} 
 
 From the results, we can see that based on training solely on the training set of Task 2, using USE embedding provides a much better representation than LSTM embedding in training our RN module. Thus, we will be running the rest of the models with USE embedding.
 
@@ -349,13 +350,14 @@ We ran the original model and compared between 2 different sample sizes of the t
 
 \begin{itemize}
 
-\item  First 1000 contexts of the training set
+\item  \textbf{First 1000} contexts of the training set
 
-\item Full 9995 contexts of the training set
+\item \textbf{Full 9995} contexts of the training set
 
 \end{itemize}
 
- 
+
+\begin{table}[H] 
 
 \begin{center}
 
@@ -365,7 +367,7 @@ We ran the original model and compared between 2 different sample sizes of the t
 
 \hline
 
-\textbf{Model}&\textbf{Training Accuracy ($\%$)}&\textbf{Training Accuracy ($\%$)}\\
+\textbf{Model}&\textbf{Training Accuracy (\%)}&\textbf{Validation Accuracy (\%)}\\
 
 \hline
 
@@ -380,18 +382,53 @@ Full 9995 & 100 & 87.1\\
  
 
 \end{tabular}
-
+\label{tab:diffsamples}
 \end{center}
+
+\caption{Results between first 1000 and full 9995 training data}
+\end{table} 
 
  
 
 Based on the validation accuracy, we can see that it is necessary to include all data in the training set for training of the models. Thus, we will be running the rest of the models based on the full 9995 contexts.
 
- 
 
- 
 
-\subsection{Comparison between Different Modification of the RN Module}
+\subsection{Comparison between RN inputs with and without Indexes}
+
+We made comparison between different modifications of inputs before passing to the RN module:
+
+\begin{itemize}
+\item \textbf{RN inputs with no index}: Removed the index of every sentence of each context prior to each question
+\item \textbf{RN inputs with indexs}: Includes both the sentence embeddings and index of every sentence of each context prior to each question (as of what was implemented in the Santoro paper \cite{Santoro2017})
+\end{itemize}
+
+\begin{table}[H]
+
+\begin{center}
+\begin{tabular}{|r|r|r|}
+		
+\hline
+\textbf{RN inputs}&\textbf{Training Accuracy (\%)}&\textbf{Validation Accuracy (\%)}\\
+\hline
+Without Index & 100 & 76.9\\
+\hline
+With Index & 100 & 87.1\\
+\hline
+		
+\end{tabular}
+\label{tab:wwoindex}
+\end{center}
+
+\caption{Results between first 1000 and full 9995 training data}
+\end{table} 
+
+Based on the validation accuracies, it seems that the indexing of the sentences in the contexts prior to each question serves an important attribute for the RN module to train on. Thus. we included indexing for the RN inputs for rest of the models that would be implemented. 
+
+
+
+
+\subsection{Comparison between Different Modifications of the RN Module}
 
  
 
@@ -409,35 +446,35 @@ We compared between different modifications of the RN model and checked for the 
 
 \begin{itemize}
 
-\item Model ori: Original RN module $(g: [256 \times 4], f: [256,512,6])$
+\item \textbf{Model ori}: Original RN module $(g: [256 \times 4], f: [256,512,6])$
 
-\item Model g6: Increase number of layers of g from 4 to 6 $(g: [256 \times 6], f: [256,512,6])$
+\item \textbf{Model g6}: Increase number of layers of g from 4 to 6 $(g: [256 \times 6], f: [256,512,6])$
 
-\item Model g8: Increase number of layers of g from 4 to 8 $(g: [256 \times 8], f: [256,512,6])$
+\item \textbf{Model g8}: Increase number of layers of g from 4 to 8 $(g: [256 \times 8], f: [256,512,6])$
 
-\item Model 512: Increase number of neurons in each layer of g from 256 to 512 $(g: [512 \times 4], f: [256,512,6])$
+\item \textbf{Model 512}: Increase number of neurons in each layer of g from 256 to 512 $(g: [512 \times 4], f: [256,512,6])$
 
-\item Model 512f512: Increase number of neurons in each layer of g from 256 to 512 and first layer of f from 256 to 512 $(g: [512 \times 4], f: [512,512,6])$
+\item \textbf{Model 512f512}: Increase number of neurons in each layer of g from 256 to 512 and first layer of f from 256 to 512 $(g: [512 \times 4], f: [512,512,6])$
 
-\item Model g6x512: Increase number of layers of g from 4 to 6 and increase number of neurons in each layer of g from 256 to 512 $(g: [512 \times 6], f: [256,512,6])$
+\item \textbf{Model g6x512}: Increase number of layers of g from 4 to 6 and increase number of neurons in each layer of g from 256 to 512 $(g: [512 \times 6], f: [256,512,6])$
 
-\item Model g6x512f512: Increase number of layers of g from 4 to 6, increase number of neurons in each layer of g from 256 to 512 and first layer of f from 256 to 512 $(g: [512 \times 6], f: [512,512,6])$
+\item \textbf{Model g6x512f512}: Increase number of layers of g from 4 to 6, increase number of neurons in each layer of g from 256 to 512 and first layer of f from 256 to 512 $(g: [512 \times 6], f: [512,512,6])$
 
-\item Model double: Increase number of layers of g from 4 to 6 and double the number of neurons in all layers except for the last layer of f $(g: [512 \times 6], f: [512,1024,6])$
+\item \textbf{Model double}: Increase number of layers of g from 4 to 6 and double the number of neurons in all layers except for the last layer of f $(g: [512 \times 6], f: [512,1024,6])$
 
 \end{itemize}
 
- 
+ \begin{table}[H]
 
 \begin{center}
 
-\begin{tabular}{|l|c|c|c|}
+\begin{tabular}{|r|r|r|r|}
 
  
 
 \hline
 
-\textbf{Model}&\textbf{Training Accuracy ($\%$)}&\textbf{Training Accuracy ($\%$)}\\
+\textbf{Model}&\textbf{Training Accuracy (\%)}&\textbf{Validation Accuracy (\%)}&\textbf{Test Accuracy (\%)}\\
 
 \hline
 
@@ -476,23 +513,38 @@ double&100&88.2&88.4\\
  
 
 \end{tabular}
-
+\label{tab:diffmod}
 \end{center}
+
+\caption{Results between different modifications of the RN module}
+\end{table} 
 
  
 
-Based on the test accuracies of the above models, we can see that increasing the number of layers of g function from 4 to 6 increased the test accuracy but drastically decreased the accuracy when it was increased to 8 layers. There is also improvement in the test accuracy when the number of neurons for each layer of g function from 256 to 512. The above table shows that the best model for our USE implementation is Model g6x512f512, which is to increase both the number of layers from 4 to 6 and the number of neurons from 256 to 512 for each layer of the g function, together with an increase of number of neurons from 256 to 512 for the first layer of the f function.
+Based on the test accuracies of the above models, we can see that increasing the number of layers of g function from 4 to 6 increased the test accuracy but drastically decreased the accuracy when it was increased to 8 layers. There is also improvement in the test accuracy when the number of neurons for each layer of $g$ function from 256 to 512. The above table shows that the best model for our USE implementation is Model g6x512f512, which is to increase both the number of layers from 4 to 6 and the number of neurons from 256 to 512 for each layer of the $g$ function, together with an increase of number of neurons from 256 to 512 for the first layer of the $f$ function.
 
 
 
 
 \section{Discussion and Conclusions}
 
+This project showed us how different sentence embeddings can yield a huge difference in the performance in the RN by training on Task 2 of the bAbI dataset alone, which requires relational reasoning based on two supporting facts. For the original implementation using LSTM embeddings, it was implemented on all the training data of all 20 tasks, scoring above 95\% for 18 out of 20 tasks. However, when it is implemented solely on the training set of Task 2, the validation accuracy drops significantly to 35\% (93.5\% when training with all 20 tasks' training data). Our experiments showed that using USE embeddings can obtain surprisingly good task performance (validation accuracy of 87.1\%) with remarkably little task specific training data.
 
+We also showed that using the full training set provides more information for the RN module to train on in order to yield a higher validation accuracy. Furthermore, it seems to have a positive correlation between the sample sizes and the validation accuracies (training from first 1000 contexts yielded 35.0\%, while training from the full 9995 contexts yielded 87.1\%). This provides greater motivation for us to modify our implementation to train on all training data of all 20 tasks as it will provide us with a much larger training set.
 
+Our experiments also showed the importance of knowing the locations of sentences of the context prior to each question in training the RN. With the additional of the index of each sentence in our training, the validation accuracy increased from 76.9\% (without index) to 87.1\% (with index). Thus, relationship between the locations of the sentences prior to each question and the question itself was learned and is crucial in training the RN module.
+
+As mentioned above, using USE would result in a higher dimensional vector for each object pair and question given. Due to this increase in dimension of our inputs to pass through the RN module, we believed that the complexity of the RN should increase as well for better training. We showed that by increasing the number of layers or/and the number of neurons in each layer in the $g$ function to a certain extent would yield slightly better performance. By increasing the number of layers from 4 to 6,  the validation accuracy has increased by 2.0\%. Moreover, increasing the number of neurons in each layer from 256 to 512 increased the accuracy by 0.9\%. Our experiments showed that the best model is the one which increased of the number of layers in the $g$ function to 6, number of neurons in each layer of $g$ function to 512 and first layer of the $f$ function to 512 neurons (test accuracy of 89.0\% as compare to the original model of 85.5\%).
+
+We would like to continue this work further even after submitting this project report. From the results of our experiments, we believe that by training on all the 20 tasks of the bAbI dataset, we would expect higher test accuracy on not only Task 2, but also improving the performance of all tasks. However, we could also foresee that improvement in performance for all tasks may not be as straightforward as we thought as each of the tasks requires different types of logical inference skills. Thus, training the RN module with different kind of tasks may seem to be a challenging task. Nonetheless, we wish to continue to use USE in the embeddings of the sentences and questions for all the training sets of the 20 tasks to see if we can succeed in more than 95\% for all the tasks.
+
+\section*{Acknowledgment}
+
+We would like to thank our fellow PhD classmate, Aik Beng Ng, for the critical feedback, suggestions and discussions with us.
 
 \bibliographystyle{abbrvnat}
 \bibliography{bib}
+
 
 
 %%%%%%%%%%%%%%%%%%%%
