@@ -5,14 +5,14 @@
 % before loading nips_2018
 
 % ready for submission
-\usepackage{nips_2018}
+%\usepackage{nips_2018}
 
 % to compile a preprint version, e.g., for submission to arXiv, add
 % add the [preprint] option:
 % \usepackage[preprint]{nips_2018}
 
 % to compile a camera-ready version, add the [final] option, e.g.:
-% \usepackage[final]{nips_2018}
+ \usepackage[final]{nips_2018}
 
 % to avoid loading the natbib package, add option nonatbib:
 % \usepackage[nonatbib]{nips_2018}
@@ -73,12 +73,14 @@
 
 \author{
 Zhangsheng Lai \\
+1002554\\
 Engineering Systems Design\\
   Singapore University of Technology and Design\\
   \texttt{zhangsheng\_lai@mymail.sutd.edu.sg} \\
   %% examples of more authors
 \And
 Jin Xing Lim \\
+1003964\\
 Engineering Systems Design\\
   Singapore University of Technology and Design\\
   \texttt{jinxing\_lim@mymail.sutd.edu.sg} \\  %% \AND
@@ -127,7 +129,7 @@ Engineering Systems Design\\
 
 In this project, we focus on the text-based question answering task using relation network (RN) \cite{Santoro2017} on the bAbI dataset \cite{Weston2015}. RNs are networks that are designed based on relational reasoning, where its capacity to compute relations is baked into the architecture without having the neural network to learn it. 
 
-For any neural approach for natural language processing, word and sentence embeddings are indispensible. They allow us to represent words and sentences whose original forms are strings, as vectors which then we can feed it into a artificial neural network. There are various ways to embed words, and while unsupervised representations have been the more commonly used approach, using the assumption that you can tell a word by the company it keeps, there is an increased focus on supervised representations and also multi-task learning of representations. In our project, we explore how different types of embeddings, in particular, how the traditional unsupervised representations compare up to representations obtained from multi-task learning.
+For any neural approach for natural language processing, word and sentence embeddings are indispensible. They allow us to represent words and sentences whose original forms are strings, as vectors which then we can feed it into an artificial neural network. There are various ways to embed words, and while unsupervised representations have been the more commonly used approach, using the assumption that you can tell a word by the company it keeps, there is an increased focus on supervised representations and also multi-task learning of representations. In our project, we explore how different types of embeddings, in particular, how the traditional unsupervised representations compare up to representations obtained from multi-task learning.
 
 
 %This is done by learning the relationships between each pair of objects using a multi-layer perceptron (MLP), following which another MLP is used to predict the answer for the question 
@@ -136,7 +138,7 @@ For any neural approach for natural language processing, word and sentence embed
 
 %\textbf{(using both lstm and use)}
 
-Our experiments involve using two different representations, the first one being the approach used by the original RN paper \cite{Santoro2017}, to embed the context and questions into sentence embeddings using LSTMs, and the other uses the universal sentence encoder (USE) \cite{Cer2018} to embed the context and questions into sentence embeddings. In the RN paper, sentence embeddings are called objects which the RN is uses to learn the relation between them. We then compare the performance of different embeddings on RN for bAbI question answering task.
+Our experiments involve using two different representations, the first one being the approach used by the original RN paper \cite{Santoro2017}, to embed the context and questions into sentence embeddings using LSTMs, and the other uses the universal sentence encoder (USE) \cite{Cer2018} to embed the context and questions into sentence embeddings. In the RN paper, sentence embeddings are called objects which the RN is used to learn the relation between them. We then compare the performance of different embeddings on RN for bAbI question answering task.
 
 
 %Here, we use both LSTMs to produce objects, which are the basic units that are passed through the RN, we used the universal sentence encoder (USE) \cite{Cer2018} model to embed the sentences into the objects that are to be fed into the RN. In this project, we focus on task 2 of the bAbI task as it is one of the most commonly task failed, which we feel is due to its task design of requiring two supporting facts to arrive at the answer.
@@ -222,20 +224,21 @@ where the input is a set of ``objects'' $O=\{o_1,\ldots,o_n\}$, $o_i \in \mathbb
 \end{figure}
 
 
-\subsubsection{LSTM Embeddings}
+%\subsubsection{LSTM Embeddings}
+%
+%The bAbI suite of tasks requires transformation of the natural language inputs into a set of objects. In the original RN paper, to provide the prior knowledge for the RN to base on, 20 sentences in the support set that were prior to the question of interest were used as the context for answering the question, and each sentence was processed word-by-word with an 32 unit LSTM to obtain a sentence embedding, after which it is tagged with indexs to indicate their relative position in the support set to obtain the objects that are the inputs to our RN. A separate LSTM with 32 units was used to process the question. 
+%%Lastly, the softmax output was optimized with a cross-entropy loss function using the Adamn optimizer with a learning rate of $2e^{-4}$.
+%
+%From (\ref{eq:RNform}) we see that for a context of size $k$, there are $k(k-1)/2$ unique pairings of the objects. In its implementation, for questions with context sizes that are smaller than 20, we pad it with zeros such that we have a full context size of 20, then let the LSTM process the words to get the context embeddings. The indexs that tagged the relative position in the support set, which are just one-hot vectors indicating the position of the sentence in the support set, are then concatenated to the embeddings. Lastly, for each given question embedding, it is concatenated to all possible combination of size 2 to obtain the inputs to the RN, which has dimensions $(190, 136)$, the first value reflecting the number of possible combinations and the other the sum of the dimension of the objects and question embeddings.
 
-The bAbI suite of tasks requires transformation of the natural language inputs into a set of objects. In the original RN paper, to provide the prior knowledge for the RN to base on, 20 sentences in the support set that were prior to the question of interest were used as the context for answering the question, and each sentence was processed word-by-word with an 32 unit LSTM to obtain a sentence embedding, after which it is tagged with indexs to indicate their relative position in the support set to obtain the objects that are the inputs to our RN. A separate LSTM with 32 units was used to process the question. Lastly, the softmax output was optimized with a cross-entropy loss function using the Adamn optimizer with a learning rate of $2e^{-4}$.
-
-From (\ref{eq:RNform}) we see that for a context of size $k$, there are $k(k-1)/2$ unique pairings of the objects. In its implementation, for questions with context sizes that are smaller than 20, we pad it with zeros such that we have a full context size of 20, then let the LSTM process the words to get the context embeddings. The indexs that tagged the relative position in the support set, which are just one-hot vectors indicating the position of the sentence in the support set, are then concatenated to the embeddings. Lastly, for each given question embedding, it is concatenated to all possible combination of size 2 to obtain the inputs to the RN, which has dimensions $(190, 136)$, the first value reflecting the number of possible combinations and the other the sum of the dimension of the objects and question embeddings.
 
 
 
-
-\subsubsection{USE Embeddings}
-
-For the USE embeddings, we followed the original RN paper of using up to 20 sentences in the support set as the prior for answering the question. The string form of the raw context and question sentences are fed into the USE which outputs a 512 dimensional vector sentence embedding for each sentence. As such we see that the USE embeddings gives the contexts and questions a much richer representation as compared to the LSTM embeddings.
-
-One main difference from the LSTM embedding approach is that we do not pad the context to the full size of 20 before passing through the USE, compared to padding the context to 20 sentences before letting the LSTM process the words. We note that to do something similar in the USE context, we have to pad the sentences to the same length with a special character, for example ``null''. Instead we keep the sentence length as it is, pass it through the USE to obtain the sentence embeddings and for context with size less than 20, pad it sufficiently with zeros we get 20 contexts. The addition of the one-hot vector indexs, we only concatenate the one-hot vectors for those non-trivial contexts, for those padded contexts, the indexs are just zero vectors of dimension 20. From experiments, if we were to label the trivial contexts with the one-hot vectors, it gives a very poor performance. As the dimensions of the representation of each sentence for both context and questions is increased from 32 to 512, our inputs to the RN has dimensions $(190,1536)$. 
+%\subsubsection{USE Embeddings}
+%
+%For the USE embeddings, we followed the original RN paper of using up to 20 sentences in the support set as the prior for answering the question. The string form of the raw context and question sentences are fed into the USE which outputs a 512 dimensional vector sentence embedding for each sentence. As such we see that the USE embeddings gives the contexts and questions a much richer representation as compared to the LSTM embeddings.
+%
+%One main difference from the LSTM embedding approach is that we do not pad the context to the full size of 20 before passing through the USE, compared to padding the context to 20 sentences before letting the LSTM process the words. We note that to do something similar in the USE context, we have to pad the sentences to the same length with a special character, for example ``null''. Instead we keep the sentence length as it is, pass it through the USE to obtain the sentence embeddings and for context with size less than 20, pad it sufficiently with zeros we get 20 contexts. The addition of the one-hot vector indexs, we only concatenate the one-hot vectors for those non-trivial contexts, for those padded contexts, the indexs are just zero vectors of dimension 20. From experiments, if we were to label the trivial contexts with the one-hot vectors, it gives a very poor performance. As the dimensions of the representation of each sentence for both context and questions is increased from 32 to 512, our inputs to the RN has dimensions $(190,1536)$. 
 
 
 
@@ -259,12 +262,23 @@ There are various ways to embed words, from common unsupervised models like word
 \subsubsection{LSTM}
 For the LSTM embeddings, a randomly initialised word embedding matrix is used to assign each word to a vector representation, which is processes each sentence word-by-word through a 32 unit LSTM. A different word embedding matrix and LSTM is used to generate the context and question embedding respectively. The final state of the sentence-processing-LSTM is the object that is our input for the RN module.
 
+\paragraph{LSTM Embeddings}
+
+The bAbI suite of tasks requires transformation of the natural language inputs into a set of objects. In the original RN paper, to provide the prior knowledge for the RN to base on, 20 sentences in the support set that were prior to the question of interest were used as the context for answering the question, and each sentence was processed word-by-word with an 32 unit LSTM to obtain a sentence embedding, after which it is tagged with indexs to indicate their relative position in the support set to obtain the objects that are the inputs to our RN. A separate LSTM with 32 units was used to process the question. 
+%Lastly, the softmax output was optimized with a cross-entropy loss function using the Adamn optimizer with a learning rate of $2e^{-4}$.
+
+From (\ref{eq:RNform}) we see that for a context of size $k$, there are $k(k-1)/2$ unique pairings of the objects. In its implementation, for questions with context sizes that are smaller than 20, we pad it with zeros such that we have a full context size of 20, then let the LSTM process the words to get the context embeddings. The indexs that tagged the relative position in the support set, which are just one-hot vectors indicating the position of the sentence in the support set, are then concatenated to the embeddings. Lastly, for each given question embedding, it is concatenated to all possible combination of size 2 to obtain the inputs to the RN, which has dimensions $(190, 136)$, the first value reflecting the number of possible combinations and the other the sum of the dimension of the objects and question embeddings.
+
 \subsubsection{USE}
 The universal sentence encoder (USE) provides sentence level embeddings that shows strong transfer performance on multiple NLP tasks. It also performs better than transfer learning using on word embeddings alone \cite{Cer2018}. The USE is designed base on the observation that for a representation to be able to generalise over a range of diverse tasks, we have to encode multiple aspects of the sentence. Thus USE learns a universal sentence embedding by switching between several tasks. 
 
 There are two encoding models available; DAN is efficient but with lower accuracy, and transformer, has greater model complexity but is more computationally expensive. In our experiment, we use the transformer model, as a better representation of the sentence would help improve the question answering task. The transformer based sentence encoding constructs sentence embeddings using the transformer architecture from \cite{NIPS2017_7181}.
 
+\paragraph{USE Embeddings}
 
+For the USE embeddings, we followed the original RN paper of using up to 20 sentences in the support set as the prior for answering the question. The string form of the raw context and question sentences are fed into the USE which outputs a 512 dimensional vector sentence embedding for each sentence. As such we see that the USE embeddings gives the contexts and questions a much richer representation as compared to the LSTM embeddings.
+
+One main difference from the LSTM embedding approach is that we do not pad the context to the full size of 20 before passing through the USE, compared to padding the context to 20 sentences before letting the LSTM process the words. We note that to do something similar in the USE context, we have to pad the sentences to the same length with a special character, for example ``null''. Instead we keep the sentence length as it is, pass it through the USE to obtain the sentence embeddings and for context with size less than 20, pad it sufficiently with zeros we get 20 contexts. The addition of the one-hot vector indexs, we only concatenate the one-hot vectors for those non-trivial contexts, for those padded contexts, the indexs are just zero vectors of dimension 20. From experiments, if we were to label the trivial contexts with the one-hot vectors, it gives a very poor performance. As the dimensions of the representation of each sentence for both context and questions is increased from 32 to 512, our inputs to the RN has dimensions $(190,1536)$. 
 
 \section{Experiments and Results}
 
@@ -332,7 +346,7 @@ USE & 100 & 87.1\\
 \caption{Results between LSTM and USE Embeddings}
 \end{table} 
 
-From the results, we can see that based on training solely on the training set of Task 2, using USE embedding provides a much better representation than LSTM embedding in training our RN module. Thus, we will be running the rest of the models with USE embedding.
+From the results, we can see that based on training solely on the training set of Task 2, using USE embedding provides a much better representation than LSTM embedding in training our RN module. Thus, we ran the rest of the models with USE embedding.
 
  
 
@@ -390,7 +404,7 @@ Full 9995 & 100 & 87.1\\
 
  
 
-Based on the validation accuracy, we can see that it is necessary to include all data in the training set for training of the models. Thus, we will be running the rest of the models based on the full 9995 contexts.
+Based on the validation accuracy, we can see that it is necessary to include all data in the training set for training of the models. Thus, we ran the rest of the models based on the full 9995 contexts.
 
 
 
@@ -423,7 +437,7 @@ With Index & 100 & 87.1\\
 \caption{Results between first 1000 and full 9995 training data}
 \end{table} 
 
-Based on the validation accuracies, it seems that the indexing of the sentences in the contexts prior to each question serves an important attribute for the RN module to train on. Thus. we included indexing for the RN inputs for rest of the models that would be implemented. 
+Based on the validation accuracies, it seems that the indexing of the sentences in the contexts prior to each question serves an important attribute for the RN module to train on. Thus, we included indexing for the RN inputs for rest of the models that would be implemented. 
 
 
 
